@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{witnessBean.id}" />
+		<f:event type="preRenderView" listener="#{witnessBean.retrieve}" />
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="#{i18n.witness}" />
+
+	<ui:define name="header">
+		#{i18n.witness}
+	</ui:define>
+
+	<ui:define name="subheader">
+		#{i18n.witness}
+	</ui:define>
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+			<h:outputLabel for="witnessBeanWitnessEnduser" value="#{i18n.enduser}" />
+			<h:link id="witnessBeanWitnessEnduser" outcome="/enduser/view"
+				value="#{witnessBean.witness.enduser}">
+				<f:param name="id" value="#{witnessBean.witness.enduser.id}" />
+			</h:link>
+			<h:outputText />
+			<h:outputLabel for="witnessBeanWitnessPrescription"
+				value="#{i18n.prescription}" />
+			<h:link id="witnessBeanWitnessPrescription"
+				outcome="/prescription/view"
+				value="#{witnessBean.witness.prescription}">
+				<f:param name="id" value="#{witnessBean.witness.prescription.id}" />
+			</h:link>
+			<h:outputText />
+			<h:outputLabel for="witnessBeanWitnessResult" value="#{i18n.result}" />
+			<h:outputText id="witnessBeanWitnessResult"
+				styleClass="#{witnessBean.witness.result ? 'boolean-true' : 'boolean-false'}"
+				value="" />
+			<h:outputText />			
+			<h:outputLabel for="witnessBeanWitnessComment" value="#{i18n.comment}" />
+			<h:outputText id="witnessBeanWitnessComment"
+				value="#{witnessBean.witness.comment}" />
+			<h:outputText />
+			<h:outputLabel for="witnessBeanWitnessSubject" value="#{i18n.subject}" />
+			<h:outputText id="witnessBeanWitnessSubject"
+				value="#{witnessBean.witness.subject}" />
+			<h:outputText />
+			<h:outputLabel for="witnessBeanWitnessCreationdate" value="#{i18n.creation_date}" />
+			<h:outputText id="witnessBeanWitnessCreationdate"
+				value="#{witnessBean.witness.creationdate}" >
+				<f:convertDateTime type="date"/>
+				</h:outputText>
+			<h:outputText />
+		</h:panelGrid>
+
+		<div class="buttons">
+			<h:link value="#{i18n.view_all}" outcome="search"
+				styleClass="btn btn-primary" />
+			<h:link value="#{i18n.edit}" outcome="create" includeViewParams="true"
+				styleClass="btn btn-primary" rendered="#{isAdministrator or witnessBean.checkWitnessEnduser == true}"/>
+			<h:link value="#{i18n.create}" outcome="create"
+				styleClass="btn btn-primary" rendered="#{isAdministrator or not empty request.remoteUser}"/>
+		</div>
+	</ui:define>
+
+</ui:composition>

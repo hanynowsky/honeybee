@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{substanceBean.page}" />
+		<f:event type="preRenderView"
+			listener="#{substanceBean.paginate(this)}" />
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="#{i18n.substances}" />
+
+	<ui:define name="header">
+		#{i18n.substances}
+	</ui:define>
+
+	<ui:define name="subheader">
+		#{i18n.search}
+	</ui:define>
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="substanceBeanExampleLabel"
+							value="#{i18n.label}" />
+						<h:panelGroup>
+							<h:inputText id="substanceBeanExampleLabel" maxlength="45"
+								value="#{substanceBean.example.label}">
+								<f:ajax execute="@form" render="substanceBeanPageItems paginator"
+									event="keyup" />
+							</h:inputText>
+							<h:message for="substanceBeanExampleLabel" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+						<h:outputLabel for="substanceBeanExampleLabelfr"
+							value="#{i18n.labelfr}" />
+						<h:panelGroup>
+							<h:inputText id="substanceBeanExampleLabelfr" maxlength="45"
+								value="#{substanceBean.example.labelfr}">
+								<f:ajax execute="@form" render="substanceBeanPageItems paginator"
+									event="keyup" />
+							</h:inputText>
+							<h:message for="substanceBeanExampleLabelfr" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+						<h:outputLabel for="substanceBeanExampleLabelar"
+							value="#{i18n.labelar}" />
+						<h:panelGroup>
+							<h:inputText id="substanceBeanExampleLabelar" maxlength="45"
+								value="#{substanceBean.example.labelar}">
+								<f:ajax execute="@form" render="substanceBeanPageItems paginator"
+									event="keyup" />
+							</h:inputText>
+							<h:message for="substanceBeanExampleLabelar" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+						<h:outputLabel for="substanceBeanExampleDescription"
+							value="#{i18n.description}" />
+						<h:panelGroup>
+							<h:inputText id="substanceBeanExampleDescription"
+								maxlength="65535" value="#{substanceBean.example.description}">
+								<f:ajax execute="@form" render="substanceBeanPageItems paginator"
+									event="keyup" />
+							</h:inputText>
+							<h:message for="substanceBeanExampleDescription"
+								styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="#{i18n.search}"
+							action="#{substanceBean.search}" styleClass="btn btn-primary" />
+						<h:commandLink rendered="#{isAdministrator or isAuthor}"
+							value="#{i18n.create}" action="#{substanceBean.create}"
+							styleClass="btn btn-primary" />
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+
+			<h:dataTable id="substanceBeanPageItems" styleClass="data-table"
+				value="#{substanceBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.label}" />
+					</f:facet>
+					<h:link outcome="/substance/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabel" value="#{_item.label}" />
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelfr}" />
+					</f:facet>
+					<h:link outcome="/substance/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabelfr" value="#{_item.labelfr}" />
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelar}" />
+					</f:facet>
+					<h:link outcome="/substance/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabelar" value="#{_item.labelar}" />
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<h:panelGroup id="paginator">
+				<ui:include src="/resources/scaffold/paginator.xhtml">
+					<ui:param name="paginatorBean" value="#{substanceBean}" />
+				</ui:include>
+			</h:panelGroup>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

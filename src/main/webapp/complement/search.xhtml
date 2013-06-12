@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{complementBean.page}" />
+		<f:event type="preRenderView"
+			listener="#{complementBean.paginate(this)}" />
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="#{i18n.complements}" />
+
+	<ui:define name="header">
+		#{i18n.complements}
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="#{i18n.search}" id="subheader">			
+		</h:outputText>
+	</ui:define>
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+
+		<h:form id="search">		
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel value="#{i18n.form}" />
+						<h:panelGroup>
+							<h:selectOneMenu id="complementBeanExampleIngredientF"
+								value="#{ingredientBean.form}"
+								valueChangeListener="#{ingredientBean.FormValueChangeListener}">
+								<f:selectItem />
+								<f:selectItems value="#{ingredientBean.ingredientForms}"
+									var="ingform" itemLabel="#{utilityBean.IngformName(ingform)}" />
+								<f:selectItem itemValue="all" itemLabel="#{i18n.all}" />
+								<p:ajax update="complementBeanExampleIngredient @form paginator" />
+							</h:selectOneMenu>
+							<h:message for="complementBeanExampleIngredientF"
+								styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+						<h:outputLabel for="complementBeanExampleIngredient"
+							value="#{i18n.ingredient}" />
+						<h:panelGroup styleClass="onemenu">
+							<p:selectOneMenu style="text-align:center;" filter="true"
+								filterMatchMode="contains"
+								converter="#{ingredientBean.converter}"
+								id="complementBeanExampleIngredient"
+								value="#{complementBean.example.ingredient}">
+								<f:selectItem itemValue="#{null}" itemLabel="#{i18n.all}" />
+								<f:selectItems value="#{ingredientBean.selectedIngredients}"
+									var="si"
+									itemLabel="#{ingredientBean.switchLabel(si)} : #{utilityBean.IngformName(si.form)}" />
+								<p:ajax update="complementBeanPageItems @form paginator" />
+							</p:selectOneMenu>
+							<h:message for="complementBeanExampleIngredient"
+								styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+						<h:outputLabel for="complementBeanExampleContent"
+							value="#{i18n.content}" />
+						<h:panelGroup>
+							<h:inputText id="complementBeanExampleContent" maxlength="65535"
+								value="#{complementBean.example.content}">
+								<f:ajax execute="@form" render="complementBeanPageItems paginator"
+									event="keyup" />
+							</h:inputText>
+							<h:message for="complementBeanExampleContent" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="#{i18n.search}" id="button_search"
+							action="#{complementBean.search}" styleClass="btn btn-primary" />
+						<h:commandLink rendered="#{isAdministrator or isAuthor}"
+							value="#{i18n.create}" action="#{complementBean.create}"
+							styleClass="btn btn-primary" />
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+
+			<h:dataTable id="complementBeanPageItems" styleClass="data-table"
+				value="#{complementBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.ingredient}" />
+					</f:facet>
+					<h:link outcome="/complement/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemIngredient" value="#{_item.ingredient}" />
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.form}" />
+					</f:facet>
+					<h:link outcome="/complement/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemFormH" value="#{i18n.honey}"
+							rendered="#{_item.ingredient.form == 'honey'}" />
+						<h:outputText id="itemFormP" value="#{i18n.powder}"
+							rendered="#{_item.ingredient.form == 'powder'}" />
+						<h:outputText id="itemFormR" value="#{i18n.raw}"
+							rendered="#{_item.ingredient.form == 'raw'}" />
+						<h:outputText id="itemFormO" value="#{i18n.oil}"
+							rendered="#{_item.ingredient.form == 'oil'}" />
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.content}" />
+					</f:facet>
+					<h:link outcome="/complement/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemContent" value="#{_item.content}" />
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<h:panelGroup id="paginator">
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value="#{complementBean}" />
+			</ui:include>
+			</h:panelGroup>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

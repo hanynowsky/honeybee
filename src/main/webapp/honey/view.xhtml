@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{honeyBean.id}"/>
+		<f:event type="preRenderView" listener="#{honeyBean.retrieve}"/>
+	</f:metadata>
+
+    <ui:param name="pageTitle" value="#{i18n.honey}"/>
+
+	<ui:define name="header">
+		#{i18n.honey}
+	</ui:define>
+
+	<ui:define name="subheader">
+		#{i18n.honey}
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+                    <h:outputLabel for="honeyBeanHoneyPlant" value="#{i18n.plant}"/>
+			<h:link id="honeyBeanHoneyPlant" outcome="/plant/view" value="#{honeyBean.honey.plant}">
+				<f:param name="id" value="#{honeyBean.honey.plant.id}"/>
+			</h:link>
+			<h:outputText/>
+                        <h:outputLabel for="honeyBeanHoneyLabel" value="#{i18n.label}"/>
+			<h:outputText id="honeyBeanHoneyLabel" value="#{honeyBean.honey.label}"/>
+			<h:outputText/>
+                        <h:outputLabel for="honeyBeanHoneyLabelfr" value="#{i18n.labelfr}"/>
+			<h:outputText id="honeyBeanHoneyLabelfr" value="#{honeyBean.honey.labelfr}"/>
+			<h:outputText/>
+			<h:outputLabel for="honeyBeanHoneyLabelar" value="#{i18n.labelar}"/>
+			<h:outputText id="honeyBeanHoneyLabelar" value="#{honeyBean.honey.labelar}"/>
+			<h:outputText/>
+                        <h:outputLabel for="honeyBeanHoneyDescription" value="#{i18n.description}"/>
+			<h:outputText id="honeyBeanHoneyDescription" value="#{honeyBean.honey.description}"/>
+			<h:outputText/>
+                        <h:outputLabel for="honeyBeanHoneyDescriptionar" value="#{i18n.descriptionar}"/>
+			<h:outputText id="honeyBeanHoneyDescriptionar" value="#{honeyBean.honey.descriptionar}"/>
+			<h:outputText/>
+                        <h:outputLabel for="honeyBeanHoneyDescriptionfr" value="#{i18n.descriptionfr}"/>
+			<h:outputText id="honeyBeanHoneyDescriptionfr" value="#{honeyBean.honey.descriptionfr}"/>
+			<h:outputText/>
+                        <h:outputLabel for="honeyBeanHoneyIngredients" value="#{i18n.ingredients}"/>
+			<p:dataTable id="honeyBeanHoneyIngredients" 
+			styleClass="primedatatable" paginator="true" paginatorPosition="top" rows="3" paginatorAlwaysVisible="false" 
+                                     value="#{forgeview:asList(honeyBean.honey.ingredients)}" 
+                                     var="_item">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.label}"/>
+					</f:facet>
+					<h:link outcome="/ingredient/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemLabel" value="#{_item.label}"/>
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelfr}"/>
+					</f:facet>
+					<h:link outcome="/ingredient/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemLabelfr" value="#{_item.labelfr}"/>
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelar}"/>
+					</f:facet>
+					<h:link outcome="/ingredient/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemLabelar" value="#{_item.labelar}"/>
+					</h:link>
+				</p:column>
+			</p:dataTable>
+			<h:outputText/>
+		</h:panelGrid>
+
+		<div class="buttons">
+                    <h:link value="#{i18n.view_all}" outcome="search" styleClass="btn btn-primary"/> 
+			<h:link rendered="#{isAdministrator or isAuthor}" value="#{i18n.edit}" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
+			<h:link rendered="#{isAdministrator or isAuthor}" value="#{i18n.create}" outcome="create" styleClass="btn btn-primary"/>
+		</div>
+	</ui:define>
+
+</ui:composition>

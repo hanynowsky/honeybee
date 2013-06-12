@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="pageTitle" value="#{i18n.search}" />
+
+	<ui:define name="header">
+            #{i18n.search}
+	</ui:define>
+
+	<ui:define name="main">
+		<h2 class="success">#{i18n.confirmation}</h2>
+		<p:panel style="margin-bottom:10px;">
+		<h:outputText value="Redirecting to #{utilityBean.viewPath}" />
+		</p:panel>
+		<p:separator style="height:1px;"/>
+		<h:form id="formRedirect">
+			<p:poll interval="2"
+				onstart="document.getElementById('formRedirect:redirectLink').click();" />
+			<h:link value="Back to Search" id="redirectLink"
+				outcome="#{utilityBean.viewPath}" includeViewParams="false" />
+		</h:form>
+	</ui:define>
+
+</ui:composition>

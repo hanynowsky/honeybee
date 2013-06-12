@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{helpBean.page}" />
+		<f:event type="preRenderView" listener="#{helpBean.paginate(this)}" />
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="#{i18n.search_help}" />
+
+	<ui:define name="header">
+		<h:outputText value="#{i18n.help}" />
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="#{i18n.search_help}" />
+	</ui:define>
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="helpBeanExampleTitle" value="#{i18n.title}" />
+						<h:panelGroup>
+							<h:inputText id="helpBeanExampleTitle" maxlength="45"
+								value="#{helpBean.example.title}">
+								<f:ajax event="keyup" render="helpBeanPageItems paginator" execute="@form" />
+							</h:inputText>
+							<h:message for="helpBeanExampleTitle" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+						<h:outputLabel for="helpBeanExampleContent"
+							value="#{i18n.content}" />
+						<h:panelGroup>
+							<h:inputTextarea id="helpBeanExampleContent"
+								value="#{helpBean.example.content}">
+								<f:ajax event="keyup" render="helpBeanPageItems paginator" execute="@form" />
+							</h:inputTextarea>
+							<h:message for="helpBeanExampleContent" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="#{i18n.search}" action="#{helpBean.search}"
+							styleClass="btn btn-primary" />
+						<h:commandLink rendered="#{isAdministrator}"
+							value="#{i18n.create}" action="#{helpBean.create}"
+							styleClass="btn btn-primary" />
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+
+			<h:dataTable id="helpBeanPageItems" styleClass="data-table"
+				value="#{helpBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.title}" />
+					</f:facet>
+					<h:link outcome="/help/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemTitle" value="#{_item.title}" />
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.content}" />
+					</f:facet>
+					<h:link outcome="/help/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText escape="false" id="itemContent"
+							value="#{_item.content}" />
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<h:panelGroup id="paginator">
+				<ui:include src="/resources/scaffold/paginator.xhtml">
+					<ui:param name="paginatorBean" value="#{helpBean}" />
+				</ui:include>
+			</h:panelGroup>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

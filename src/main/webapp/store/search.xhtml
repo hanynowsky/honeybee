@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{storeBean.page}" />
+		<f:event type="preRenderView" listener="#{storeBean.paginate(this)}" />
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="#{i18n.stores}" />
+
+	<ui:define name="header">
+		#{i18n.stores}
+	</ui:define>
+
+	<ui:define name="subheader">
+		#{i18n.search}
+	</ui:define>
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="storeBeanExampleLabel" value="#{i18n.label}" />
+						<h:panelGroup>
+							<h:inputText id="storeBeanExampleLabel" maxlength="45"
+								value="#{storeBean.example.label}">
+								<f:ajax execute="@form" render="storeBeanPageItems paginator"
+									event="keyup" />
+							</h:inputText>
+							<h:message for="storeBeanExampleLabel" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+						<h:outputLabel for="storeBeanExampleLabelar"
+							value="#{i18n.labelar}" />
+						<h:panelGroup>
+							<h:inputText id="storeBeanExampleLabelar" maxlength="45"
+								value="#{storeBean.example.labelar}">
+								<f:ajax execute="@form" render="storeBeanPageItems paginator"
+									event="keyup" />
+							</h:inputText>
+							<h:message for="storeBeanExampleLabelar" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+						<h:outputLabel for="storeBeanExampleAddress"
+							value="#{i18n.address}" />
+						<h:panelGroup>
+							<h:inputText id="storeBeanExampleAddress" maxlength="445"
+								value="#{storeBean.example.address}">
+								<f:ajax execute="@form" render="storeBeanPageItems paginator"
+									event="keyup" />
+							</h:inputText>
+							<h:message for="storeBeanExampleAddress" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+						<h:outputLabel for="storeBeanExampleAddressar"
+							value="#{i18n.addressar}" />
+						<h:panelGroup>
+							<h:inputText id="storeBeanExampleAddressar" maxlength="445"
+								value="#{storeBean.example.addressar}">
+								<f:ajax execute="@form" render="storeBeanPageItems paginator"
+									event="keyup" />
+							</h:inputText>
+							<h:message for="storeBeanExampleAddressar" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+						<h:outputLabel for="storeBeanExamplePhone" value="#{i18n.phone}" />
+						<h:panelGroup>
+							<h:inputText id="storeBeanExamplePhone" maxlength="45"
+								value="#{storeBean.example.phone}">
+								<f:ajax execute="@form" render="storeBeanPageItems paginator"
+									event="keyup" />
+							</h:inputText>
+							<h:message for="storeBeanExamplePhone" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="#{i18n.search}" action="#{storeBean.search}"
+							styleClass="btn btn-primary" />
+						<h:commandLink rendered="#{isAdministrator or isAuthor}"
+							value="#{i18n.create}" action="#{storeBean.create}"
+							styleClass="btn btn-primary" />
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+
+			<h:dataTable id="storeBeanPageItems" styleClass="data-table"
+				value="#{storeBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.label}" />
+					</f:facet>
+					<h:link outcome="/store/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabel" value="#{_item.label}" />
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelar}" />
+					</f:facet>
+					<h:link outcome="/store/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabelar" value="#{_item.labelar}" />
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<h:panelGroup id="paginator">
+				<ui:include src="/resources/scaffold/paginator.xhtml">
+					<ui:param name="paginatorBean" value="#{storeBean}" />
+				</ui:include>
+			</h:panelGroup>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

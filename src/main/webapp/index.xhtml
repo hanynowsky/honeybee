@@ -1,67 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-   xmlns:ui="http://java.sun.com/jsf/facelets"
-   xmlns:f="http://java.sun.com/jsf/core"
-   xmlns:h="http://java.sun.com/jsf/html"
-   template="/WEB-INF/templates/default.xhtml">
-   <ui:define name="content">
-      <h1>Welcome to JBoss AS 7!</h1>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html">
 
-      <p>You have successfully deployed a Java EE 6 web application on JBoss AS 7.</p>
+	<ui:param name="pageTitle" value="#{i18n.welcome_home}" />
 
-      <h:form id="reg">
-         <h2>Register (Bean Validation example)</h2>
-         <p>Enforces annotation-based constraints defined on the model class.</p>
-         <h:panelGrid columns="3" columnClasses="titleCell">
-            <h:outputLabel for="name" value="Name:"/>
-            <h:inputText id="name" value="#{newMember.name}" />
-            <h:message for="name" errorClass="invalid"/>
+	<ui:define name="header">
+		<h:outputText value="#{i18n.welcome_home}" />
+	</ui:define>
 
-            <h:outputLabel for="email" value="Email:"/>
-            <h:inputText id="email" value="#{newMember.email}"/>
-            <h:message for="email" errorClass="invalid"/>
+	<ui:define name="main">
+		<h2 class="success">
+			<h:outputText value="#{i18n.honeybee_ready}" />
+		</h2>
+		<h:graphicImage value="#{resource['library.png']}"
+			style="padding-bottom:15px;" />
+		<p>
+			<a target="_blank" href="mailto:kyoshuu.madani@gmail.com"> <h:outputText
+					value="#{i18n.feedback}" />
+			</a>
+		</p>	
+	</ui:define>
 
-            <h:outputLabel for="phoneNumber" value="Phone #:"/>
-            <h:inputText id="phoneNumber" value="#{newMember.phoneNumber}"/>
-            <h:message for="phoneNumber" errorClass="invalid"/>
-         </h:panelGrid>
-
-         <p>
-            <h:panelGrid columns="2">
-               <h:commandButton id="register" action="#{memberRegistration.register}" value="Register"/>
-               <h:messages styleClass="messages" errorClass="invalid" infoClass="valid" warnClass="warning"
-                           globalOnly="true"/>
-            </h:panelGrid>
-         </p>
-      </h:form>
-      <h2>Members</h2>
-      <h:panelGroup rendered="#{empty members}">
-         <em>No registered members.</em>
-      </h:panelGroup>
-      <h:dataTable var="_member" value="#{members}" rendered="#{not empty members}">
-         <h:column>
-            <f:facet name="header">Id</f:facet>
-                #{_member.id}
-            </h:column>
-         <h:column>
-            <f:facet name="header">Name</f:facet>
-                #{_member.name}
-            </h:column>
-         <h:column>
-            <f:facet name="header">Email</f:facet>
-                #{_member.email}
-            </h:column>
-         <h:column>
-            <f:facet name="header">Phone #</f:facet>
-                #{_member.phoneNumber}
-            </h:column>
-         <h:column>
-            <f:facet name="header">REST URL</f:facet>
-            <a href="#{request.contextPath}/rest/members/#{_member.id}">/rest/members/#{_member.id}</a>
-         </h:column>
-         <f:facet name="footer">
-            REST URL for all members: <a href="#{request.contextPath}/rest/members">/rest/members</a>
-         </f:facet>
-      </h:dataTable>
-   </ui:define>
 </ui:composition>

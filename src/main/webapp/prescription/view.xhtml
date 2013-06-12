@@ -1,0 +1,289 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{prescriptionBean.id}" />
+		<f:event type="preRenderView" listener="#{prescriptionBean.retrieve}" />
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="#{i18n.prescription}" />
+
+	<ui:define name="header">
+		#{i18n.prescription}
+	</ui:define>
+
+	<ui:define name="subheader">
+		#{i18n.prescription}
+	</ui:define>
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+			<h:outputLabel for="prescriptionBeanPrescriptionAuthor"
+				value="#{i18n.author}" />
+			<h:link id="prescriptionBeanPrescriptionAuthor"
+				outcome="/author/view"
+				value="#{prescriptionBean.prescription.author}">
+				<f:param name="id"
+					value="#{prescriptionBean.prescription.author.id}" />
+			</h:link>
+			<h:outputText />
+			<h:outputLabel for="prescriptionBeanPrescriptionTitle" value="#{i18n.title}" />
+			<h:outputText id="prescriptionBeanPrescriptionTitle"
+				value="#{prescriptionBean.prescription.title}" />
+			<h:outputText />
+			<h:outputLabel for="prescriptionBeanPrescriptionTitlear"
+				value="#{i18n.titlear}" />
+			<h:outputText id="prescriptionBeanPrescriptionTitlear"
+				value="#{prescriptionBean.prescription.titlear}" />
+			<h:outputText />
+			<h:outputLabel for="prescriptionBeanPrescriptionTitlefr"
+				value="#{i18n.titlefr}" />
+			<h:outputText id="prescriptionBeanPrescriptionTitlefr"
+				value="#{prescriptionBean.prescription.titlefr}" />
+			<h:outputText />
+			<h:outputLabel for="prescriptionBeanPrescriptionPreparation"
+				value="#{i18n.preparation}" />
+			<h:outputText id="prescriptionBeanPrescriptionPreparation"
+				value="#{prescriptionBean.prescription.preparation}" />
+			<h:outputText />
+			<h:outputLabel for="prescriptionBeanPrescriptionPreparationfr"
+				value="#{i18n.prescriptionfr}" />
+			<h:outputText id="prescriptionBeanPrescriptionPreparationfr"
+				value="#{prescriptionBean.prescription.preparationfr}" />
+			<h:outputText />
+			<h:outputLabel for="prescriptionBeanPrescriptionPreparationar"
+				value="#{i18n.prescriptionar}" />
+			<h:outputText id="prescriptionBeanPrescriptionPreparationar"
+				value="#{prescriptionBean.prescription.preparationar}" />
+			<h:outputText />
+			<h:outputLabel for="prescriptionBeanPrescriptionTreatment"
+				value="#{i18n.treatment}" />
+			<h:outputText id="prescriptionBeanPrescriptionTreatment"
+				value="#{prescriptionBean.prescription.treatment}" />
+			<h:outputText />
+			<h:outputLabel for="prescriptionBeanPrescriptionTreatmentfr"
+				value="#{i18n.treatmentfr}" />
+			<h:outputText id="prescriptionBeanPrescriptionTreatmentfr"
+				value="#{prescriptionBean.prescription.treatmentfr}" />
+			<h:outputText />
+			<h:outputLabel for="prescriptionBeanPrescriptionTreatmentar"
+				value="#{i18n.treatmentar}" />
+			<h:outputText id="prescriptionBeanPrescriptionTreatmentar"
+				value="#{prescriptionBean.prescription.treatmentar}" />
+			<h:outputText />
+			<h:outputLabel for="prescriptionBeanPrescriptionCoefficient"
+				value="#{i18n.coefficient}" />
+			<h:outputText id="prescriptionBeanPrescriptionCoefficient"
+				value="#{prescriptionBean.prescription.coefficient}" />
+			<h:outputText />
+			<h:outputLabel for="prescriptionBeanWitnessCreationdate"
+				value="#{i18n.creation_date}" />
+			<h:outputText id="prescriptionBeanWitnessCreationdate"
+				value="#{prescriptionBean.prescription.creationdate}">
+				<f:convertDateTime type="date" />
+			</h:outputText>
+			<h:outputText />
+			<h:outputLabel for="prescriptionBeanPrescriptionIngredients"
+				value="#{i18n.ingredients}" />
+			<p:dataTable id="prescriptionBeanPrescriptionIngredients"
+				styleClass="primedatatable" paginator="true" paginatorPosition="top" rows="3" paginatorAlwaysVisible="false"
+				value="#{forgeview:asList(prescriptionBean.prescription.ingredients)}"
+				var="_item">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.label}" />
+					</f:facet>
+					<h:link outcome="/ingredient/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabel" value="#{_item.label}" />
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelfr}" />
+					</f:facet>
+					<h:link outcome="/ingredient/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabelfr" value="#{_item.labelfr}" />
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelar}" />
+					</f:facet>
+					<h:link outcome="/ingredient/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabelar" value="#{_item.labelar}" />
+					</h:link>
+				</p:column>
+			</p:dataTable>
+			<h:outputText />			
+			<h:outputLabel for="prescriptionBeanPrescriptionDefects"
+				value="#{i18n.defects}" />
+			<p:dataTable id="prescriptionBeanPrescriptionDefects"
+				styleClass="primedatatable" paginator="true" paginatorPosition="top" rows="3" paginatorAlwaysVisible="false"
+				value="#{forgeview:asList(prescriptionBean.prescription.defects)}"
+				var="_item">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.label}" />
+					</f:facet>
+					<h:link outcome="/defect/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabel" value="#{_item.label}" />
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelfr}" />
+					</f:facet>
+					<h:link outcome="/defect/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabelfr" value="#{_item.labelfr}" />
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelar}" />
+					</f:facet>
+					<h:link outcome="/defect/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabelar" value="#{_item.labelar}" />
+					</h:link>
+				</p:column>
+			</p:dataTable>
+			<h:outputText />
+			<h:outputLabel for="prescriptionBeanPrescriptionVirtues"
+				value="#{i18n.virtues}" />
+			<p:dataTable id="prescriptionBeanPrescriptionVirtues"
+				styleClass="primedatatable" paginator="true" paginatorPosition="top" rows="3" paginatorAlwaysVisible="false"
+				value="#{forgeview:asList(prescriptionBean.prescription.virtues)}"
+				var="_item">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.label}" />
+					</f:facet>
+					<h:link outcome="/virtue/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabel" value="#{_item.label}" />
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelfr}" />
+					</f:facet>
+					<h:link outcome="/virtue/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabelfr" value="#{_item.labelfr}" />
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelar}" />
+					</f:facet>
+					<h:link outcome="/virtue/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabelar" value="#{_item.labelar}" />
+					</h:link>
+				</p:column>
+			</p:dataTable>
+			<h:outputText />
+			<h:outputLabel for="prescriptionBeanPrescriptionComplements"
+				value="#{i18n.complements}" />
+			<p:dataTable id="prescriptionBeanPrescriptionComplements"
+				styleClass="primedatatable" paginator="true" paginatorPosition="top" rows="3" paginatorAlwaysVisible="false"
+				value="#{forgeview:asList(prescriptionBean.prescription.complements)}"
+				var="_item">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.ingredient}" />
+					</f:facet>
+					<h:link outcome="/complement/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemIngredient" value="#{_item.ingredient}" />
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.content}" />
+					</f:facet>
+					<h:link outcome="/complement/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemContent" value="#{_item.content}" />
+					</h:link>
+				</p:column>
+			</p:dataTable>
+			<h:outputText />
+			<h:outputLabel value="#{i18n.formale}" />
+			<h:outputText
+				styleClass="#{prescriptionBean.prescription.formale ? 'boolean-true' : 'boolean-false'}"
+				value="" />
+			<h:outputText />
+			<h:outputLabel value="#{i18n.forfemale}" />
+			<h:outputText
+				styleClass="#{prescriptionBean.prescription.forfemale ? 'boolean-true' : 'boolean-false'}"
+				value="" />
+			<h:outputText />
+			<h:outputLabel value="#{i18n.forchidren}" />
+			<h:outputText
+				styleClass="#{prescriptionBean.prescription.forchildren ? 'boolean-true' : 'boolean-false'}"
+				value="" />
+			<h:outputText />
+			<h:outputLabel for="prescriptionBeanPrescriptionWitnesses"
+				value="#{i18n.witnesses}" />
+			<p:dataTable id="prescriptionBeanPrescriptionWitnesses"
+				styleClass="primedatatable" paginator="true" paginatorPosition="top" rows="3" paginatorAlwaysVisible="false"
+				value="#{forgeview:asList(prescriptionBean.prescription.witnesses)}"
+				var="_item">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.comment}" />
+					</f:facet>
+					<h:link outcome="/witness/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemComment" value="#{_item.comment}" />
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.subject}" />
+					</f:facet>
+					<h:link outcome="/witness/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemSubject" value="#{_item.subject}" />
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.result}" />
+					</f:facet>
+					<h:link outcome="/witness/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemResult" value=""
+							styleClass="#{_item.result ? 'boolean-true' : 'boolean-false'}" />
+					</h:link>
+				</p:column>
+			</p:dataTable>
+			<h:outputText />
+		</h:panelGrid>
+
+		<div class="buttons">
+			<h:link value="#{i18n.view_all}" outcome="search"
+				styleClass="btn btn-primary" />
+			<h:link rendered="#{isAdministrator or isAuthor}" value="#{i18n.edit}" outcome="create" includeViewParams="true"
+				styleClass="btn btn-primary" />
+			<h:link rendered="#{isAdministrator or isAuthor}" value="#{i18n.create}" outcome="create"
+				styleClass="btn btn-primary" />
+		</div>
+	</ui:define>
+
+</ui:composition>

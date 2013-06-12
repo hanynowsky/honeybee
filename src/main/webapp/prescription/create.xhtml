@@ -1,0 +1,366 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:forgeview="http://jboss.org/forge/view"	
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{prescriptionBean.id}"/>
+		<f:event type="preRenderView" listener="#{prescriptionBean.retrieve}"/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="#{i18n.create} #{i18n.prescription}"/>
+
+	<ui:define name="header">
+		#{i18n.prescription}
+	</ui:define>
+
+	<ui:define name="subheader">
+		<c:choose>
+			<c:when test="#{!empty prescriptionBean.id}">
+				#{i18n.edit}
+			</c:when>
+			<c:otherwise>
+				#{i18n.create}
+			</c:otherwise>
+		</c:choose>
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:form id="create" rendered="#{isAdministrator or isAuthor}">
+			<h:messages globalOnly="true" styleClass="error"/>
+
+			<h:panelGrid columnClasses="label,component,required" columns="3">
+				<h:outputLabel for="prescriptionBeanPrescriptionAuthor" value="#{i18n.author}"/>
+				<h:panelGroup>
+					<h:selectOneMenu converter="#{authorBean.converter}" id="prescriptionBeanPrescriptionAuthor" value="#{prescriptionBean.prescription.author}">
+						<f:selectItem/>
+						<f:selectItem itemLabel="#{prescriptionBean.prescription.author}" itemValue="#{prescriptionBean.prescription.author}"/>
+						<f:selectItem noSelectionOption="true" itemLabel="------"/>
+						<f:selectItems value="#{authorBean.all}"/>
+					</h:selectOneMenu>
+					<h:message for="prescriptionBeanPrescriptionAuthor" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="prescriptionBeanPrescriptionTitle" value="#{i18n.title}"/>
+				<h:panelGroup>
+					<h:inputText id="prescriptionBeanPrescriptionTitle" maxlength="145" required="true" value="#{prescriptionBean.prescription.title}"/>
+					<h:message for="prescriptionBeanPrescriptionTitle" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+				<h:outputLabel for="prescriptionBeanPrescriptionTitlear" value="#{i18n.titlear}"/>
+				<h:panelGroup>
+					<h:inputText id="prescriptionBeanPrescriptionTitlear" maxlength="145" required="true" value="#{prescriptionBean.prescription.titlear}"/>
+					<h:message for="prescriptionBeanPrescriptionTitlear" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+                                <h:outputLabel for="prescriptionBeanPrescriptionTitlefr" value="#{i18n.titlefr}"/>
+				<h:panelGroup>
+					<h:inputText id="prescriptionBeanPrescriptionTitlefr" maxlength="145" required="true" value="#{prescriptionBean.prescription.titlefr}"/>
+					<h:message for="prescriptionBeanPrescriptionTitlefr" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+                                <h:outputLabel for="prescriptionBeanPrescriptionPreparation" value="#{i18n.preparation}"/>
+				<h:panelGroup>
+					<h:inputText id="prescriptionBeanPrescriptionPreparation" maxlength="65535" required="true" value="#{prescriptionBean.prescription.preparation}"/>
+					<h:message for="prescriptionBeanPrescriptionPreparation" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+                                <h:outputLabel for="prescriptionBeanPrescriptionPreparationfr" value="#{i18n.preparationfr}"/>
+				<h:panelGroup>
+					<h:inputText id="prescriptionBeanPrescriptionPreparationfr" maxlength="65535" required="true" value="#{prescriptionBean.prescription.preparationfr}"/>
+					<h:message for="prescriptionBeanPrescriptionPreparationfr" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+                                <h:outputLabel for="prescriptionBeanPrescriptionPreparationar" value="#{i18n.preparationar}"/>
+				<h:panelGroup>
+					<h:inputText id="prescriptionBeanPrescriptionPreparationar" maxlength="65535" required="true" value="#{prescriptionBean.prescription.preparationar}"/>
+					<h:message for="prescriptionBeanPrescriptionPreparationar" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+                                <h:outputLabel for="prescriptionBeanPrescriptionTreatment" value="#{i18n.treatment}"/>
+				<h:panelGroup>
+					<h:inputText id="prescriptionBeanPrescriptionTreatment" maxlength="65535" required="true" value="#{prescriptionBean.prescription.treatment}"/>
+					<h:message for="prescriptionBeanPrescriptionTreatment" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+                                <h:outputLabel for="prescriptionBeanPrescriptionTreatmentfr" value="#{i18n.treatmentfr}"/>
+				<h:panelGroup>
+					<h:inputText id="prescriptionBeanPrescriptionTreatmentfr" maxlength="65535" required="true" value="#{prescriptionBean.prescription.treatmentfr}"/>
+					<h:message for="prescriptionBeanPrescriptionTreatmentfr" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+                                <h:outputLabel for="prescriptionBeanPrescriptionTreatmentar" value="#{i18n.treatmentar}"/>
+				<h:panelGroup>
+					<h:inputText id="prescriptionBeanPrescriptionTreatmentar" maxlength="65535" required="true" value="#{prescriptionBean.prescription.treatmentar}"/>
+					<h:message for="prescriptionBeanPrescriptionTreatmentar" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+                                <h:outputLabel for="prescriptionBeanPrescriptionCoefficient" value="#{i18n.coefficient}"/>
+				<h:panelGroup>
+					<h:selectOneMenu id="prescriptionBeanPrescriptionCoefficient" value="#{prescriptionBean.prescription.coefficient}">
+					<f:selectItem itemLabel="1" itemValue="1"/>
+					<f:selectItem itemLabel="2" itemValue="2"/>
+					<f:selectItem itemLabel="3" itemValue="3"/>
+					<f:selectItem itemLabel="4" itemValue="4"/>
+					<f:selectItem itemLabel="5" itemValue="5"/>
+					<f:selectItem itemLabel="0" itemValue="0"/>
+					</h:selectOneMenu>
+					<h:message for="prescriptionBeanPrescriptionCoefficient" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+                                <h:outputLabel for="prescriptionBeanPrescriptionIngredients" value="#{i18n.ingredients}"/>
+				<h:panelGroup>
+					<ui:param name="_collection" value="#{prescriptionBean.prescription.ingredients}"/>
+					<h:dataTable id="prescriptionBeanPrescriptionIngredients" styleClass="data-table" value="#{forgeview:asList(_collection)}" var="_item">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.label}"/>
+							</f:facet>
+							<h:link outcome="/ingredient/view">
+								<f:param name="id" value="#{_item.id}"/>
+								<h:outputText id="itemLabel" value="#{_item.label}"/>
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.labelfr}"/>
+							</f:facet>
+							<h:link outcome="/ingredient/view">
+								<f:param name="id" value="#{_item.id}"/>
+								<h:outputText id="itemLabelfr" value="#{_item.labelfr}"/>
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.labelar}"/>
+							</f:facet>
+							<h:link outcome="/ingredient/view">
+								<f:param name="id" value="#{_item.id}"/>
+								<h:outputText id="itemLabelar" value="#{_item.labelar}"/>
+							</h:link>
+						</h:column>
+						<h:column footerClass="remove-column" headerClass="remove-column">
+							<h:commandLink action="#{_collection.remove(_item)}" styleClass="remove-button"/>
+						</h:column>
+					</h:dataTable>
+					<h:panelGrid columnClasses=",remove-column" columns="2" styleClass="data-table-footer">
+						<h:selectOneMenu converter="#{ingredientBean.converter}" id="prescriptionBeanPrescriptionIngredientsSelect" value="#{requestScope['prescriptionBeanPrescriptionIngredientsSelect']}">
+							<f:selectItem/>
+							<f:selectItems value="#{ingredientBean.all}"/>
+						</h:selectOneMenu>
+						<h:commandLink action="#{_collection.add(requestScope['prescriptionBeanPrescriptionIngredientsSelect'])}" 
+                                                               id="prescriptionBeanPrescriptionIngredientsAdd" 
+                                                               onclick="if (1>document.getElementById('create:prescriptionBeanPrescriptionIngredientsSelect').selectedIndex) { alert('Must select a Ingredient'); return false; }" 
+                                                               styleClass="add-button"/>
+					</h:panelGrid>
+				</h:panelGroup>
+				<h:outputText/>
+                                <h:outputLabel for="prescriptionBeanPrescriptionWitnesses" value="#{i18n.witnesses}"/>
+				<h:panelGroup>
+					<ui:param name="_collection" value="#{prescriptionBean.prescription.witnesses}"/>
+					<h:dataTable id="prescriptionBeanPrescriptionWitnesses" styleClass="data-table" value="#{forgeview:asList(_collection)}" var="_item">
+						<h:column>
+							<f:facet name="header">
+                                                            <h:outputText value="#{i18n.comment}"/>
+							</f:facet>
+							<h:link outcome="/witness/view">
+								<f:param name="id" value="#{_item.id}"/>
+								<h:outputText id="itemComment" value="#{_item.comment}"/>
+							</h:link>
+							<f:facet name="footer">
+								<h:inputText id="witnessBeanAddComment" maxlength="65535" value="#{witnessBean.add.comment}"/>
+								<h:message for="witnessBeanAddComment" styleClass="error"/>
+							</f:facet>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+                                                            <h:outputText value="#{i18n.subject}"/>
+							</f:facet>
+							<h:link outcome="/witness/view">
+								<f:param name="id" value="#{_item.id}"/>
+								<h:outputText id="itemSubject" value="#{_item.subject}"/>
+							</h:link>
+							<f:facet name="footer">
+								<h:inputText id="witnessBeanAddSubject" maxlength="30" value="#{witnessBean.add.subject}"/>
+								<h:message for="witnessBeanAddSubject" styleClass="error"/>
+							</f:facet>
+						</h:column>
+						<h:column footerClass="remove-column" headerClass="remove-column">
+							<h:commandLink action="#{_collection.remove(_item)}" styleClass="remove-button"/>
+							<f:facet name="footer">
+								<h:commandLink action="#{_collection.add(witnessBean.added)}" id="prescriptionBeanPrescriptionWitnessesAdd" styleClass="add-button">
+									<f:setPropertyActionListener target="#{witnessBean.add.prescription}" value="#{prescriptionBean.prescription}"/>
+								</h:commandLink>
+							</f:facet>
+						</h:column>
+					</h:dataTable>
+				</h:panelGroup>
+				<h:outputText/>
+                                <h:outputLabel for="prescriptionBeanPrescriptionDefects" value="#{i18n.defects}"/>
+				<h:panelGroup>
+					<ui:param name="_collection" value="#{prescriptionBean.prescription.defects}"/>
+					<h:dataTable id="prescriptionBeanPrescriptionDefects" styleClass="data-table" value="#{forgeview:asList(_collection)}" var="_item">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.label}"/>
+							</f:facet>
+							<h:link outcome="/defect/view">
+								<f:param name="id" value="#{_item.id}"/>
+								<h:outputText id="itemLabel" value="#{_item.label}"/>
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.labelfr}"/>
+							</f:facet>
+							<h:link outcome="/defect/view">
+								<f:param name="id" value="#{_item.id}"/>
+								<h:outputText id="itemLabelfr" value="#{_item.labelfr}"/>
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.labelar}"/>
+							</f:facet>
+							<h:link outcome="/defect/view">
+								<f:param name="id" value="#{_item.id}"/>
+								<h:outputText id="itemLabelar" value="#{_item.labelar}"/>
+							</h:link>
+						</h:column>
+						<h:column footerClass="remove-column" headerClass="remove-column">
+							<h:commandLink action="#{_collection.remove(_item)}" styleClass="remove-button"/>
+						</h:column>
+					</h:dataTable>
+					<h:panelGrid columnClasses=",remove-column" columns="2" styleClass="data-table-footer">
+						<h:selectOneMenu converter="#{defectBean.converter}" id="prescriptionBeanPrescriptionDefectsSelect" value="#{requestScope['prescriptionBeanPrescriptionDefectsSelect']}">
+							<f:selectItem/>
+							<f:selectItems value="#{defectBean.all}"/>
+						</h:selectOneMenu>
+						<h:commandLink action="#{_collection.add(requestScope['prescriptionBeanPrescriptionDefectsSelect'])}" id="prescriptionBeanPrescriptionDefectsAdd" onclick="if (1>document.getElementById('create:prescriptionBeanPrescriptionDefectsSelect').selectedIndex) { alert('Must select a Defect'); return false; }" styleClass="add-button"/>
+					</h:panelGrid>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="prescriptionBeanPrescriptionVirtues" value="#{i18n.virtues}"/>
+				<h:panelGroup>
+					<ui:param name="_collection" value="#{prescriptionBean.prescription.virtues}"/>
+					<h:dataTable id="prescriptionBeanPrescriptionVirtues" styleClass="data-table" value="#{forgeview:asList(_collection)}" var="_item">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.label}"/>
+							</f:facet>
+							<h:link outcome="/virtue/view">
+								<f:param name="id" value="#{_item.id}"/>
+								<h:outputText id="itemLabel" value="#{_item.label}"/>
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.labelfr}"/>
+							</f:facet>
+							<h:link outcome="/virtue/view">
+								<f:param name="id" value="#{_item.id}"/>
+								<h:outputText id="itemLabelfr" value="#{_item.labelfr}"/>
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.labelar}"/>
+							</f:facet>
+							<h:link outcome="/virtue/view">
+								<f:param name="id" value="#{_item.id}"/>
+								<h:outputText id="itemLabelar" value="#{_item.labelar}"/>
+							</h:link>
+						</h:column>
+						<h:column footerClass="remove-column" headerClass="remove-column">
+							<h:commandLink action="#{_collection.remove(_item)}" styleClass="remove-button"/>
+						</h:column>
+					</h:dataTable>
+					<h:panelGrid columnClasses=",remove-column" columns="2" styleClass="data-table-footer">
+						<h:selectOneMenu converter="#{virtueBean.converter}" id="prescriptionBeanPrescriptionVirtuesSelect" value="#{requestScope['prescriptionBeanPrescriptionVirtuesSelect']}">
+							<f:selectItem/>
+							<f:selectItems value="#{virtueBean.all}"/>
+						</h:selectOneMenu>
+						<h:commandLink action="#{_collection.add(requestScope['prescriptionBeanPrescriptionVirtuesSelect'])}" id="prescriptionBeanPrescriptionVirtuesAdd" onclick="if (1>document.getElementById('create:prescriptionBeanPrescriptionVirtuesSelect').selectedIndex) { alert('Must select a Virtue'); return false; }" styleClass="add-button"/>
+					</h:panelGrid>
+				</h:panelGroup>
+				<h:outputText/>
+                                <h:outputLabel for="prescriptionBeanPrescriptionComplements" value="#{i18n.complements}"/>
+				<h:panelGroup>
+					<ui:param name="_collection" value="#{prescriptionBean.prescription.complements}"/>
+					<h:dataTable id="prescriptionBeanPrescriptionComplements" styleClass="data-table" value="#{forgeview:asList(_collection)}" var="_item">
+						<h:column>
+							<f:facet name="header">
+                                                            <h:outputText value="#{i18n.ingredient}"/>
+							</f:facet>
+							<h:link outcome="/complement/view">
+								<f:param name="id" value="#{_item.id}"/>
+								<h:outputText id="itemIngredient" value="#{_item.ingredient}"/>
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+                                                            <h:outputText value="#{i18n.content}"/>
+							</f:facet>
+							<h:link outcome="/complement/view">
+								<f:param name="id" value="#{_item.id}"/>
+								<h:outputText id="itemContent" value="#{_item.content}"/>
+							</h:link>
+						</h:column>
+						<h:column footerClass="remove-column" headerClass="remove-column">
+							<h:commandLink action="#{_collection.remove(_item)}" styleClass="remove-button"/>
+						</h:column>
+					</h:dataTable>
+					<h:panelGrid columnClasses=",remove-column" columns="2" styleClass="data-table-footer">
+						<h:selectOneMenu converter="#{complementBean.converter}" id="prescriptionBeanPrescriptionComplementsSelect" value="#{requestScope['prescriptionBeanPrescriptionComplementsSelect']}">
+							<f:selectItem/>
+							<f:selectItems value="#{complementBean.all}"/>
+						</h:selectOneMenu>
+						<h:commandLink action="#{_collection.add(requestScope['prescriptionBeanPrescriptionComplementsSelect'])}" id="prescriptionBeanPrescriptionComplementsAdd" onclick="if (1>document.getElementById('create:prescriptionBeanPrescriptionComplementsSelect').selectedIndex) { alert('Must select a Complement'); return false; }" styleClass="add-button"/>
+					</h:panelGrid>
+				</h:panelGroup>
+				<h:outputText/>
+                                <h:outputLabel for="prescriptionBeanPrescriptionFormale" value="#{i18n.formale}"/>
+				<h:panelGroup>
+					<h:selectBooleanCheckbox id="prescriptionBeanPrescriptionFormale" value="#{prescriptionBean.prescription.formale}"/>
+					<h:message for="prescriptionBeanPrescriptionFormale" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+                                <h:outputLabel for="prescriptionBeanPrescriptionForfemale" value="#{i18n.forfemale}"/>
+				<h:panelGroup>
+					<h:selectBooleanCheckbox id="prescriptionBeanPrescriptionForfemale" value="#{prescriptionBean.prescription.forfemale}"/>
+					<h:message for="prescriptionBeanPrescriptionForfemale" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+                                <h:outputLabel for="prescriptionBeanPrescriptionForchildren" value="#{i18n.forchidren}"/>
+				<h:panelGroup>
+					<h:selectBooleanCheckbox id="prescriptionBeanPrescriptionForchildren" value="#{prescriptionBean.prescription.forchildren}"/>
+					<h:message for="prescriptionBeanPrescriptionForchildren" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+			</h:panelGrid>
+
+			<div class="buttons">
+				<h:commandLink value="#{i18n.save}" action="#{prescriptionBean.update}" styleClass="btn btn-primary"/>
+				<c:choose>
+					<c:when test="#{!empty prescriptionBean.id}">
+						<h:link value="#{i18n.cancel}" outcome="view" styleClass="btn btn-primary">
+							<f:param name="id" value="#{prescriptionBean.id}"/>
+						</h:link>
+						<h:commandLink value="#{i18n.delete}" action="#{prescriptionBean.delete}" styleClass="btn btn-primary"/>
+					</c:when>
+					<c:otherwise>
+						<h:link value="#{i18n.cancel}" outcome="search" styleClass="btn btn-primary"/>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

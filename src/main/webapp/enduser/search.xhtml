@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{enduserBean.page}" />
+		<f:event type="preRenderView" listener="#{enduserBean.paginate(this)}" />
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="#{i18n.endusers}" />
+
+	<ui:define name="header">
+		#{i18n.endusers}
+	</ui:define>
+
+	<ui:define name="subheader">
+		#{i18n.search}
+	</ui:define>
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+		<h:outputText value="#{i18n.list_users_invisible}"
+			rendered="#{not isAdministrator}" />
+		<h:form id="search" rendered="#{isAdministrator}">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="enduserBeanExampleUsergroup"
+							value="#{i18n.usergroup}" />
+						<h:panelGroup>
+							<h:selectOneMenu converter="#{usergroupBean.converter}"
+								id="enduserBeanExampleUsergroup"
+								value="#{enduserBean.example.usergroup}">
+								<f:selectItem />
+								<f:selectItems value="#{usergroupBean.all}" />
+								<f:ajax event="click" execute="@form"
+									listener="#{enduserBean.paginate}"
+									render="enduserBeanPageItems paginator" />
+							</h:selectOneMenu>
+							<h:message for="enduserBeanExampleUsergroup" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+						<h:outputLabel for="enduserBeanExampleLanguage"
+							value="#{i18n.language}" />
+						<h:panelGroup>
+							<h:selectOneMenu converter="#{languageBean.converter}"
+								id="enduserBeanExampleLanguage"
+								value="#{enduserBean.example.language}">
+								<f:selectItem />
+								<f:selectItems value="#{languageBean.all}" />
+								<f:ajax event="click" execute="@form"
+									listener="#{enduserBean.paginate}"
+									render="enduserBeanPageItems paginator" />
+							</h:selectOneMenu>
+							<h:message for="enduserBeanExampleLanguage" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+						<h:outputLabel for="enduserBeanExampleName" value="#{i18n.name}" />
+						<h:panelGroup>
+							<h:inputText id="enduserBeanExampleName" maxlength="45"
+								value="#{enduserBean.example.name}">
+								<f:ajax event="keyup" execute="@form"
+									listener="#{enduserBean.paginate}"
+									render="enduserBeanPageItems paginator" />
+							</h:inputText>
+							<h:message for="enduserBeanExampleName" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+						<h:outputLabel for="enduserBeanExampleSurname"
+							value="#{i18n.surname}" />
+						<h:panelGroup>
+							<h:inputText id="enduserBeanExampleSurname" maxlength="45"
+								value="#{enduserBean.example.surname}">
+								<f:ajax event="keyup" execute="@form"
+									listener="#{enduserBean.paginate}"
+									render="enduserBeanPageItems paginator" />
+							</h:inputText>
+							<h:message for="enduserBeanExampleSurname" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+						<h:outputLabel for="enduserBeanExampleEmail" value="#{i18n.email}" />
+						<h:panelGroup>
+							<h:inputText id="enduserBeanExampleEmail" maxlength="50"
+								value="#{enduserBean.example.email}">
+								<f:ajax event="keyup" execute="@form"
+									listener="#{enduserBean.paginate}"
+									render="enduserBeanPageItems paginator" />
+							</h:inputText>
+							<h:message for="enduserBeanExampleEmail" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="#{i18n.search}"
+							action="#{enduserBean.search}" styleClass="btn btn-primary" />
+						<h:commandLink
+							rendered="#{isAdministrator or empty request.remoteUser}"
+							value="#{i18n.create}" action="#{enduserBean.create}"
+							styleClass="btn btn-primary" />
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+
+			<h:dataTable id="enduserBeanPageItems" styleClass="data-table"
+				value="#{enduserBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.name}" />
+					</f:facet>
+					<h:link outcome="/enduser/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemName" value="#{_item.name}" />
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.surname}" />
+					</f:facet>
+					<h:link outcome="/enduser/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemSurname" value="#{_item.surname}" />
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.email}" />
+					</f:facet>
+					<h:link outcome="/enduser/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemEmail" value="#{_item.email}" />
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<h:panelGroup id="paginator">
+				<ui:include src="/resources/scaffold/paginator.xhtml">
+					<ui:param name="paginatorBean" value="#{enduserBean}" />
+				</ui:include>
+			</h:panelGroup>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,199 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml" >
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{plantBean.id}" />
+		<f:event type="preRenderView" listener="#{plantBean.retrieve}" />
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="#{i18n.create} #{i18n.plant}" />
+
+	<ui:define name="header">
+		#{i18n.plant}
+	</ui:define>
+
+	<ui:define name="subheader">
+		<c:choose>
+			<c:when test="#{!empty plantBean.id}">
+				#{i18n.edit}
+			</c:when>
+			<c:otherwise>
+				#{i18n.create}
+			</c:otherwise>
+		</c:choose>
+	</ui:define>
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+		<h:form id="create" rendered="#{isAdministrator or isAuthor}"
+			> <!-- enctype="multipart/form-data" -->
+			<h:messages globalOnly="true" styleClass="error" />
+
+			<h:panelGrid columnClasses="label,component,required" columns="3">
+				<h:outputLabel for="plantBeanPlantLabel" value="#{i18n.label}" />
+				<h:panelGroup>
+					<h:inputText id="plantBeanPlantLabel" maxlength="45"
+						required="true" value="#{plantBean.plant.label}" />
+					<h:message for="plantBeanPlantLabel" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText value="*" />
+				<h:outputLabel for="plantBeanPlantLabelfr" value="#{i18n.labelfr}" />
+				<h:panelGroup>
+					<h:inputText id="plantBeanPlantLabelfr" maxlength="45"
+						required="true" value="#{plantBean.plant.labelfr}" />
+					<h:message for="plantBeanPlantLabelfr" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText value="*" />
+				<h:outputLabel for="plantBeanPlantLabellat" value="#{i18n.labellat}" />
+				<h:panelGroup>
+					<h:inputText id="plantBeanPlantLabellat" maxlength="45"
+						required="true" value="#{plantBean.plant.labellat}" />
+					<h:message for="plantBeanPlantLabellat" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText value="*" />
+				<h:outputLabel for="plantBeanPlantLabelar" value="#{i18n.labelar}" />
+				<h:panelGroup>
+					<h:inputText id="plantBeanPlantLabelar" maxlength="45"
+						required="true" value="#{plantBean.plant.labelar}" />
+					<h:message for="plantBeanPlantLabelar" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText value="*" />
+				<h:outputLabel for="plantBeanPlantLabelmar" value="#{i18n.labelmar}" />
+				<h:panelGroup>
+					<h:inputText id="plantBeanPlantLabelmar" maxlength="45"
+						value="#{plantBean.plant.labelmar}" />
+					<h:message for="plantBeanPlantLabelmar" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="plantBeanPlantImage" value="#{i18n.image}" />
+				<h:panelGroup>
+					<h:inputText id="plantBeanPlantImage" maxlength="100"
+						value="#{plantBean.plant.image}" />
+					<h:message for="plantBeanPlantImage" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="plantBeanPlantImage" value="#{i18n.graphic}" />
+				<h:panelGroup>
+					<p:fileUpload id="fileupload_plant"
+						allowTypes="/(\.|\/)(gif|jpe?g|png)$/" auto="false"
+						fileUploadListener="#{plantBean.handleFileUpload}" update="msgbox" />
+					<p:message for="fileupload_plant" redisplay="true" id="msgbox" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="plantBeanPlantDescription" value="#{i18n.description}" />
+				<h:panelGroup>
+					<h:inputText id="plantBeanPlantDescription" maxlength="65535"
+						value="#{plantBean.plant.description}" />
+					<h:message for="plantBeanPlantDescription" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="plantBeanPlantDescriptionfr"
+					value="#{i18n.descriptionfr}" />
+				<h:panelGroup>
+					<h:inputText id="plantBeanPlantDescriptionfr" maxlength="65535"
+						value="#{plantBean.plant.descriptionfr}" />
+					<h:message for="plantBeanPlantDescriptionfr" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="plantBeanPlantDescriptionar"
+					value="#{i18n.descriptionar}" />
+				<h:panelGroup>
+					<h:inputText id="plantBeanPlantDescriptionar" maxlength="65535"
+						value="#{plantBean.plant.descriptionar}" />
+					<h:message for="plantBeanPlantDescriptionar" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="plantBeanPlantIngredients" value="#{i18n.ingredients}" />
+				<h:panelGroup>
+					<ui:param name="_collection" value="#{plantBean.plant.ingredients}" />
+					<h:dataTable id="plantBeanPlantIngredients" styleClass="data-table"
+						value="#{forgeview:asList(_collection)}" var="_item">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.label}" />
+							</f:facet>
+							<h:link outcome="/ingredient/view">
+								<f:param name="id" value="#{_item.id}" />
+								<h:outputText id="itemLabel" value="#{_item.label}" />
+							</h:link>
+							<f:facet name="footer">
+								<h:inputText id="ingredientBeanAddLabel" maxlength="45"
+									value="#{ingredientBean.add.label}" />
+								<h:message for="ingredientBeanAddLabel" styleClass="error" />
+							</f:facet>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.labelfr}" />
+							</f:facet>
+							<h:link outcome="/ingredient/view">
+								<f:param name="id" value="#{_item.id}" />
+								<h:outputText id="itemLabelfr" value="#{_item.labelfr}" />
+							</h:link>
+							<f:facet name="footer">
+								<h:inputText id="ingredientBeanAddLabelfr" maxlength="45"
+									value="#{ingredientBean.add.labelfr}" />
+								<h:message for="ingredientBeanAddLabelfr" styleClass="error" />
+							</f:facet>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.labelar}" />
+							</f:facet>
+							<h:link outcome="/ingredient/view">
+								<f:param name="id" value="#{_item.id}" />
+								<h:outputText id="itemLabelar" value="#{_item.labelar}" />
+							</h:link>
+							<f:facet name="footer">
+								<h:inputText id="ingredientBeanAddLabelar" maxlength="45"
+									value="#{ingredientBean.add.labelar}" />
+								<h:message for="ingredientBeanAddLabelar" styleClass="error" />
+							</f:facet>
+						</h:column>
+						<h:column footerClass="remove-column" headerClass="remove-column">
+							<h:commandLink action="#{_collection.remove(_item)}"
+								styleClass="remove-button" />
+							<f:facet name="footer">
+								<h:commandLink action="#{_collection.add(ingredientBean.added)}"
+									id="plantBeanPlantIngredientsAdd" styleClass="add-button">
+									<f:setPropertyActionListener
+										target="#{ingredientBean.add.plant}"
+										value="#{plantBean.plant}" />
+								</h:commandLink>
+							</f:facet>
+						</h:column>
+					</h:dataTable>
+				</h:panelGroup>
+				<h:outputText />
+			</h:panelGrid>
+
+			<div class="buttons">
+				<h:commandLink value="#{i18n.save}" action="#{plantBean.update}"
+					styleClass="btn btn-primary" />
+				<c:choose>
+					<c:when test="#{!empty plantBean.id}">
+						<h:link value="#{i18n.cancel}" outcome="view" styleClass="btn btn-primary">
+							<f:param name="id" value="#{plantBean.id}" />
+						</h:link>
+						<h:commandLink value="#{i18n.delete}" action="#{plantBean.delete}"
+							styleClass="btn btn-primary" />
+					</c:when>
+					<c:otherwise>
+						<h:link value="#{i18n.cancel}" outcome="search"
+							styleClass="btn btn-primary" />
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

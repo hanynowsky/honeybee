@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="pageTitle" value="#{i18n.login}" />
+
+	<ui:define name="header">
+		<h:outputText
+			value="#{empty request.remoteUser ? i18n.login : i18n.user_profile}" />
+	</ui:define>
+
+	<ui:define name="main">
+
+		<h:messages id="messages_login" />
+		<div>
+			<h2 class="success">
+				<h:outputText value="#{i18n.login}"
+					rendered="#{empty request.remoteUser}" />
+				<h:outputText value="#{i18n.logout}"
+					rendered="#{not empty request.remoteUser}" />
+				<br></br>
+				<!-- 	<h:outputText value="#{request.remoteUser}" />
+			<br></br>
+			<h:outputText value="#{request.isUserInRole('ADMINISTRATOR')}" />
+			
+			-->
+			</h2>
+			<form id="formLogin" method="post" action="j_security_check">
+				<div>
+					<h:panelGrid columns="2" style="border-width:0px;" id="grid_login"
+						rendered="#{empty request.remoteUser}">
+						<h:outputLabel value="#{i18n.email}" id="label_username_log" />
+						<input id="j_username" type="text" name="j_username" />
+						<h:outputLabel value="#{i18n.password}" id="label_password_log" />
+						<input id="j_password" type="password" name="j_password" />
+						<h:outputLabel value="" id="label_void" />
+						<h:panelGroup styleClass="buttons">
+							<input type='submit' name='submit' value='#{i18n.login}'
+								class="btn btn-primary" />
+						</h:panelGroup>
+					</h:panelGrid>
+				</div>
+			</form>
+		</div>
+		<h:form>
+			<div style="margin: 20px" class="buttons">
+				<h:commandButton value="#{i18n.logout}" styleClass="btn btn-primary"
+					action="#{userManagerBean.logout()}"
+					rendered="#{not empty request.remoteUser}" />
+			</div>
+		</h:form>
+
+		<h:panelGroup rendered="#{not empty request.remoteUser}">
+			<h2 class="success">
+				<h:outputText value="#{i18n.user_profile}" />
+			</h2>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{not empty request.remoteUser}"
+			styleClass="buttons">
+			<h:link value="#{i18n.user_profile}" outcome="/enduser/view"
+				styleClass="btn btn-primary" includeViewParams="true">
+				<f:param name="id" value="#{userManagerBean.userObject.id}" />
+			</h:link>
+		</h:panelGroup>
+
+		<h:panelGroup rendered="#{empty request.remoteUser}">
+			<h2 class="success">
+				<h:outputText value="#{i18n.signup}" />
+			</h2>
+		</h:panelGroup>
+		<div align="left">
+			<h:panelGroup rendered="#{empty request.remoteUser}"
+				styleClass="buttons">
+				<h:link value="#{i18n.signup}" outcome="/enduser/create"
+					styleClass="btn btn-primary">
+				</h:link>
+			</h:panelGroup>
+		</div>
+	</ui:define>
+
+</ui:composition>

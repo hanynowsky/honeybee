@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:forgeview="http://jboss.org/forge/view"	
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{substanceBean.id}"/>
+		<f:event type="preRenderView" listener="#{substanceBean.retrieve}"/>
+	</f:metadata>
+
+    <ui:param name="pageTitle" value="#{i18n.create} #{i18n.substance}"/>
+
+	<ui:define name="header">
+		#{i18n.substance}
+	</ui:define>
+
+	<ui:define name="subheader">
+		<c:choose>
+			<c:when test="#{!empty substanceBean.id}">
+				#{i18n.edit}
+			</c:when>
+			<c:otherwise>
+				#{i18n.create}
+			</c:otherwise>
+		</c:choose>
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main" >
+		<h:form id="create" rendered="#{isAdministrator or isAuthor}">
+			<h:messages globalOnly="true" styleClass="error"/>
+
+			<h:panelGrid columnClasses="label,component,required" columns="3">
+				<h:outputLabel for="substanceBeanSubstanceLabel" value="#{i18n.label}"/>
+				<h:panelGroup>
+					<h:inputText id="substanceBeanSubstanceLabel" maxlength="45" required="true" value="#{substanceBean.substance.label}"/>
+					<h:message for="substanceBeanSubstanceLabel" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+				<h:outputLabel for="substanceBeanSubstanceLabelfr" value="#{i18n.labelfr}"/>
+				<h:panelGroup>
+					<h:inputText id="substanceBeanSubstanceLabelfr" maxlength="45" required="true" value="#{substanceBean.substance.labelfr}"/>
+					<h:message for="substanceBeanSubstanceLabelfr" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+				<h:outputLabel for="substanceBeanSubstanceLabelar" value="#{i18n.labelar}"/>
+				<h:panelGroup>
+					<h:inputText id="substanceBeanSubstanceLabelar" maxlength="45" required="true" value="#{substanceBean.substance.labelar}"/>
+					<h:message for="substanceBeanSubstanceLabelar" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+                                <h:outputLabel for="substanceBeanSubstanceDescription" value="#{i18n.description}"/>
+				<h:panelGroup>
+					<h:inputText id="substanceBeanSubstanceDescription" maxlength="65535" value="#{substanceBean.substance.description}"/>
+					<h:message for="substanceBeanSubstanceDescription" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+                                <h:outputLabel for="substanceBeanSubstanceIngredients" value="#{i18n.ingredients}"/>
+				<h:panelGroup>
+					<ui:param name="_collection" value="#{substanceBean.substance.ingredients}"/>
+					<h:dataTable id="substanceBeanSubstanceIngredients" styleClass="data-table" value="#{forgeview:asList(_collection)}" var="_item">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.label}"/>
+							</f:facet>
+							<h:link outcome="/ingredient/view">
+								<f:param name="id" value="#{_item.id}"/>
+								<h:outputText id="itemLabel" value="#{_item.label}"/>
+							</h:link>
+							<f:facet name="footer">
+								<h:inputText id="ingredientBeanAddLabel" maxlength="45" value="#{ingredientBean.add.label}"/>
+								<h:message for="ingredientBeanAddLabel" styleClass="error"/>
+							</f:facet>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.labelfr}"/>
+							</f:facet>
+							<h:link outcome="/ingredient/view">
+								<f:param name="id" value="#{_item.id}"/>
+								<h:outputText id="itemLabelfr" value="#{_item.labelfr}"/>
+							</h:link>
+							<f:facet name="footer">
+								<h:inputText id="ingredientBeanAddLabelfr" maxlength="45" value="#{ingredientBean.add.labelfr}"/>
+								<h:message for="ingredientBeanAddLabelfr" styleClass="error"/>
+							</f:facet>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.labelar}"/>
+							</f:facet>
+							<h:link outcome="/ingredient/view">
+								<f:param name="id" value="#{_item.id}"/>
+								<h:outputText id="itemLabelar" value="#{_item.labelar}"/>
+							</h:link>
+							<f:facet name="footer">
+								<h:inputText id="ingredientBeanAddLabelar" maxlength="45" value="#{ingredientBean.add.labelar}"/>
+								<h:message for="ingredientBeanAddLabelar" styleClass="error"/>
+							</f:facet>
+						</h:column>
+						<h:column footerClass="remove-column" headerClass="remove-column">
+							<h:commandLink action="#{_collection.remove(_item)}" styleClass="remove-button"/>
+							<f:facet name="footer">
+								<h:commandLink action="#{_collection.add(ingredientBean.added)}" id="substanceBeanSubstanceIngredientsAdd" styleClass="add-button">
+									<f:setPropertyActionListener target="#{ingredientBean.add.substance}" value="#{substanceBean.substance}"/>
+								</h:commandLink>
+							</f:facet>
+						</h:column>
+					</h:dataTable>
+				</h:panelGroup>
+				<h:outputText/>
+			</h:panelGrid>
+
+			<div class="buttons">
+                            <h:commandLink value="#{i18n.save}" action="#{substanceBean.update}" styleClass="btn btn-primary"/>
+				<c:choose>
+					<c:when test="#{!empty substanceBean.id}">
+						<h:link value="#{i18n.cancel}" outcome="view" styleClass="btn btn-primary">
+							<f:param name="id" value="#{substanceBean.id}"/>
+						</h:link>
+						<h:commandLink value="#{i18n.delete}" action="#{substanceBean.delete}" styleClass="btn btn-primary"/>
+					</c:when>
+					<c:otherwise>
+						<h:link value="#{i18n.cancel}" outcome="search" styleClass="btn btn-primary"/>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

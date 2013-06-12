@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{bodypartBean.page}"/>
+		<f:event type="preRenderView" listener="#{bodypartBean.paginate(this)}"/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="#{i18n.bodyparts}"/>
+
+	<ui:define name="header">
+		#{i18n.bodyparts}
+	</ui:define>
+
+	<ui:define name="subheader">
+		#{i18n.search}
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="bodypartBeanExampleLabel" value="#{i18n.label}"/>
+						<h:panelGroup>
+							<h:inputText id="bodypartBeanExampleLabel" maxlength="50" value="#{bodypartBean.example.label}">
+								<f:ajax execute="@form" render="bodypartBeanPageItems paginator" event="keyup"/>
+							</h:inputText>
+							<h:message for="bodypartBeanExampleLabel" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="bodypartBeanExampleLabelfr" value="#{i18n.labelfr}"/>
+						<h:panelGroup>
+							<h:inputText id="bodypartBeanExampleLabelfr" maxlength="50" value="#{bodypartBean.example.labelfr}">
+							<f:ajax execute="@form" render="bodypartBeanPageItems paginator" event="keyup"/>
+							</h:inputText>
+							<h:message for="bodypartBeanExampleLabelfr" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="bodypartBeanExampleLabelar" value="#{i18n.labelar}"/>
+						<h:panelGroup>
+							<h:inputText id="bodypartBeanExampleLabelar" maxlength="50" value="#{bodypartBean.example.labelar}">
+							<f:ajax execute="@form" render="bodypartBeanPageItems paginator" event="keyup"/>
+							</h:inputText>
+							<h:message for="bodypartBeanExampleLabelar" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="#{i18n.search}" action="#{bodypartBean.search}" styleClass="btn btn-primary"/>
+						<h:commandLink rendered="#{isAdministrator or isAuthor}" value="#{i18n.create}" action="#{bodypartBean.create}" styleClass="btn btn-primary"/>
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+			
+			<h:dataTable id="bodypartBeanPageItems" styleClass="data-table" value="#{bodypartBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.label}"/>
+					</f:facet>
+					<h:link outcome="/bodypart/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemLabel" value="#{_item.label}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelfr}"/>
+					</f:facet>
+					<h:link outcome="/bodypart/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemLabelfr" value="#{_item.labelfr}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelar}"/>
+					</f:facet>
+					<h:link outcome="/bodypart/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemLabelar" value="#{_item.labelar}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<h:panelGroup id="paginator">
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value="#{bodypartBean}"/>
+			</ui:include>
+			</h:panelGroup>
+		</h:form>
+			
+	</ui:define>
+
+</ui:composition>

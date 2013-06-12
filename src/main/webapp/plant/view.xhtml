@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{plantBean.id}" />
+		<f:event type="preRenderView" listener="#{plantBean.retrieve}" />
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="#{i18n.plant}" />
+
+	<ui:define name="header">
+		<h:outputText value="#{i18n.plant}" />
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="#{i18n.view_plant}" />
+	</ui:define>
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+		<p:messages autoUpdate="true" showDetail="false" />
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+			<h:outputLabel for="plantBeanPlantLabel" value="#{i18n.label}:" />
+			<h:outputText id="plantBeanPlantLabel"
+				value="#{plantBean.plant.label}" />
+			<h:outputText />
+			<h:outputLabel for="plantBeanPlantLabelfr" value="#{i18n.labelfr}:" />
+			<h:outputText id="plantBeanPlantLabelfr"
+				value="#{plantBean.plant.labelfr}" />
+			<h:outputText />
+			<h:outputLabel for="plantBeanPlantLabellat" value="#{i18n.labellat}:" />
+			<h:outputText id="plantBeanPlantLabellat"
+				value="#{plantBean.plant.labellat}" />
+			<h:outputText />
+			<h:outputLabel for="plantBeanPlantLabelar" value="#{i18n.labelar}:" />
+			<h:outputText id="plantBeanPlantLabelar"
+				value="#{plantBean.plant.labelar}" />
+			<h:outputText />
+			<h:outputLabel for="plantBeanPlantLabelmar" value="#{i18n.labelmar}:" />
+			<h:outputText id="plantBeanPlantLabelmar"
+				value="#{plantBean.plant.labelmar}" />
+			<h:outputText />
+			<h:outputLabel for="plantBeanPlantImage" value="#{i18n.image}:" />
+			<h:graphicImage id="plantBeanPlantImage" width="250"
+				value="/resources/plants/#{plantBean.plant.image}" />
+			<h:outputText />
+			<h:outputLabel for="plantBeanPlantGraphic" value="#{i18n.graphic}:" />
+			<p:graphicImage id="plantBeanPlantGraphic" width="250"
+				value="#{imagesBean.image}"
+				rendered="#{plantBean.plant.graphic != null}">
+				<f:param name="plant_id" value="#{plantBean.plant.id}" />
+			</p:graphicImage>
+			<p:graphicImage value="#{resource['search.png']}"
+				rendered="#{plantBean.plant.graphic == null}" />
+			<h:outputText />
+			<h:outputLabel value="" for="sep_pbpd" />
+			<h:outputText id="sep_pbpd" style="color: #ccc;margin:15px;"
+				value="---------------------------------------------------------" />
+			<h:outputText />
+			<h:outputLabel for="plantBeanPlantDescription"
+				value="#{i18n.description}:" />
+			<h:outputText id="plantBeanPlantDescription"
+				value="#{plantBean.plant.description}" />
+			<h:outputText />
+			<h:outputLabel value="" for="sep_pbpdfr" />
+			<h:outputText id="sep_pbpdfr" style="color: #ccc;margin:15px;"
+				value="---------------------------------------------------------" />
+			<h:outputText />
+			<h:outputLabel for="plantBeanPlantDescriptionfr"
+				value="#{i18n.descriptionfr}:" />
+			<h:outputText id="plantBeanPlantDescriptionfr"
+				value="#{plantBean.plant.descriptionfr}" />
+			<h:outputText />
+			<h:outputLabel value="" for="sep_pbpdar" />
+			<h:outputText id="sep_pbpdar" style="color: #ccc;margin:15px;"
+				value="---------------------------------------------------------" />
+			<h:outputText />
+			<h:outputLabel for="plantBeanPlantDescriptionar"
+				value="#{i18n.descriptionar}:" />
+			<h:outputText dir="rtl" id="plantBeanPlantDescriptionar"
+				value="#{plantBean.plant.descriptionar}" />
+			<h:outputText />
+			<h:outputLabel value="" for="sep_pbpi" />
+			<h:outputText id="sep_pbpi" style="color: #ccc;margin:15px;"
+				value="---------------------------------------------------------" />
+			<h:outputText />
+			<h:outputLabel for="plantBeanPlantIngredients"
+				value="#{i18n.ingredients}:" />
+			<p:dataTable id="plantBeanPlantIngredients" 
+			styleClass="primedatatable" paginator="true" paginatorPosition="top" rows="3" paginatorAlwaysVisible="false"
+				value="#{forgeview:asList(plantBean.plant.ingredients)}" var="_item">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.label}" />
+					</f:facet>
+					<h:link outcome="/ingredient/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabel" value="#{_item.label}" />
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelfr}" />
+					</f:facet>
+					<h:link outcome="/ingredient/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabelfr" value="#{_item.labelfr}" />
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelar}" />
+					</f:facet>
+					<h:link outcome="/ingredient/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabelar" value="#{_item.labelar}" />
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.form}" />
+					</f:facet>
+					<h:link outcome="/ingredient/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemFormR" value="#{i18n.raw}"
+							rendered="#{_item.form == 'raw'}" />
+						<h:outputText id="itemFormO" value="#{i18n.oil}"
+							rendered="#{_item.form == 'oil'}" />
+						<h:outputText id="itemFormP" value="#{i18n.powder}"
+							rendered="#{_item.form == 'powder'}" />
+					</h:link>
+				</p:column>
+			</p:dataTable>
+			<h:outputText />
+		</h:panelGrid>
+
+		<div class="buttons">
+			<h:link value="#{i18n.search}" outcome="search"
+				styleClass="btn btn-primary" />
+			<h:link rendered="#{isAdministrator or isAuthor}"
+				value="#{i18n.edit}" outcome="create" includeViewParams="true"
+				styleClass="btn btn-primary" />
+			<h:link rendered="#{isAdministrator or isAuthor}"
+				value="#{i18n.create}" outcome="create" styleClass="btn btn-primary" />
+		</div>
+	</ui:define>
+</ui:composition>

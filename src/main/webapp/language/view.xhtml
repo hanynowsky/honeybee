@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{languageBean.id}"/>
+		<f:event type="preRenderView" listener="#{languageBean.retrieve}"/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="View Language"/>
+
+	<ui:define name="header">
+		Language
+	</ui:define>
+
+	<ui:define name="subheader">
+		View existing Language
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+			<h:outputLabel for="languageBeanLanguageCode" value="Code:"/>
+			<h:outputText id="languageBeanLanguageCode" value="#{languageBean.language.code}"/>
+			<h:outputText/>
+			<h:outputLabel for="languageBeanLanguageLabel" value="Label:"/>
+			<h:outputText id="languageBeanLanguageLabel" value="#{languageBean.language.label}"/>
+			<h:outputText/>
+			<h:outputLabel for="languageBeanLanguageEndusers" value="Endusers:"/>
+			<p:dataTable id="languageBeanLanguageEndusers" 
+			styleClass="primedatatable" paginator="true" paginatorPosition="top" 
+			rows="3" paginatorAlwaysVisible="false"
+			value="#{forgeview:asList(languageBean.language.endusers)}" var="_item">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Name"/>
+					</f:facet>
+					<h:link outcome="/enduser/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemName" value="#{_item.name}"/>
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Surname"/>
+					</f:facet>
+					<h:link outcome="/enduser/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemSurname" value="#{_item.surname}"/>
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Password"/>
+					</f:facet>
+					<h:link outcome="/enduser/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemPassword" value="#{_item.password}"/>
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Passconf"/>
+					</f:facet>
+					<h:link outcome="/enduser/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemPassconf" value="#{_item.passconf}"/>
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Email"/>
+					</f:facet>
+					<h:link outcome="/enduser/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemEmail" value="#{_item.email}"/>
+					</h:link>
+				</p:column>
+			</p:dataTable>
+			<h:outputText/>
+		</h:panelGrid>
+
+		<div class="buttons">
+			<h:link value="View All" outcome="search" styleClass="btn btn-primary"/> 
+			<h:link rendered="#{isAdministrator}" value="Edit" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
+			<h:link rendered="#{isAdministrator}" value="Create New" outcome="create" styleClass="btn btn-primary"/>
+		</div>
+	</ui:define>
+
+</ui:composition>

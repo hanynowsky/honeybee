@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="pageTitle" value="#{i18n.general_search}" />
+
+	<ui:define name="header">
+            #{i18n.general_search}
+	</ui:define>
+
+	<ui:define name="main">
+		<h2 class="success">#{i18n.general_search}</h2>
+		<!-- This form is supposed to enable Mysql Full Text Search -->
+		<h:form>
+			<h:inputText value="#{requestScope.isCool}" id="general_search_input" maxlength="50" />
+			<p:separator  style="height:1px;"/>
+			<h:commandButton action="#{utilityBean.dummyMethod}" value="#{i18n.search}"
+				styleClass="btn btn-primary" />
+		</h:form>
+	</ui:define>
+
+</ui:composition>

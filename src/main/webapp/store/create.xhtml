@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{storeBean.id}"/>
+		<f:event type="preRenderView" listener="#{storeBean.retrieve}"/>
+	</f:metadata>
+
+    <ui:param name="pageTitle" value="#{i18n.create} #{i18n.store}"/>
+
+	<ui:define name="header">
+		#{i18n.store}
+	</ui:define>
+
+	<ui:define name="subheader">
+		<c:choose>
+			<c:when test="#{!empty storeBean.id}">
+				#{i18n.edit}
+			</c:when>
+			<c:otherwise>
+				#{i18n.create}
+			</c:otherwise>
+		</c:choose>
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:form id="create" rendered="#{isAdministrator or isAuthor}">
+			<h:messages globalOnly="true" styleClass="error"/>
+
+			<h:panelGrid columnClasses="label,component,required" columns="3">
+				<h:outputLabel for="storeBeanStoreLabel" value="#{i18n.label}"/>
+				<h:panelGroup>
+					<h:inputText id="storeBeanStoreLabel" maxlength="45" required="true" value="#{storeBean.store.label}"/>
+					<h:message for="storeBeanStoreLabel" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+				<h:outputLabel for="storeBeanStoreLabelar" value="#{i18n.labelar}"/>
+				<h:panelGroup>
+					<h:inputText id="storeBeanStoreLabelar" maxlength="45" required="true" value="#{storeBean.store.labelar}"/>
+					<h:message for="storeBeanStoreLabelar" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+                                <h:outputLabel for="storeBeanStoreAddress" value="#{i18n.address}"/>
+				<h:panelGroup>
+					<h:inputText id="storeBeanStoreAddress" maxlength="445" value="#{storeBean.store.address}"/>
+					<h:message for="storeBeanStoreAddress" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+                                <h:outputLabel for="storeBeanStoreAddressar" value="#{i18n.addressar}"/>
+				<h:panelGroup>
+					<h:inputText id="storeBeanStoreAddressar" maxlength="445" value="#{storeBean.store.addressar}"/>
+					<h:message for="storeBeanStoreAddressar" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="storeBeanStorePhone" value="#{i18n.phone}"/>
+				<h:panelGroup>
+					<h:inputText id="storeBeanStorePhone" maxlength="45" value="#{storeBean.store.phone}"/>
+					<h:message for="storeBeanStorePhone" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="storeBeanStoreFax" value="#{i18n.fax}"/>
+				<h:panelGroup>
+					<h:inputText id="storeBeanStoreFax" maxlength="45" value="#{storeBean.store.fax}"/>
+					<h:message for="storeBeanStoreFax" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="storeBeanStoreCellular" value="#{i18n.cellular}"/>
+				<h:panelGroup>
+					<h:inputText id="storeBeanStoreCellular" maxlength="45" value="#{storeBean.store.cellular}"/>
+					<h:message for="storeBeanStoreCellular" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="storeBeanStoreEmail" value="#{i18n.email}"/>
+				<h:panelGroup>
+					<h:inputText id="storeBeanStoreEmail" maxlength="85" value="#{storeBean.store.email}"/>
+					<h:message for="storeBeanStoreEmail" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+                                <h:outputLabel for="storeBeanStoreMapaddress" value="#{i18n.map}"/>
+				<h:panelGroup>
+					<h:inputText id="storeBeanStoreMapaddress" maxlength="155" value="#{storeBean.store.mapaddress}"/>
+					<h:message for="storeBeanStoreMapaddress" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+                                <h:outputLabel for="storeBeanStoreWebsite" value="#{i18n.website}"/>
+				<h:panelGroup>
+					<h:inputText id="storeBeanStoreWebsite" maxlength="105" value="#{storeBean.store.website}"/>
+					<h:message for="storeBeanStoreWebsite" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+                                <h:outputLabel for="storeBeanStoreDescription" value="#{i18n.description}"/>
+				<h:panelGroup>
+					<h:inputText id="storeBeanStoreDescription" maxlength="105" value="#{storeBean.store.description}"/>
+					<h:message for="storeBeanStoreDescription" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+                                <h:outputLabel for="storeBeanStoreDescriptionar" value="#{i18n.descriptionar}"/>
+				<h:panelGroup>
+					<h:inputText id="storeBeanStoreDescriptionar" maxlength="105" value="#{storeBean.store.descriptionar}"/>
+					<h:message for="storeBeanStoreDescriptionar" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+			</h:panelGrid>
+
+			<div class="buttons">
+				<h:commandLink value="#{i18n.save}" action="#{storeBean.update}" styleClass="btn btn-primary"/>
+				<c:choose>
+					<c:when test="#{!empty storeBean.id}">
+						<h:link value="#{i18n.cancel}" outcome="view" styleClass="btn btn-primary">
+							<f:param name="id" value="#{storeBean.id}"/>
+						</h:link>
+						<h:commandLink value="#{i18n.delete}" action="#{storeBean.delete}" styleClass="btn btn-primary">
+						<f:setPropertyActionListener target="#{utilityBean.viewPath}" value="/store/search" />
+						</h:commandLink>
+					</c:when>
+					<c:otherwise>
+						<h:link value="#{i18n.cancel}" outcome="search" styleClass="btn btn-primary"/>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

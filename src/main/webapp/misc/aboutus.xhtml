@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="pageTitle" value="About us" />
+
+	<ui:define name="header">
+		<h:outputText value="#{i18n.about_app}"/>
+	</ui:define>
+
+	<ui:define name="main">
+	
+	<div dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}">	
+	
+		<h2 class="success">
+			<h:outputText value="#{i18n.about_app}" />
+		</h2>
+		<h:panelGroup rendered="#{localeBean.locale.language == 'en'}">
+			<p>
+				<h:outputText
+					value="This application was developed using Java EE technology." />
+			</p>
+			<p>
+				<h:outputText
+					value="It is designed to let the user interact with a database of
+			Naturotherapy. The common user can browse natural prescriptions, plants..using 
+			human body parts, cure virtues, types of illnesses or defects." />
+			</p>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{localeBean.locale.language == 'fr'}">
+			<p>
+				<h:outputText
+					value="Cette application a été développée avec la technologie Java EE." />
+			</p>
+			<p>
+				<h:outputText
+					value="Elle a été conçue afin de permettre à l'internaute d'interagir
+				avec une base de données de naturopathie. L'utilisateur commun peut
+				parcourir des prescriptions, plantes... en cherchant par parties 
+				corporelles, vertus sur le coprs, types d'anomalies/maladies...etc." />
+			</p>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{localeBean.locale.language == 'ar'}">
+			<p>
+				<h:outputText value="هذا البرنامج مطور بتقنلوجيا جاوة للمقاولات." />
+			</p>
+			<p>
+				<h:outputText
+					value="يمكنك برنامج نحلة العسل من تفحص قاعدة معلوماتية حول الطب البديل أو ما يسميه العامة بالتداوي بالأعشاب
+				. يمكنك الإطلاع على وصفات طبيعية مجربة والبحث بواسطة أعشاب, مزيات صحية, أمراض, أعضاء الجسم, 
+				..." />
+			</p>
+		</h:panelGroup>
+		<p>
+			<a target="_blank" href="http://www.google.com"> <h:outputText
+					value="#{i18n.search_web}" />
+			</a> | <a target="_blank" href="mailto:kyoshuu.madani@gmail.com"> <h:outputText
+					value="#{i18n.report_issue}" /></a>
+		</p>
+		</div>
+			<p:separator style="height:2px;" />
+	</ui:define>
+
+</ui:composition>

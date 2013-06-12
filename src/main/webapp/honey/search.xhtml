@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{honeyBean.page}"/>
+		<f:event type="preRenderView" listener="#{honeyBean.paginate(this)}"/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="#{i18n.honey}"/>
+
+	<ui:define name="header">
+		#{i18n.honey}
+	</ui:define>
+
+	<ui:define name="subheader">
+		#{i18n.search}
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="honeyBeanExamplePlant" value="#{i18n.plant}"/>
+						<h:panelGroup>
+							<h:selectOneMenu converter="#{plantBean.converter}" id="honeyBeanExamplePlant" value="#{honeyBean.example.plant}">
+								<f:selectItem/>
+								<f:selectItems value="#{plantBean.all}"/>
+								<f:ajax execute="@form" render="honeyBeanPageItems paginator" event="click"/>
+							</h:selectOneMenu>
+							<h:message for="honeyBeanExamplePlant" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="honeyBeanExampleLabel" value="#{i18n.label}"/>
+						<h:panelGroup>
+							<h:inputText id="honeyBeanExampleLabel" maxlength="45" value="#{honeyBean.example.label}" >
+							<f:ajax execute="@form" render="honeyBeanPageItems paginator" event="keyup"/>
+							</h:inputText>
+							<h:message for="honeyBeanExampleLabel" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="honeyBeanExampleLabelfr" value="#{i18n.labelfr}"/>
+						<h:panelGroup>
+							<h:inputText id="honeyBeanExampleLabelfr" maxlength="45" value="#{honeyBean.example.labelfr}">
+							<f:ajax execute="@form" render="honeyBeanPageItems paginator" event="keyup"/>
+							</h:inputText>
+							<h:message for="honeyBeanExampleLabelfr" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="honeyBeanExampleLabelar" value="#{i18n.labelar}"/>
+						<h:panelGroup>
+							<h:inputText id="honeyBeanExampleLabelar" maxlength="45" value="#{honeyBean.example.labelar}" >
+							<f:ajax execute="@form" render="honeyBeanPageItems paginator" event="keyup"/>
+							</h:inputText>
+							<h:message for="honeyBeanExampleLabelar" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="honeyBeanExampleDescription" value="#{i18n.description}"/>
+						<h:panelGroup>
+							<h:inputText id="honeyBeanExampleDescription" maxlength="445" value="#{honeyBean.example.description}">
+							<f:ajax execute="@form" render="honeyBeanPageItems paginator" event="keyup"/>
+							</h:inputText>
+							<h:message for="honeyBeanExampleDescription" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="#{i18n.search}" action="#{honeyBean.search}" styleClass="btn btn-primary"/>
+						<h:commandLink rendered="#{isAdministrator or isAuthor}" value="#{i18n.create}" action="#{honeyBean.create}" styleClass="btn btn-primary"/>
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+			
+			<h:dataTable id="honeyBeanPageItems" styleClass="data-table" value="#{honeyBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.label}"/>
+					</f:facet>
+					<h:link outcome="/honey/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemLabel" value="#{_item.label}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelfr}"/>
+					</f:facet>
+					<h:link outcome="/honey/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemLabelfr" value="#{_item.labelfr}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelar}"/>
+					</f:facet>
+					<h:link outcome="/honey/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemLabelar" value="#{_item.labelar}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<h:panelGroup id="paginator">
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value="#{honeyBean}"/>
+			</ui:include>
+			</h:panelGroup>
+		</h:form>
+			
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{defectBean.id}"/>
+		<f:event type="preRenderView" listener="#{defectBean.retrieve}"/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="#{i18n.defect}"/>
+
+	<ui:define name="header">
+		#{i18n.defect}
+	</ui:define>
+
+	<ui:define name="subheader">
+		#{i18n.defect}
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+			<h:outputLabel for="defectBeanDefectBodypart" value="#{i18n.bodypart}"/>
+			<h:link id="defectBeanDefectBodypart" outcome="/bodypart/view" value="#{defectBean.defect.bodypart}">
+				<f:param name="id" value="#{defectBean.defect.bodypart.id}"/>
+			</h:link>
+			<h:outputText/>
+			<h:outputLabel for="defectBeanDefectLabel" value="#{i18n.label}"/>
+			<h:outputText id="defectBeanDefectLabel" value="#{defectBean.defect.label}"/>
+			<h:outputText/>
+			<h:outputLabel for="defectBeanDefectLabelfr" value="#{i18n.labelfr}"/>
+			<h:outputText id="defectBeanDefectLabelfr" value="#{defectBean.defect.labelfr}"/>
+			<h:outputText/>
+			<h:outputLabel for="defectBeanDefectLabelar" value="#{i18n.labelar}"/>
+			<h:outputText id="defectBeanDefectLabelar" value="#{defectBean.defect.labelar}"/>
+			<h:outputText/>
+			<h:outputLabel for="defectBeanDefectIngredients" value="#{i18n.ingredients}"/>
+			<p:dataTable id="defectBeanDefectIngredients" 
+			styleClass="primedatatable" paginator="true" paginatorPosition="top" rows="3" paginatorAlwaysVisible="false"
+			value="#{forgeview:asList(defectBean.defect.ingredients)}" var="_item">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.label}"/>
+					</f:facet>
+					<h:link outcome="/ingredient/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemLabel" value="#{_item.label}"/>
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelfr}"/>
+					</f:facet>
+					<h:link outcome="/ingredient/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemLabelfr" value="#{_item.labelfr}"/>
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.labelar}"/>
+					</f:facet>
+					<h:link outcome="/ingredient/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemLabelar" value="#{_item.labelar}"/>
+					</h:link>
+				</p:column>
+			</p:dataTable>
+			<h:outputText/>
+                        <h:outputLabel for="defectBeanDefectPrescriptions" value="#{i18n.prescriptions}"/>
+			<p:dataTable id="defectBeanDefectPrescriptions" 
+			styleClass="primedatatable" paginator="true" paginatorPosition="top" rows="3" paginatorAlwaysVisible="false"
+			 value="#{forgeview:asList(defectBean.defect.prescriptions)}" var="_item">
+				<p:column>
+					<f:facet name="header">
+                                            <h:outputText value="#{i18n.title}"/>
+					</f:facet>
+					<h:link outcome="/prescription/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemTitle" value="#{_item.title}"/>
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+                                            <h:outputText value="#{i18n.titlear}"/>
+					</f:facet>
+					<h:link outcome="/prescription/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemTitlear" value="#{_item.titlear}"/>
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+                                            <h:outputText value="#{i18n.titlefr}"/>
+					</f:facet>
+					<h:link outcome="/prescription/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemTitlefr" value="#{_item.titlefr}"/>
+					</h:link>
+				</p:column>				
+			</p:dataTable>
+			<h:outputText/>
+		</h:panelGrid>
+
+		<div class="buttons">
+                    <h:link value="#{i18n.view_all}" outcome="search" styleClass="btn btn-primary"/> 
+			<h:link rendered="#{isAdministrator or isAuthor}" value="#{i18n.edit}" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
+                        <h:link rendered="#{isAdministrator or isAuthor}" value="#{i18n.create}" outcome="create" styleClass="btn btn-primary"/>
+		</div>
+	</ui:define>
+
+</ui:composition>
