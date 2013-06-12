@@ -46,10 +46,12 @@
       <role-link>REGISTERED</role-link>
     </security-role-ref>
   </servlet>
+  <!--
   <servlet-mapping>
     <servlet-name>javax.ws.rs.core.Application</servlet-name>
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
+  -->
   <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>*.jsf</url-pattern>
