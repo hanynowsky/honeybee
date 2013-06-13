@@ -2,5 +2,5 @@
 <jboss-web>
   <!-- Links with JBoss the Realm to use -->
   <security-domain>java:/jaas/HoneybeeRealm</security-domain>
-  <context-root>/honeybee</context-root>
+<!--  <context-root>/honeybee</context-root> -->
 </jboss-web>

@@ -3,7 +3,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"      
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}">
     <f:view id="honeybee_view" contentType="text/html"
             locale="#{localeBean.locale}" >
         <h:head>
@@ -18,7 +19,7 @@
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         </h:head>
 
-        <h:body onload="colorify();" dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}">
+        <h:body onload="colorify();">
             <p:growl  autoUpdate="true" life="4500" id="growl_general" showDetail="false"/>
             <ui:param name="isAdministrator"
                       value="#{request.isUserInRole('ADMINISTRATOR')}" />
