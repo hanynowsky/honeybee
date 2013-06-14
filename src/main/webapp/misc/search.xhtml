@@ -4,7 +4,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/resources/scaffold/pageTemplate.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
 
 	<ui:param name="pageTitle" value="#{i18n.general_search}" />
 
@@ -14,12 +15,52 @@
 
 	<ui:define name="main">
 		<h2 class="success">#{i18n.general_search}</h2>
-		<!-- This form is supposed to enable Mysql Full Text Search -->
-		<h:form>
-			<h:inputText value="#{requestScope.isCool}" id="general_search_input" maxlength="50" />
-			<p:separator  style="height:1px;"/>
-			<h:commandButton action="#{utilityBean.dummyMethod}" value="#{i18n.search}"
-				styleClass="btn btn-primary" />
+		<!-- This form is supposed to enable Mysql or Hibernate Full Text Search -->
+		<h:form id="globalSearchForm">
+			<h:inputText value="#{searchBean.keyword}" id="general_search_input"
+				maxlength="50" style="width:100%;">			
+			</h:inputText>
+			<p:separator style="height:1px;" />
+			<h:panelGroup
+				style="text-align:center;margin-left:40%;margin-right:60%;">
+				<p:commandButton action="#{searchBean.searchIngredients}"
+					value="#{i18n.search}" styleClass="btn btn-primary"
+					update="globalSearchForm:searchTable" />
+			</h:panelGroup>
+			<p:separator style="height:1px;margin-top:20px;" />
+
+			<p:dataTable var="_item" value="#{searchBean.ingredients}"
+				id="searchTable" styleClass="primedatatable" paginator="true"
+				paginatorPosition="top" paginatorAlwaysVisible="false" rows="10">
+				<p:column headerText="ID">
+					<h:outputText value="#{_item.id}" />
+				</p:column>
+				<p:column headerText="#{i18n.form}">
+					<h:link outcome="/ingredient/view" value="#{utilityBean.IngformName(_item.form)}"
+						includeViewParams="true">
+						<f:param name="id" value="#{_item.id}" />
+					</h:link>
+				</p:column>
+				<p:column headerText="#{i18n.label}">
+					<h:link outcome="/ingredient/view" value="#{_item.label}"
+						includeViewParams="true">
+						<f:param name="id" value="#{_item.id}" />
+					</h:link>
+				</p:column>
+				<p:column headerText="#{i18n.labelfr}">
+					<h:link outcome="/ingredient/view" value="#{_item.labelfr}"
+						includeViewParams="true">
+						<f:param name="id" value="#{_item.id}" />
+					</h:link>
+				</p:column>
+				<p:column headerText="#{i18n.labelar}">
+					<h:link outcome="/ingredient/view" value="#{_item.labelar}"
+						includeViewParams="true">
+						<f:param name="id" value="#{_item.id}" />
+					</h:link>
+				</p:column>
+			</p:dataTable>
+
 		</h:form>
 	</ui:define>
 

@@ -1,27 +1,17 @@
-Kitchensink on OpenShift
-=========================
+HoneyBee
+========
+[Application on the cloud : ](http://honeybee-otika.rhcloud.com/) HoneyBee: http://honeybee-otika.rhcloud.com/
 
-This is the kitchensink JBoss Quickstart app.  You can find more info @ https://docs.jboss.org/author/display/AS71/Kitchensink+quickstart
+Topic
+======
+Naturopathy Database - Java EE Application 
 
-Running on OpenShift
---------------------
+Purpose
+=======
 
-Create an account at http://openshift.redhat.com/
+This application allows a user to browse prescriptions based on natural ingredients.
+The user have many ways to reach the information he/she needs.
 
-Create a jbossas-7 application
-
-    rhc app create -a kitchensink -t jbossas-7
-
-Add this upstream kitchensink repo
-
-    cd kitchensink
-    git remote add upstream -m master git://github.com/openshift/kitchensink-example.git
-    git pull -s recursive -X theirs upstream master
-
-Then push the repo upstream
-
-    git push
-
-That's it, you can now checkout your application at:
-
-    http://kitchensink-$namespace.rhcloud.com
+Email Contact
+=============
+hanynowsk@gmail.com

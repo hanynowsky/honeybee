@@ -20,6 +20,9 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -33,6 +36,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 		@NamedQuery(name = "Ingredient.findByLabel", query = "select i from Ingredient i where i.label = :label"),
 		@NamedQuery(name = "Ingredient.findAll", query = "select i from Ingredient i"),
 		@NamedQuery(name = "Ingredient.findByLabelAndForm", query = "select i from Ingredient i where i.label = :label and i.form = :form") })
+@Indexed
 public class Ingredient implements java.io.Serializable {
 
 	private static final long serialVersionUID = -3523929976141378902L;
@@ -120,6 +124,7 @@ public class Ingredient implements java.io.Serializable {
 		this.version = version;
 	}
 
+	@IndexedEmbedded
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "plant_id")
 	public Plant getPlant() {
@@ -130,6 +135,7 @@ public class Ingredient implements java.io.Serializable {
 		this.plant = plant;
 	}
 
+	@IndexedEmbedded
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "honey_id")
 	public Honey getHoney() {
@@ -140,6 +146,7 @@ public class Ingredient implements java.io.Serializable {
 		this.honey = honey;
 	}
 
+	@IndexedEmbedded
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "substance_id")
 	public Substance getSubstance() {
@@ -150,6 +157,7 @@ public class Ingredient implements java.io.Serializable {
 		this.substance = substance;
 	}
 
+	@Field
 	@Column(name = "label", nullable = false, length = 45)
 	public String getLabel() {
 		return this.label;
@@ -159,6 +167,7 @@ public class Ingredient implements java.io.Serializable {
 		this.label = label;
 	}
 
+	@Field
 	@Column(name = "labelfr", nullable = false, length = 45)
 	public String getLabelfr() {
 		return this.labelfr;
@@ -168,6 +177,7 @@ public class Ingredient implements java.io.Serializable {
 		this.labelfr = labelfr;
 	}
 
+	@Field
 	@Column(name = "labelar", nullable = false, length = 45)
 	public String getLabelar() {
 		return this.labelar;
@@ -177,6 +187,7 @@ public class Ingredient implements java.io.Serializable {
 		this.labelar = labelar;
 	}
 
+	@Field
 	@Column(name = "labellat", length = 45)
 	public String getLabellat() {
 		return this.labellat;
@@ -186,6 +197,7 @@ public class Ingredient implements java.io.Serializable {
 		this.labellat = labellat;
 	}
 
+	@Field
 	@Column(name = "labelmar", length = 45)
 	public String getLabelmar() {
 		return this.labelmar;
@@ -204,6 +216,7 @@ public class Ingredient implements java.io.Serializable {
 		this.image = image;
 	}
 
+	@Field
 	@Column(name = "description", length = 65535)
 	public String getDescription() {
 		return this.description;
@@ -213,6 +226,7 @@ public class Ingredient implements java.io.Serializable {
 		this.description = description;
 	}
 
+	@Field
 	@Column(name = "descriptionfr", length = 65535)
 	public String getDescriptionfr() {
 		return this.descriptionfr;
@@ -222,6 +236,7 @@ public class Ingredient implements java.io.Serializable {
 		this.descriptionfr = descriptionfr;
 	}
 
+	@Field
 	@Column(name = "descriptionar", length = 65535)
 	public String getDescriptionar() {
 		return this.descriptionar;
@@ -267,6 +282,7 @@ public class Ingredient implements java.io.Serializable {
 		this.price = price;
 	}
 
+	@Field
 	@NotEmpty
 	@Column(name = "form", nullable = false)
 	public String getForm() {
@@ -276,7 +292,7 @@ public class Ingredient implements java.io.Serializable {
 	public void setForm(String form) {
 		this.form = form;
 	}
-
+	
 	@Column(name = "complement")
 	public boolean getComplement() {
 		return this.complement;
@@ -285,7 +301,8 @@ public class Ingredient implements java.io.Serializable {
 	public void setComplement(boolean complement) {
 		this.complement = complement;
 	}
-
+	
+	@IndexedEmbedded
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "virtue_ingredient", catalog = "honeybee", joinColumns = { @JoinColumn(name = "ingredient_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "virtue_id", nullable = false, updatable = false) })
 	public Set<Virtue> getVirtues() {
@@ -296,6 +313,7 @@ public class Ingredient implements java.io.Serializable {
 		this.virtues = virtues;
 	}
 
+	@IndexedEmbedded
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "ingredient_prescription", catalog = "honeybee", joinColumns = { @JoinColumn(name = "ingredient_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "prescription_id", nullable = false, updatable = false) })
 	public Set<Prescription> getPrescriptions() {
@@ -306,6 +324,7 @@ public class Ingredient implements java.io.Serializable {
 		this.prescriptions = prescriptions;
 	}
 
+	@IndexedEmbedded
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "defect_ingredient", catalog = "honeybee", joinColumns = { @JoinColumn(name = "ingredient_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "defect_id", nullable = false, updatable = false) })
 	public Set<Defect> getDefects() {
@@ -323,7 +342,7 @@ public class Ingredient implements java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		return label + " " + labelar + " | " + form;
+		return label + " | " + labelar + " | " + labelfr;
 	}
 
 }
