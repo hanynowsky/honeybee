@@ -1,5 +1,5 @@
-HoneyBee
-========
+HoneyBee Application
+====================
 [Application on the cloud : ](http://honeybee-otika.rhcloud.com/) HoneyBee: http://honeybee-otika.rhcloud.com/
 
 Topic
