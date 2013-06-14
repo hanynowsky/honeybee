@@ -1,34 +1,44 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"      
-      xmlns:p="http://primefaces.org/ui"
-      dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}">
-    <f:view id="honeybee_view" contentType="text/html"
-            locale="#{localeBean.locale}" >
-        <h:head>
-            <title>#{empty pageTitle ? '{#pageTitle}' : pageTitle}</title>
-            <link rel="icon" href="#{resource['favicon.ico']}" />
-            <h:outputStylesheet name="primefaces-flick/theme.css" />
-            <h:outputStylesheet name="bootstrap.css" />
-            <h:outputStylesheet name="forge-style.css" />
-            <h:outputStylesheet name="primefaces.css" />
-            <link rel="shortcut icon" type="image/x-icon"
-                  href="#{request.contextPath}/resources/favicon.ico" />
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        </h:head>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}">
+<f:view id="honeybee_view" contentType="text/html"
+	locale="#{localeBean.locale}">
+	<h:head>
+		<title>#{empty pageTitle ? '{#pageTitle}' : pageTitle}</title>
+		<link rel="icon" href="#{resource['favicon.ico']}" />
+		<h:outputStylesheet name="primefaces-flick/theme.css" />
+		<h:outputStylesheet name="bootstrap.css" />
+		<h:outputStylesheet name="forge-style.css" />
+		<h:outputStylesheet name="primefaces.css" />
+		<link rel="shortcut icon" type="image/x-icon"
+			href="#{request.contextPath}/resources/favicon.ico" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</h:head>
 
-        <h:body onload="colorify();">
-            <p:growl  autoUpdate="true" life="4500" id="growl_general" showDetail="false"/>
-            <ui:param name="isAdministrator"
-                      value="#{request.isUserInRole('ADMINISTRATOR')}" />
-            <ui:param name="isGuest" value="#{request.isUserInRole('GUEST')}" />
-            <ui:param name="isRegistered"
-                      value="#{request.isUserInRole('REGISTERED')}" />
-            <ui:param name="isAuthor" value="#{request.isUserInRole('AUTHOR')}" />
+	<h:body onload="colorify();">
 
-            <script type="text/javascript">
+		<p:ajaxStatus id="ajaxStatus" style="float:left;">
+			<f:facet name="start">				
+				<p:graphicImage value="#{resource['gif.gif']}" />
+			</f:facet>
+			<f:facet name="complete">
+				<h:outputText value="" style="background-color:transparent;" />
+			</f:facet>
+		</p:ajaxStatus>
+		<p:growl autoUpdate="true" life="4500" id="growl_general"
+			showDetail="false" />
+		<ui:param name="isAdministrator"
+			value="#{request.isUserInRole('ADMINISTRATOR')}" />
+		<ui:param name="isGuest" value="#{request.isUserInRole('GUEST')}" />
+		<ui:param name="isRegistered"
+			value="#{request.isUserInRole('REGISTERED')}" />
+		<ui:param name="isAuthor" value="#{request.isUserInRole('AUTHOR')}" />
+
+		<script type="text/javascript">
         function colorify() {
             // var items = document.getElementById('navigation').getElementsByTagName('a');
             var topitems = document.getElementById('top_div').getElementsByTagName('a');
@@ -44,140 +54,140 @@
         }
             </script>
 
-            <div class="navbar navbar-fixed-top">
-                <div class="navbar-inner">
-                    <div class="container">
-                        <h:link id="brandLink" outcome="/index.xhtml" styleClass="brand">
-                            <h:outputText value="#{i18n.honeybee}" />
-                        </h:link>
-                        <div style="float: right;" class="nav-collapse collapse">
-                            <h:panelGrid columns="2" dir="ltr">
-                                <h:panelGroup styleClass="user-panel">
-                                    <h:link id="userlink" outcome="/login.xhtml">
-                                        <h:outputText rendered="#{not empty request.remoteUser}"
-                                                      value="#{i18n.hi} #{userManagerBean.userObject.surname}!"
-                                                      dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
-                                    </h:link>
-                                    <h:outputLink id="userconnect"
-                                                  value="#{request.contextPath}/redirect.html">
-                                        <h:outputText rendered="#{empty request.remoteUser}"
-                                                      value="#{i18n.login}!"
-                                                      dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
-                                    </h:outputLink>
-                                </h:panelGroup>
-                                <h:form id="form_locale" style="height:20px;">
-                                    <h:selectOneMenu id="localemenu" value="#{localeBean.language}"
-                                                     style="width: 90px;margin-right:5px;"
-                                                     onchange="document.getElementById('form_locale').submit();">
-                                        <f:selectItem itemLabel="Français" itemValue="fr"
-                                                      id="localmenu_items" />
-                                        <f:selectItem itemLabel="عربية" itemValue="ar"
-                                                      id="localmenu_itemsar" />
-                                        <f:selectItem itemLabel="English" itemValue="en"
-                                                      id="localmenu_itemsen" />
-                                    </h:selectOneMenu>
-                                </h:form>
-                            </h:panelGrid>
-                        </div>
-                        <div class="nav-collapse collapse" id="top_div">
-                            <ul class="nav">
-                                <li><h:link id="help_top" outcome="/help/search"
-                                            value="#{i18n.help}" /></li>
-                                <li><h:link id="aboutus_top" outcome="/misc/aboutus"
-                                            value="#{i18n.aboutus}" /></li>
-                                <li><a id="source_code" target="_blank"
-                                       href="https://github.com/hanynowsky/honeybee"><h:outputText
-                                            value="#{i18n.source_code}" /></a></li>
-                                <li><h:link id="search_menu" outcome="/misc/search"
-                                            value="#{i18n.search}" /></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<h:link id="brandLink" outcome="/index.xhtml" styleClass="brand">
+						<h:outputText value="#{i18n.honeybee}" />
+					</h:link>
+					<div style="float: right;" class="nav-collapse collapse">
+						<h:panelGrid columns="2" dir="ltr">
+							<h:panelGroup styleClass="user-panel">
+								<h:link id="userlink" outcome="/login.xhtml">
+									<h:outputText rendered="#{not empty request.remoteUser}"
+										value="#{i18n.hi} #{userManagerBean.userObject.surname}!"
+										dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
+								</h:link>
+								<h:outputLink id="userconnect"
+									value="#{request.contextPath}/redirect.html">
+									<h:outputText rendered="#{empty request.remoteUser}"
+										value="#{i18n.login}!"
+										dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
+								</h:outputLink>
+							</h:panelGroup>
+							<h:form id="form_locale" style="height:20px;">
+								<h:selectOneMenu id="localemenu" value="#{localeBean.language}"
+									style="width: 90px;margin-right:5px;"
+									onchange="document.getElementById('form_locale').submit();">
+									<f:selectItem itemLabel="Français" itemValue="fr"
+										id="localmenu_items" />
+									<f:selectItem itemLabel="عربية" itemValue="ar"
+										id="localmenu_itemsar" />
+									<f:selectItem itemLabel="English" itemValue="en"
+										id="localmenu_itemsen" />
+								</h:selectOneMenu>
+							</h:form>
+						</h:panelGrid>
+					</div>
+					<div class="nav-collapse collapse" id="top_div">
+						<ul class="nav">
+							<li><h:link id="help_top" outcome="/help/search"
+									value="#{i18n.help}" /></li>
+							<li><h:link id="aboutus_top" outcome="/misc/aboutus"
+									value="#{i18n.aboutus}" /></li>
+							<li><a id="source_code" target="_blank"
+								href="https://github.com/hanynowsky/honeybee"><h:outputText
+										value="#{i18n.source_code}" /></a></li>
+							<li><h:link id="search_menu" outcome="/misc/search"
+									value="#{i18n.search}" /></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 
-            <div class="container forgecontainer">
-                <div id="navigation">
-                    <h:link id="homeLink" outcome="/index.xhtml"
-                            style="padding-left:0px;">
-                        <img src="#{resource['bee.jpg']}" alt="HoneyBee" border="0"
-                             style="width: 180px; text-align: center; margin-bottom: 5px;" />
-                    </h:link>
-                    <h:panelGroup rendered="#{isAdministrator == true}">
-                        <ul>
-                            <li><h:link id="language" outcome="/language/search"
-                                        value="#{i18n.languages}" /></li>
-                            <li><h:link id="usergroup" outcome="/usergroup/search"
-                                        value="#{i18n.usergroup}" /></li>
-                            <li><h:link id="enduser" outcome="/enduser/search"
-                                        value="#{i18n.endusers}" /></li>
-                        </ul>
-                    </h:panelGroup>
+		<div class="container forgecontainer">
+			<div id="navigation">
+				<h:link id="homeLink" outcome="/index.xhtml"
+					style="padding-left:0px;">
+					<img src="#{resource['bee.jpg']}" alt="HoneyBee" border="0"
+						style="width: 180px; text-align: center; margin-bottom: 5px;" />
+				</h:link>
+				<h:panelGroup rendered="#{isAdministrator == true}">
+					<ul>
+						<li><h:link id="language" outcome="/language/search"
+								value="#{i18n.languages}" /></li>
+						<li><h:link id="usergroup" outcome="/usergroup/search"
+								value="#{i18n.usergroup}" /></li>
+						<li><h:link id="enduser" outcome="/enduser/search"
+								value="#{i18n.endusers}" /></li>
+					</ul>
+				</h:panelGroup>
 
-                    <h:panelGroup>
-                        <ul>
-                            <li><h:link id="author" outcome="/author/search"
-                                        value="#{i18n.authors}" /></li>
-                            <li><h:link id="prescription" outcome="/prescription/search"
-                                        value="#{i18n.prescriptions}" /></li>
-                            <li><h:link id="virtue" outcome="/virtue/search"
-                                        value="#{i18n.virtues}" /></li>
-                            <li><h:link id="defect" outcome="/defect/search"
-                                        value="#{i18n.defects}" /></li>
-                            <li><h:link id="bodypart" outcome="/bodypart/search"
-                                        value="#{i18n.bodyparts}" /></li>
-                            <li><h:link id="witness" outcome="/witness/search"
-                                        value="#{i18n.witnesses}" /></li>
-                        </ul>
-                    </h:panelGroup>
-                    <h:panelGroup>
-                        <ul>
-                            <li><h:link id="ingredient" outcome="/ingredient/search"
-                                        value="#{i18n.ingredients}" /></li>
-                            <li><h:link id="complement" outcome="/complement/search"
-                                        value="#{i18n.complements}" /></li>
-                            <li><h:link id="honey" outcome="/honey/search"
-                                        value="#{i18n.honey}" /></li>
-                            <li><h:link id="plant" outcome="/plant/search"
-                                        value="#{i18n.plants}" /></li>
-                            <li><h:link id="substance" outcome="/substance/search"
-                                        value="#{i18n.substances}" /></li>
-                        </ul>
-                    </h:panelGroup>
-                    <h:panelGroup>
-                        <ul>
-                            <li><h:link id="store" outcome="/store/search"
-                                        value="#{i18n.stores}" /></li>
-                        </ul>
-                    </h:panelGroup>
-                </div>
+				<h:panelGroup>
+					<ul>
+						<li><h:link id="author" outcome="/author/search"
+								value="#{i18n.authors}" /></li>
+						<li><h:link id="prescription" outcome="/prescription/search"
+								value="#{i18n.prescriptions}" /></li>
+						<li><h:link id="virtue" outcome="/virtue/search"
+								value="#{i18n.virtues}" /></li>
+						<li><h:link id="defect" outcome="/defect/search"
+								value="#{i18n.defects}" /></li>
+						<li><h:link id="bodypart" outcome="/bodypart/search"
+								value="#{i18n.bodyparts}" /></li>
+						<li><h:link id="witness" outcome="/witness/search"
+								value="#{i18n.witnesses}" /></li>
+					</ul>
+				</h:panelGroup>
+				<h:panelGroup>
+					<ul>
+						<li><h:link id="ingredient" outcome="/ingredient/search"
+								value="#{i18n.ingredients}" /></li>
+						<li><h:link id="complement" outcome="/complement/search"
+								value="#{i18n.complements}" /></li>
+						<li><h:link id="honey" outcome="/honey/search"
+								value="#{i18n.honey}" /></li>
+						<li><h:link id="plant" outcome="/plant/search"
+								value="#{i18n.plants}" /></li>
+						<li><h:link id="substance" outcome="/substance/search"
+								value="#{i18n.substances}" /></li>
+					</ul>
+				</h:panelGroup>
+				<h:panelGroup>
+					<ul>
+						<li><h:link id="store" outcome="/store/search"
+								value="#{i18n.stores}" /></li>
+					</ul>
+				</h:panelGroup>
+			</div>
 
-                <div id="content">
-                    <h1>
-                        <ui:insert name="header" />
-                    </h1>
-                    <h2>
-                        <ui:insert name="subheader" />
-                    </h2>
-                    <h:form>
-                        <p:messages						
-                            globalOnly="false" id="messages_global" showDetail="false"
-                            />
-                    </h:form>
-                    <ui:insert name="main" />
-                </div>
-            </div>
+			<div id="content">
+				<h1>
+					<ui:insert name="header" />
+				</h1>
+				<h2>
+					<ui:insert name="subheader" />
+				</h2>
+				<h:form>
+					<p:messages globalOnly="false" id="messages_global"
+						showDetail="false" />
+				</h:form>
+				<ui:insert name="main" />
+			</div>
+		</div>
 
-            <footer>
-                <div id="footer-wrapper">
-                    <p>
-                        <h:outputText value="Powered By" /> <a href="http://opentika-otika.rhcloud.com">
-                            <h:outputText value="OpenTika" />
-                        </a>
-                        <h:outputText value=" | @2013 - Casablanca" />
-                    </p>
-                </div>
-            </footer>
-        </h:body>
-    </f:view>
+		<footer>
+			<div id="footer-wrapper">
+				<p>
+					<h:outputText value="Powered By" />
+					<a href="http://opentika-otika.rhcloud.com"> <h:outputText
+							value="OpenTika" />
+					</a>
+					<h:outputText value=" | @2013 - Casablanca" />
+				</p>
+			</div>
+		</footer>
+	</h:body>
+</f:view>
 </html>
