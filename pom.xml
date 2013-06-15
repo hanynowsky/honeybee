@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.otika.honeybee</groupId>
     <artifactId>honeybee</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.2</version>
     <packaging>war</packaging>
     <properties>
         <!-- Explicitly declaring the source encoding eliminates the following 
@@ -164,6 +164,12 @@
         	<groupId>org.hibernate</groupId>
         	<artifactId>hibernate-search</artifactId>
         	<version>4.3.0.Final</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.apache.mahout</groupId>
+        	<artifactId>mahout</artifactId>
+        	<version>0.7</version>
+        	<type>pom</type>
         </dependency>
     </dependencies>
     <repositories>
