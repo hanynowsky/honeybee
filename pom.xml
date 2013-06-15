@@ -277,4 +277,6 @@
             </build>
         </profile>
     </profiles>
+    <name>honeybee</name>
+    <description>Naturopathy</description>
 </project>
