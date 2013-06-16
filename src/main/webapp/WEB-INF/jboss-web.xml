@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
   <!-- Links with JBoss the Realm to use -->
-  <security-domain>java:/jaas/HoneybeeRealm</security-domain>
-  <!--  <context-root>/honeybee</context-root> -->
-  <context-root>/honeybee</context-root>
+  <security-domain>java:/jaas/HoneybeeRealm</security-domain>  
+  <context-root>/</context-root>
 </jboss-web>
