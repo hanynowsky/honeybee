@@ -1,14 +1,26 @@
 package org.otika.honeybee.view;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.event.Event;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -25,8 +37,16 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.otika.honeybee.model.Prescription;
+import org.otika.honeybee.events.PrescriptionPrintedEvent;
 import org.otika.honeybee.model.Author;
+import org.otika.honeybee.model.Complement;
+import org.otika.honeybee.model.Defect;
+import org.otika.honeybee.model.Ingredient;
+import org.otika.honeybee.model.Prescription;
+import org.otika.honeybee.model.Virtue;
+import org.otika.honeybee.model.Witness;
+import org.otika.honeybee.util.DownloadFileBean;
+import org.otika.honeybee.util.UtilityBean;
 
 /**
  * Backing bean for Prescription entities.
@@ -44,6 +64,12 @@ import org.otika.honeybee.model.Author;
 public class PrescriptionBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	@Inject
+	private UtilityBean utilityBean;
+	@Inject
+	private DownloadFileBean downloadFileBean;
+	@Inject
+	private Event<PrescriptionPrintedEvent> prescriptionPrintedEvent;
 
 	/*
 	 * Support creating and retrieving Prescription entities
@@ -282,6 +308,415 @@ public class PrescriptionBean implements Serializable {
 				return String.valueOf(((Prescription) value).getId());
 			}
 		};
+	}
+
+	/**
+	 * Returns number of positive witnesses for a given prescription
+	 * 
+	 * @param p Prescription
+	 * @return counter Number of positive witnesses
+	 */
+	public int getPostiveWitnessesCount(Prescription p) {
+		int counter = 0;
+		try {
+			Set<Witness> witnesses;
+			witnesses = p.getWitnesses();
+			if (witnesses.size() > 0) {
+				for (Witness w : witnesses) {
+					if (w.isResult()) {
+						counter++;
+					}
+				}
+			}
+			return counter;
+		} catch (Exception ex) {
+			Logger.getLogger(getClass().getName()).severe(
+					"Failure getting count for prescription witnesses");
+		}
+		return 0;
+	}
+
+	/**
+	 * Returns number of negative witnesses for a given prescription
+	 * 
+	 * @param p <em>Prescription</em>
+	 * @return counter<p>Number of negative witnesses</p>
+	 */
+	public int getNegativeWitnessesCount(Prescription p) {
+		int counter = 0;
+		try {
+			Set<Witness> witnesses;
+			witnesses = p.getWitnesses();
+			if (witnesses.size() > 0) {
+				for (Witness w : witnesses) {
+					if (!w.isResult()) {
+						counter++;
+					}
+				}
+			}
+			return counter;
+		} catch (Exception ex) {
+			Logger.getLogger(getClass().getName()).severe(
+					"Failure getting count for prescription witnesses");
+		}
+		return 0;
+	}
+
+	/**
+	 * Prints a prescription
+	 */
+	public void printPrescription(boolean writeCss, boolean openFox) {
+		// TODO re-factor this method using i-text library
+		// Or create a temporary file instead of a physical file
+		try {
+			if (id != null) {
+				Prescription prescription = findById(id);
+				String authorName = prescription.getAuthor().getName();
+				String p = System.getProperty("user.home");
+				String path = p + File.separator + "honeybee" + File.separator
+						+ "export" + File.separator;
+
+				File presFile = new File(path + "presFile" + "_"
+						+ prescription.getId() + ".html");
+				new File(p + File.separator + "honeybee" + File.separator
+						+ "export").mkdirs();
+				presFile.createNewFile();
+
+				InputStream is = getClass().getResourceAsStream("/css.css");
+
+				if (writeCss) {
+					File cssFile = new File(path + "css.css");
+					cssFile.createNewFile();
+					OutputStream output = new FileOutputStream(cssFile);
+					int read;
+					byte[] bytes = new byte[1024];
+					while ((read = is.read(bytes)) != -1) {
+						output.write(bytes, 0, read);
+					}
+					is.close();
+					output.flush();
+					output.close();
+				}
+
+				FileWriter fstream = new FileWriter(presFile, false);
+				BufferedWriter out = new BufferedWriter(fstream);
+				out.write("<!DOCTYPE HTML>");
+				out.write("<html>");
+				out.newLine();
+				out.write("<head>");
+				out.write("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />");
+				out.write("<title>");
+				out.write(prescription.getTitle() + " : "
+						+ prescription.getId());
+				out.write("</title>");
+				// out.write("<link href=\"css.css\" rel=\"stylesheet\" type=\"text/css\" />");
+				out.write("<style type=\"text/css\">");
+				BufferedReader br = new BufferedReader(
+						new InputStreamReader(is));
+				StringBuilder sb = new StringBuilder();
+				while ((br.read()) != -1) {
+					sb.append(br.readLine());
+				}
+				out.write(sb.substring(0));
+				out.write("</style>");
+				out.append("</head>");
+				out.append("<body>");
+				out.append("<article>Powered by Honeybee: https://honeybee-otika.rhcloud.com</article>");
+				out.newLine();
+				out.write("<h1>");
+				out.write("Prescription: " + prescription.getTitle() + " : "
+						+ prescription.getId());
+				out.write("</h1>");
+				out.write("<table>");
+				out.write("<tbody>");
+				out.write("<tr>");
+				out.write("<td><label>Author Name</label></td>");
+				out.write("<td>" + authorName + "</td>");
+				out.write("</tr>");
+				out.write("<tr>");
+				out.write("<td><label>Title (Ar)</label></td>");
+				out.write("<td>" + prescription.getTitlear() + "</td>");
+				out.write("</tr>");
+				out.write("<tr>");
+				out.write("<td><label>Title (Fr)</label></td>");
+				out.write("<td>" + prescription.getTitlefr() + "</td>");
+				out.write("</tr>");
+				out.write("<tr>");
+				out.write("<td><label>Coefficient</label></td>");
+				out.write("<td>" + prescription.getCoefficient() + "</td>");
+				out.write("</tr>");
+				out.write("<tr>");
+				out.write("<td><label>Creation Date</label></td>");
+				out.write("<td>" + prescription.getCreationdate() + "</td>");
+				out.write("</tr>");
+				out.write("<tr>");
+				out.write("<td><label>Preparation</label></td>");
+				out.write("<td>" + prescription.getPreparation() + "</td>");
+				out.write("</tr>");
+				out.write("<tr>");
+				out.write("<td><label>Preparation (Ar)</label></td>");
+				out.write("<td>" + prescription.getPreparationar() + "</td>");
+				out.write("</tr>");
+				out.write("<tr>");
+				out.write("<td><label>Preparation (Fr)</label></td>");
+				out.write("<td>" + prescription.getPreparationfr() + "</td>");
+				out.write("</tr>");
+				out.write("<tr>");
+				out.write("<td><label>Treatment</label></td>");
+				out.write("<td>" + prescription.getTreatment() + "</td>");
+				out.write("</tr>");
+				out.write("<tr>");
+				out.write("<td><label>Treatment (Fr)</label></td>");
+				out.write("<td>" + prescription.getTreatmentfr() + "</td>");
+				out.write("</tr>");
+				out.write("<tr>");
+				out.write("<td><label>Treatment (Ar)</label></td>");
+				out.write("<td>" + prescription.getTreatmentar() + "</td>");
+				out.write("</tr>");
+				out.write("</tbody>");
+				out.write("</table>");
+
+				// Virtues
+				out.write("<h2>Virtues</h2>");
+				out.write("<table>");
+				out.write("<tbody>");
+				out.write("<thead>");
+				out.write("<tr>");
+				out.write("<th>");
+				out.write("Label(Ar)");
+				out.write("</th>");
+				out.write("<th>");
+				out.write("Label");
+				out.write("</th>");
+				out.write("<th>");
+				out.write("Label (Fr)");
+				out.write("</th>");
+				out.write("</tr>");
+				out.write("</thead>");
+				for (Virtue v : prescription.getVirtues()) {
+					out.write("<tr>");
+					out.write("<td>");
+					out.write(v.getLabelar());
+					out.write("</td>");
+					out.write("<td>");
+					out.write(v.getLabel());
+					out.write("</td>");
+					out.write("<td>");
+					out.write(v.getLabelfr());
+					out.write("</td>");
+					out.write("</tr>");
+				}
+				out.write("</tbody>");
+				out.write("</table>");
+
+				// Defects
+				out.write("<h2>Defects</h2>");
+				out.write("<table>");
+				out.write("<tbody>");
+				out.write("<thead>");
+				out.write("<tr>");
+				out.write("<th>");
+				out.write("Label Ar");
+				out.write("</th>");
+				out.write("<th>");
+				out.write("Label");
+				out.write("</th>");
+				out.write("<th>");
+				out.write("Label Fr");
+				out.write("</th>");
+				out.write("</tr>");
+				out.write("</thead>");
+				for (Defect d : prescription.getDefects()) {
+					out.write("<tr>");
+					out.write("<td>");
+					out.write(d.getLabelar());
+					out.write("</td>");
+					out.write("<td>");
+					out.write(d.getLabel());
+					out.write("</td>");
+					out.write("<td>");
+					out.write(d.getLabelfr());
+					out.write("</td>");
+					out.write("</tr>");
+				}
+				out.write("</tbody>");
+				out.write("</table>");
+
+				// Ingredients
+				out.write("<h2>Ingredients</h2>");
+				out.write("<table>");
+				out.write("<tbody>");
+				out.write("<thead>");
+				out.write("<tr>");
+				out.write("<th>");
+				out.write("Label Ar");
+				out.write("</th>");
+				out.write("<th>");
+				out.write("Label");
+				out.write("</th>");
+				out.write("<th>");
+				out.write("Label Fr");
+				out.write("</th>");
+				out.write("<th>");
+				out.write("Form");
+				out.write("</th>");
+				out.write("<th>");
+				out.write("Honey");
+				out.write("</th>");
+				out.write("<th>");
+				out.write("Plant");
+				out.write("</th>");
+				out.write("<th>");
+				out.write("Substance");
+				out.write("</th>");
+				out.write("</tr>");
+				out.write("</thead>");
+				for (Ingredient i : prescription.getIngredients()) {
+					out.write("<tr>");
+					out.write("<td>");
+					out.write(i.getLabelar());
+					out.write("</td>");
+					out.write("<td>");
+					out.write(i.getLabel());
+					out.write("</td>");
+					out.write("<td>");
+					out.write(i.getLabelfr());
+					out.write("</td>");
+					out.write("<td>");
+					out.write(i.getForm());
+					out.write("</td>");
+					String honey = (i.getHoney() != null ? i.getHoney()
+							.getLabel() : "N/A");
+					String plant = (i.getPlant() != null ? i.getPlant()
+							.getLabel() : "N/A");
+					String substance = (i.getSubstance() != null ? i
+							.getSubstance().getLabel() : "N/A");
+					out.write("<td>");
+					out.write(honey);
+					out.write("</td>");
+					out.write("<td>");
+					out.write(plant);
+					out.write("</td>");
+					out.write("<td>");
+					out.write(substance);
+					out.write("</td>");
+					out.write("</tr>");
+				}
+				out.write("</tbody>");
+				out.write("</table>");
+
+				// Complements
+				out.write("<h2>Complements</h2>");
+				out.write("<table>");
+				out.write("<tbody>");
+				out.write("<thead>");
+				out.write("<tr>");
+				out.write("<th>");
+				out.write("Label");
+				out.write("</th>");
+				out.write("<th>");
+				out.write("Label Fr");
+				out.write("</th>");
+				out.write("<th>");
+				out.write("Label Ar");
+				out.write("</th>");
+				out.write("<th>");
+				out.write("Content");
+				out.write("</th>");
+				out.write("</tr>");
+				out.write("</thead>");
+				for (Complement c : prescription.getComplements()) {
+					out.write("<tr>");
+					out.write("<td>");
+					out.write(c.getIngredient().getLabel());
+					out.write("</td>");
+					out.write("<td>");
+					out.write(c.getIngredient().getLabelfr());
+					out.write("</td>");
+					out.write("<td>");
+					out.write(c.getIngredient().getLabelar());
+					out.write("</td>");
+					out.write("<td>");
+					out.write(c.getContent());
+					out.write("</td>");
+					out.write("</tr>");
+				}
+				out.write("</tbody>");
+				out.write("</table>");
+
+				// Witnesses
+				out.write("<h2>Witnesses</h2>");
+				out.write("<table>");
+				out.write("<tbody>");
+				out.write("<thead>");
+				out.write("<tr>");
+				out.write("<th>");
+				out.write("Subject");
+				out.write("</th>");
+				out.write("<th>");
+				out.write("Date");
+				out.write("</th>");
+				out.write("<th>");
+				out.write("Positive");
+				out.write("</th>");
+				out.write("<th>");
+				out.write("Comment");
+				out.write("</th>");
+				out.write("</tr>");
+				out.write("</thead>");
+				for (Witness w : prescription.getWitnesses()) {
+					out.write("<tr>");
+					out.write("<td>");
+					out.write(w.getSubject());
+					out.write("</td>");
+					out.write("<td>");
+					out.write(w.getCreationdate().toString());
+					out.write("</td>");
+					out.write("<td>");
+					out.write(String.valueOf(w.isResult()));
+					out.write("</td>");
+					out.write("<td>");
+					out.write(w.getComment());
+					out.write("</td>");
+					out.write("</tr>");
+				}
+				out.write("</tbody>");
+				out.write("</table>");
+
+				// -------------
+				out.write("</body>");
+				out.write("</html>");
+				System.out.println("- presFile.html File Created in "
+						+ presFile.getCanonicalPath() + " | Encoded: "
+						+ fstream.getEncoding());
+				utilityBean.showMessage(
+						"INFO",
+						"presFile.html File Created in "
+								+ presFile.getCanonicalPath(), "");
+				out.close();
+
+				// Fire Printed Prescription Event
+				if (this.prescription.getId() != null) {
+					prescriptionPrintedEvent.fire(new PrescriptionPrintedEvent(
+							this.prescription.getId()));
+				}
+
+				// Download the file
+				downloadFileBean.downloadFile(presFile);
+
+				// Open created file in FireFox in Ubuntu Linux
+				if (System.getenv("DESKTOP_SESSION") != null && openFox) {
+					utilityBean.execBash("firefox -new-window "
+							+ presFile.getCanonicalPath());
+				}
+			}
+
+		} catch (Exception ex) {
+			utilityBean.showMessage("ERROR", "Error printing the file", "");
+			System.out.println(ex + " Error printing the file");
+			Logger.getLogger(getClass().getName()).log(Level.SEVERE,
+					ex.getMessage(), ex);
+		}
 	}
 
 	/*

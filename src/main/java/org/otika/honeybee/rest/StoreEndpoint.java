@@ -3,15 +3,21 @@ package org.otika.honeybee.rest;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
-import javax.persistence.TypedQuery;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
+
 import org.otika.honeybee.model.Store;
 
 /**
@@ -25,7 +31,7 @@ public class StoreEndpoint
    private EntityManager em;
 
    @POST
-   @Consumes("application/xml")
+   @Consumes(MediaType.APPLICATION_JSON)
    public Response create(Store entity)
    {
       em.persist(entity);
@@ -47,12 +53,10 @@ public class StoreEndpoint
 
    @GET
    @Path("/{id:[0-9][0-9]*}")
-   @Produces("application/xml")
+   @Produces(MediaType.APPLICATION_JSON)
    public Response findById(@PathParam("id") Long id)
    {
-      TypedQuery<Store> findByIdQuery = em.createQuery("SELECT s FROM Store s WHERE s.tId = :entityId", Store.class);
-      findByIdQuery.setParameter("entityId", id);
-      Store entity = findByIdQuery.getSingleResult();
+	   Store entity =  em.find(Store.class,id);     
       if (entity == null)
       {
          return Response.status(Status.NOT_FOUND).build();
@@ -61,20 +65,20 @@ public class StoreEndpoint
    }
 
    @GET
-   @Produces("application/xml")
+   @Produces({MediaType.APPLICATION_JSON})
    public List<Store> listAll()
    {
-      final List<Store> results = em.createQuery("SELECT s FROM Store s", Store.class).getResultList();
-      return results;
+	   //MessageBodyWriter<Store> mbw;
+      return em.createQuery("SELECT s FROM Store s", Store.class).getResultList();
    }
 
    @PUT
    @Path("/{id:[0-9][0-9]*}")
-   @Consumes("application/xml")
+   @Consumes(MediaType.APPLICATION_JSON)
    public Response update(@PathParam("id") Long id, Store entity)
    {
       entity.setId(id);
-      entity = em.merge(entity);
+      em.merge(entity);     
       return Response.noContent().build();
    }
 }

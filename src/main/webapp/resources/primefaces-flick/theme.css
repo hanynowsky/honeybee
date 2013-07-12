@@ -52,18 +52,18 @@
 		50% 50% repeat-x;*/
 		background-color: #ECE9E9;
 	font-weight: bold;
-	color: #0073ea;
+	color: #867F10; /*#0073ea*/
 }
 
 .ui-state-default a,.ui-state-default a:link,.ui-state-default a:visited
 	{
-	color: #0073ea;
+	color: #333; /*#0073ea*/
 	text-decoration: none;
 }
 
 .ui-state-hover,.ui-widget-content .ui-state-hover,.ui-widget-header .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus,.ui-widget-header .ui-state-focus
 	{
-	border: 1px solid #0073ea;
+	border: 1px solid green; /*#0073ea*/
 	/*background: #CCCCCC
 		url("#{resource['primefaces-flick:images/ui-bg_highlight-soft_25_0073ea_1x100.png']}")
 		50% 50% repeat-x;*/
@@ -75,12 +75,14 @@
 .ui-state-hover a,.ui-state-hover a:hover {
 	color: #ffffff;
 	text-decoration: none;
+	text-shadow: 0 1px 0 green;
+	font-weight: bold;
 }
 
 .ui-state-active {
 	border: 0px solid #dddddd;
 	font-weight: bold;
-	color: #ff0084;
+	color: green; /*#ff0084*/
 }
 
 .ui-state-active,.ui-widget-content .ui-state-active,.ui-widget-header .ui-state-active
@@ -95,7 +97,7 @@
 }
 
 .ui-state-active a,.ui-state-active a:link,.ui-state-active a:visited {
-	color: #ff0084;
+	color: #867F10; /*#ff0084*/
 	text-decoration: none;
 }
 
@@ -104,7 +106,7 @@
 } /* Interaction Cues----------------------------------*/
 .ui-state-highlight,.ui-widget-content .ui-state-highlight,.ui-widget-header .ui-state-highlight
 	{
-	border: 1px solid #FF0084;
+	border: 1px solid #CCC; /*border: 1px solid #FF0084;*/
 	background: green 50% 50% repeat-x;
 	color: #FFFFFF;
 }

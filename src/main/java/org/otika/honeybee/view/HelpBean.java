@@ -13,6 +13,7 @@ import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -123,15 +124,17 @@ public class HelpBean implements Serializable {
 
 		try {
 			if (this.id == null) {
-				this.entityManager.persist(this.help);				
-				utilityBean.showMessage("INFO", this.help.getTitle()
-						+ bundle.i18n("item_created")+" : ", null);
+				this.entityManager.persist(this.help);
+				utilityBean.showMessage("INFO",
+						this.help.getTitle() + bundle.i18n("item_created")
+								+ " : ", null);
 				return "view.xhtml?id=" + this.help.getId();
 				// return "search?faces-redirect=true";
 			} else {
 				this.entityManager.merge(this.help);
-				utilityBean.showMessage("INFO", this.help.getTitle()
-						+bundle.i18n("item_updated")+" : ", null);
+				utilityBean.showMessage("INFO",
+						this.help.getTitle() + bundle.i18n("item_updated")
+								+ " : ", null);
 				return "view.xhtml?id=" + this.help.getId();
 				// return "view?faces-redirect=true&id=" + this.help.getId();
 			}
@@ -148,7 +151,7 @@ public class HelpBean implements Serializable {
 		boolean isAdmin = false;
 		try {
 			isAdmin = sessionContext.isCallerInRole("ADMINISTRATOR");
-			if (isAdmin == false) {
+			if (!isAdmin) {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage("No permission to delete!",
@@ -163,9 +166,8 @@ public class HelpBean implements Serializable {
 			if (isAdmin) {
 				this.entityManager.remove(findById(getId()));
 				this.entityManager.flush();
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(bundle.i18n("item_deleted")+" : "));
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(bundle.i18n("item_deleted") + " : "));
 				// return "search?faces-redirect=false";
 				return "/misc/redirect.xhtml?faces-redirect=false";
 			} else {
@@ -326,5 +328,24 @@ public class HelpBean implements Serializable {
 		Help added = this.add;
 		this.add = new Help();
 		return added;
+	}
+
+	/*
+	 * Utilities
+	 */
+
+	/**
+	 * Validator method to be attached to an input component
+	 * @param context FacesContext
+	 * @param toValidate Component_toValidate
+	 * @param value Component_Object_value
+	 */
+	public void validateSubject(FacesContext context, UIComponent toValidate,
+			Object value) {
+		if (String.valueOf(value).toLowerCase().contains("fuck")) {
+			context.addMessage(toValidate.getClientId(context),
+					new FacesMessage("Forbidden word"));
+			((UIInput) toValidate).setValid(false);
+        }
 	}
 }

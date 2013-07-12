@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/scaffold/pageTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:param name="pageTitle" value="#{i18n.login}" />
+
+    <ui:define name="header">
+        <h:outputText
+            value="#{empty request.remoteUser ? i18n.login : i18n.user_profile}" />
+    </ui:define>
+
+    <ui:define name="main">
+
+        <h2 class="success">
+            <h:outputText value="#{i18n.login}" rendered="#{true}" />
+        </h2>
+
+        <h:form id="authenticationForm" style="text-align:center;">
+            <h:panelGrid id="authGrid" columns="3"
+                         columnClasses="label,component,required">
+                <p:outputLabel value="#{i18n.email}" />
+                <h:inputText value="#{authenticationBean.email}" id="email_input" />
+                <h:outputText value="*" />
+                <h:outputText style="width:1px;" />
+                <p:message for="email_input" id="msgforemail" />
+                <h:outputText style="width:1px;" />
+                <p:outputLabel value="#{i18n.password}" />
+                <h:inputSecret value="#{authenticationBean.password}"
+                               id="password_input" 
+                               validatorMessage="Value must be at least 5">
+                    <f:validateLength minimum="5" /> 
+                    <f:converter converterId="org.otika.honeybee.util.SHAConverter"/>                  
+                </h:inputSecret>
+                <h:outputText value="*" />
+                <h:outputText />
+                <p:message for="password_input" />
+                <h:outputText />
+                <h:outputText />
+            </h:panelGrid>
+
+            <div align="center" class="buttons">
+                <h:commandLink action="#{authenticationBean.login(false,'referer')}"
+                               value="#{i18n.login}" styleClass="btn btn-primary" />
+            </div>
+        </h:form>
+        <h:form>
+            <div style="margin: 20px" class="buttons">
+                <p:commandButton value="#{i18n.logout}" styleClass="btn btn-primary"
+                                 action="#{utilityBean.showMessage('info','Disconnected','')}" actionListener="#{authenticationBean.logout}" 
+                                 rendered="#{not empty request.remoteUser}" />
+            </div>
+        </h:form>
+
+        <h:panelGroup rendered="#{not empty request.remoteUser}">
+            <h2 class="success">
+                <h:outputText value="#{i18n.user_profile}" />
+            </h2>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{not empty request.remoteUser}"
+                      styleClass="buttons">
+            <h:link value="#{i18n.user_profile}" outcome="/enduser/view"
+                    styleClass="btn btn-primary" includeViewParams="true">
+                <f:param name="id" value="#{userManagerBean.userObject.id}" />
+            </h:link>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{empty request.remoteUser}">
+            <h2 class="success">
+                <h:outputText value="#{i18n.signup}" />
+            </h2>
+        </h:panelGroup>
+        <div align="left">
+            <h:panelGroup rendered="#{empty request.remoteUser}"
+                          styleClass="buttons">
+                <h:link value="#{i18n.signup}" outcome="/enduser/create"
+                        styleClass="btn btn-primary">
+                </h:link>
+            </h:panelGroup>
+        </div>
+        <h:panelGroup rendered="#{empty request.remoteUser}">
+            <h2 class="success">
+                <h:outputText value="#{i18n.password_recovery} / #{i18n.activation}" />
+            </h2>
+            <div class="buttons">
+                <h:link outcome="/misc/activation" value="#{i18n.activation}"
+                        styleClass="btn btn-primary" />
+                <h:link outcome="/misc/activation" value="#{i18n.password_recovery}"
+                        styleClass="btn btn-primary" />
+            </div>
+        </h:panelGroup>
+    </ui:define>
+
+</ui:composition>

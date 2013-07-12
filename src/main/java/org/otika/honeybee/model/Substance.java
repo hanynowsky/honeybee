@@ -96,6 +96,7 @@ public class Substance implements java.io.Serializable
       this.label = label;
    }
 
+   @Field
    @Column(name = "labelfr", nullable = false, length = 45)
    public String getLabelfr()
    {
@@ -107,6 +108,7 @@ public class Substance implements java.io.Serializable
       this.labelfr = labelfr;
    }
 
+   @Field
    @Column(name = "labelar", nullable = false, length = 45)
    public String getLabelar()
    {
@@ -118,6 +120,7 @@ public class Substance implements java.io.Serializable
       this.labelar = labelar;
    }
 
+   @Field
    @Column(name = "description", length = 65535)
    public String getDescription()
    {

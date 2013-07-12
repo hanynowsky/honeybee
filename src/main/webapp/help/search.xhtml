@@ -32,7 +32,8 @@
 						<h:panelGroup>
 							<h:inputText id="helpBeanExampleTitle" maxlength="45"
 								value="#{helpBean.example.title}">
-								<f:ajax event="keyup" render="helpBeanPageItems paginator" execute="@form" />
+								<f:ajax event="keyup" render="helpBeanPageItems paginator"
+									execute="@form" />
 							</h:inputText>
 							<h:message for="helpBeanExampleTitle" styleClass="error" />
 						</h:panelGroup>
@@ -42,7 +43,8 @@
 						<h:panelGroup>
 							<h:inputTextarea id="helpBeanExampleContent"
 								value="#{helpBean.example.content}">
-								<f:ajax event="keyup" render="helpBeanPageItems paginator" execute="@form" />
+								<f:ajax event="keyup" render="helpBeanPageItems paginator"
+									execute="@form" />
 							</h:inputTextarea>
 							<h:message for="helpBeanExampleContent" styleClass="error" />
 						</h:panelGroup>
@@ -71,12 +73,14 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="#{i18n.content}" />
+						<h:outputText value="#{i18n.valid}" />
 					</f:facet>
 					<h:link outcome="/help/view">
 						<f:param name="id" value="#{_item.id}" />
-						<h:outputText escape="false" id="itemContent"
-							value="#{_item.content}" />
+						<h:graphicImage id="itemValid" value="#{resource['true.png']}"
+							rendered="#{_item.valid == true}" />
+						<h:graphicImage id="itemNotValid" value="#{resource['false.png']}"
+							rendered="#{_item.valid == false}" />
 					</h:link>
 				</h:column>
 			</h:dataTable>

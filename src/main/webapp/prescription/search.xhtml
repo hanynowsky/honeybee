@@ -1,138 +1,140 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/resources/scaffold/pageTemplate.xhtml">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/scaffold/pageTemplate.xhtml">
 
-	<f:metadata>
-		<f:viewParam name="page" value="#{prescriptionBean.page}"/>
-		<f:event type="preRenderView" listener="#{prescriptionBean.paginate(this)}"/>
-	</f:metadata>
+    <f:metadata>
+        <f:viewParam name="page" value="#{prescriptionBean.page}"/>
+        <f:event type="preRenderView" listener="#{prescriptionBean.paginate(this)}"/>
+    </f:metadata>
 
-	<ui:param name="pageTitle" value="#{i18n.prescriptions}"/>
+    <ui:param name="pageTitle" value="#{i18n.prescriptions}"/>
 
-	<ui:define name="header">
-		#{i18n.prescriptions}
-	</ui:define>
+    <ui:define name="header">
+        #{i18n.prescriptions}
+    </ui:define>
 
-	<ui:define name="subheader">
-		#{i18n.search}
-	</ui:define>
+    <ui:define name="subheader">
+        #{i18n.search}
+    </ui:define>
 
-	<ui:define name="footer"/>
+    <ui:define name="footer"/>
 
-	<ui:define name="main">
-		<h:form id="search">
-			<f:validateBean disabled="true">
-				<h:panelGroup styleClass="search">
+    <ui:define name="main">
+        <h:form id="search">
+            <f:validateBean disabled="true">
+                <h:panelGroup styleClass="search">
 
-					<h:panelGrid columnClasses="label,component,required" columns="3">
-						<h:outputLabel for="prescriptionBeanExampleAuthor" value="#{i18n.author}"/>
-						<h:panelGroup>
-							<h:selectOneMenu converter="#{authorBean.converter}" id="prescriptionBeanExampleAuthor" value="#{prescriptionBean.example.author}">
-								<f:selectItem/>
-								<f:selectItems value="#{authorBean.all}"/>
-								<f:ajax execute="@form" render="prescriptionBeanPageItems paginator" event="click"/>
-							</h:selectOneMenu>
-							<h:message for="prescriptionBeanExampleAuthor" styleClass="error"/>
-						</h:panelGroup>
-						<h:outputText/>
-						<h:outputLabel for="prescriptionBeanExampleTitle" value="#{i18n.title}"/>
-						<h:panelGroup>
-							<h:inputText id="prescriptionBeanExampleTitle" maxlength="145" value="#{prescriptionBean.example.title}">
-							<f:ajax execute="@form" render="prescriptionBeanPageItems paginator" event="keyup"/>
-							</h:inputText>
-							<h:message for="prescriptionBeanExampleTitle" styleClass="error"/>
-						</h:panelGroup>
-						<h:outputText/>
-						<h:outputLabel for="prescriptionBeanExampleTitlear" value="#{i18n.titlear}"/>
-						<h:panelGroup>
-							<h:inputText id="prescriptionBeanExampleTitlear" maxlength="145" value="#{prescriptionBean.example.titlear}">
-							<f:ajax execute="@form" render="prescriptionBeanPageItems paginator" event="keyup"/>
-							</h:inputText>
-							<h:message for="prescriptionBeanExampleTitlear" styleClass="error"/>
-						</h:panelGroup>
-						<h:outputText/>
-						<h:outputLabel for="prescriptionBeanExampleTitlefr" value="#{i18n.titlefr}"/>
-						<h:panelGroup>
-							<h:inputText id="prescriptionBeanExampleTitlefr" maxlength="145" value="#{prescriptionBean.example.titlefr}">
-							<f:ajax execute="@form" render="prescriptionBeanPageItems paginator" event="keyup"/>
-							</h:inputText>
-							<h:message for="prescriptionBeanExampleTitlefr" styleClass="error"/>
-						</h:panelGroup>
-						<h:outputText/>
-						<h:outputLabel for="prescriptionBeanExamplePreparation" value="#{i18n.preparation}"/>
-						<h:panelGroup>
-							<h:inputText id="prescriptionBeanExamplePreparation" maxlength="65535" value="#{prescriptionBean.example.preparation}">
-							<f:ajax execute="@form" render="prescriptionBeanPageItems paginator" event="keyup"/>
-							</h:inputText>
-							<h:message for="prescriptionBeanExamplePreparation" styleClass="error"/>
-						</h:panelGroup>
-						<h:outputText/>
-					</h:panelGrid>
-					<h:panelGroup styleClass="buttons">
-						<h:commandLink value="#{i18n.search}" action="#{prescriptionBean.search}" styleClass="btn btn-primary"/>
-						<h:commandLink rendered="#{isAdministrator or isAuthor}" value="#{i18n.create}" action="#{prescriptionBean.create}" styleClass="btn btn-primary"/>
-					</h:panelGroup>
-				</h:panelGroup>
-			</f:validateBean>
-			
-			<h:dataTable id="prescriptionBeanPageItems" styleClass="data-table" value="#{prescriptionBean.pageItems}" var="_item">
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{i18n.title}"/>
-					</f:facet>
-					<h:link outcome="/prescription/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemTitle" value="#{_item.title}"/>
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{i18n.titlear}"/>
-					</f:facet>
-					<h:link outcome="/prescription/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemTitlear" value="#{_item.titlear}"/>
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{i18n.titlefr}"/>
-					</f:facet>
-					<h:link outcome="/prescription/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemTitlefr" value="#{_item.titlefr}"/>
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{i18n.preparation}"/>
-					</f:facet>
-					<h:link outcome="/prescription/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemPreparation" value="#{_item.preparation}"/>
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{i18n.preparationfr}"/>
-					</f:facet>
-					<h:link outcome="/prescription/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemPreparationfr" value="#{_item.preparationfr}"/>
-					</h:link>
-				</h:column>
-			</h:dataTable>
-			<h:panelGroup id="paginator">
-			<ui:include src="/resources/scaffold/paginator.xhtml">
-				<ui:param name="paginatorBean" value="#{prescriptionBean}"/>
-			</ui:include>
-			</h:panelGroup>
-		</h:form>
-			
-	</ui:define>
+                    <h:panelGrid columnClasses="label,component,required" columns="3">
+                        <h:outputLabel for="prescriptionBeanExampleAuthor" value="#{i18n.author}"/>
+                        <h:panelGroup styleClass="onemenu">
+                            <p:selectOneMenu filter="true" filterMatchMode="contains"
+                                converter="#{authorBean.converter}" id="prescriptionBeanExampleAuthor" value="#{prescriptionBean.example.author}">
+                              <f:selectItem itemValue="#{null}" itemLabel="-----"/>
+                                <f:selectItems value="#{authorBean.all}" var="_a" itemLabel="#{utilityBean.switchLabel(_a)}" itemValue="#{_a}"/>
+                                <f:ajax execute="@form" render="prescriptionBeanPageItems paginator" />
+                            </p:selectOneMenu>
+                            <h:message for="prescriptionBeanExampleAuthor" styleClass="error"/>
+                        </h:panelGroup>
+                        <h:outputText/>
+                        <h:outputLabel for="prescriptionBeanExampleTitle" value="#{i18n.title}"/>
+                        <h:panelGroup>
+                            <h:inputText id="prescriptionBeanExampleTitle" maxlength="145" value="#{prescriptionBean.example.title}">
+                                <f:ajax execute="@form" render="prescriptionBeanPageItems paginator" event="keyup"/>
+                            </h:inputText>
+                            <h:message for="prescriptionBeanExampleTitle" styleClass="error"/>
+                        </h:panelGroup>
+                        <h:outputText/>
+                        <h:outputLabel for="prescriptionBeanExampleTitlear" value="#{i18n.titlear}"/>
+                        <h:panelGroup>
+                            <h:inputText id="prescriptionBeanExampleTitlear" maxlength="145" value="#{prescriptionBean.example.titlear}">
+                                <f:ajax execute="@form" render="prescriptionBeanPageItems paginator" event="keyup"/>
+                            </h:inputText>
+                            <h:message for="prescriptionBeanExampleTitlear" styleClass="error"/>
+                        </h:panelGroup>
+                        <h:outputText/>
+                        <h:outputLabel for="prescriptionBeanExampleTitlefr" value="#{i18n.titlefr}"/>
+                        <h:panelGroup>
+                            <h:inputText id="prescriptionBeanExampleTitlefr" maxlength="145" value="#{prescriptionBean.example.titlefr}">
+                                <f:ajax execute="@form" render="prescriptionBeanPageItems paginator" event="keyup"/>
+                            </h:inputText>
+                            <h:message for="prescriptionBeanExampleTitlefr" styleClass="error"/>
+                        </h:panelGroup>
+                        <h:outputText/>
+                        <h:outputLabel for="prescriptionBeanExamplePreparation" value="#{i18n.preparation}"/>
+                        <h:panelGroup>
+                            <h:inputText id="prescriptionBeanExamplePreparation" maxlength="65535" value="#{prescriptionBean.example.preparation}">
+                                <f:ajax execute="@form" render="prescriptionBeanPageItems paginator" event="keyup"/>
+                            </h:inputText>
+                            <h:message for="prescriptionBeanExamplePreparation" styleClass="error"/>
+                        </h:panelGroup>
+                        <h:outputText/>
+                    </h:panelGrid>
+                    <h:panelGroup styleClass="buttons">
+                        <h:commandLink value="#{i18n.search}" action="#{prescriptionBean.search}" styleClass="btn btn-primary"/>
+                        <h:commandLink rendered="#{isAdministrator or isAuthor}" value="#{i18n.create}" action="#{prescriptionBean.create}" styleClass="btn btn-primary"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </f:validateBean>
+
+            <h:dataTable id="prescriptionBeanPageItems" styleClass="data-table" value="#{prescriptionBean.pageItems}" var="_item">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{i18n.title}"/>
+                    </f:facet>
+                    <h:link outcome="/prescription/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemTitle" value="#{_item.title}"/>
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{i18n.titlear}"/>
+                    </f:facet>
+                    <h:link outcome="/prescription/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemTitlear" value="#{_item.titlear}"/>
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{i18n.titlefr}"/>
+                    </f:facet>
+                    <h:link outcome="/prescription/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemTitlefr" value="#{_item.titlefr}"/>
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{i18n.coefficient}"/>
+                    </f:facet>
+                    <h:link outcome="/prescription/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemCoefficient" value="#{_item.coefficient}"/>
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{i18n.witnesses}"/>
+                    </f:facet>
+                    <h:link outcome="/prescription/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemWitnessesCount" value="#{_item.witnesses.size()}"/>
+                    </h:link>
+                </h:column>
+            </h:dataTable>
+            <h:panelGroup id="paginator">
+                <ui:include src="/resources/scaffold/paginator.xhtml">
+                    <ui:param name="paginatorBean" value="#{prescriptionBean}"/>
+                </ui:include>
+            </h:panelGroup>
+        </h:form>
+
+    </ui:define>
 
 </ui:composition>

@@ -3,10 +3,13 @@ package org.otika.honeybee.util;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
+import javax.ejb.StatefulTimeout;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,6 +24,9 @@ import org.otika.honeybee.model.Ingredient;
 @Named("searchBean")
 @Stateful
 @SessionScoped
+@StatefulTimeout(value = 29, unit = TimeUnit.MINUTES)
+/** Session scope is mandatory in order to keep search list 
+ persistent in data table - with pagination - multiple requests */
 public class SearchBean implements Serializable {
 
 	private static final long serialVersionUID = 7346308736815039014L;
@@ -28,8 +34,10 @@ public class SearchBean implements Serializable {
 	private List<?> ingredients;
 	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	private EntityManager entityManager;
-	FullTextSession fullTextSession;
-	FullTextEntityManager fullTextEntityManager;
+	protected FullTextSession fullTextSession;
+	private FullTextEntityManager fullTextEntityManager;
+	@Inject
+	private UtilityBean utilityBean;
 
 	@PostConstruct
 	public void init() {
@@ -49,19 +57,24 @@ public class SearchBean implements Serializable {
 	 * Hibernate Search Method to search ingredients
 	 */
 	public void searchIngredients() {
-		if (keyword != null) {
+		if (keyword != null && !keyword.equals("")) {
 			QueryBuilder qb = fullTextEntityManager.getSearchFactory()
 					.buildQueryBuilder().forEntity(Ingredient.class).get();
 			org.apache.lucene.search.Query query = qb
 					.keyword()
+					.fuzzy()
+					.withThreshold(.7f)
+					.withPrefixLength(1)
 					.onFields("label", "labelfr", "labelar", "labelmar",
-							"plant.label", "honey.label", "substance.label",
-							"description", "descriptionar", "descriptionfr",
-							"form", "virtues.label", "virtues.labelar",
-							"virtues.labelfr", "defects.label",
-							"defects.labelar", "defects.labelfr",
-							"prescriptions.title", "prescriptions.titlear",
-							"virtues.bodypart.label",
+							"plant.label", "honey.labelar", "substance.label",
+							"substance.labelar", "substance.labelfr",
+							"honey.labelfr", "honey.label", "plant.labelfr",
+							"plant.labelar", "description", "descriptionar",
+							"descriptionfr", "form", "virtues.label",
+							"virtues.labelar", "virtues.labelfr",
+							"defects.label", "defects.labelar",
+							"defects.labelfr", "prescriptions.title",
+							"prescriptions.titlear", "virtues.bodypart.label",
 							"prescriptions.treatment",
 							"virtues.bodypart.labelar",
 							"virtues.bodypart.labelfr",
@@ -84,13 +97,33 @@ public class SearchBean implements Serializable {
 							"prescriptions.author.countryar").matching(keyword)
 					.createQuery();
 
+			// TODO add sorting by id
 			javax.persistence.Query persistenceQuery = fullTextEntityManager
 					.createFullTextQuery(query, Ingredient.class);
-			List<?> result = persistenceQuery.getResultList();
-			ingredients = result;
+			int i = persistenceQuery.getResultList().size();
+			String message = "Search returned " + i + " Results";
+			utilityBean.showMessage("INFO", message, "-");
+			ingredients = persistenceQuery.getResultList();
+
 			// entityManager.getTransaction().commit();
 			// entityManager.close();
+		} else {
+			String message = "Please type a keyword";
+			utilityBean.showMessage("WARN", message, "-");
 		}
+	}
+
+	/**
+	 * Reset keyword and ingredient list.
+	 * <p>
+	 * The method cannot be decorated by <em>@Remove</em> in order to free from memory
+	 * the instance of Search Bean, for it is a non-dependant bean
+	 * </p>
+	 */
+	//@Remove
+	public void release() {
+		setKeyword("");
+		ingredients.clear();
 	}
 
 	public String getKeyword() {

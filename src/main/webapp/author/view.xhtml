@@ -9,11 +9,11 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<f:metadata>
-		<f:viewParam name="id" value="#{authorBean.id}"/>
-		<f:event type="preRenderView" listener="#{authorBean.retrieve}"/>
+		<f:viewParam name="id" value="#{authorBean.id}" />
+		<f:event type="preRenderView" listener="#{authorBean.retrieve}" />
 	</f:metadata>
 
-    <ui:param name="pageTitle" value="#{i18n.author}"/>
+	<ui:param name="pageTitle" value="#{i18n.author}" />
 
 	<ui:define name="header">
 		#{i18n.author}
@@ -23,100 +23,122 @@
 		#{i18n.author}
 	</ui:define>
 
-	<ui:define name="footer"/>
+	<ui:define name="footer" />
 
 	<ui:define name="main">
 		<h:panelGrid columnClasses="label,component,required" columns="3">
-			<h:outputLabel for="authorBeanAuthorName" value="#{i18n.name}"/>
-			<h:outputText id="authorBeanAuthorName" value="#{authorBean.author.name}"/>
-			<h:outputText/>
-			<h:outputLabel for="authorBeanAuthorSurname" value="#{i18n.surname}"/>
-			<h:outputText id="authorBeanAuthorSurname" value="#{authorBean.author.surname}"/>
-			<h:outputText/>
-                        <h:outputLabel for="authorBeanAuthorNamear" value="#{i18n.namear}"/>
-			<h:outputText id="authorBeanAuthorNamear" value="#{authorBean.author.namear}"/>
-			<h:outputText/>
-                        <h:outputLabel for="authorBeanAuthorSurnamear" value="#{i18n.surnamear}"/>
-			<h:outputText id="authorBeanAuthorSurnamear" value="#{authorBean.author.surnamear}"/>
-			<h:outputText/>
-			<h:outputLabel for="authorBeanAuthorBio" value="#{i18n.bio}"/>
-			<h:outputText id="authorBeanAuthorBio" value="#{authorBean.author.bio}"/>
-			<h:outputText/>
-			<h:outputLabel for="authorBeanAuthorTelephone" value="#{i18n.phone}"/>
-			<h:outputText id="authorBeanAuthorTelephone" value="#{authorBean.author.telephone}"/>
-			<h:outputText/>
-			<h:outputLabel for="authorBeanAuthorWebsite" value="#{i18n.website}"/>
-			<h:outputText id="authorBeanAuthorWebsite" value="#{authorBean.author.website}"/>
-			<h:outputText/>
-			<h:outputLabel for="authorBeanAuthorEmail" value="#{i18n.email}"/>
-			<h:outputText id="authorBeanAuthorEmail" value="#{authorBean.author.email}"/>
-			<h:outputText/>
-			<h:outputLabel for="authorBeanAuthorExpertise" value="#{i18n.expertise}"/>
-			<h:outputText id="authorBeanAuthorExpertise" value="#{authorBean.author.expertise}"/>
-			<h:outputText/>
-			<h:outputLabel for="authorBeanAuthorCountry" value="#{i18n.country}"/>
-			<h:outputText id="authorBeanAuthorCountry" value="#{authorBean.author.country}"/>
-			<h:outputText/>
-                        <h:outputLabel for="authorBeanAuthorCountryar" value="#{i18n.countryar}"/>
-			<h:outputText id="authorBeanAuthorCountryar" value="#{authorBean.author.countryar}"/>
-			<h:outputText/>
-                        <h:outputLabel for="authorBeanAuthorPrescriptions" value="#{i18n.prescriptions}"/>
-			<p:dataTable id="authorBeanAuthorPrescriptions" 
-			styleClass="primedatatable" paginator="true" paginatorPosition="top" rows="3" paginatorAlwaysVisible="false"
-			value="#{forgeview:asList(authorBean.author.prescriptions)}" var="_item">
+			<h:outputLabel for="authorBeanAuthorName" value="#{i18n.name}" />
+			<h:outputText id="authorBeanAuthorName"
+				value="#{authorBean.author.name}" />
+			<h:outputText />
+			<h:outputLabel for="authorBeanAuthorSurname" value="#{i18n.surname}" />
+			<h:outputText id="authorBeanAuthorSurname"
+				value="#{authorBean.author.surname}" />
+			<h:outputText />
+			<h:outputLabel for="authorBeanAuthorNamear" value="#{i18n.namear}" />
+			<h:outputText id="authorBeanAuthorNamear"
+				value="#{authorBean.author.namear}" />
+			<h:outputText />
+			<h:outputLabel for="authorBeanAuthorSurnamear"
+				value="#{i18n.surnamear}" />
+			<h:outputText id="authorBeanAuthorSurnamear"
+				value="#{authorBean.author.surnamear}" />
+			<h:outputText />
+			<h:outputLabel for="authorBeanAuthorBio" value="#{i18n.bio}" />
+			<h:outputText id="authorBeanAuthorBio"
+				value="#{authorBean.author.bio}" />
+			<h:outputText />
+			<h:outputLabel for="authorBeanAuthorTelephone" value="#{i18n.phone}" />
+			<h:outputText id="authorBeanAuthorTelephone"
+				value="#{authorBean.author.telephone}" />
+			<h:outputText />
+			<h:outputLabel for="authorBeanAuthorWebsite" value="#{i18n.website}" />
+			<h:outputText id="authorBeanAuthorWebsite"
+				value="#{authorBean.author.website}" />
+			<h:outputText />
+			<h:outputLabel for="authorBeanAuthorEmail" value="#{i18n.email}" />
+			<h:outputText id="authorBeanAuthorEmail"
+				value="#{authorBean.author.email}" />
+			<h:outputText />
+			<h:outputLabel for="authorBeanAuthorExpertise"
+				value="#{i18n.expertise}" />
+			<h:outputText id="authorBeanAuthorExpertise"
+				value="#{authorBean.author.expertise}" />
+			<h:outputText />
+			<h:outputLabel for="authorBeanAuthorCountry" value="#{i18n.country}" />
+			<h:outputText id="authorBeanAuthorCountry"
+				value="#{authorBean.author.country}" />
+			<h:outputText />
+			<h:outputLabel for="authorBeanAuthorCountryar"
+				value="#{i18n.countryar}" />
+			<h:outputText id="authorBeanAuthorCountryar"
+				value="#{authorBean.author.countryar}" />
+			<h:outputText />
+			<h:outputLabel for="authorBeanAuthorPrescriptions"
+				value="#{i18n.prescriptions}" />
+			<p:dataTable id="authorBeanAuthorPrescriptions"
+				styleClass="primedatatable" paginator="true" paginatorPosition="top"
+				rows="3" paginatorAlwaysVisible="false"
+				value="#{forgeview:asList(authorBean.author.prescriptions)}"
+				var="_item">
 				<p:column>
 					<f:facet name="header">
-                                            <h:outputText value="#{i18n.title}"/>
+						<h:outputText value="#{i18n.title}" />
 					</f:facet>
 					<h:link outcome="/prescription/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemTitle" value="#{_item.title}"/>
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemTitle" value="#{_item.title}" />
 					</h:link>
 				</p:column>
 				<p:column>
 					<f:facet name="header">
-                                            <h:outputText value="#{i18n.titlear}"/>
+						<h:outputText value="#{i18n.titlear}" />
 					</f:facet>
 					<h:link outcome="/prescription/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemTitlear" value="#{_item.titlear}"/>
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemTitlear" value="#{_item.titlear}" />
 					</h:link>
 				</p:column>
 				<p:column>
 					<f:facet name="header">
-                                            <h:outputText value="#{i18n.titlefr}"/>
+						<h:outputText value="#{i18n.titlefr}" />
 					</f:facet>
 					<h:link outcome="/prescription/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemTitlefr" value="#{_item.titlefr}"/>
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemTitlefr" value="#{_item.titlefr}" />
 					</h:link>
 				</p:column>
 				<p:column>
 					<f:facet name="header">
-                                            <h:outputText value="#{i18n.preparation}"/>
+						<h:outputText value="#{i18n.coefficient}" />
 					</f:facet>
 					<h:link outcome="/prescription/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemPreparation" value="#{_item.preparation}"/>
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemCoefficient" value="#{_item.coefficient}" />
 					</h:link>
 				</p:column>
 				<p:column>
 					<f:facet name="header">
-                                            <h:outputText value="#{i18n.preparationfr}"/>
+						<h:outputText value="#{i18n.witnesses}" />
 					</f:facet>
 					<h:link outcome="/prescription/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemPreparationfr" value="#{_item.preparationfr}"/>
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemWitnesses"
+							value="#{_item.witnesses.size()}" />
 					</h:link>
 				</p:column>
 			</p:dataTable>
-			<h:outputText/>
+			<h:outputText />
 		</h:panelGrid>
 
 		<div class="buttons">
-                    <h:link value="#{i18n.view_all}" outcome="search" styleClass="btn btn-primary"/> 
-                    <h:link rendered="#{isAdministrator or isAuthor}" value="#{i18n.edit}" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
-			<h:link rendered="#{isAdministrator or isAuthor}" value="#{i18n.create}" outcome="create" styleClass="btn btn-primary"/>
+			<h:link value="#{i18n.view_all}" outcome="search"
+				styleClass="btn btn-primary" />
+			<h:link rendered="#{isAdministrator or isAuthor}"
+				value="#{i18n.edit}" outcome="create" includeViewParams="true"
+				styleClass="btn btn-primary" />
+			<h:link rendered="#{isAdministrator or isAuthor}"
+				value="#{i18n.create}" outcome="create" styleClass="btn btn-primary" />
 		</div>
 	</ui:define>
 

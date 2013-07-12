@@ -28,7 +28,7 @@
 	<ui:define name="main">
 		<h:panelGrid columnClasses="label,component,required" columns="3">
 			<h:outputLabel for="defectBeanDefectBodypart" value="#{i18n.bodypart}"/>
-			<h:link id="defectBeanDefectBodypart" outcome="/bodypart/view" value="#{defectBean.defect.bodypart}">
+			<h:link id="defectBeanDefectBodypart" outcome="/bodypart/view" value="#{utilityBean.switchLabel(defectBean.defect.bodypart)}">
 				<f:param name="id" value="#{defectBean.defect.bodypart.id}"/>
 			</h:link>
 			<h:outputText/>

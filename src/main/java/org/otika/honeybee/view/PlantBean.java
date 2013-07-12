@@ -7,7 +7,6 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -18,9 +17,11 @@ import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -58,8 +59,7 @@ public class PlantBean implements Serializable {
 	private EntityManager entityManager;
 	private Plant plant;
 	private static final long serialVersionUID = 1L;
-	private OutputStream output;
-	private StreamedContent graphic;
+    private StreamedContent graphic;
 
 	/*
 	 * Support creating and retrieving Plant entities
@@ -85,7 +85,7 @@ public class PlantBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-			
+         // TODO
 	}
 
 	/**
@@ -318,11 +318,10 @@ public class PlantBean implements Serializable {
 		return added;
 	}
 
-	/**
-	 * File Upload Listener
-	 * 
-	 * @throws IOException
-	 */
+    /**
+     * File upload listener
+     * @param event File Upload Event
+     */
 	public void handleFileUpload(FileUploadEvent event) {
 		String p = System.getProperty("user.home");
 		String separator = File.separator;
@@ -335,7 +334,7 @@ public class PlantBean implements Serializable {
 						+ separator + "pics").mkdirs();
 				f.createNewFile();
 			}
-			output = new FileOutputStream(f);
+            OutputStream output = new FileOutputStream(f);
 			/*
 			 * byte[] content = new byte[1024]; int read; while ((read =
 			 * file.getInputstream().read(content)) != -1) {
@@ -345,10 +344,23 @@ public class PlantBean implements Serializable {
 			file.getInputstream().close();
 			output.flush();
 
-			//Plant plant = new Plant("P2", "P2", "P2", "P2");
-			this.plant.setGraphic(file.getContents());
-			//plant.setId(Long.valueOf("0"));
-			//this.entityManager.persist(plant);
+			// Plant plant = new Plant("P2", "P2", "P2", "P2");
+			int height = ImageIO.read(file.getInputstream()).getHeight();
+			int width = ImageIO.read(file.getInputstream()).getWidth();
+			if (width == height) {
+				System.out.println("w: " + width + " == " + " h: " + height
+						+ " Image is square-sized");
+				this.plant.setGraphic(file.getContents());
+				// this.plant.setGraphic(file.getContents());
+			} else {
+				System.out.println(width + " != " + height
+						+ " Image must be square-sized");
+				FacesMessage msg = new FacesMessage(
+						"Image must be square-sized");
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+			}
+			// plant.setId(Long.valueOf("0"));
+			// this.entityManager.persist(plant);
 
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -360,11 +372,43 @@ public class PlantBean implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"File was not uploaded: " + file.getFileName(),
 							null));
-			Logger.getLogger(PlantBean.class.getName()).log(Level.SEVERE, null,
-					ex);
+			Logger.getLogger(PlantBean.class.getName()).severe(ex.getMessage());
 		}
 
 	} // END OF METHOD
 
+	/**
+	 * Validator for plant graphic
+	 * 
+	 * @param context FacesContext
+	 * @param component UIComponent
+	 * @param value Object value
+	 */
+	public void imageValidator(FacesContext context, UIComponent component,
+			Object value) {
+		/*
+		 * TODO this validator is not invoked from primefaces upload file
+		 * component
+		 */
+		try {
+			int height = ImageIO.read(((UploadedFile) value).getInputstream())
+					.getHeight();
+			int width = ImageIO.read(((UploadedFile) value).getInputstream())
+					.getWidth();
+			System.out
+					.println("image validator: w: " + width + " h: " + height);
+			if (width != height) {
+				((UIInput) component).setValid(false);
+				context.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR,
+						"File was not uploaded: Graphic must be square-sized: "
+								+ width + " # " + height, null));
+            }
+		} catch (IOException e) {
+			Logger.getLogger(getClass().getName()).severe(
+					"IO Exception reading graphic width & height "
+							+ e.getMessage());
+		}
+	}
 
 } // END OF CLASS

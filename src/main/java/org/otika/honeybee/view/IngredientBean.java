@@ -126,97 +126,35 @@ public class IngredientBean implements Serializable {
 	 */
 
 	/**
-	 * Method that sets the same defects and virtues for all ingredients of same
-	 * type
-	 */
-	private void appendIngredientVirtuesAndDefects() {
-		try {
-			Ingredient ilf = this.ingredient;
-			Ingredient ibylf = repository.findByLabelAndForm(
-					this.ingredient.getLabel(), this.ingredient.getForm());
-			if (ibylf == null) {
-				ilf = this.ingredient;
-			} else {
-				ilf = ibylf;
-			}
-			if (ilf.getForm().equalsIgnoreCase("raw")
-					&& ilf.getSubstance() == null) {
-				// Maybe we should exclude honey ingredient if it has different
-				// virtues and defects
-				List<Ingredient> ingredients = repository
-						.findByLabel(this.ingredient.getLabel());
-				for (Ingredient i : ingredients) {
-					if (!i.getForm().equalsIgnoreCase("raw")) {
-						i.setDefects(new HashSet<Defect>(ilf.getDefects()));
-						i.setVirtues(new HashSet<Virtue>(ilf.getVirtues()));
-						// merge i here => hibernate shared exception
-						this.entityManager.merge(i);
-					}
-				}
-				/*
-				 * Set<Virtue> virtues = new
-				 * HashSet<Virtue>(this.ingredient.getVirtues()); Set<Defect>
-				 * defects = new HashSet<Defect>(this.ingredient.getDefects());
-				 * Ingredient o =
-				 * repository.findByLabelAndForm(this.ingredient.getLabel(),
-				 * "oil") ; Ingredient p =
-				 * repository.findByLabelAndForm(this.ingredient.getLabel(),
-				 * "powder"); Ingredient h =
-				 * repository.findByLabelAndForm(this.ingredient.getLabel(),
-				 * "honey");
-				 * o.setVirtues(virtues);p.setVirtues(virtues);h.setVirtues
-				 * (virtues);
-				 * o.setDefects(defects);p.setDefects(defects);h.setDefects
-				 * (defects); this.entityManager.merge(o);
-				 * this.entityManager.merge(p); this.entityManager.merge(h);
-				 */
-			}
-		} catch (Exception ex) {
-			Logger.getLogger(IngredientBean.class.getName()).log(Level.ALL,
-					ex.getMessage());
-			System.out
-					.println(ex.getMessage()
-							+ " "
-							+ ex
-							+ ex.getStackTrace().toString()
-							+ " Setting defects & virtues for all ingredients of same type, failed!");
-		}
-
-	}
-
-	/**
-	 * 
-	 * @return is_Honey?
-	 */
-	private boolean isHoney() {
-		Ingredient i = this.ingredient;
-		if (i.getHoney() != null && i.getSubstance() == null
-				&& i.getPlant() == null) {
-			i.setForm("honey");
-			return true;
-		}
-		return false;
-	}
-
-	/**
 	 * Creating & Editing Ingredient objects
 	 * 
 	 * @return outcome
 	 */
 	public String update() {
-		this.conversation.end();
-
+		// ending conversation was originally here
 		try {
 			if (this.id == null) {
-				isHoney();				
-				this.entityManager.persist(this.ingredient);
-				appendIngredientVirtuesAndDefects();
-				return "search?faces-redirect=true";
+				if (!isIngredientPresent()
+						&& !isOneParentIngredientPresent()) {
+					isHoney();
+					this.conversation.end();
+					this.entityManager.persist(this.ingredient);
+					appendIngredientVirtuesAndDefects();
+					return "search?faces-redirect=true";
+				} else {
+					return null;
+				}
 			} else {
-				isHoney();
-				this.entityManager.merge(this.ingredient);
-				appendIngredientVirtuesAndDefects();
-				return "view?faces-redirect=true&id=" + this.ingredient.getId();
+				if (!isOneParentIngredientPresent()) {
+					isHoney();
+					this.conversation.end();
+					this.entityManager.merge(this.ingredient);
+					appendIngredientVirtuesAndDefects();
+					return "view?faces-redirect=true&id="
+							+ this.ingredient.getId();
+				} else {
+					return null;
+				}
 			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
@@ -369,29 +307,6 @@ public class IngredientBean implements Serializable {
 				.getResultList();
 	}
 
-	/*
-	 * 
-	 * @return List_of_ingredient_items
-	 */
-	public List<Ingredient> getIngredientItemsByForm() {
-		if (getForm() != null && !"".equals(getForm())) {
-			try {
-				CriteriaQuery<Ingredient> criteria = this.entityManager
-						.getCriteriaBuilder().createQuery(Ingredient.class);
-				return this.entityManager
-						.createQuery(
-								criteria.select(criteria.from(Ingredient.class)))
-						.setParameter("form", getForm()).getResultList();
-			} catch (Exception ex) {
-				// No need for Finally clause for EM is closed by container
-				Logger.getLogger(Repository.class.getName()).log(Level.ALL,
-						ex.getMessage());
-				return null;
-			}
-		}
-		return null;
-	}
-
 	@Resource
 	private SessionContext sessionContext;
 
@@ -440,6 +355,7 @@ public class IngredientBean implements Serializable {
 		ingredientForms.add("powder");
 		ingredientForms.add("honey");
 		ingredientForms.add("juice");
+		ingredientForms.add("mixture");
 
 		selectedIngredients = getAll();
 
@@ -451,14 +367,110 @@ public class IngredientBean implements Serializable {
 		units.add("bottle");
 	}
 
+	/*
+	 * 
+	 * @return List_of_ingredient_items
+	 */
+	public List<Ingredient> getIngredientItemsByForm() {
+		if (getForm() != null && !"".equals(getForm())) {
+			try {
+				CriteriaQuery<Ingredient> criteria = this.entityManager
+						.getCriteriaBuilder().createQuery(Ingredient.class);
+				return this.entityManager
+						.createQuery(
+								criteria.select(criteria.from(Ingredient.class)))
+						.setParameter("form", getForm()).getResultList();
+			} catch (Exception ex) {
+				// No need for Finally clause for EM is closed by container
+				Logger.getLogger(Repository.class.getName()).log(Level.ALL,
+						ex.getMessage());
+				return null;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Method that sets the same defects and virtues for all ingredients of same
+	 * type
+	 */
+	private void appendIngredientVirtuesAndDefects() {
+		try {
+			Ingredient ilf;
+			Ingredient ibylf = repository.findByLabelAndForm(
+					this.ingredient.getLabel(), this.ingredient.getForm());
+			if (ibylf == null) {
+				ilf = this.ingredient;
+			} else {
+				ilf = ibylf;
+			}
+			if (ilf.getForm().equalsIgnoreCase("raw")
+					&& ilf.getSubstance() == null) {
+				/*
+				 * Maybe we should exclude honey ingredient if it has different
+				 * virtues and defects
+				 */
+				List<Ingredient> ingredients = repository
+						.findByLabel(this.ingredient.getLabel());
+				for (Ingredient i : ingredients) {
+					if (!i.getForm().equalsIgnoreCase("raw")) {
+						i.setDefects(new HashSet<Defect>(ilf.getDefects()));
+						i.setVirtues(new HashSet<Virtue>(ilf.getVirtues()));
+						// merge i here => hibernate shared exception
+						this.entityManager.merge(i);
+					}
+				}
+				/*
+				 * Set<Virtue> virtues = new
+				 * HashSet<Virtue>(this.ingredient.getVirtues()); Set<Defect>
+				 * defects = new HashSet<Defect>(this.ingredient.getDefects());
+				 * Ingredient o =
+				 * repository.findByLabelAndForm(this.ingredient.getLabel(),
+				 * "oil") ; Ingredient p =
+				 * repository.findByLabelAndForm(this.ingredient.getLabel(),
+				 * "powder"); Ingredient h =
+				 * repository.findByLabelAndForm(this.ingredient.getLabel(),
+				 * "honey");
+				 * o.setVirtues(virtues);p.setVirtues(virtues);h.setVirtues
+				 * (virtues);
+				 * o.setDefects(defects);p.setDefects(defects);h.setDefects
+				 * (defects); this.entityManager.merge(o);
+				 * this.entityManager.merge(p); this.entityManager.merge(h);
+				 */
+			}
+		} catch (Exception ex) {
+			Logger.getLogger(IngredientBean.class.getName()).log(Level.ALL,
+					ex.getMessage());
+			System.out
+					.println(ex.getMessage()
+							+ " "
+							+ ex
+							+ " Setting defects & virtues for all ingredients of same type, failed!");
+			ex.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Method that checks whether an Ingredient has a Honey object as the only
+	 * parent and sets its form to honey
+	 * 
+	 * @return is_Honey?
+	 */
+	private boolean isHoney() {
+		Ingredient i = this.ingredient;
+		if (i.getHoney() != null && i.getSubstance() == null
+				&& i.getPlant() == null) {
+			i.setForm("honey");
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Listener for the ingredient form select one menu
 	 */
 	public void updateIngredients() {
-		/*
-		 * if (this.conversation.isTransient()) { this.conversation.begin(); }
-		 * // Suspicious
-		 */
 		if (form == null || form.equals("")) {
 			System.out.println(form + " : form is null");
 			utilityBean
@@ -476,7 +488,7 @@ public class IngredientBean implements Serializable {
 
 	/**
 	 * 
-	 * @param event
+	 * @param evt Value Change event
 	 */
 	public void FormValueChangeListener(ValueChangeEvent evt) {
 		if (evt != null) {
@@ -488,31 +500,118 @@ public class IngredientBean implements Serializable {
 
 	/**
 	 * 
-	 * @param label
+	 * @param i Ingredient
 	 * @return localized_label_string
 	 */
 	public String switchLabel(Ingredient i) {
 		String lang = FacesContext.getCurrentInstance().getViewRoot()
 				.getLocale().getLanguage();
 		if (i != null) {
-			if ("ar".equals(lang)) {
-				return i.getLabelar();
-			} else if ("fr".equals(lang)) {
-				return i.getLabelfr();
-			} else {
-				return i.getLabel();
-			}
+            switch (lang) {
+                case "ar":
+                    return i.getLabelar();
+                case "fr":
+                    return i.getLabelfr();
+                default:
+                    return i.getLabel();
+            }
 		}
 		return null;
 	}
 
-	public List<String> getUnits() {
-		return units;
+	/**
+	 * 
+	 * @return whether_an_ingredient_is_present_or_not
+	 */
+	private boolean isIngredientPresent() {
+		try {
+			Ingredient i = repository.findByLabelAndForm(
+					this.ingredient.getLabel(), this.ingredient.getForm());
+			if (i != null) {
+				utilityBean.showMessage("ERROR",
+						"(Ingredient) Item already exists in database!", "");
+				System.out.println("(Ingredient) Item Already exists in DB! ");
+				return true;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Logger.getLogger(IngredientBean.class.getName()).log(Level.ALL,
+					ex.getMessage());
+			System.out.println("Failure checking Ingredient uniqueness! "
+					+ ex.getMessage());
+		}
+		return false;
+	}
+
+	/**
+	 * Method that ensures a newly created ingredient object is not a duplicate
+	 * 
+	 * @return whether_ingredient_is_present_on_DB
+	 */
+
+	public boolean isOneParentIngredientPresent() {
+		try {
+			List<Ingredient> ipList = repository.findByPlantAndForm(
+					this.ingredient.getPlant(), this.ingredient.getForm());
+			List<Ingredient> ihList = repository.findByHoneyAndForm(
+					this.ingredient.getHoney(), this.ingredient.getForm());
+			List<Ingredient> isList = repository.findBySubstanceAndForm(
+					this.ingredient.getSubstance(), this.ingredient.getForm());
+			boolean conditionP = ipList != null
+					&& this.ingredient.getSubstance() == null
+					&& this.ingredient.getHoney() == null;
+			boolean conditionS = isList != null
+					&& this.ingredient.getPlant() == null
+					&& this.ingredient.getHoney() == null;
+			boolean conditionH = ihList != null
+					&& this.ingredient.getSubstance() == null
+					&& this.ingredient.getPlant() == null;
+
+			if ((conditionP || conditionS || conditionH)
+					&& !this.ingredient.getForm().equalsIgnoreCase("mixture")) {
+				utilityBean.showMessage("ERROR", "Item exists", "");
+				return true;
+			}
+
+		} catch (Exception ex) {
+			// TODO Properly handle exception
+			System.out.println("IngredientBean: Exception in isOneIngredient: "
+					+ getClass().getName() + " : " + ex);
+			ex.printStackTrace();
+			Logger.getLogger(getClass().getName()).log(Level.ALL,
+					ex.getMessage(), ex);
+		}
+		return false;
+	}
+
+	/**
+	 * Supposed to validate ingredient uniqueness
+	 * 
+	 * @param context
+	 * @param component
+	 * @param value
+	 */
+	public void validateIngredient(FacesContext context, UIComponent component,
+			Object value) {
+		// TODO logic here : Use this validator for all required select menu
+		// components
+		if (value instanceof Ingredient || value instanceof Honey
+				|| value instanceof Plant) {
+			if (isOneParentIngredientPresent() && isIngredientPresent()) {
+				utilityBean.showMessage("ERROR",
+						"Validation Error: Ingredient already exists ", "");
+				// new ValidationException("Validation Error: Item Exists");
+			}
+		}
 	}
 
 	/*
 	 * Getters & Setters
 	 */
+
+	public List<String> getUnits() {
+		return units;
+	}
 
 	/**
 	 * @return the ingredientForms

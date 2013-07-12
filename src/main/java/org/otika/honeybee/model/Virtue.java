@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
@@ -154,6 +155,7 @@ public class Virtue implements java.io.Serializable
       this.prescriptions = prescriptions;
    }
 
+   @ContainedIn
    @ManyToMany(fetch = FetchType.LAZY)
    @JoinTable(name = "virtue_ingredient", catalog = "honeybee", joinColumns = {
          @JoinColumn(name = "virtue_id", nullable = false, updatable = false) }, inverseJoinColumns = {

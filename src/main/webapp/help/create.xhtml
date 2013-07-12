@@ -34,13 +34,14 @@
 
 	<ui:define name="main">
 		<h:form id="create" rendered="#{isAdministrator}">
-			<h:messages globalOnly="true" styleClass="error" />
+			<h:messages globalOnly="true" styleClass="error" id="helpcreateForm" />
 
 			<h:panelGrid columnClasses="label,component,required" columns="3">
 				<h:outputLabel for="helpBeanHelpTitle" value="#{i18n.title}" />
 				<h:panelGroup>
 					<h:inputText id="helpBeanHelpTitle" maxlength="45" required="true"
-						value="#{helpBean.help.title}" />
+						value="#{helpBean.help.title}"
+						validator="#{helpBean.validateSubject}" />
 					<h:message for="helpBeanHelpTitle" styleClass="error" />
 				</h:panelGroup>
 				<h:outputText value="*" />
@@ -74,11 +75,21 @@
 							styleClass="btn btn-primary">
 							<f:param name="id" value="#{helpBean.id}" />
 						</h:link>
-						<h:commandLink value="#{i18n.delete}" action="#{helpBean.delete}"
-							styleClass="btn btn-primary">
-							<f:setPropertyActionListener target="#{utilityBean.viewPath}"
-								value="/help/search" />
-						</h:commandLink>
+
+						<p:commandButton value="#{i18n.delete}" onclick="cd.show();" type="button" styleClass="btn btn-primary"/>
+						<p:confirmDialog message="#{i18n.delete} ?"
+							header="#{i18n.delete} : #{helpBean.help.title}" severity="alert"
+							widgetVar="cd" styleClass="buttons">
+							<p:commandLink value="#{i18n.delete}"
+								action="#{helpBean.delete}" oncomplete="cd.hide()"
+								styleClass="btn btn-primary">
+								<f:setPropertyActionListener target="#{utilityBean.viewPath}"
+									value="/help/search" />
+							</p:commandLink>
+							<p:commandButton value="#{i18n.cancel}" onclick="cd.hide();"
+								type="button" styleClass="btn btn-primary"/>
+						</p:confirmDialog>
+
 					</c:when>
 					<c:otherwise>
 						<h:link value="#{i18n.cancel}" outcome="search"

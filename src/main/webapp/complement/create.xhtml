@@ -1,144 +1,168 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:c="http://java.sun.com/jsp/jstl/core"
-                xmlns:forgeview="http://jboss.org/forge/view"	
-                template="/resources/scaffold/pageTemplate.xhtml">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml">
 
-    <f:metadata>
-        <f:viewParam name="id" value="#{complementBean.id}"/>
-        <f:event type="preRenderView" listener="#{complementBean.retrieve}"/>
-    </f:metadata>
+	<f:metadata>
+		<f:viewParam name="id" value="#{complementBean.id}" />
+		<f:event type="preRenderView" listener="#{complementBean.retrieve}" />
+	</f:metadata>
 
-    <ui:param name="pageTitle" value="#{i18n.create} #{i18n.complement}"/>
+	<ui:param name="pageTitle" value="#{i18n.create} #{i18n.complement}" />
 
-    <ui:define name="header">
+	<ui:define name="header">
         #{i18n.complement}
     </ui:define>
 
-    <ui:define name="subheader">
-        <c:choose>
-            <c:when test="#{!empty complementBean.id}">
+	<ui:define name="subheader">
+		<c:choose>
+			<c:when test="#{!empty complementBean.id}">
                 #{i18n.edit}
             </c:when>
-            <c:otherwise>
+			<c:otherwise>
                 #{i18n.create}
             </c:otherwise>
-        </c:choose>
-    </ui:define>
+		</c:choose>
+	</ui:define>
 
-    <ui:define name="footer"/>
+	<ui:define name="footer" />
 
-    <ui:define name="main">                                          
-        <h:form id="create" rendered="#{isAdministrator or isAuthor}">
-            <h:messages globalOnly="true" styleClass="error"/>
+	<ui:define name="main">
+		<h:form id="create" rendered="#{isAdministrator or isAuthor}">
+			<h:messages globalOnly="true" styleClass="error" />
 
-            <h:panelGrid columnClasses="label,component,required" columns="3">
-                <h:outputLabel for="complementBeanComplementIngredient" value="#{i18n.ingredient}"/>
-                <h:panelGroup>
-                    <h:selectOneMenu converter="#{ingredientBean.converter}" id="complementBeanComplementIngredient" value="#{complementBean.complement.ingredient}">
-                        <f:selectItem/>
-                        <f:selectItem itemLabel="#{complementBean.complement.ingredient}" itemValue="#{complementBean.complement.ingredient}"/>
-                        <f:selectItem itemLabel="-----" noSelectionOption="true"/>
-                        <f:selectItems value="#{ingredientBean.all}"/>
-                    </h:selectOneMenu>
-                    <h:message for="complementBeanComplementIngredient" styleClass="error"/>
-                </h:panelGroup>
-                <h:outputText/>
-                <h:outputLabel for="complementBeanComplementContent" value="#{i18n.content}"/>
-                <h:panelGroup>
-                    <h:inputText id="complementBeanComplementContent" maxlength="65535" value="#{complementBean.complement.content}"/>
-                    <h:message for="complementBeanComplementContent" styleClass="error"/>
-                </h:panelGroup>
-                <h:outputText/>
-                <h:outputLabel for="complementBeanComplementPrescriptions" value="#{i18n.prescriptions}"/>
-                <h:panelGroup>
-                    <ui:param name="_collection" value="#{complementBean.complement.prescriptions}"/>
-                    <h:dataTable id="complementBeanComplementPrescriptions" styleClass="data-table" value="#{forgeview:asList(_collection)}" var="_item">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{i18n.title}"/>
-                            </f:facet>
-                            <h:link outcome="/prescription/view">
-                                <f:param name="id" value="#{_item.id}"/>
-                                <h:outputText id="itemTitle" value="#{_item.title}"/>
-                            </h:link>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{i18n.titlear}"/>
-                            </f:facet>
-                            <h:link outcome="/prescription/view">
-                                <f:param name="id" value="#{_item.id}"/>
-                                <h:outputText id="itemTitlear" value="#{_item.titlear}"/>
-                            </h:link>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{i18n.titlefr}"/>
-                            </f:facet>
-                            <h:link outcome="/prescription/view">
-                                <f:param name="id" value="#{_item.id}"/>
-                                <h:outputText id="itemTitlefr" value="#{_item.titlefr}"/>
-                            </h:link>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{i18n.preparation}"/>
-                            </f:facet>
-                            <h:link outcome="/prescription/view">
-                                <f:param name="id" value="#{_item.id}"/>
-                                <h:outputText id="itemPreparation" value="#{_item.preparation}"/>
-                            </h:link>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{i18n.preparationfr}"/>
-                            </f:facet>
-                            <h:link outcome="/prescription/view">
-                                <f:param name="id" value="#{_item.id}"/>
-                                <h:outputText id="itemPreparationfr" value="#{_item.preparationfr}"/>
-                            </h:link>
-                        </h:column>
-                        <h:column footerClass="remove-column" headerClass="remove-column">
-                            <h:commandLink action="#{_collection.remove(_item)}" styleClass="remove-button"/>
-                        </h:column>
-                    </h:dataTable>
-                    <h:panelGrid columnClasses=",remove-column" columns="2" styleClass="data-table-footer">
-                        <h:selectOneMenu converter="#{prescriptionBean.converter}" id="complementBeanComplementPrescriptionsSelect" value="#{requestScope['complementBeanComplementPrescriptionsSelect']}">
-                            <f:selectItem noSelectionOption="true" itemLabel="------" itemValue="#{null}"/>
-                            <f:selectItems value="#{prescriptionBean.all}"/>
-                        </h:selectOneMenu>
-                        <h:commandLink action="#{_collection.add(requestScope['complementBeanComplementPrescriptionsSelect'])}" 
-                                       id="complementBeanComplementPrescriptionsAdd" 
-                                       styleClass="add-button" 
-                                       onclick="if (1 > document.getElementById('create:complementBeanComplementPrescriptionsSelect').selectedIndex) {
+			<h:panelGrid columnClasses="label,component,required" columns="3">
+				<h:outputLabel for="complementBeanComplementIngredient"
+					value="#{i18n.ingredient}" />
+				<h:panelGroup>
+					<h:selectOneMenu converter="#{ingredientBean.converter}"
+						id="complementBeanComplementIngredient"
+						value="#{complementBean.complement.ingredient}">
+						<f:selectItem />
+						<f:selectItem
+							itemLabel="#{ingredientBean.switchLabel(complementBean.complement.ingredient)} : #{utilityBean.IngformName(complementBean.complement.ingredient.form)}"
+							itemValue="#{complementBean.complement.ingredient}" />
+						<f:selectItem itemLabel="-----" noSelectionOption="true" />
+						<f:selectItems value="#{ingredientBean.all}" var="_i"
+							itemLabel="#{utilityBean.switchLabel(_i)} : #{utilityBean.IngformName(_i.form)}" itemValue="#{_i}" />
+					</h:selectOneMenu>
+					<h:message for="complementBeanComplementIngredient"
+						styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="complementBeanComplementContent"
+					value="#{i18n.content}" />
+				<h:panelGroup>
+					<h:inputText id="complementBeanComplementContent" maxlength="65535"
+						value="#{complementBean.complement.content}" />
+					<h:message for="complementBeanComplementContent" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="complementBeanComplementPrescriptions"
+					value="#{i18n.prescriptions}" />
+				<h:panelGroup>
+					<ui:param name="_collection"
+						value="#{complementBean.complement.prescriptions}" />
+					<h:dataTable id="complementBeanComplementPrescriptions"
+						styleClass="data-table" value="#{forgeview:asList(_collection)}"
+						var="_item">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.title}" />
+							</f:facet>
+							<h:link outcome="/prescription/view">
+								<f:param name="id" value="#{_item.id}" />
+								<h:outputText id="itemTitle" value="#{_item.title}" />
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.titlear}" />
+							</f:facet>
+							<h:link outcome="/prescription/view">
+								<f:param name="id" value="#{_item.id}" />
+								<h:outputText id="itemTitlear" value="#{_item.titlear}" />
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.titlefr}" />
+							</f:facet>
+							<h:link outcome="/prescription/view">
+								<f:param name="id" value="#{_item.id}" />
+								<h:outputText id="itemTitlefr" value="#{_item.titlefr}" />
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.preparation}" />
+							</f:facet>
+							<h:link outcome="/prescription/view">
+								<f:param name="id" value="#{_item.id}" />
+								<h:outputText id="itemPreparation" value="#{_item.preparation}" />
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.preparationfr}" />
+							</f:facet>
+							<h:link outcome="/prescription/view">
+								<f:param name="id" value="#{_item.id}" />
+								<h:outputText id="itemPreparationfr"
+									value="#{_item.preparationfr}" />
+							</h:link>
+						</h:column>
+						<h:column footerClass="remove-column" headerClass="remove-column">
+							<h:commandLink action="#{_collection.remove(_item)}"
+								styleClass="remove-button" />
+						</h:column>
+					</h:dataTable>
+					<h:panelGrid columnClasses=",remove-column" columns="2"
+						styleClass="data-table-footer">
+						<h:selectOneMenu converter="#{prescriptionBean.converter}"
+							id="complementBeanComplementPrescriptionsSelect"
+							value="#{requestScope['complementBeanComplementPrescriptionsSelect']}">
+							<f:selectItem noSelectionOption="true" itemLabel="------"
+								itemValue="#{null}" />
+							<f:selectItems value="#{prescriptionBean.all}" />
+						</h:selectOneMenu>
+						<h:commandLink
+							action="#{_collection.add(requestScope['complementBeanComplementPrescriptionsSelect'])}"
+							id="complementBeanComplementPrescriptionsAdd"
+							styleClass="add-button"
+							onclick="if (1 > document.getElementById('create:complementBeanComplementPrescriptionsSelect').selectedIndex) {
                                                    alert('Select an item');
                                                    return false;
-                                               }"/>
-                    </h:panelGrid>
-                </h:panelGroup>
-                <h:outputText/>
-            </h:panelGrid>
+                                               }" />
+					</h:panelGrid>
+				</h:panelGroup>
+				<h:outputText />
+			</h:panelGrid>
 
-            <div class="buttons">
-                <h:commandLink value="Save" action="#{complementBean.update}" styleClass="btn btn-primary"/>
-                <c:choose>
-                    <c:when test="#{!empty complementBean.id}">
-                        <h:link value="#{i18n.cancel}" outcome="view" styleClass="btn btn-primary">
-                            <f:param name="id" value="#{complementBean.id}"/>
-                        </h:link>
-                        <h:commandLink value="#{i18n.delete}" action="#{complementBean.delete}" styleClass="btn btn-primary"/>
-                    </c:when>
-                    <c:otherwise>
-                        <h:link value="#{i18n.cancel}" outcome="search" styleClass="btn btn-primary"/>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-        </h:form>
-    </ui:define>
+			<div class="buttons">
+				<h:commandLink value="Save" action="#{complementBean.update}"
+					styleClass="btn btn-primary" />
+				<c:choose>
+					<c:when test="#{!empty complementBean.id}">
+						<h:link value="#{i18n.cancel}" outcome="view"
+							styleClass="btn btn-primary">
+							<f:param name="id" value="#{complementBean.id}" />
+						</h:link>
+						<h:commandLink value="#{i18n.delete}"
+							action="#{complementBean.delete}" styleClass="btn btn-primary" />
+					</c:when>
+					<c:otherwise>
+						<h:link value="#{i18n.cancel}" outcome="search"
+							styleClass="btn btn-primary" />
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</h:form>
+	</ui:define>
 
 </ui:composition>

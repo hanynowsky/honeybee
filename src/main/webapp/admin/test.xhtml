@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<ui:param name="pageTitle" value="Test" />
+
+	<ui:define name="header">
+		<h:outputText value="Test Page" />
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="Test!" />
+	</ui:define>
+
+	<ui:define name="main">
+		<h:form id="testForm">
+			<p:messages autoUpdate="true" id="testMessages" />
+			<p:commandButton value="Test Audit Interceptor"
+				action="#{requestBean.showHello}" ajax="true" id="testButton" />
+			<p:commandButton value="Test Decorator"
+				action="#{requestBean.message('bee')}" ajax="true"
+				id="testDecButton" />
+			<p:separator style="height:1px;margin:10px;" />
+			<p:panelGrid columns="2" id="testGrid">
+				<h:outputText value="Locale language" />
+				 #{request.locale.language}
+				 <h:outputText value="User principal" />
+				 #{request.userPrincipal}
+				 <h:outputText value="Request URI" />
+				 #{request.requestURI}
+				  <h:outputText value="Request URL" />
+				 #{request.requestURL}
+				 <h:outputText value="Host" />
+				 #{request.getHeader('host')}
+				  <h:outputText value="User Agent" />
+				 #{request.getHeader('User-Agent')}
+				  <h:outputText value="View ID" />
+				 #{facesContext.getCurrentInstance().getViewRoot().getViewId()}
+				  <h:outputText value="Component ID" />
+				 #{component.id}
+				 <h:outputText value="Application Project Stage" />
+				 #{facesContext.getCurrentInstance().getApplication().getProjectStage()}
+				 <h:outputText value="Application Default Locale" />
+				 #{facesContext.getCurrentInstance().getApplication().getDefaultLocale()}
+				  <h:outputText value="Cookies" />
+				 #{cookie}
+				 </p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

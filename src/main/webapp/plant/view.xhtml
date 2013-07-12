@@ -28,31 +28,31 @@
 	<ui:define name="main">
 		<p:messages autoUpdate="true" showDetail="false" />
 		<h:panelGrid columnClasses="label,component,required" columns="3">
-			<h:outputLabel for="plantBeanPlantLabel" value="#{i18n.label}:" />
+			<h:outputLabel for="plantBeanPlantLabel" value="#{i18n.label}" />
 			<h:outputText id="plantBeanPlantLabel"
 				value="#{plantBean.plant.label}" />
 			<h:outputText />
-			<h:outputLabel for="plantBeanPlantLabelfr" value="#{i18n.labelfr}:" />
+			<h:outputLabel for="plantBeanPlantLabelfr" value="#{i18n.labelfr}" />
 			<h:outputText id="plantBeanPlantLabelfr"
 				value="#{plantBean.plant.labelfr}" />
 			<h:outputText />
-			<h:outputLabel for="plantBeanPlantLabellat" value="#{i18n.labellat}:" />
+			<h:outputLabel for="plantBeanPlantLabellat" value="#{i18n.labellat}" />
 			<h:outputText id="plantBeanPlantLabellat"
 				value="#{plantBean.plant.labellat}" />
 			<h:outputText />
-			<h:outputLabel for="plantBeanPlantLabelar" value="#{i18n.labelar}:" />
+			<h:outputLabel for="plantBeanPlantLabelar" value="#{i18n.labelar}" />
 			<h:outputText id="plantBeanPlantLabelar"
 				value="#{plantBean.plant.labelar}" />
 			<h:outputText />
-			<h:outputLabel for="plantBeanPlantLabelmar" value="#{i18n.labelmar}:" />
+			<h:outputLabel for="plantBeanPlantLabelmar" value="#{i18n.labelmar}" />
 			<h:outputText id="plantBeanPlantLabelmar"
 				value="#{plantBean.plant.labelmar}" />
 			<h:outputText />
-			<h:outputLabel for="plantBeanPlantImage" value="#{i18n.image}:" />
+			<h:outputLabel for="plantBeanPlantImage" value="#{i18n.image}" />
 			<h:graphicImage id="plantBeanPlantImage" width="250"
 				value="/resources/plants/#{plantBean.plant.image}" />
 			<h:outputText />
-			<h:outputLabel for="plantBeanPlantGraphic" value="#{i18n.graphic}:" />
+			<h:outputLabel for="plantBeanPlantGraphic" value="#{i18n.graphic}" />
 			<p:graphicImage id="plantBeanPlantGraphic" width="250"
 				value="#{imagesBean.image}"
 				rendered="#{plantBean.plant.graphic != null}">
@@ -66,7 +66,7 @@
 				value="---------------------------------------------------------" />
 			<h:outputText />
 			<h:outputLabel for="plantBeanPlantDescription"
-				value="#{i18n.description}:" />
+				value="#{i18n.description}" />
 			<h:outputText id="plantBeanPlantDescription"
 				value="#{plantBean.plant.description}" />
 			<h:outputText />
@@ -75,7 +75,7 @@
 				value="---------------------------------------------------------" />
 			<h:outputText />
 			<h:outputLabel for="plantBeanPlantDescriptionfr"
-				value="#{i18n.descriptionfr}:" />
+				value="#{i18n.descriptionfr}" />
 			<h:outputText id="plantBeanPlantDescriptionfr"
 				value="#{plantBean.plant.descriptionfr}" />
 			<h:outputText />
@@ -84,7 +84,7 @@
 				value="---------------------------------------------------------" />
 			<h:outputText />
 			<h:outputLabel for="plantBeanPlantDescriptionar"
-				value="#{i18n.descriptionar}:" />
+				value="#{i18n.descriptionar}" />
 			<h:outputText dir="rtl" id="plantBeanPlantDescriptionar"
 				value="#{plantBean.plant.descriptionar}" />
 			<h:outputText />
@@ -93,7 +93,7 @@
 				value="---------------------------------------------------------" />
 			<h:outputText />
 			<h:outputLabel for="plantBeanPlantIngredients"
-				value="#{i18n.ingredients}:" />
+				value="#{i18n.ingredients}" />
 			<p:dataTable id="plantBeanPlantIngredients" 
 			styleClass="primedatatable" paginator="true" paginatorPosition="top" rows="3" paginatorAlwaysVisible="false"
 				value="#{forgeview:asList(plantBean.plant.ingredients)}" var="_item">

@@ -3,15 +3,21 @@ package org.otika.honeybee.rest;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
+
 import org.otika.honeybee.model.Virtue;
 
 /**
@@ -64,8 +70,7 @@ public class VirtueEndpoint
    @Produces("application/xml")
    public List<Virtue> listAll()
    {
-      final List<Virtue> results = em.createQuery("SELECT v FROM Virtue v LEFT JOIN FETCH v.tBodypart LEFT JOIN FETCH v.tPrescriptions LEFT JOIN FETCH v.tIngredients", Virtue.class).getResultList();
-      return results;
+     return em.createQuery("SELECT v FROM Virtue v LEFT JOIN FETCH v.tBodypart LEFT JOIN FETCH v.tPrescriptions LEFT JOIN FETCH v.tIngredients", Virtue.class).getResultList();
    }
 
    @PUT
@@ -74,7 +79,7 @@ public class VirtueEndpoint
    public Response update(@PathParam("id") Long id, Virtue entity)
    {
       entity.setId(id);
-      entity = em.merge(entity);
+   em.merge(entity);
       return Response.noContent().build();
    }
 }

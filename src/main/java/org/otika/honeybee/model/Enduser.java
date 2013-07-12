@@ -2,6 +2,8 @@ package org.otika.honeybee.model;
 
 // Generated May 19, 2013 4:05:52 PM by Hibernate Tools 3.4.0.CR1
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +13,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,6 +25,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlRootElement;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -35,9 +37,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 @XmlRootElement
 @NamedQueries(value = {
 		@NamedQuery(name = "Enduser.findByUserkey", query = "SELECT e FROM Enduser e WHERE e.userkey = :userkey"),
-		@NamedQuery(name = "Enduser.findByEmail", query = "select e from Enduser e where e.email = :email") })
+		@NamedQuery(name = "Enduser.findByEmail", query = "select e from Enduser e where e.email = :email"),
+		@NamedQuery(name = "Enduser.findByEmailAndPassword", query = "select e from Enduser e where e.email = :email and e.password = :password")})
 public class Enduser implements java.io.Serializable {
-
+			
+	private static final String ENTER_VALUE = "Enter a value / Entrez une valeur";
 	private static final long serialVersionUID = -5640669438836852305L;
 	private Long id;
 	private Integer version;
@@ -140,7 +144,7 @@ public class Enduser implements java.io.Serializable {
 		this.language = language;
 	}
 
-	@NotEmpty
+	@NotEmpty(message=ENTER_VALUE)
 	@Column(name = "name", nullable = false, length = 45)
 	public String getName() {
 		return this.name;
@@ -150,7 +154,7 @@ public class Enduser implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@NotEmpty
+	@NotEmpty(message=ENTER_VALUE)
 	@Column(name = "surname", nullable = false, length = 45)
 	public String getSurname() {
 		return this.surname;
@@ -159,10 +163,10 @@ public class Enduser implements java.io.Serializable {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-
-	@NotEmpty
-	@Column(name = "password", nullable = false, length = 12)
-	public String getPassword() {
+	
+	@NotEmpty(message=ENTER_VALUE)
+	@Column(name = "password", nullable = false)
+	public String getPassword() {		
 		return this.password;
 	}
 
@@ -170,8 +174,8 @@ public class Enduser implements java.io.Serializable {
 		this.password = password;
 	}
 
-	@NotEmpty
-	@Column(name = "passconf", nullable = false, length = 12)
+	@NotEmpty(message=ENTER_VALUE)
+	@Column(name = "passconf", nullable = false)
 	public String getPassconf() {
 		return this.passconf;
 	}
@@ -180,7 +184,7 @@ public class Enduser implements java.io.Serializable {
 		this.passconf = passconf;
 	}
 
-	@NotEmpty
+	@NotEmpty(message=ENTER_VALUE)
 	@Email
 	@Column(name = "email", unique = true, nullable = false, length = 65)
 	public String getEmail() {
@@ -289,13 +293,13 @@ public class Enduser implements java.io.Serializable {
 
 	public void setUserkey(String userkey) {
 		this.userkey = userkey;
-	}
-
-	/*
+	}	
+	
+	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see java.lang.Object#toString()
-	 */
+	 */	
 	@Override
 	public String toString() {
 		return name + " " + surname;

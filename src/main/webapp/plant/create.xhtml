@@ -34,8 +34,8 @@
 	<ui:define name="footer" />
 
 	<ui:define name="main">
-		<h:form id="create" rendered="#{isAdministrator or isAuthor}"
-			> <!-- enctype="multipart/form-data" -->
+		<h:form id="create" rendered="#{isAdministrator or isAuthor}"> 
+		<!-- enctype="multipart/form-data" -->
 			<h:messages globalOnly="true" styleClass="error" />
 
 			<h:panelGrid columnClasses="label,component,required" columns="3">
@@ -83,9 +83,13 @@
 				<h:outputText />
 				<h:outputLabel for="plantBeanPlantImage" value="#{i18n.graphic}" />
 				<h:panelGroup>
-					<p:fileUpload id="fileupload_plant"
+					<p:fileUpload validator="#{plantBean.imageValidator}"
+					id="fileupload_plant" sizeLimit="500000" 
+					invalidSizeMessage="Size limit is 500 Kb" 
+					invalidFileMessage="Invalid extension"
+					cancelLabel="#{i18n.cancel}" label="#{i18n.search}" 
 						allowTypes="/(\.|\/)(gif|jpe?g|png)$/" auto="false"
-						fileUploadListener="#{plantBean.handleFileUpload}" update="msgbox" />
+						fileUploadListener="#{plantBean.handleFileUpload}" update="msgbox" />						
 					<p:message for="fileupload_plant" redisplay="true" id="msgbox" />
 				</h:panelGroup>
 				<h:outputText />

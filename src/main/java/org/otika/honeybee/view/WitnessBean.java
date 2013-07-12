@@ -142,10 +142,13 @@ public class WitnessBean implements Serializable {
 									+ p.getTitle(), null));
 				}
 			} else {
-				if(this.witness.getEnduser().getEmail().equals(getRemoteUserCredential())
-						|| sessionContext.isCallerInRole("ADMINISTRATOR"))
-				{this.entityManager.merge(this.witness);
-				return "view?faces-redirect=true&id=" + this.witness.getId();}
+				if (this.witness.getEnduser().getEmail()
+						.equals(getRemoteUserCredential())
+						|| sessionContext.isCallerInRole("ADMINISTRATOR")) {
+					this.entityManager.merge(this.witness);
+					return "view?faces-redirect=true&id="
+							+ this.witness.getId();
+				}
 			}
 		} catch (Exception ex) {
 			FacesContext.getCurrentInstance().addMessage(null,
@@ -156,7 +159,6 @@ public class WitnessBean implements Serializable {
 		}
 		return null;
 	}
-	
 
 	public String delete() {
 		this.conversation.end();
@@ -186,9 +188,8 @@ public class WitnessBean implements Serializable {
 	 */
 	private String getRemoteUserCredential() {
 		try {
-			String credential = FacesContext.getCurrentInstance()
-					.getExternalContext().getRemoteUser();
-			return credential;
+			return FacesContext.getCurrentInstance().getExternalContext()
+					.getRemoteUser();
 		} catch (Exception ex) {
 			Logger.getLogger(getClass().getName()).log(Level.ALL,
 					ex.getMessage());
@@ -217,8 +218,9 @@ public class WitnessBean implements Serializable {
 			Logger.getLogger(getClass().getName()).log(Level.ALL,
 					ex.getMessage(), ex);
 			return false;
-		}		
+		}
 	}
+
 	/*
 	 * Support searching Witness entities with pagination
 	 */
@@ -317,7 +319,6 @@ public class WitnessBean implements Serializable {
 	 * Support listing and POSTing back Witness entities (e.g. from inside an
 	 * HtmlSelectOneMenu)
 	 */
-
 
 	public List<Witness> getAll() {
 

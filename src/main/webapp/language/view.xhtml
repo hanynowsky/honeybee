@@ -55,25 +55,7 @@
 						<f:param name="id" value="#{_item.id}"/>
 						<h:outputText id="itemSurname" value="#{_item.surname}"/>
 					</h:link>
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Password"/>
-					</f:facet>
-					<h:link outcome="/enduser/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemPassword" value="#{_item.password}"/>
-					</h:link>
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Passconf"/>
-					</f:facet>
-					<h:link outcome="/enduser/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemPassconf" value="#{_item.passconf}"/>
-					</h:link>
-				</p:column>
+				</p:column>				
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Email"/>

@@ -79,6 +79,7 @@ public class AuthorBean implements Serializable {
 		return "create?faces-redirect=true";
 	}
 
+
 	public void retrieve() {
 
 		if (FacesContext.getCurrentInstance().isPostback()) {
@@ -171,8 +172,7 @@ public class AuthorBean implements Serializable {
 		this.page = 0;
 	}
 
-	public void paginate(AjaxBehaviorEvent evt) {
-
+	public void paginate(AjaxBehaviorEvent evt) {          
 		CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
 
 		// Populate this.count

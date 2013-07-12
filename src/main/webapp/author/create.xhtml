@@ -185,7 +185,7 @@
             </h:panelGrid>
 
             <div class="buttons">
-                <h:commandLink value="Save" action="#{authorBean.update}" styleClass="btn btn-primary"/>
+                <h:commandLink value="#{i18n.save}" action="#{authorBean.update}" styleClass="btn btn-primary"/>
                 <c:choose>
                     <c:when test="#{!empty authorBean.id}">
                         <h:link value="#{i18n.cancel}" outcome="view" styleClass="btn btn-primary">

@@ -95,23 +95,15 @@
 					</f:facet>
 					<h:link outcome="/complement/view">
 						<f:param name="id" value="#{_item.id}" />
-						<h:outputText id="itemIngredient" value="#{_item.ingredient}" />
+						<h:outputText id="itemIngredient" value="#{utilityBean.switchLabel(_item.ingredient)}" />
 					</h:link>
 				</h:column>
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{i18n.form}" />
 					</f:facet>
-					<h:link outcome="/complement/view">
-						<f:param name="id" value="#{_item.id}" />
-						<h:outputText id="itemFormH" value="#{i18n.honey}"
-							rendered="#{_item.ingredient.form == 'honey'}" />
-						<h:outputText id="itemFormP" value="#{i18n.powder}"
-							rendered="#{_item.ingredient.form == 'powder'}" />
-						<h:outputText id="itemFormR" value="#{i18n.raw}"
-							rendered="#{_item.ingredient.form == 'raw'}" />
-						<h:outputText id="itemFormO" value="#{i18n.oil}"
-							rendered="#{_item.ingredient.form == 'oil'}" />
+					<h:link outcome="/complement/view" value="#{utilityBean.IngformName(_item.ingredient.form)}">
+						<f:param name="id" value="#{_item.id}" />						
 					</h:link>
 				</h:column>
 				<h:column>

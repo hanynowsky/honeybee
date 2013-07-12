@@ -8,7 +8,7 @@ body {
 	color: #5b5b5b;
 	font-size:13px;
     text-shadow: 0 1px 0 #efefef;
-	padding-top:50px;
+	padding-top:50px;	
 }
 
 #container {
@@ -174,6 +174,11 @@ footer p {
 #navigation a {
 	padding-left: 0px; /*15px*/
 	color: #444444;
+	font-family: DroidArabicKufi, Nunito, Helvetica, Verdana;
+	text-shadow: 0px 1px 0px #FFFFFF;
+	font-weight: 500;
+	font-size: 10pt;
+	line-height: 120%;
 }
 #navigation li.nav-header a {
 	margin-left:-10px;	
@@ -241,8 +246,7 @@ footer p {
 #content table .component {
 	width: 75%;
 /*	text-align: left;*/
-	text-align: #{localeBean.locale.language != 'ar' ? left : right};
-	vertical-align: top;
+        vertical-align: top;		
 }
 
 #content table .component input {
@@ -305,7 +309,7 @@ footer p {
 }
 
 #content .data-table thead th, #content .data-table tbody td, #content .data-table tfoot td {
-	text-align: left;
+	text-align: center; /*left*/
 	padding-left: 4px;
 	padding-top: 2px;
 	padding-bottom: 2px;
@@ -328,11 +332,14 @@ footer p {
 	display: block;
 	color: #5b5b5b;
 	text-decoration: none;
+	text-align: center; /*Added to center content of table*/
 }
 
 #content .remove-column {
 	width: 1%;
 	text-align: center;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 #content .data-table .remove-button {
@@ -412,16 +419,14 @@ footer p {
 #content h2.success {
 	color:#5d8a10;
 	line-height:46px;
-	padding: 5px 0 20px 35px; /*padding: 5px 0 20px 35px;*/
+	padding: 5px 25px 20px 35px; /*padding: 5px 0 20px 35px;*/
 	border-top:1px solid #ccc;
 	background: url("#{resource['true.png']}") no-repeat 0px 15px transparent;
-	background-position: center 18px; /*Added for Arabic support*/
-	
-	
+				
 }#content h2.failure {
 	color:red;
 	line-height:46px;
-	padding: 5px 0 20px 35px;
+	padding: 5px 25px 20px 35px;
 	border-top:1px solid #ccc;
 	background: url("#{resource['false.png']}") no-repeat 0px 15px transparent;
 }
@@ -607,9 +612,9 @@ button::-moz-focus-inner {
 	font-weight:bold;
 	text-align:center;
 	color:#fff!important;
-	padding:8px 10px;
+	padding:6px 14px;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	border-radius: 4px;
+	border-radius: 2px; /*4px*/
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-box-shadow: 0px 1px 2px rgba(137, 137, 137, 0.8);
@@ -623,7 +628,11 @@ button::-moz-focus-inner {
 .btn-primary.disabled,
 .btn-primary[disabled] {
   	background-color: #979026;
-  	*background-color: #979026;
+  	*background-color: #979026;  ;
+}
+
+.btn-primary:hover {
+		box-shadow: 0 3px 3px rgba(0, 0, 0, 0.025) inset, 0 0 8px rgba(0,0,0,0.7);  	
 }
 
 .btn-primary:active,
@@ -689,7 +698,7 @@ h4.page-header {
 
 .user-panel {
 	float: right;
-	margin-top: 0px;
+	margin-top: -5px;
 	margin-right: 10px;
 	text-shadow: none;
 	color: #5D8A10;
@@ -705,12 +714,14 @@ h4.page-header {
 .active-menuitem {
 	background-color: buttonface;	
 	font-style: oblique;
-	font-weight: bolder;
+	font-weight: 800;	
+	letter-spacing: 1px;
 	font-variant: small-caps;
+	font-size: 11pt;
+	text-shadow: 0px 3px 0px black;
 	border: 1px solid rgba(0,0,0,0.1);
-	text-decoration: underline;
-	color: green;
 }
+
 
 .active-topmenuitem {	
 	font-style: oblique;
@@ -724,187 +735,94 @@ h4.page-header {
 	
 }
 
-/*.primedatatable {
-	font-size: 9pt;
-	width: 500px;
-	font-family: DroidArabicKufi, Helvetica, sans-serif;
+.status {
+	width: auto;
+	height: auto;
+	position: fixed;
+	float: left;
+	top: 45px;
+	left: 0px;
 }
 
-.primedatatable tbody tr {
-	background: transparent;
+.statusdiv {
+        color: #FFF;
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.2);
+	border: 1px solid gray;
+	font-weight: lighter;
+	text-shadow: 0px 0 #EFEFEF;
+	font-size: large;
+	text-align: center;
+	padding: 5px;
+	font-family: DroidArabicKufi, sans-serif, Verdana, Arial;
 }
 
-.primedatatable tbody tr a {
-text-shadow: 0 1px 0 #EFEFEF;
+.feedback {	
+	/*background: repeat scroll 0 0 rgba(0, 0, 0, 0.4);*/
+	text-shadow: none;
+	font-family: DroidArabicKufi,'Open Sans',sans-serif;
+	font-size: large;
+	color: white;
+	position: fixed;
+	right: 0px;
+	top: 300px;	
+	font-variant: small-caps;
+	letter-spacing: 1px;
 }
 
-.primedatatable thead th {
-	background: #DDDDDD;
-	color: #5B5B5B;
-}*/
-
-/* PrimeFaces Datatable Style*/
-.primedatatable {
-	
-	border: 1px solid #cccccc;
-	margin-bottom: 7px;
-	font-size: small;
-}
-
- .primedatatable thead th {
-	border-bottom: 1px solid #cccccc;
-	background: #DDDDDD;
-	color: #5B5B5B;
-}
-
- .primedatatable thead th,  .primedatatable tbody td,  .primedatatable tfoot td {
-	text-align: left;
-	padding-left: 4px;
-	padding-top: 2px;
-	padding-bottom: 2px;
-}
-
- .primedatatable tfoot td {
-	padding-right: 4px;
-}
-
- .primedatatable tbody tr:nth-child(2n) {
-	background-color: #eeeeee;
-}
-
-.primedatatable td {
-	background-color: transparent;
-}
-
- .primedatatable tbody tr:hover,  .primedatatable tfoot tr:hover {
-	background-color: #d2e8f2;
-}
-
- .primedatatable tbody tr a {
-	display: block;
-	color: #5b5b5b;
+.feedback a {
+	color: white;
 	text-decoration: none;
-	white-space: normal;
-}
-
-.primedatatable tbody tr {	
-	white-space: normal;
-	background: transparent;
-}
-
-.primedatatable tbody td {
-	white-space: normal;
-}
-
- .primedatatable .remove-button {
-	display: block;
-	width: 22px;
-	height: 22px;
-	background-image: url("#{resource['remove.png']}");
-}
-
- .primedatatable-footer {
-	width: 50%;
-	margin-left: 50%;
-	margin-top: 5px;
-}
-
- .primedatatable-footer select {
-	width: 50%;
-	/*height: 30px;*/
-	vertical-align: middle;
-	margin-right: 5px;
-}
-
- .primedatatable tfoot select {
-	line-height: 30px;
-	vertical-align: middle;
-}
-
-/* Prime Faces Theme Overrides */
-
-.ui-widget-content {
-    color: #444444;
-    background: transparent;
-}
-
-.ui.widget {
-white-space: normal;	
-}
-
-.ui-datatable tbody td {
-    border-color: inherit;   
-    white-space: normal;
-}
-
-.ui-datatable {
-    border: 0px solid #DDDDDD;
-    width: 100%;     
-    white-space: normal;
-}
-
-.ui-datatable-data {
-    border: 0px solid #DDDDDD;
-    width: 500px;     
-    white-space: normal;
-}
-
-.ui-widget-header {
-    background: none repeat scroll 0 0 #DDDDDD;
-    border: 1px solid #DDDDDD;
-    color: #444444;
-    font-weight: bold;
-}
-
-.ui-datatable thead th {
-    border-style: solid;
-    border-width: 1px;
-    overflow: hidden;
-    padding: 4px 10px;
-}
-
-.ui-datatable tbody td {
-	 border-style: solid;
-    border-width: 1px;
-    overflow: hidden;
-    padding: 4px 10px;
-}
-
- .ui-datatable tfoot td {
- 	border-style: solid;
-    border-width: 1px;
-    overflow: hidden;
-    padding: 4px 10px; 
- }
- 
- .ui-growl {
- margin-top: 25px;
- font-family: sans-serif,helevetica,arial,monospace;
- font-weight: lighter;
- }
- 
-  .onemenu {
- width: 100%;
- }
- 
- .onemenu div {
- width: 99.2%;
- border: 1px solid #BBBBBB;
- }
- 
- .ui-selectonemenu-label {
- cursor: pointer;
- text-align: center;
- background: #F2F1F0;
- }
- 
- .ui-selectonemenu-panel {
- background: #F2F2F2;
- padding-left:5px;
- padding-right:5px;
- text-align: center;
- }
-
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+	margin: 5px;
+	padding: 1px 5px;	
+	}
+	
+.feedback a:hover {
+	color: rgb(23,32,98);
+	border: 0 1px 0px rgba(0, 0, 0, 0.15);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.025) inset, 0 0 8px white;	
+	}
+	
+	.index {
+	text-align: center;
+	}
+	
+	.index h3 {
+	font-family: Kufi, Nunito, Open Sans, Helevtica, Arial;
+	letter-spacing: 0px;
+	text-shadow: 3px 5px 8px #CCC;
+	font-weight: bold;
+	font-size: 30pt;
+	margin: 1px;
+	}
+	
+	.index h4 {
+	font-family: Kufi, Nunito, Open Sans, Helevtica, Arial;
+	letter-spacing: 0px;
+	line-height: 20px;
+	text-shadow: 3px 5px 8px #CCC;
+	font-weight: bold;
+	font-size: 22pt;
+	color: green;
+	padding: 20px;
+	}
+	
+	.successimg {
+	background: url("/honeybee/javax.faces.resource/true.png.xhtml") no-repeat scroll center 18px transparent;
+	
+	}
+	
+	.validationerror {
+	border: 2px solid red;
+	box-shadow: 3px 3px 3px red;
+	}
+	
+	.loginpanel {
+	padding: 0px;
+	text-align: center;
+	width: 100%;
+	/*margin-right:50%;*/
+	}
 
 /* CUSTOM FONT */
 @font-face {
@@ -913,3 +831,35 @@ src: url("#{resource['DroidKufi-Regular.ttf']}");
      /* url('Sansation_Light.eot'); IE9+ */
 font-weight:300;
 }
+
+@font-face {
+font-family: Naskh; 
+src: url("#{resource['DroidNaskh-Regular.ttf']}");
+font-size: small;
+font-weight:300;
+}
+
+@font-face {
+font-family: Naskh; 
+src: url("#{resource['DroidNaskh-Bold.ttf']}");
+font-weight:bold;
+}
+
+@font-face {
+font-family: Nunito; 
+src: url("#{resource['Nunito-Regular.ttf']}");
+font-weight:300;
+}
+
+@font-face {
+font-family: Nunito; 
+src: url("#{resource['Nunito-Bold.ttf']}");
+font-weight:bold;
+}
+
+@font-face {
+font-family: Nunito; 
+src: url("#{resource['Nunito-Light.ttf']}");
+font-weight:100;
+}
+/* END */

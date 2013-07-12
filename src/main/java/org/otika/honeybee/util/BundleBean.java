@@ -12,8 +12,7 @@ import javax.faces.context.FacesContext;
 public class BundleBean implements java.io.Serializable {
 
 	private static final long serialVersionUID = 2311408848698752949L;
-	private ResourceBundle i18n = ResourceBundle.getBundle("/i18n");;
-	private FacesContext facesContext = FacesContext.getCurrentInstance();;
+	private ResourceBundle i18n = ResourceBundle.getBundle("/i18n");
 
 	public BundleBean() {
 	}
@@ -25,27 +24,27 @@ public class BundleBean implements java.io.Serializable {
 	 */
 
 	/**
-	 * 
-	 * @param key
+	 *  Method that gets the localized value from the Bundle
+	 * @param key bundle key
 	 * @return The Bundle (i18n) String corresponding to the key parameter
 	 */
 	public String i18n(String key) {
-		facesContext = FacesContext.getCurrentInstance();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
 		String lang = facesContext.getViewRoot().getLocale().getLanguage();
 		Locale locale = facesContext.getViewRoot().getLocale();
-		if (lang.equals("en") || lang.equals("en_US")) {
-			i18n = ResourceBundle.getBundle("/i18n");
-		}
-
-		else if (lang.equals("fr") || lang.equals("fr_FR")) {
-			i18n = ResourceBundle.getBundle("/i18n", locale);
-		}
-
-		else if (lang.equals("ar") || lang.equals("ar_MA")) {
-			i18n = ResourceBundle.getBundle("/i18n", locale);
-		} else {
-			i18n = ResourceBundle.getBundle("/i18n");
-		}
+        switch (lang) {
+            case "en":
+            case "en_US":
+            case "fr":
+            case "fr_FR":
+            case "ar":
+            case "ar_MA":
+                i18n = ResourceBundle.getBundle("/i18n",locale);
+                break;
+            default:
+                i18n = ResourceBundle.getBundle("/i18n");
+                break;
+        }
 		String s = i18n.getString(key);
 		if (s == null || s.equals("")) {
 			return "unknown";

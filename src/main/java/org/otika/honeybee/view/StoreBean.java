@@ -54,7 +54,7 @@ public class StoreBean implements Serializable
    private static final long serialVersionUID = 1L;
    @Inject
    private UtilityBean utilityBean;
-   private BundleBean bundle = new BundleBean();
+   private final BundleBean bundle = new BundleBean();
    private Long storeId;
    @EJB
    private Repository repository;
@@ -65,7 +65,7 @@ public class StoreBean implements Serializable
    
    @PostConstruct
    public void init(){
-	  
+	       // TODO
    }
 
    private Long id;

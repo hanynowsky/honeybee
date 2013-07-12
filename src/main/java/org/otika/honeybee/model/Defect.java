@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
@@ -140,6 +141,7 @@ public class Defect implements java.io.Serializable
       this.labelar = labelar;
    }
 
+   @ContainedIn
    @ManyToMany(fetch = FetchType.LAZY)
    @JoinTable(name = "defect_ingredient", catalog = "honeybee", joinColumns = {
          @JoinColumn(name = "defect_id", nullable = false, updatable = false) }, inverseJoinColumns = {

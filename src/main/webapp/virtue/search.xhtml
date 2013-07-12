@@ -1,112 +1,114 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/resources/scaffold/pageTemplate.xhtml">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/scaffold/pageTemplate.xhtml">
 
-	<f:metadata>
-		<f:viewParam name="page" value="#{virtueBean.page}"/>
-		<f:event type="preRenderView" listener="#{virtueBean.paginate(this)}"/>
-	</f:metadata>
+    <f:metadata>
+        <f:viewParam name="page" value="#{virtueBean.page}"/>
+        <f:event type="preRenderView" listener="#{virtueBean.paginate(this)}"/>
+    </f:metadata>
 
-	<ui:param name="pageTitle" value="#{i18n.virtues}"/>
+    <ui:param name="pageTitle" value="#{i18n.virtues}"/>
 
-	<ui:define name="header">
-		#{i18n.virtues}
-	</ui:define>
+    <ui:define name="header">
+        #{i18n.virtues}
+    </ui:define>
 
-	<ui:define name="subheader">
-		#{i18n.search}
-	</ui:define>
+    <ui:define name="subheader">
+        #{i18n.search}
+    </ui:define>
 
-	<ui:define name="footer"/>
+    <ui:define name="footer"/>
 
-	<ui:define name="main">
-		<h:form id="search">
-			<f:validateBean disabled="true">
-				<h:panelGroup styleClass="search">
+    <ui:define name="main">
+        <h:form id="search">
+            <f:validateBean disabled="true">
+                <h:panelGroup styleClass="search">
 
-					<h:panelGrid columnClasses="label,component,required" columns="3">
-						<h:outputLabel for="virtueBeanExampleBodypart" value="#{i18n.bodypart}"/>
-						<h:panelGroup>
-							<h:selectOneMenu converter="#{bodypartBean.converter}" id="virtueBeanExampleBodypart" value="#{virtueBean.example.bodypart}">
-								<f:selectItem/>
-								<f:selectItems value="#{bodypartBean.all}"/>
-									<f:ajax execute="@form" render="virtueBeanPageItems paginator" event="click"/>
-							</h:selectOneMenu>
-							<h:message for="virtueBeanExampleBodypart" styleClass="error"/>
-						</h:panelGroup>
-						<h:outputText/>
-						<h:outputLabel for="virtueBeanExampleLabel" value="#{i18n.label}"/>
-						<h:panelGroup>
-							<h:inputText id="virtueBeanExampleLabel" maxlength="145" value="#{virtueBean.example.label}">
-							<f:ajax execute="@form" render="virtueBeanPageItems paginator" event="keyup"/>
-							</h:inputText>
-							<h:message for="virtueBeanExampleLabel" styleClass="error"/>
-						</h:panelGroup>
-						<h:outputText/>
-						<h:outputLabel for="virtueBeanExampleLabelfr" value="#{i18n.labelfr}"/>
-						<h:panelGroup>
-							<h:inputText id="virtueBeanExampleLabelfr" maxlength="145" value="#{virtueBean.example.labelfr}">
-							<f:ajax execute="@form" render="virtueBeanPageItems paginator" event="keyup"/>
-							</h:inputText>
-							<h:message for="virtueBeanExampleLabelfr" styleClass="error"/>
-						</h:panelGroup>
-						<h:outputText/>
-						<h:outputLabel for="virtueBeanExampleLabelar" value="#{i18n.labelar}"/>
-						<h:panelGroup>
-							<h:inputText id="virtueBeanExampleLabelar" maxlength="145" value="#{virtueBean.example.labelar}">
-							<f:ajax execute="@form" render="virtueBeanPageItems paginator" event="keyup"/>
-							</h:inputText>
-							<h:message for="virtueBeanExampleLabelar" styleClass="error"/>
-						</h:panelGroup>
-						<h:outputText/>
-					</h:panelGrid>
-					<h:panelGroup styleClass="buttons">
-						<h:commandLink value="#{i18n.search}" action="#{virtueBean.search}" styleClass="btn btn-primary"/>
-						<h:commandLink rendered="#{isAdministrator or isAuthor}" value="#{i18n.create}" action="#{virtueBean.create}" styleClass="btn btn-primary"/>
-					</h:panelGroup>
-				</h:panelGroup>
-			</f:validateBean>
-			
-			<h:dataTable id="virtueBeanPageItems" styleClass="data-table" value="#{virtueBean.pageItems}" var="_item">
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{i18n.label}"/>
-					</f:facet>
-					<h:link outcome="/virtue/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemLabel" value="#{_item.label}"/>
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{i18n.labelfr}"/>
-					</f:facet>
-					<h:link outcome="/virtue/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemLabelfr" value="#{_item.labelfr}"/>
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{i18n.labelar}"/>
-					</f:facet>
-					<h:link outcome="/virtue/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemLabelar" value="#{_item.labelar}"/>
-					</h:link>
-				</h:column>
-			</h:dataTable>
-			<h:panelGroup id="paginator">
-			<ui:include src="/resources/scaffold/paginator.xhtml">
-				<ui:param name="paginatorBean" value="#{virtueBean}"/>
-			</ui:include>
-			</h:panelGroup>
-		</h:form>
-			
-	</ui:define>
+                    <h:panelGrid columnClasses="label,component,required" columns="3">
+                        <h:outputLabel for="virtueBeanExampleBodypart" value="#{i18n.bodypart}"/>
+                        <h:panelGroup styleClass="onemenu">
+                            <p:selectOneMenu filter="true" filterMatchMode="contains"
+                                             converter="#{bodypartBean.converter}" id="virtueBeanExampleBodypart" value="#{virtueBean.example.bodypart}">
+                                <f:selectItem itemValue="#{null}" itemLabel="-----"/>
+                                <f:selectItems value="#{bodypartBean.all}" var="_b" itemLabel="#{utilityBean.switchLabel(_b)}" itemValue="#{_b}"/>
+                                <f:ajax execute="@form" render="virtueBeanPageItems paginator" />
+                            </p:selectOneMenu>
+                            <h:message for="virtueBeanExampleBodypart" styleClass="error"/>
+                        </h:panelGroup>
+                        <h:outputText/>
+                        <h:outputLabel for="virtueBeanExampleLabel" value="#{i18n.label}"/>
+                        <h:panelGroup>
+                            <h:inputText id="virtueBeanExampleLabel" maxlength="145" value="#{virtueBean.example.label}">
+                                <f:ajax execute="@form" render="virtueBeanPageItems paginator" event="keyup"/>
+                            </h:inputText>
+                            <h:message for="virtueBeanExampleLabel" styleClass="error"/>
+                        </h:panelGroup>
+                        <h:outputText/>
+                        <h:outputLabel for="virtueBeanExampleLabelfr" value="#{i18n.labelfr}"/>
+                        <h:panelGroup>
+                            <h:inputText id="virtueBeanExampleLabelfr" maxlength="145" value="#{virtueBean.example.labelfr}">
+                                <f:ajax execute="@form" render="virtueBeanPageItems paginator" event="keyup"/>
+                            </h:inputText>
+                            <h:message for="virtueBeanExampleLabelfr" styleClass="error"/>
+                        </h:panelGroup>
+                        <h:outputText/>
+                        <h:outputLabel for="virtueBeanExampleLabelar" value="#{i18n.labelar}"/>
+                        <h:panelGroup>
+                            <h:inputText id="virtueBeanExampleLabelar" maxlength="145" value="#{virtueBean.example.labelar}">
+                                <f:ajax execute="@form" render="virtueBeanPageItems paginator" event="keyup"/>
+                            </h:inputText>
+                            <h:message for="virtueBeanExampleLabelar" styleClass="error"/>
+                        </h:panelGroup>
+                        <h:outputText/>
+                    </h:panelGrid>
+                    <h:panelGroup styleClass="buttons">
+                        <h:commandLink value="#{i18n.search}" action="#{virtueBean.search}" styleClass="btn btn-primary"/>
+                        <h:commandLink rendered="#{isAdministrator or isAuthor}" value="#{i18n.create}" action="#{virtueBean.create}" styleClass="btn btn-primary"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </f:validateBean>
+
+            <h:dataTable id="virtueBeanPageItems" styleClass="data-table" value="#{virtueBean.pageItems}" var="_item">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{i18n.label}"/>
+                    </f:facet>
+                    <h:link outcome="/virtue/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemLabel" value="#{_item.label}"/>
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{i18n.labelfr}"/>
+                    </f:facet>
+                    <h:link outcome="/virtue/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemLabelfr" value="#{_item.labelfr}"/>
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{i18n.labelar}"/>
+                    </f:facet>
+                    <h:link outcome="/virtue/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemLabelar" value="#{_item.labelar}"/>
+                    </h:link>
+                </h:column>
+            </h:dataTable>
+            <h:panelGroup id="paginator">
+                <ui:include src="/resources/scaffold/paginator.xhtml">
+                    <ui:param name="paginatorBean" value="#{virtueBean}"/>
+                </ui:include>
+            </h:panelGroup>
+        </h:form>
+
+    </ui:define>
 
 </ui:composition>

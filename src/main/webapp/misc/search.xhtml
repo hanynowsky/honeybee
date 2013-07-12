@@ -10,33 +10,83 @@
 	<ui:param name="pageTitle" value="#{i18n.general_search}" />
 
 	<ui:define name="header">
-            #{i18n.general_search}
+		<h:outputText value="#{i18n.general_search}" />
 	</ui:define>
 
 	<ui:define name="main">
-		<h2 class="success">#{i18n.general_search}</h2>
-		<!-- This form is supposed to enable Mysql or Hibernate Full Text Search -->
+		<style type="text/css">
+.searchButton {
+	width: 100%;
+	height: 50px;
+	margin-left: 8px;
+	font-variant: small-caps;
+	text-transform: uppercase;
+	color: white;
+	background-color: rgb(93, 138, 70);;
+	border-radius: 0px 0px 0px 0px;
+}
+
+.searchButton:HOVER {
+	color: white;
+	background-color: #5D8A10;
+	box-shadow: 0 1px 1px rgba(93, 138, 16, 0.75) inset, 0 0 12px
+		rgba(93, 138, 16, 0.6);
+	text-shadow: 0 1px 1px rgba(93, 138, 16, 0.75) inset, 0 0 12px
+		rgba(13, 138, 16, 0.6);
+	border-radius: 5px 5px 5px 5px;
+}
+
+.searchInput {
+	font-family: Sans-serif, arial, verdana, helvetica;
+	width: 100%;
+	text-shadow: 0 1px 0 #CCC;
+	background: url("#{resource['search.png']}") no-repeat;
+	text-indent: 25px;
+	background-position: #{utilityBean.htmlDirection=='rtl'?   'right':'left'
+}
+
+;
+}
+.searchGrid {
+	width: 100%;
+}
+</style>
+		<h2 class="success">
+			<h:outputText value="#{i18n.general_search}" />
+		</h2>
+		<p:separator style="height:1px;" />
 		<h:form id="globalSearchForm">
-			<h:inputText value="#{searchBean.keyword}" id="general_search_input"
-				maxlength="50" style="width:100%;">			
-			</h:inputText>
-			<p:separator style="height:1px;" />
-			<h:panelGroup
-				style="text-align:center;margin-left:40%;margin-right:60%;">
-				<p:commandButton action="#{searchBean.searchIngredients}"
-					value="#{i18n.search}" styleClass="btn btn-primary"
-					update="globalSearchForm:searchTable" />
-			</h:panelGroup>
-			<p:separator style="height:1px;margin-top:20px;" />
+			<h:panelGrid columns="2" styleClass="searchGrid">
+				<h:panelGroup>
+					<h:inputText value="#{searchBean.keyword}"
+						style="height: 40px;border-radius: 5px 0 0 5px;font-size: 14pt;"
+						id="general_search_input" maxlength="50" styleClass="searchInput">
+					</h:inputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:commandButton action="#{searchBean.searchIngredients}"
+						value="#{i18n.search}" styleClass="searchButton"
+						update="globalSearchForm:searchTable">
+					</p:commandButton>
+				</h:panelGroup>
+			</h:panelGrid>
+			<div align="center">
+				<p:commandButton action="#{searchBean.release()}"
+					update="globalSearchForm:searchTable globalSearchForm:general_search_input"
+					icon="ui-icon ui-icon-refresh" />
+			</div>
+			<p:separator style="height:1px;margin:20px;" />
+			<p:watermark value="#{i18n.search_here}" for="general_search_input" />
 
 			<p:dataTable var="_item" value="#{searchBean.ingredients}"
 				id="searchTable" styleClass="primedatatable" paginator="true"
-				paginatorPosition="top" paginatorAlwaysVisible="false" rows="10">
+				paginatorPosition="top" paginatorAlwaysVisible="false" rows="5">
 				<p:column headerText="ID">
 					<h:outputText value="#{_item.id}" />
 				</p:column>
 				<p:column headerText="#{i18n.form}">
-					<h:link outcome="/ingredient/view" value="#{utilityBean.IngformName(_item.form)}"
+					<h:link outcome="/ingredient/view"
+						value="#{utilityBean.IngformName(_item.form)}"
 						includeViewParams="true">
 						<f:param name="id" value="#{_item.id}" />
 					</h:link>

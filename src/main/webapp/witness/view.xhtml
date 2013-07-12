@@ -24,6 +24,7 @@
 	<ui:define name="footer" />
 
 	<ui:define name="main">
+	
 		<h:panelGrid columnClasses="label,component,required" columns="3">
 			<h:outputLabel for="witnessBeanWitnessEnduser" value="#{i18n.enduser}" />
 			<h:link id="witnessBeanWitnessEnduser" outcome="/enduser/view"
@@ -35,7 +36,7 @@
 				value="#{i18n.prescription}" />
 			<h:link id="witnessBeanWitnessPrescription"
 				outcome="/prescription/view"
-				value="#{witnessBean.witness.prescription}">
+				value="#{utilityBean.switchLabel(witnessBean.witness.prescription)}">
 				<f:param name="id" value="#{witnessBean.witness.prescription.id}" />
 			</h:link>
 			<h:outputText />

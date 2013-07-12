@@ -9,11 +9,11 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<f:metadata>
-		<f:viewParam name="id" value="#{enduserBean.id}"/>
-		<f:event type="preRenderView" listener="#{enduserBean.retrieve}"/>
+		<f:viewParam name="id" value="#{enduserBean.id}" />
+		<f:event type="preRenderView" listener="#{enduserBean.retrieve}" />
 	</f:metadata>
 
-	<ui:param name="pageTitle" value="#{i18n.enduser}"/>
+	<ui:param name="pageTitle" value="#{i18n.enduser}" />
 
 	<ui:define name="header">
 		#{i18n.enduser}
@@ -23,98 +23,145 @@
 		#{i18n.enduser}
 	</ui:define>
 
-	<ui:define name="footer"/>
+	<ui:define name="footer" />
 
 	<ui:define name="main">
-	<h:panelGroup rendered="#{userManagerBean.userObject.id == enduserBean.id or isAdministrator == true}">	
-		<h:panelGrid columnClasses="label,component,required" columns="3">
-                    <h:outputLabel for="enduserBeanEnduserUsergroup" value="#{i18n.usergroup}"/>
-			<h:link id="enduserBeanEnduserUsergroup" outcome="/usergroup/view" value="#{enduserBean.enduser.usergroup}">
-				<f:param name="id" value="#{enduserBean.enduser.usergroup.id}"/>
-			</h:link>
-			<h:outputText/>
-                        <h:outputLabel for="enduserBeanEnduserLanguage" value="#{i18n.language}"/>
-			<h:link id="enduserBeanEnduserLanguage" outcome="/language/view" value="#{enduserBean.enduser.language}">
-				<f:param name="id" value="#{enduserBean.enduser.language.id}"/>
-			</h:link>
-			<h:outputText/>
-			<h:outputLabel for="enduserBeanEnduserName" value="#{i18n.name}"/>
-			<h:outputText id="enduserBeanEnduserName" value="#{enduserBean.enduser.name}"/>
-			<h:outputText/>
-			<h:outputLabel for="enduserBeanEnduserSurname" value="#{i18n.surname}"/>
-			<h:outputText id="enduserBeanEnduserSurname" value="#{enduserBean.enduser.surname}"/>
-			<h:outputText/>
-                        <h:outputLabel for="enduserBeanEnduserPassword" value="#{i18n.password}"/>
-			<h:outputText id="enduserBeanEnduserPassword" value="#{enduserBean.enduser.password}"/>
-			<h:outputText/>
-                        <h:outputLabel for="enduserBeanEnduserPassconf" value="#{i18n.password} - #{i18n.confirmation}"/>
-			<h:outputText id="enduserBeanEnduserPassconf" value="#{enduserBean.enduser.passconf}"/>
-			<h:outputText/>
-                        <h:outputLabel for="enduserBeanEnduserEmail" value="#{i18n.email}"/>
-			<h:outputText id="enduserBeanEnduserEmail" value="#{enduserBean.enduser.email}"/>
-			<h:outputText/>
-                        <h:outputLabel for="enduserBeanEnduserTelephone" value="#{i18n.phone}"/>
-			<h:outputText id="enduserBeanEnduserTelephone" value="#{enduserBean.enduser.telephone}"/>
-			<h:outputText/>
-                        <h:outputLabel for="enduserBeanEnduserAddress" value="#{i18n.address}"/>
-			<h:outputText id="enduserBeanEnduserAddress" value="#{enduserBean.enduser.address}"/>
-			<h:outputText/>
-			<h:outputLabel for="enduserBeanEnduserFacebook" value="Facebook"/>
-			<h:outputText id="enduserBeanEnduserFacebook" value="#{enduserBean.enduser.facebook}"/>
-			<h:outputText/>
-			<h:outputLabel for="enduserBeanEnduserGoogleplus" value="Googleplus"/>
-			<h:outputText id="enduserBeanEnduserGoogleplus" value="#{enduserBean.enduser.googleplus}"/>
-			<h:outputText/>
-			<h:outputLabel for="enduserBeanEnduserTwitter" value="Twitter"/>
-			<h:outputText id="enduserBeanEnduserTwitter" value="#{enduserBean.enduser.twitter}"/>
-			<h:outputText/>
-                        <h:outputLabel for="enduserBeanEnduserWebsite" value="#{i18n.website}"/>
-			<h:outputText id="enduserBeanEnduserWebsite" value="#{enduserBean.enduser.website}"/>
-			<h:outputText/>
-                        <h:outputLabel value="#{i18n.active}"/>
-			<h:outputText styleClass="#{enduserBean.enduser.isactive ? 'boolean-true' : 'boolean-false'}" value=""/>
-			<h:outputText/>
-                        <h:outputLabel for="enduserBeanEnduserGender" value="#{i18n.gender}"/>
-			<h:outputText id="enduserBeanEnduserGender" value="#{enduserBean.enduser.gender}"/>
-			<h:outputText/>
-                        <h:outputLabel for="enduserBeanEnduserDatejoined" value="#{i18n.date_joined}"/>
-			<h:outputText id="enduserBeanEnduserDatejoined" value="#{enduserBean.enduser.datejoined}">
-				<f:convertDateTime type="date"/>
-			</h:outputText>
-			<h:outputText/>
-                        <h:outputLabel for="enduserBeanEnduserWitnesses" value="#{i18n.witnesses}"/>
-			<p:dataTable id="enduserBeanEnduserWitnesses" 
-			styleClass="primedatatable" paginator="true" paginatorPosition="top" rows="3" paginatorAlwaysVisible="false"
-			value="#{forgeview:asList(enduserBean.enduser.witnesses)}" var="_item">
-				<p:column>
-					<f:facet name="header">
-                                            <h:outputText value="#{i18n.comment}"/>
-					</f:facet>
-					<h:link outcome="/witness/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemComment" value="#{_item.comment}"/>
-					</h:link>
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-                                            <h:outputText value="#{i18n.subject}"/>
-					</f:facet>
-					<h:link outcome="/witness/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemSubject" value="#{_item.subject}"/>
-					</h:link>
-				</p:column>
-			</p:dataTable>
-			<h:outputText/>
-		</h:panelGrid>
 
-		<div class="buttons">
-                    <h:link value="#{i18n.view_all}" outcome="search" styleClass="btn btn-primary"/> 
-                    <h:link rendered="#{isAdministrator or request.remoteUser == enduserBean.enduser.email}" value="#{i18n.edit}" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
-                    <h:link rendered="#{isAdministrator or empty request.remoteUser}"  value="#{i18n.create}" outcome="create" styleClass="btn btn-primary"/>
-		</div>
-		
+		<h:panelGroup
+			rendered="#{userManagerBean.userObject.id == enduserBean.id or isAdministrator == true}">
+			<p:accordionPanel dynamic="true" multiple="true">
+				<p:tab title="#{enduserBean.enduser.surname}" >
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="enduserBeanEnduserUsergroup"
+							value="#{i18n.usergroup}" />
+						<h:link id="enduserBeanEnduserUsergroup" outcome="/usergroup/view"
+							value="#{enduserBean.enduser.usergroup}">
+							<f:param name="id" value="#{enduserBean.enduser.usergroup.id}" />
+						</h:link>
+						<h:outputText />
+						<h:outputLabel for="enduserBeanEnduserLanguage"
+							value="#{i18n.language}" />
+						<h:link id="enduserBeanEnduserLanguage" outcome="/language/view"
+							value="#{enduserBean.enduser.language}">
+							<f:param name="id" value="#{enduserBean.enduser.language.id}" />
+						</h:link>
+						<h:outputText />
+						<h:outputLabel for="enduserBeanEnduserName" value="#{i18n.name}" />
+						<h:outputText id="enduserBeanEnduserName"
+							value="#{enduserBean.enduser.name}" />
+						<h:outputText />
+						<h:outputLabel for="enduserBeanEnduserSurname"
+							value="#{i18n.surname}" />
+						<h:outputText id="enduserBeanEnduserSurname"
+							value="#{enduserBean.enduser.surname}" />
+						<h:outputText />
+						<h:outputLabel for="enduserBeanEnduserPassword"
+							value="#{i18n.password}" />
+						<h:outputText id="enduserBeanEnduserPassword"
+							value="#{enduserBean.enduser.password.toCharArray()}" />
+						<h:outputText />						
+						<h:outputLabel for="enduserBeanEnduserEmail" value="#{i18n.email}" />
+						<h:outputText id="enduserBeanEnduserEmail"
+							value="#{enduserBean.enduser.email}" />
+						<h:outputText />
+						<h:outputLabel for="enduserBeanEnduserTelephone"
+							value="#{i18n.phone}" />
+						<h:outputText id="enduserBeanEnduserTelephone"
+							value="#{enduserBean.enduser.telephone}" />
+						<h:outputText />
+						<h:outputLabel for="enduserBeanEnduserAddress"
+							value="#{i18n.address}" />
+						<h:outputText id="enduserBeanEnduserAddress"
+							value="#{enduserBean.enduser.address}" />
+						<h:outputText />
+					</h:panelGrid>
+				</p:tab>
+				<p:tab title="#{i18n.user_profile}">
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="enduserBeanEnduserFacebook" value="Facebook" />
+						<h:outputText id="enduserBeanEnduserFacebook"
+							value="#{enduserBean.enduser.facebook}" />
+						<h:outputText />
+						<h:outputLabel for="enduserBeanEnduserGoogleplus"
+							value="Googleplus" />
+						<h:outputText id="enduserBeanEnduserGoogleplus"
+							value="#{enduserBean.enduser.googleplus}" />
+						<h:outputText />
+						<h:outputLabel for="enduserBeanEnduserTwitter" value="Twitter" />
+						<h:outputText id="enduserBeanEnduserTwitter"
+							value="#{enduserBean.enduser.twitter}" />
+						<h:outputText />
+						<h:outputLabel for="enduserBeanEnduserWebsite"
+							value="#{i18n.website}" />
+						<h:outputText id="enduserBeanEnduserWebsite"
+							value="#{enduserBean.enduser.website}" />
+						<h:outputText />
+						<h:outputLabel value="#{i18n.active}" />
+						<h:outputText
+							styleClass="#{enduserBean.enduser.isactive ? 'boolean-true' : 'boolean-false'}"
+							value="" />
+						<h:outputText />
+						<h:outputLabel for="enduserBeanEnduserGender"
+							value="#{i18n.gender}" />
+						<h:outputText id="enduserBeanEnduserGender"
+							value="#{utilityBean.IngformName(enduserBean.enduser.gender.toLowerCase())}" />
+						<h:outputText />
+						<h:outputLabel for="enduserBeanEnduserDatejoined"
+							value="#{i18n.date_joined}" />
+						<h:outputText id="enduserBeanEnduserDatejoined"
+							value="#{enduserBean.enduser.datejoined}">
+							<f:convertDateTime type="date" />
+						</h:outputText>
+						<h:outputText />
+					</h:panelGrid>
+				</p:tab>
+				<p:tab title="#{i18n.witnesses}">
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="enduserBeanEnduserWitnesses"
+							value="#{i18n.witnesses}" />
+						<p:dataTable id="enduserBeanEnduserWitnesses"
+							styleClass="primedatatable" paginator="true"
+							paginatorPosition="top" rows="3" paginatorAlwaysVisible="false"
+							value="#{forgeview:asList(enduserBean.enduser.witnesses)}"
+							var="_item">
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{i18n.comment}" />
+								</f:facet>
+								<h:link outcome="/witness/view">
+									<f:param name="id" value="#{_item.id}" />
+									<h:outputText id="itemComment" value="#{_item.comment}" />
+								</h:link>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{i18n.subject}" />
+								</f:facet>
+								<h:link outcome="/witness/view">
+									<f:param name="id" value="#{_item.id}" />
+									<h:outputText id="itemSubject" value="#{_item.subject}" />
+								</h:link>
+							</p:column>
+						</p:dataTable>
+						<h:outputText />
+					</h:panelGrid>
+				</p:tab>
+			</p:accordionPanel>
+
+			<div class="buttons">
+				<h:link value="#{i18n.view_all}" outcome="search"
+					styleClass="btn btn-primary" />
+				<h:link
+					rendered="#{isAdministrator or request.remoteUser == enduserBean.enduser.email}"
+					value="#{i18n.edit}" outcome="create" includeViewParams="true"
+					styleClass="btn btn-primary" />
+				<h:link rendered="#{isAdministrator or empty request.remoteUser}"
+					value="#{i18n.create}" outcome="create"
+					styleClass="btn btn-primary" />
+			</div>
+
 		</h:panelGroup>
+
 	</ui:define>
 
 </ui:composition>

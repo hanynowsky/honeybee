@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html >
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/resources/scaffold/pageTemplate.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 	<ui:param name="pageTitle" value="#{i18n.login}" />
 
@@ -14,43 +15,66 @@
 	</ui:define>
 
 	<ui:define name="main">
-
 		<h:messages id="messages_login" />
-		<div>
-			<h2 class="success">
-				<h:outputText value="#{i18n.login}"
-					rendered="#{empty request.remoteUser}" />
-				<h:outputText value="#{i18n.logout}"
-					rendered="#{not empty request.remoteUser}" />
-				<br></br>
-				<!-- 	<h:outputText value="#{request.remoteUser}" />
-			<br></br>
-			<h:outputText value="#{request.isUserInRole('ADMINISTRATOR')}" />
-			
-			-->
-			</h2>
-			<form id="formLogin" method="post" action="j_security_check">
-				<div>
-					<h:panelGrid columns="2" style="border-width:0px;" id="grid_login"
-						rendered="#{empty request.remoteUser}">
-						<h:outputLabel value="#{i18n.email}" id="label_username_log" />
-						<input id="j_username" type="text" name="j_username" />
-						<h:outputLabel value="#{i18n.password}" id="label_password_log" />
-						<input id="j_password" type="password" name="j_password" />
-						<h:outputLabel value="" id="label_void" />
-						<h:panelGroup styleClass="buttons">
-							<input type='submit' name='submit' value='#{i18n.login}'
-								class="btn btn-primary" />
-						</h:panelGroup>
-					</h:panelGrid>
-				</div>
-			</form>
-		</div>
+
+		<h2 class="success">
+			<h:outputText value="#{i18n.login}"
+				rendered="#{empty request.remoteUser}" />
+			<h:outputText value="#{i18n.logout}"
+				rendered="#{not empty request.remoteUser}" />
+			<br />
+			<!-- 	<h:outputText value="#{request.remoteUser}" />
+            <br></br>
+            <h:outputText value="#{request.isUserInRole('ADMINISTRATOR')}" />
+            
+            -->
+		</h2>
+		<script type="text/javascript">
+            function jaas() {
+                document.loginform.action = 'j_security_check';
+                document.getElementById('loginform:j_username').name = 'j_username';
+                document.getElementById('loginform:j_password').name = 'j_password';                				
+            }
+            
+            function hashpass(){            	              
+            document.getElementById('loginform:j_password').value =  
+               /*hash the pass*/
+            alert(document.getElementById('loginform:j_password').value);
+                }
+        </script>
+		<h:form id="loginform" onsubmit="jaas();">
+			<div class="loginpanel">
+				<h:panelGrid columns="4" style="border-width:0px;text-align:center;"
+					id="grid_login" rendered="#{empty request.remoteUser}">
+					<h:outputLabel value="#{i18n.email}" id="label_username_log" />
+					<h:inputText id="j_username" label="j_username" title="j_username" />
+					<h:outputLabel value="#{i18n.password}" id="label_password_log" />
+					<h:inputSecret id="j_password" label="j_password"
+						title="j_password">
+						<f:converter for="j_password" 
+						converterId="org.otika.honeybee.util.SHAConverter" />
+					</h:inputSecret>
+					<h:outputLabel value="" id="label_void" />
+				</h:panelGrid>
+			</div>
+			<h:panelGroup styleClass="buttons"
+				rendered="#{empty request.remoteUser}">
+				<h:commandButton  type='submit' value='#{i18n.login}'
+					class="btn btn-primary" onclick="return(validateLoginForm());"
+					style="padding: 3px 14px;" />					
+			</h:panelGroup>
+		</h:form>
+
 		<h:form>
 			<div style="margin: 20px" class="buttons">
 				<h:commandButton value="#{i18n.logout}" styleClass="btn btn-primary"
-					action="#{userManagerBean.logout()}"
-					rendered="#{not empty request.remoteUser}" />
+					action="#{authenticationBean.logout}"
+					rendered="#{not empty request.remoteUser}">
+					<f:setPropertyActionListener target="#{authenticationBean.email}"
+						value="" />
+					<f:setPropertyActionListener
+						target="#{authenticationBean.password}" value="" />
+				</h:commandButton>
 			</div>
 		</h:form>
 
@@ -80,6 +104,17 @@
 				</h:link>
 			</h:panelGroup>
 		</div>
+		<h:panelGroup rendered="#{empty request.remoteUser}">
+			<h2 class="success">
+				<h:outputText value="#{i18n.password_recovery} / #{i18n.activation}" />
+			</h2>
+			<div class="buttons">
+				<h:link outcome="/misc/activation" value="#{i18n.activation}"
+					styleClass="btn btn-primary" />
+				<h:link outcome="/misc/activation" value="#{i18n.password_recovery}"
+					styleClass="btn btn-primary" />
+			</div>
+		</h:panelGroup>
 	</ui:define>
 
 </ui:composition>

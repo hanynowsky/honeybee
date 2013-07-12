@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:param name="pageTitle" value="#{i18n.activation}" />
+
+	<ui:define name="header">
+		<h:outputText value="#{i18n.account} #{i18n.activation}" />
+	</ui:define>
+
+	<ui:define name="main">
+	
+		<h:form>
+			<p:messages autoUpdate="true" globalOnly="true" showDetail="false"/>
+		</h:form>
+		<h:panelGroup layout="block" rendered="#{mailActivationBean.valid}">
+			<h2 class="success" style="border: 1px solid #CCC;">
+				<h:outputText value="#{i18n.account_activated}"
+					style="font-size:11pt;" />
+			</h2>
+			<p class="buttons">
+				<h:link outcome="/index" value="#{i18n.home}"
+					styleClass="btn btn-primary" />
+			</p>
+		</h:panelGroup>
+		<h:panelGroup layout="block" rendered="#{!mailActivationBean.valid}">
+
+			<h2 class="failure" style="font-size: 11pt; border: 1px solid #CCC;">
+				<h:outputText value="#{i18n.activation_failure} : #{param.key}"
+					rendered="#{not empty param.key}" />
+			</h2>
+			<h:form id="form_activate">
+				<p:separator style="margin:20px;" />
+				<h:panelGrid columns="3" id="panel_activate"
+					style="text-align:center;">
+					<p:outputLabel value="#{i18n.email}" for="input_activate" />
+					<p:inputText id="input_activate" required="true"
+						requiredMessage="#{i18n.required}"
+						value="#{mailActivationBean.emailAddress}" >
+						<f:validateLength minimum="8" />
+					</p:inputText>
+					<p:commandButton id="button_activate" update="panel_activate"
+						process="@form" action="#{mailActivationBean.activateMember}"
+						ajax="true" value="#{i18n.activation}" />
+				</h:panelGrid>
+			</h:form>
+			<p:separator style="height:1px;" />
+			<h:outputText value="- #{i18n.alternatively} -" style="text-align:center;"/>
+			<h:form id="form_activate_key">
+				<p:separator style="margin:20px;" />
+				<h:panelGrid columns="3" id="panel_activate_key"
+					style="text-align:center;">
+					<p:outputLabel value="#{i18n.key}" for="input_activate_key" />
+					<p:inputText id="input_activate_key" required="true"
+						requiredMessage="#{i18n.required}"
+						value="#{mailActivationBean.manualKey}">
+						<f:validateLength minimum="18" />
+					</p:inputText>
+					<p:commandButton id="button_activate_key"
+						update="panel_activate_key :user-panel-grid" process="@form"
+						action="#{mailActivationBean.manuallyEnableUser('K')}" ajax="true"
+						value="#{i18n.activation}" />
+				</h:panelGrid>
+			</h:form>
+		</h:panelGroup>
+		<p:separator style="margin:5px;" />
+		<h1>
+			<h:outputText value="#{i18n.password_recovery}" />
+		</h1>
+		<h:panelGroup layout="block" rendered="#{empty userManagerBean.user}">
+			<h:form dir="#{facesBean.direction}">
+				<h:panelGrid columns="4">
+					<p:outputLabel value="#{i18n.email}" for="inputEmailActiv" />
+					<p:inputText id="inputEmailActiv" required="true"
+						requiredMessage="#{i18n.required}"
+						value="#{mailActivationBean.emailAddress}">
+						<f:validateLength minimum="8" />
+					</p:inputText>
+					<p:message for="inputEmailActiv" showDetail="false" />
+					<p:commandButton id="button_activate" update="@form"
+						process="@form" action="#{mailActivationBean.passwordRecovery}"
+						ajax="true" value="#{i18n.password_recovery}" />
+				</h:panelGrid>
+			</h:form>
+		</h:panelGroup>
+
+	</ui:define>
+
+</ui:composition>

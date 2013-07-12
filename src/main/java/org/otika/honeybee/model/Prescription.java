@@ -22,6 +22,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import org.hibernate.search.annotations.Boost;
+import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
@@ -32,6 +34,7 @@ import org.hibernate.search.annotations.Resolution;
  */
 @Entity
 @Table(name = "prescription", catalog = "honeybee", uniqueConstraints = @UniqueConstraint(columnNames = "title"))
+@Boost(1.7f)
 public class Prescription implements java.io.Serializable {
 
 	private static final long serialVersionUID = 5331336059116754439L;
@@ -279,6 +282,7 @@ public class Prescription implements java.io.Serializable {
 		this.creationdate = creationdate;
 	}
 
+	@ContainedIn
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "ingredient_prescription", catalog = "honeybee", joinColumns = { @JoinColumn(name = "prescription_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ingredient_id", nullable = false, updatable = false) })
 	public Set<Ingredient> getIngredients() {

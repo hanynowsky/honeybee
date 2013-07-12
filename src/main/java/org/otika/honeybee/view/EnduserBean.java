@@ -14,8 +14,10 @@ import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.event.Event;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -31,19 +33,18 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.otika.honeybee.events.RegistrationEvent;
 import org.otika.honeybee.model.Enduser;
 import org.otika.honeybee.model.Language;
 import org.otika.honeybee.model.Usergroup;
+import org.otika.honeybee.util.BundleBean;
 import org.otika.honeybee.util.Repository;
+import org.otika.honeybee.util.UtilityBean;
 
 /**
- * Backing bean for Enduser entities.
- * <p>
- * This class provides CRUD functionality for all Enduser entities. It focuses
- * purely on Java EE 6 standards (e.g. <tt>&#64;ConversationScoped</tt> for
- * state management, <tt>PersistenceContext</tt> for persistence,
- * <tt>CriteriaBuilder</tt> for searches) rather than introducing a CRUD
- * framework or custom base class.
+ * 
+ * @author hanine
+ * 
  */
 
 @Named
@@ -53,15 +54,21 @@ import org.otika.honeybee.util.Repository;
 public class EnduserBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	@Inject
+	private Event<RegistrationEvent> registrationEvent;
+	private boolean termsAccepted = false;
 
 	/*
 	 * Support creating and retrieving Enduser entities
 	 */
-
 	@Inject
 	private Repository repository;
-
 	private Long id;
+
+	@Inject
+	private UtilityBean utilityBean;
+	@Inject
+	private BundleBean bundleBean;
 
 	public Long getId() {
 		return this.id;
@@ -79,7 +86,6 @@ public class EnduserBean implements Serializable {
 
 	@Inject
 	private Conversation conversation;
-
 	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	private EntityManager entityManager;
 
@@ -108,6 +114,33 @@ public class EnduserBean implements Serializable {
 		} else {
 			this.enduser = findById(getId());
 		}
+
+		/*
+		 * Ensures a user cannot view another user's profile
+		 */
+		if (this.id != null) {
+			try {
+				String user = (FacesContext.getCurrentInstance()
+						.getExternalContext().getRemoteUser() != null ? FacesContext
+						.getCurrentInstance().getExternalContext()
+						.getRemoteUser()
+						: null);
+				Enduser enduser = repository.findByEmail(user);
+				if (user == null
+						|| (enduser != findById(this.id) && !sessionContext
+                        .isCallerInRole("ADMINISTRATOR"))) {
+					// TODO prevent from viewing another user
+					utilityBean.showMessage("warn",
+							bundleBean.i18n("view_another_user"), "");
+				}
+			} catch (Exception ex) {
+				Logger.getLogger(getClass().getName()).info(ex.getMessage());
+				utilityBean.showMessage(
+						"error",
+						"Exception checking retrieved end user!"
+								+ ex.getMessage(), ex.getCause().getMessage());
+			}
+		}
 	}
 
 	public Enduser findById(Long id) {
@@ -118,51 +151,112 @@ public class EnduserBean implements Serializable {
 	/*
 	 * Support updating and deleting Enduser entities
 	 */
-
 	public String update() {
+		System.out.println("Ending Conversation for End user bean");
 		this.conversation.end();
-
 		try {
+			System.out.println("Checking End user ID nullity");
 			if (this.id == null) {
+				System.out.println("Trying to set values for new end user");
 
 				/**
 				 * We set some values for new object creation and create it
 				 */
 				this.enduser.setDatejoined(new Date());
-				this.enduser.setIsactive(true);
-				this.entityManager.persist(this.enduser);
-				return "search?faces-redirect=true";
+				this.enduser.setIsactive(false);
+				System.out.println("new End user is: "
+						+ this.enduser.getEmail());
+				createEnduser(this.enduser);
+				System.out.println("Persisted : " + this.enduser.getEmail());
+				registrationEvent.fire(new RegistrationEvent(this.enduser));
+				return "/enduser/search?faces-redirect=true";
 
 				/**
 				 * Updating end user object
 				 */
 			} else {
-				this.entityManager.merge(this.enduser);
-				return "view?faces-redirect=true&id=" + this.enduser.getId();
+				String user = FacesContext.getCurrentInstance()
+						.getExternalContext().getRemoteUser();
+				Enduser enduser = repository.findByEmail(user);
+				if (enduser == findById(getId())
+						|| sessionContext.isCallerInRole("ADMINISTRATOR")) {
+					System.out.println("Trying to merge end user...");
+					this.entityManager.merge(this.enduser);
+					System.out.println("Merged end user... "+this.enduser.getEmail());
+					return "view?faces-redirect=true&id="
+							+ this.enduser.getId();
+				} else {
+					utilityBean.showMessage("warn", "Permission Denied", "");
+				}
 			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(e.getMessage()));
 			return null;
 		}
+		return null;
 	}
 
+	/**
+	 * Merge an end user
+	 * 
+	 * @param e
+	 */
+	public void updateEnduser(Enduser e) {
+		try {
+			this.entityManager.merge(e);
+			System.out.println("Merged End user " + e.getEmail());
+			utilityBean.showMessage("info", "Registration successfull", "");
+		} catch (Exception ex) {
+			System.out.println("Failed to merge End User " + e.getEmail());
+			utilityBean.showMessage("error", "Registration unsuccessfull", "");
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(ex.getMessage()));
+		}
+	}
+
+	/**
+	 * Create a new end user
+	 * 
+	 * @param e
+	 */
+	public void createEnduser(Enduser e) {
+		try {
+			this.entityManager.persist(e);
+			System.out.println("Persisted End user " + e.getEmail());
+		} catch (Exception ex) {
+			System.out.println("Failed to persist End User " + e.getEmail());
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(ex.getMessage()));
+			Logger.getLogger(getClass().getName()).severe(
+					"Exception in per" + "sisting new user " + ex);
+		}
+	}
+
+	/**
+	 * Delete an end user
+	 * 
+	 * @return
+	 */
 	public String delete() {
 		this.conversation.end();
-
+		/*
+		 * TODO make sure only administrators and a connected user can delete
+		 * only his/her own profile
+		 */
 		try {
 			String user = FacesContext.getCurrentInstance()
 					.getExternalContext().getRemoteUser();
 			Enduser enduser = repository.findByEmail(user);
 			if (enduser == findById(getId())
-					|| sessionContext.isCallerInRole("ADMINISTRATOR") == true) {
+					|| sessionContext.isCallerInRole("ADMINISTRATOR")) {
 				this.entityManager.remove(findById(getId()));
 				this.entityManager.flush();
 				if ((FacesContext.getCurrentInstance().getExternalContext()
 						.getRemoteUser() != null || !FacesContext
 						.getCurrentInstance().getExternalContext()
 						.getRemoteUser().equals(""))
-						&& sessionContext.isCallerInRole("ADMINISTRATOR") == false) {
+						&& !sessionContext.isCallerInRole("ADMINISTRATOR")) {
 					FacesContext.getCurrentInstance().getExternalContext()
 							.invalidateSession();
 					return "/index?faces-redirect=true";
@@ -170,6 +264,8 @@ public class EnduserBean implements Serializable {
 				return "search?faces-redirect=true";
 			}
 		} catch (Exception e) {
+			Logger.getLogger(getClass().getName()).severe(
+					e.getMessage() + " " + e.getCause());
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(e.getMessage()));
 			return null;
@@ -180,11 +276,9 @@ public class EnduserBean implements Serializable {
 	/*
 	 * Support searching Enduser entities with pagination
 	 */
-
 	private int page;
 	private long count;
 	private List<Enduser> pageItems;
-
 	private Enduser example = new Enduser();
 
 	public int getPage() {
@@ -293,7 +387,6 @@ public class EnduserBean implements Serializable {
 	 * Support listing and POSTing back Enduser entities (e.g. from inside an
 	 * HtmlSelectOneMenu)
 	 */
-
 	public List<Enduser> getAll() {
 
 		CriteriaQuery<Enduser> criteria = this.entityManager
@@ -313,6 +406,7 @@ public class EnduserBean implements Serializable {
 			}
 			return dummyList;
 		} catch (Exception ex) {
+			Logger.getLogger(getClass().getName()).info(ex.getMessage());
 			return null;
 		}
 	}
@@ -326,7 +420,6 @@ public class EnduserBean implements Serializable {
 				.getBusinessObject(EnduserBean.class);
 
 		return new Converter() {
-
 			@Override
 			public Object getAsObject(FacesContext context,
 					UIComponent component, String value) {
@@ -349,34 +442,49 @@ public class EnduserBean implements Serializable {
 
 	/**
 	 * Custom Validator for validating password and password confirmation
+	 * 
+	 * @param context
+	 * @param component
+	 * @param value
+	 * @throws ValidatorException
 	 */
 	public void validatePassconf(FacesContext context, UIComponent component,
 			Object value) throws ValidatorException {
 
 		String p = String.valueOf(value);
-		// String pc = this.enduser.getPassword(); // returns null :(
-
-		/*
-		 * if (!p.equals(pc)) { FacesMessage message = new
-		 * FacesMessage("Passwords do not match!");
-		 * Logger.getLogger(getClass().getName()).log(Level.ALL,
-		 * message.getSummary(), new ValidatorException(message)); throw new
-		 * ValidatorException(message); }
-		 */
-
-		if (p.length() < 5 || p.length() > 12) {
+		if (p.length() < 5) {
 			FacesMessage message = new FacesMessage(
-					"Password length must be between 5 and 12!");
+					"Password length must be 5 chars at least!");
+			context.addMessage(null, message);
+			((UIInput) component).setValid(false);
 			Logger.getLogger(getClass().getName()).log(Level.ALL,
 					message.getSummary(), new ValidatorException(message));
 			throw new ValidatorException(message);
 		}
 	}
 
+	/**
+	 * Validates boolean button input
+	 * 
+	 * @param context
+	 * @param component
+	 * @param value
+	 * @throws ValidatorException
+	 */
+	public void validateTermsAccepted(FacesContext context,
+			UIComponent component, Object value) throws ValidatorException {
+		if (!((boolean) value)) {
+			FacesMessage message = new FacesMessage(
+					"Please accept registration terms!");
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			context.addMessage(null, message);
+			((UIInput) component).setValid(false);
+        }
+	}
+
 	/*
 	 * Support adding children to bidirectional, one-to-many tables
 	 */
-
 	private Enduser add = new Enduser();
 
 	public Enduser getAdd() {
@@ -387,5 +495,13 @@ public class EnduserBean implements Serializable {
 		Enduser added = this.add;
 		this.add = new Enduser();
 		return added;
+	}
+
+	public boolean isTermsAccepted() {
+		return termsAccepted;
+	}
+
+	public void setTermsAccepted(boolean termsAccepted) {
+		this.termsAccepted = termsAccepted;
 	}
 }

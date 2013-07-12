@@ -16,7 +16,7 @@
 </forge>
 </jboss>
 </org>
-<rootpath>/rest</rootpath>
+<rootpath>"/rest"</rootpath>
 <jboss-as>
 <as7>
 <configured>PROJECT</configured>
@@ -26,8 +26,14 @@
 <forge>
 <analytics>
 <enabled>true</enabled>
-<lastrun>20130612</lastrun>
+<lastrun>20130701</lastrun>
 </analytics>
 
 </forge>
+<rest>
+<applicationclass>
+<package>org.otika.honeybee.rest</package>
+<name>/home/hanine/Workspace/jboss/honeybee/src/main/java/org/otika/honeybee/rest/JaxRsActivator.java</name>
+</applicationclass>
+</rest>
 </configuration>

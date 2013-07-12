@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,14 +21,25 @@ import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
+import org.apache.commons.codec.digest.DigestUtils;
+import org.otika.honeybee.model.Author;
+import org.otika.honeybee.model.Bodypart;
+import org.otika.honeybee.model.Defect;
+import org.otika.honeybee.model.Honey;
+import org.otika.honeybee.model.Ingredient;
+import org.otika.honeybee.model.Plant;
+import org.otika.honeybee.model.Prescription;
+import org.otika.honeybee.model.Substance;
+import org.otika.honeybee.model.Virtue;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 /**
  * <p>
  * This bean must be request scoped - Otherwise you would get an EL illegal
- * state when using an El expression in a javascript function and changing
+ * state when using an El expression in a java script function and changing
  * locale
  * </p>
  * 
@@ -43,25 +57,29 @@ public class UtilityBean implements Serializable {
 	private Repository repository;
 	private String viewPath;
 	private Long storeId;
-
 	private BundleBean bundle;
-	public static ProcessBuilder pb;
+	static ProcessBuilder pb;
 
 	/**
 	 * Constructor
 	 */
 	public UtilityBean() {
-
 	}
 
 	@PostConstruct
 	public void init() {
 		bundle = new BundleBean();
-		facesContext = FacesContext.getCurrentInstance();
+		facesContext = FacesContext.getCurrentInstance();			
 	}
 
-	public void dummyMethod() {
-
+	/**
+	 * Faces Action Method
+	 * 
+	 * @param event
+	 *            Action event
+	 */
+	public void dummyMethod(ActionEvent event) {
+		System.out.println(event.getComponent().getFamily());
 	}
 
 	/**
@@ -92,34 +110,39 @@ public class UtilityBean implements Serializable {
 	 * 
 	 * @param severity
 	 *            <p>
-	 *            must be a string in capital letters (e.g. WARN)
+	 *            Faces message severity (e.g. WARN, INFO, ERROR, FATAL)
 	 *            </p>
 	 * @param summary
+	 *            <p>
+	 *            Message summary
+	 *            </p>
 	 * @param detail
+	 *            <p>
+	 *            Message detail
+	 *            </p>
 	 */
 	public void showMessage(String severity, String summary, String detail) {
-		FacesMessage.Severity SEV = FacesMessage.SEVERITY_INFO;
+		FacesMessage.Severity SEV;
 		FacesMessage.Severity INFO = FacesMessage.SEVERITY_INFO;
 		FacesMessage.Severity WARN = FacesMessage.SEVERITY_WARN;
 		FacesMessage.Severity FATAL = FacesMessage.SEVERITY_FATAL;
 		FacesMessage.Severity ERROR = FacesMessage.SEVERITY_ERROR;
-		if (severity.equals("INFO")) {
+		if (severity.equalsIgnoreCase("info")) {
 			SEV = INFO;
-		} else if (severity.equals("WARN")) {
+		} else if (severity.equalsIgnoreCase("warn")) {
 			SEV = WARN;
-		} else if (severity.equals("ERROR")) {
+		} else if (severity.equalsIgnoreCase("error")) {
 			SEV = ERROR;
-		} else if (severity.equals("FATAL")) {
+		} else if (severity.equalsIgnoreCase("fatal")) {
 			SEV = FATAL;
 		} else {
 			SEV = INFO;
 		}
 		FacesMessage message = new FacesMessage(SEV, summary, detail);
-		facesContext.addMessage(null, message);
+		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
 	// GETTERS & SETTERS
-
 	public StreamedContent getImage() {
 		return image;
 	}
@@ -143,8 +166,15 @@ public class UtilityBean implements Serializable {
 	}
 
 	public String getViewName() {
-
-		return facesContext.getViewRoot().getViewId();
+		String id = "/index";
+		try {
+			id = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+		} catch (Exception ex) {
+			Logger.getLogger(getClass().getName()).severe(
+					"NULL view name: " + ex.getMessage() + " "
+							+ ex.getCause().getMessage());
+		}
+		return id;
 	}
 
 	public String getViewPath() {
@@ -169,18 +199,22 @@ public class UtilityBean implements Serializable {
 	/**
 	 * Method that fetches an Object from database by ID
 	 * 
-	 * @param id_as_Entity_ID
-	 * @param Object_o_is_any_object_of_the_same_type_as_T
-	 * @return
+	 * @param id
+	 *            id_as_Entity_ID
+	 * @param type
+	 *            Object_o_is_any_object_of_the_same_type_as_T
+	 * @return Type (Type)
 	 */
 	public <T> T getRepoObject(Long id, Object type) {
 		return repository.findById((long) id, type);
 	}
 
 	/**
+	 * Returns All entity items
 	 * 
-	 * @param e_Any_instance_of_T
-	 * @return
+	 * @param type
+	 *            e_Any_instance_of_T
+	 * @return Type (Type)
 	 */
 	public <T> List<T> getEntityItems(Object type) {
 		return repository.findAll(type);
@@ -192,24 +226,24 @@ public class UtilityBean implements Serializable {
 	 * @return localized_name
 	 */
 	public String IngformName(String input) {
-		String name = "";
+		String name;
 		if (!input.equals("")) {
 			name = bundle.i18n(input);
+			return name;
 		}
-		return name;
+		return null;
 	}
 
 	/**
-	 * Executes a bash command -Applicable only in UNIX
+	 * Executes a bash command - Applicable only in Linux
 	 * 
 	 * @param command
-	 * @throws IOException
-	 * @throws InterruptedException
+	 * @return Bash_STDOUT_STDERR
 	 */
-	public void execBash(String command) {
+	public String execBash(String command) {
 		try {
 			if (System.getProperty("os.name").contains("inux")) {
-				java.util.List<String> commands = new ArrayList<String>();
+				java.util.List<String> commands = new ArrayList<>();
 				commands.add("bash"); // or /bin/cat
 				commands.add("-c");
 				// commands.add("echo Han | grep [^*]");
@@ -227,7 +261,7 @@ public class UtilityBean implements Serializable {
 				StringBuilder sbout = new StringBuilder();
 				BufferedReader br = new BufferedReader(new InputStreamReader(
 						process.getInputStream()));
-				String line = null, previous = null;
+				String line, previous = null;
 				while ((line = br.readLine()) != null) {
 					if (!line.equals(previous)) {
 						previous = line;
@@ -240,18 +274,252 @@ public class UtilityBean implements Serializable {
 					System.out.println("Success!");
 					System.out.println("Here is the Bash-return: "
 							+ sbout.toString());
+					return sbout.toString();
 				} else {
 					System.err.println(commands);
 					System.err.println(sbout.toString());
 					System.exit(1);
+					return sbout.toString();
 				}
 				// System.exit(0);
 			}
-		} catch (Exception ex) {
+		} catch (IOException | InterruptedException ex) {
 			System.out.println("Bash command exception!: " + ex);
-			Logger.getLogger(UtilityBean.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
 		}
-	} // END OF METHOD	
+		return null;
+	} // END OF METHOD
+
+	/**
+	 * Returns the object label by user language
+	 * 
+	 * @param o
+	 *            Object_o
+	 * @return DB_localized label
+	 */
+	public String switchLabel(Object o) {
+		String lang = FacesContext.getCurrentInstance().getViewRoot()
+				.getLocale().getLanguage();
+
+		/* Ingredient */
+		if (o != null && o instanceof Ingredient) {
+			switch (lang) {
+			case "ar":
+				return ((Ingredient) o).getLabelar();
+			case "fr":
+				return ((Ingredient) o).getLabelfr();
+			default:
+				return ((Ingredient) o).getLabel();
+			}
+		}
+
+		// Plant
+		if (o != null && o instanceof Plant) {
+			switch (lang) {
+			case "ar":
+				return ((Plant) o).getLabelar();
+			case "fr":
+				return ((Plant) o).getLabelfr();
+			default:
+				return ((Plant) o).getLabel();
+			}
+		}
+
+		// Honey
+		if (o != null && o instanceof Honey) {
+			switch (lang) {
+			case "ar":
+				return ((Honey) o).getLabelar();
+			case "fr":
+				return ((Honey) o).getLabelfr();
+			default:
+				return ((Honey) o).getLabel();
+			}
+		}
+
+		// Substance
+		if (o != null && o instanceof Substance) {
+			switch (lang) {
+			case "ar":
+				return ((Substance) o).getLabelar();
+			case "fr":
+				return ((Substance) o).getLabelfr();
+			default:
+				return ((Substance) o).getLabel();
+			}
+		}
+
+		// Body part
+		if (o != null && o instanceof Bodypart) {
+			switch (lang) {
+			case "ar":
+				return ((Bodypart) o).getLabelar();
+			case "fr":
+				return ((Bodypart) o).getLabelfr();
+			default:
+				return ((Bodypart) o).getLabel();
+			}
+		}
+
+		// Virtue
+		if (o != null && o instanceof Virtue) {
+			switch (lang) {
+			case "ar":
+				return ((Virtue) o).getLabelar();
+			case "fr":
+				return ((Virtue) o).getLabelfr();
+			default:
+				return ((Virtue) o).getLabel();
+			}
+		}
+
+		// Defect
+		if (o != null && o instanceof Defect) {
+			switch (lang) {
+			case "ar":
+				return ((Defect) o).getLabelar();
+			case "fr":
+				return ((Defect) o).getLabelfr();
+			default:
+				return ((Defect) o).getLabel();
+			}
+		}
+
+		// Prescription
+		if (o != null && o instanceof Prescription) {
+			switch (lang) {
+			case "ar":
+				return ((Prescription) o).getTitlear();
+			case "fr":
+				return ((Prescription) o).getTitlefr();
+			default:
+				return ((Prescription) o).getTitle();
+			}
+		}
+
+		// Author
+		if (o != null && o instanceof Author) {
+			switch (lang) {
+			case "ar":
+				return ((Author) o).getNamear() + " "
+						+ ((Author) o).getSurnamear();
+			case "fr":
+				return ((Author) o).getName() + " " + ((Author) o).getSurname();
+			default:
+				return ((Author) o).getName() + " " + ((Author) o).getSurname();
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * 
+	 * @return html_direction
+	 */
+	public String getHtmlDirection() {
+		try {
+			String language = FacesContext.getCurrentInstance().getViewRoot()
+					.getLocale().getLanguage();
+			if (language.equalsIgnoreCase("ar")) {
+				return "rtl";
+			} else {
+				return "ltr";
+			}
+		} catch (Exception ex) {
+			Logger.getLogger(getClass().getName()).severe(
+					"Exception in getting HTML direction: " + ex.getMessage());
+			return "ltr";
+		}
+	}
+
+	/**
+	 * Method that hashes a string value with SHA-256 algorithm
+	 * 
+	 * @param value
+	 *            Hashed value
+	 * @return
+	 */
+	public String hash(String value) {
+		try {
+			MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+			byte[] hash = messageDigest.digest(value.getBytes("UTF-8"));
+			StringBuilder stringBuilder = new StringBuilder();
+			for (int i = 0; i < hash.length; i++) {
+				stringBuilder.append(Integer.toString((hash[i] & 0xff) + 0x100,
+						16).substring(1));
+			}
+			return stringBuilder.toString();
+		} catch (NoSuchAlgorithmException ex) {
+			Logger.getLogger(UtilityBean.class.getName()).severe(
+					ex.getMessage());
+			return "";
+		} catch (UnsupportedEncodingException unsupportedEncodingException) {
+			String msg = "SHAConverter.getAsObject: "
+					+ unsupportedEncodingException.getMessage();
+			Logger.getLogger(UtilityBean.class.getName()).severe(msg);
+			return "";
+		}
+	}
+
+	/**
+	 * Method to hash a string to SHA-256 Hexadecimal
+	 * 
+	 * @param value
+	 *            String to be hashed
+	 * @return hashed Hashed password
+	 */
+	public String hashHex(String value) {
+		try {
+			String hashed = DigestUtils.sha256Hex(value.trim());
+			System.out.println("Hex hashed password : " + hashed + " for: "
+					+ value.trim());
+			return hashed;
+		} catch (Exception ex) {
+			Logger.getLogger(getClass().getName()).severe(ex.getMessage());
+			return null;
+		}
+	}
+
+	/**
+	 * Method that should return honeybee------.sql
+	 * 
+	 * @param path
+	 *            Path to file located in home directory
+	 * @return file DB dump file
+	 */
+	public File dumpFile(String path) {
+		try {
+			File file = new File(System.getenv("HOME") + path);
+			return file;
+		} catch (Exception ex) {
+			System.out.println("dumpFile: Failure retrieving file");
+			Logger.getLogger(getClass().getName()).severe(ex.getMessage());
+			return null;
+		}
+	}
+
+	/**
+	 * Method that splits the browser referer url. Either it is a localhost url
+	 * or a web url
+	 * 
+	 * @param string
+	 *            browser url string
+	 * @return referer Formatted Referer url as view name
+	 */
+	public String cutRefererString(String string) {
+		String cut = "";
+		if (string.contains(".com")) {
+			cut = string.split(".com")[1];
+		} else if (string.contains(".fr")) {
+			cut = string.split(".fr")[1];
+		} else if (string.contains(".ma")) {
+			cut = string.split(".ma")[1];
+		} else {
+			cut = string.split(":[0-9][0-9][0-9][0-9]")[1].replace("/honeybee",
+					"");
+		}
+		return cut;
+	}
 
 } // END OF CLASS

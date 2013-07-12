@@ -1,133 +1,135 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/resources/scaffold/pageTemplate.xhtml">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/scaffold/pageTemplate.xhtml">
 
-	<f:metadata>
-		<f:viewParam name="page" value="#{witnessBean.page}" />
-		<f:event type="preRenderView" listener="#{witnessBean.paginate(this)}" />
-	</f:metadata>
+    <f:metadata>
+        <f:viewParam name="page" value="#{witnessBean.page}" />
+        <f:event type="preRenderView" listener="#{witnessBean.paginate(this)}" />
+    </f:metadata>
 
-	<ui:param name="pageTitle" value="#{i18n.witnesses}" />
+    <ui:param name="pageTitle" value="#{i18n.witnesses}" />
 
-	<ui:define name="header">
-		#{i18n.witnesses}
-	</ui:define>
+    <ui:define name="header">
+        #{i18n.witnesses}
+    </ui:define>
 
-	<ui:define name="subheader">
-		#{i18n.search}
-	</ui:define>
+    <ui:define name="subheader">
+        #{i18n.search}
+    </ui:define>
 
-	<ui:define name="footer" />
+    <ui:define name="footer" />
 
-	<ui:define name="main">
-		<h:form id="search">
-			<f:validateBean disabled="true">
-				<h:panelGroup styleClass="search">
+    <ui:define name="main">
+        <h:form id="search">
+            <f:validateBean disabled="true">
+                <h:panelGroup styleClass="search">
+                    <h:panelGrid columnClasses="label,component,required" columns="3">
+                        <h:outputLabel for="witnessBeanExampleEnduser"
+                                       value="#{i18n.enduser}" />
+                        <h:panelGroup styleClass="onemenu">
+                            <p:selectOneMenu rendered="#{not isAdministrator}"
+                                             converter="#{enduserBean.converter}"
+                                             id="witnessBeanExampleEnduser"
+                                             value="#{witnessBean.example.enduser}"
+                                             filter="true" filterMatchMode="contains"
+                                             >
+                                <f:selectItem itemValue="#{null}" itemLabel="-----"/>
+                                <f:selectItems value="#{enduserBean.dummyList}" />
+                                <f:ajax execute="@form" render="witnessBeanPageItems paginator" />
+                            </p:selectOneMenu>
+                            <p:selectOneMenu id="witnessBeanExampleEnduser2"
+                                             rendered="#{isAdministrator}"
+                                             converter="#{enduserBean.converter}"
+                                             value="#{witnessBean.example.enduser}"
+                                             filter="true" filterMatchMode="contains">
+                                <f:selectItem itemValue="#{null}" itemLabel="-----"/>
+                                <f:selectItems value="#{enduserBean.all}" var="_e" itemLabel="#{_e.name} #{_e.surname}" itemValue="#{_e}"/>
+                                <f:ajax execute="@form" render="witnessBeanPageItems paginator"
+                                        />
+                            </p:selectOneMenu>
+                            <h:message for="witnessBeanExampleEnduser" styleClass="error" />
+                        </h:panelGroup>
+                        <h:outputText />
+                        <h:outputLabel for="witnessBeanExamplePrescription"
+                                       value="#{i18n.prescription}" />
+                        <h:panelGroup styleClass="onemenu">
+                            <p:selectOneMenu converter="#{prescriptionBean.converter}"
+                                             id="witnessBeanExamplePrescription"
+                                             value="#{witnessBean.example.prescription}"
+                                             filter="true" filterMatchMode="contains">
+                                <f:selectItem itemValue="#{null}" itemLabel="-----"/>
+                                <f:selectItems value="#{prescriptionBean.all}" var="_p" itemLabel="#{utilityBean.switchLabel(_p)}" itemValue="#{_p}"/>
+                                <f:ajax execute="@form" render="witnessBeanPageItems paginator" />
+                            </p:selectOneMenu>
+                            <h:message for="witnessBeanExamplePrescription"
+                                       styleClass="error" />
+                        </h:panelGroup>
+                        <h:outputText />
+                        <h:outputLabel for="witnessBeanExampleSubject"
+                                       value="#{i18n.subject}" />
+                        <h:panelGroup>
+                            <h:inputText id="witnessBeanExampleSubject" maxlength="30"
+                                         value="#{witnessBean.example.subject}">
+                                <f:ajax execute="@form" render="witnessBeanPageItems paginator"
+                                        event="keyup" />
+                            </h:inputText>
+                            <h:message for="witnessBeanExampleSubject" styleClass="error" />
+                        </h:panelGroup>
+                        <h:outputText />
+                        <h:outputLabel for="witnessBeanExampleComment"
+                                       value="#{i18n.comment}" />
+                        <h:panelGroup>
+                            <h:inputText id="witnessBeanExampleComment" maxlength="65535"
+                                         value="#{witnessBean.example.comment}">
+                                <f:ajax execute="@form" render="witnessBeanPageItems paginator"
+                                        event="keyup" />
+                            </h:inputText>
+                            <h:message for="witnessBeanExampleComment" styleClass="error" />
+                        </h:panelGroup>
+                        <h:outputText />
+                    </h:panelGrid>
+                    <h:panelGroup styleClass="buttons">
+                        <h:commandLink value="#{i18n.search}"
+                                       action="#{witnessBean.search}" styleClass="btn btn-primary" />
+                        <h:commandLink value="#{i18n.create}"
+                                       rendered="#{isAdministrator or not empty request.remoteUser}" action="#{witnessBean.create}" styleClass="btn btn-primary" />
+                    </h:panelGroup>
+                </h:panelGroup>
+            </f:validateBean>
 
-					<h:panelGrid columnClasses="label,component,required" columns="3">
-						<h:outputLabel for="witnessBeanExampleEnduser"
-							value="#{i18n.enduser}" />
-						<h:panelGroup>
-							<h:selectOneMenu rendered="#{not isAdministrator}"
-								converter="#{enduserBean.converter}"
-								id="witnessBeanExampleEnduser"
-								value="#{witnessBean.example.enduser}">
-								<f:selectItem />
-								<f:selectItems value="#{enduserBean.dummyList}" />
-								<f:ajax execute="@form" render="witnessBeanPageItems paginator"
-									event="click" />
-							</h:selectOneMenu>
-							<h:selectOneMenu id="witnessBeanExampleEnduser2"
-								rendered="#{isAdministrator}"
-								converter="#{enduserBean.converter}"
-								value="#{witnessBean.example.enduser}">
-								<f:selectItem />
-								<f:selectItems value="#{enduserBean.all}" />
-								<f:ajax execute="@form" render="witnessBeanPageItems paginator"
-									event="click" />
-							</h:selectOneMenu>
-							<h:message for="witnessBeanExampleEnduser" styleClass="error" />
-						</h:panelGroup>
-						<h:outputText />
-						<h:outputLabel for="witnessBeanExamplePrescription"
-							value="#{i18n.prescription}" />
-						<h:panelGroup>
-							<h:selectOneMenu converter="#{prescriptionBean.converter}"
-								id="witnessBeanExamplePrescription"
-								value="#{witnessBean.example.prescription}">
-								<f:selectItem />
-								<f:selectItems value="#{prescriptionBean.all}" />
-								<f:ajax execute="@form" render="witnessBeanPageItems paginator"
-									event="click" />
-							</h:selectOneMenu>
-							<h:message for="witnessBeanExamplePrescription"
-								styleClass="error" />
-						</h:panelGroup>
-						<h:outputText />
-						<h:outputLabel for="witnessBeanExampleSubject"
-							value="#{i18n.subject}" />
-						<h:panelGroup>
-							<h:inputText id="witnessBeanExampleSubject" maxlength="30"
-								value="#{witnessBean.example.subject}">
-								<f:ajax execute="@form" render="witnessBeanPageItems paginator"
-									event="keyup" />
-							</h:inputText>
-							<h:message for="witnessBeanExampleSubject" styleClass="error" />
-						</h:panelGroup>
-						<h:outputText />
-						<h:outputLabel for="witnessBeanExampleComment"
-							value="#{i18n.comment}" />
-						<h:panelGroup>
-							<h:inputText id="witnessBeanExampleComment" maxlength="65535"
-								value="#{witnessBean.example.comment}">
-								<f:ajax execute="@form" render="witnessBeanPageItems paginator"
-									event="keyup" />
-							</h:inputText>
-							<h:message for="witnessBeanExampleComment" styleClass="error" />
-						</h:panelGroup>
-						<h:outputText />
-					</h:panelGrid>
-					<h:panelGroup styleClass="buttons">
-						<h:commandLink value="#{i18n.search}"
-							action="#{witnessBean.search}" styleClass="btn btn-primary" />
-						<h:commandLink value="#{i18n.create}"
-							rendered="#{isAdministrator or not empty request.remoteUser}" action="#{witnessBean.create}" styleClass="btn btn-primary" />
-					</h:panelGroup>
-				</h:panelGroup>
-			</f:validateBean>
+            <h:dataTable id="witnessBeanPageItems" styleClass="data-table"
+                         value="#{witnessBean.pageItems}" var="_item">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{i18n.comment}" />
+                    </f:facet>
+                    <h:link outcome="/witness/view">
+                        <f:param name="id" value="#{_item.id}" />
+                        <h:outputText id="itemComment" value="#{_item.comment}" />
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{i18n.subject}" />
+                    </f:facet>
+                    <h:link outcome="/witness/view">
+                        <f:param name="id" value="#{_item.id}" />
+                        <h:outputText id="itemSubject" value="#{_item.subject}" />
+                    </h:link>
+                </h:column>
+            </h:dataTable>
+            <h:panelGroup id="paginator">
+                <ui:include src="/resources/scaffold/paginator.xhtml">
+                    <ui:param name="paginatorBean" value="#{witnessBean}" />
+                </ui:include>
+            </h:panelGroup>
+        </h:form>
 
-			<h:dataTable id="witnessBeanPageItems" styleClass="data-table"
-				value="#{witnessBean.pageItems}" var="_item">
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{i18n.comment}" />
-					</f:facet>
-					<h:link outcome="/witness/view">
-						<f:param name="id" value="#{_item.id}" />
-						<h:outputText id="itemComment" value="#{_item.comment}" />
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{i18n.subject}" />
-					</f:facet>
-					<h:link outcome="/witness/view">
-						<f:param name="id" value="#{_item.id}" />
-						<h:outputText id="itemSubject" value="#{_item.subject}" />
-					</h:link>
-				</h:column>
-			</h:dataTable>
-			<h:panelGroup id="paginator">
-			<ui:include src="/resources/scaffold/paginator.xhtml">
-				<ui:param name="paginatorBean" value="#{witnessBean}" />
-			</ui:include>
-			</h:panelGroup>
-		</h:form>
-
-	</ui:define>
+    </ui:define>
 
 </ui:composition>

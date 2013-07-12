@@ -1,200 +1,213 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/resources/scaffold/pageTemplate.xhtml">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/scaffold/pageTemplate.xhtml">
 
-	<f:metadata>
-		<f:viewParam name="page" value="#{ingredientBean.page}" />
-		<f:event type="preRenderView"
-			listener="#{ingredientBean.paginate(this)}" />
-	</f:metadata>
+    <f:metadata>
+        <f:viewParam name="page" value="#{ingredientBean.page}" />
+        <f:event type="preRenderView"
+                 listener="#{ingredientBean.paginate(this)}" />
+    </f:metadata>
 
-	<ui:param name="pageTitle" value="#{i18n.ingredients}" />
+    <ui:param name="pageTitle" value="#{i18n.ingredients}" />
 
-	<ui:define name="header">
-		#{i18n.ingredients}
-	</ui:define>
+    <ui:define name="header">
+        #{i18n.ingredients}
+    </ui:define>
 
-	<ui:define name="subheader">
-		#{i18n.search}
-	</ui:define>
+    <ui:define name="subheader">
+        #{i18n.search}
+    </ui:define>
 
-	<ui:define name="footer" />
+    <ui:define name="footer" />
 
-	<ui:define name="main">
-		<h:form id="search">
-			<f:validateBean disabled="true">
-				<h:panelGroup styleClass="search">
+    <ui:define name="main">
+        <h:form id="search">
+            <f:validateBean disabled="true">
+                <h:panelGroup styleClass="search">
 
-					<h:panelGrid columnClasses="label,component,required" columns="3">
-						<h:outputLabel for="ingredientBeanExamplePlant"
-							value="#{i18n.plant}" />
-						<h:panelGroup>
-							<h:selectOneMenu converter="#{plantBean.converter}"
-								id="ingredientBeanExamplePlant"
-								value="#{ingredientBean.example.plant}">
-								<f:selectItem />
-								<f:selectItems value="#{plantBean.all}" />
-								<f:ajax execute="@form" render="ingredientBeanPageItems paginator"
-									 />
-							</h:selectOneMenu>
-							<h:message for="ingredientBeanExamplePlant" styleClass="error" />
-						</h:panelGroup>
-						<h:outputText />
-						<h:outputLabel for="ingredientBeanExampleHoney"
-							value="#{i18n.honey}" />
-						<h:panelGroup>
-							<h:selectOneMenu converter="#{honeyBean.converter}"
-								id="ingredientBeanExampleHoney"
-								value="#{ingredientBean.example.honey}">
-								<f:selectItem />
-								<f:selectItems value="#{honeyBean.all}" />
-								<f:ajax execute="@form" render="ingredientBeanPageItems paginator"
-									 />
-							</h:selectOneMenu>
-							<h:message for="ingredientBeanExampleHoney" styleClass="error" />
-						</h:panelGroup>
-						<h:outputText />
-						<h:outputLabel for="ingredientBeanExampleSubstance"
-							value="#{i18n.substance}" />
-						<h:panelGroup>
-							<h:selectOneMenu converter="#{substanceBean.converter}"
-								id="ingredientBeanExampleSubstance"
-								value="#{ingredientBean.example.substance}">
-								<f:selectItem />
-								<f:selectItems value="#{substanceBean.all}" />
-								<f:ajax execute="@form" render="ingredientBeanPageItems paginator"
-									/>
-							</h:selectOneMenu>
-							<h:message for="ingredientBeanExampleSubstance"
-								styleClass="error" />
-						</h:panelGroup>
-						<h:outputText />
-						<h:outputLabel for="ingredientBeanExampleForm"
-							value="#{i18n.form}" />
-						<h:panelGroup>
-							<h:selectOneMenu id="ingredientBeanExampleForm"
-								value="#{ingredientBean.example.form}">
-								<f:selectItem />
-								<f:selectItem itemLabel="#{i18n.raw}" itemValue="raw" />
-								<f:selectItem itemLabel="#{i18n.oil}" itemValue="oil" />
-								<f:selectItem itemLabel="#{i18n.powder}" itemValue="powder" />
-								<f:selectItem itemLabel="#{i18n.honey}" itemValue="honey" />								
-								<f:ajax execute="@form" render="ingredientBeanPageItems paginator"
-									 />
-							</h:selectOneMenu>
-							<h:message for="ingredientBeanExampleForm"
-								styleClass="error" />
-						</h:panelGroup>
-						<h:outputText />
-						<h:outputLabel for="ingredientBeanExampleLabel"
-							value="#{i18n.label}" />
-						<h:panelGroup>
-							<h:inputText id="ingredientBeanExampleLabel" maxlength="45"
-								value="#{ingredientBean.example.label}">
-								<f:ajax execute="@form" render="ingredientBeanPageItems paginator"
-									event="keyup" />
-							</h:inputText>
-							<h:message for="ingredientBeanExampleLabel" styleClass="error" />
-						</h:panelGroup>
-						<h:outputText />
-						<h:outputLabel for="ingredientBeanExampleLabelfr"
-							value="#{i18n.labelfr}" />
-						<h:panelGroup>
-							<h:inputText id="ingredientBeanExampleLabelfr" maxlength="45"
-								value="#{ingredientBean.example.labelfr}">
-								<f:ajax execute="@form" render="ingredientBeanPageItems paginator"
-									event="keyup" />
-							</h:inputText>
-							<h:message for="ingredientBeanExampleLabelfr" styleClass="error" />
-						</h:panelGroup>
-						<h:outputText />
+                    <h:panelGrid columnClasses="label,component,required" columns="3">
+                        <h:outputLabel for="ingredientBeanExampleForm"
+                                       value="#{i18n.form}" />
+                        <h:panelGroup>
+                            <h:selectOneMenu id="ingredientBeanExampleForm"
+                                             value="#{ingredientBean.example.form}">
+                                <f:selectItem />
+                                <f:selectItem itemLabel="#{i18n.raw}" itemValue="raw" />
+                                <f:selectItem itemLabel="#{i18n.oil}" itemValue="oil" />
+                                <f:selectItem itemLabel="#{i18n.powder}" itemValue="powder" />
+                                <f:selectItem itemLabel="#{i18n.honey}" itemValue="honey" />
+                                <f:selectItem itemLabel="#{i18n.mixture}" itemValue="mixture" />
+                                <f:selectItem itemLabel="#{i18n.juice}" itemValue="juice" />
+                                <f:ajax execute="@form"
+                                        render="ingredientBeanPageItems paginator" />
+                            </h:selectOneMenu>
+                            <h:message for="ingredientBeanExampleForm" styleClass="error" />
+                        </h:panelGroup>
+                        <h:outputText />
+                        <h:outputLabel for="ingredientBeanExamplePlant"
+                                       value="#{i18n.plant}" />
+                        <h:panelGroup styleClass="onemenu">
+                            <p:selectOneMenu converter="#{plantBean.converter}"
+                                             id="ingredientBeanExamplePlant"
+                                             value="#{ingredientBean.example.plant}"
+                                             filter="true" filterMatchMode="contains">
+                                <f:selectItem itemValue="#{null}" itemLabel="-----"/> 
+                                <f:selectItems value="#{plantBean.all}" var="_pl" itemLabel="#{utilityBean.switchLabel(_pl)}" itemValue="#{_pl}"/>
+                                <f:ajax execute="@form"
+                                        render="ingredientBeanPageItems paginator" />
+                            </p:selectOneMenu>
+                            <h:message for="ingredientBeanExamplePlant" styleClass="error" />
+                        </h:panelGroup>
+                        <h:outputText />
+                        <h:outputLabel for="ingredientBeanExampleHoney"
+                                       value="#{i18n.honey}" />
+                        <h:panelGroup styleClass="onemenu">
+                            <p:selectOneMenu converter="#{honeyBean.converter}"
+                                             id="ingredientBeanExampleHoney"
+                                             value="#{ingredientBean.example.honey}"
+                                             filter="" filterMatchMode="contains">
+                                <f:selectItem itemValue="#{null}" itemLabel="-----"/> 
+                                <f:selectItems value="#{honeyBean.all}" var="_h" itemLabel="#{utilityBean.switchLabel(_h)}" itemValue="#{_h}"/>
+                                <f:ajax execute="@form"
+                                        render="ingredientBeanPageItems paginator" />
+                            </p:selectOneMenu>
+                            <h:message for="ingredientBeanExampleHoney" styleClass="error" />
+                        </h:panelGroup>
+                        <h:outputText />
+                        <h:outputLabel for="ingredientBeanExampleSubstance"
+                                       value="#{i18n.substance}" />
+                        <h:panelGroup styleClass="onemenu">
+                            <p:selectOneMenu converter="#{substanceBean.converter}"
+                                             id="ingredientBeanExampleSubstance"
+                                             value="#{ingredientBean.example.substance}"
+                                             filter="true" filterMatchMode="contains">
+                                <f:selectItem itemValue="#{null}" itemLabel="-----"/> 
+                                <f:selectItems value="#{substanceBean.all}" var="_s" itemLabel="#{utilityBean.switchLabel(_s)}" itemValue="#{_s}"/>
+                                <f:ajax execute="@form"
+                                        render="ingredientBeanPageItems paginator" />
+                            </p:selectOneMenu>
+                            <h:message for="ingredientBeanExampleSubstance"
+                                       styleClass="error" />
+                        </h:panelGroup>
+                        <h:outputText />                     
+                        <h:outputLabel for="ingredientBeanExampleLabel"
+                                       value="#{i18n.label}" />
+                        <h:panelGroup>
+                            <h:inputText id="ingredientBeanExampleLabel" maxlength="45"
+                                         value="#{ingredientBean.example.label}">
+                                <f:ajax execute="@form"
+                                        render="ingredientBeanPageItems paginator" event="keyup" />
+                            </h:inputText>
+                            <h:message for="ingredientBeanExampleLabel" styleClass="error" />
+                        </h:panelGroup>
+                        <h:outputText />
+                        <h:outputLabel for="ingredientBeanExampleLabelfr"
+                                       value="#{i18n.labelfr}" />
+                        <h:panelGroup>
+                            <h:inputText id="ingredientBeanExampleLabelfr" maxlength="45"
+                                         value="#{ingredientBean.example.labelfr}">
+                                <f:ajax execute="@form"
+                                        render="ingredientBeanPageItems paginator" event="keyup" />
+                            </h:inputText>
+                            <h:message for="ingredientBeanExampleLabelfr" styleClass="error" />
+                        </h:panelGroup>
+                        <h:outputText />
 
-						<h:outputLabel for="ingredientBeanExampleLabelar"
-							value="#{i18n.labelar}" />
-						<h:panelGroup>
-							<h:inputText id="ingredientBeanExampleLabelar" maxlength="45"
-								value="#{ingredientBean.example.labelar}">
-								<f:ajax execute="@form" render="ingredientBeanPageItems paginator"
-									event="keyup" />
-							</h:inputText>
-							<h:message for="ingredientBeanExampleLabelar" styleClass="error" />
-						</h:panelGroup>
-						<h:outputText />
-						<h:outputLabel for="ingredientBeanExampleLabelmar"
-							value="#{i18n.labelmar}" />
-						<h:panelGroup>
-							<h:inputText id="ingredientBeanExampleLabelmar" maxlength="45"
-								value="#{ingredientBean.example.labelmar}">
-								<f:ajax execute="@form" render="ingredientBeanPageItems paginator"
-									event="keyup" />
-							</h:inputText>
-							<h:message for="ingredientBeanExampleLabelmar" styleClass="error" />
-						</h:panelGroup>
-						<h:outputText />
-					</h:panelGrid>
-					<h:panelGroup styleClass="buttons">
-						<h:commandLink value="#{i18n.search}"
-							action="#{ingredientBean.search}" styleClass="btn btn-primary" />
-						<h:commandLink rendered="#{isAdministrator or isAuthor}" value="#{i18n.create}"
-							action="#{ingredientBean.create}" styleClass="btn btn-primary" />
-					</h:panelGroup>
-				</h:panelGroup>
-			</f:validateBean>
+                        <h:outputLabel for="ingredientBeanExampleLabelar"
+                                       value="#{i18n.labelar}" />
+                        <h:panelGroup>
+                            <h:inputText id="ingredientBeanExampleLabelar" maxlength="45"
+                                         value="#{ingredientBean.example.labelar}">
+                                <f:ajax execute="@form"
+                                        render="ingredientBeanPageItems paginator" event="keyup" />
+                            </h:inputText>
+                            <h:message for="ingredientBeanExampleLabelar" styleClass="error" />
+                        </h:panelGroup>
+                        <h:outputText />
+                        <h:outputLabel for="ingredientBeanExampleLabelmar"
+                                       value="#{i18n.labelmar}" />
+                        <h:panelGroup>
+                            <h:inputText id="ingredientBeanExampleLabelmar" maxlength="45"
+                                         value="#{ingredientBean.example.labelmar}">
+                                <f:ajax execute="@form"
+                                        render="ingredientBeanPageItems paginator" event="keyup" />
+                            </h:inputText>
+                            <h:message for="ingredientBeanExampleLabelmar" styleClass="error" />
+                        </h:panelGroup>
+                        <h:outputText />
+                    </h:panelGrid>
+                    <h:panelGroup styleClass="buttons">
+                        <h:commandLink value="#{i18n.search}"
+                                       action="#{ingredientBean.search}" styleClass="btn btn-primary" />
+                        <h:commandLink rendered="#{isAdministrator or isAuthor}"
+                                       value="#{i18n.create}" action="#{ingredientBean.create}"
+                                       styleClass="btn btn-primary" />
+                    </h:panelGroup>
+                </h:panelGroup>
+            </f:validateBean>
 
-			<h:dataTable id="ingredientBeanPageItems" styleClass="data-table"
-				value="#{ingredientBean.pageItems}" var="_item">
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{i18n.label}" />
-					</f:facet>
-					<h:link outcome="/ingredient/view">
-						<f:param name="id" value="#{_item.id}" />
-						<h:outputText id="itemLabel" value="#{_item.label}" />
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{i18n.labelfr}" />
-					</f:facet>
-					<h:link outcome="/ingredient/view">
-						<f:param name="id" value="#{_item.id}" />
-						<h:outputText id="itemLabelfr" value="#{_item.labelfr}" />
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{i18n.labelar}" />
-					</f:facet>
-					<h:link outcome="/ingredient/view">
-						<f:param name="id" value="#{_item.id}" />
-						<h:outputText id="itemLabelar" value="#{_item.labelar}" />
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{i18n.form}" />
-					</f:facet>
-					<h:link outcome="/ingredient/view">
-						<f:param name="id" value="#{_item.id}" />
-						<h:outputText id="itemFormR" value="#{i18n.raw}" rendered="#{_item.form == 'raw'}"/>
-						<h:outputText id="itemFormO" value="#{i18n.oil}"  rendered="#{_item.form == 'oil'}" />
-						<h:outputText id="itemFormP" value="#{i18n.powder}"  rendered="#{_item.form == 'powder'}"/>
-						<h:outputText id="itemFormH" value="#{i18n.honey}"  rendered="#{_item.form == 'honey'}"/>
-						<h:outputText id="itemFormJ" value="#{i18n.juice}"  rendered="#{_item.form == 'juice'}"/>
-					</h:link>
-				</h:column>
-			</h:dataTable>
-			<h:panelGroup id="paginator">
-			<ui:include src="/resources/scaffold/paginator.xhtml" >
-				<ui:param name="paginatorBean" value="#{ingredientBean}" />
-			</ui:include>
-			</h:panelGroup>
-		</h:form>
+            <h:dataTable id="ingredientBeanPageItems" styleClass="data-table"
+                         value="#{ingredientBean.pageItems}" var="_item">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{i18n.label}" />
+                    </f:facet>
+                    <h:link outcome="/ingredient/view">
+                        <f:param name="id" value="#{_item.id}" />
+                        <h:outputText id="itemLabel" value="#{_item.label}" />
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{i18n.labelfr}" />
+                    </f:facet>
+                    <h:link outcome="/ingredient/view">
+                        <f:param name="id" value="#{_item.id}" />
+                        <h:outputText id="itemLabelfr" value="#{_item.labelfr}" />
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{i18n.labelar}" />
+                    </f:facet>
+                    <h:link outcome="/ingredient/view">
+                        <f:param name="id" value="#{_item.id}" />
+                        <h:outputText id="itemLabelar" value="#{_item.labelar}" />
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{i18n.form}" />
+                    </f:facet>
+                    <h:link outcome="/ingredient/view">
+                        <f:param name="id" value="#{_item.id}" />
+                        <h:outputText id="itemFormR" value="#{i18n.raw}"
+                                      rendered="#{_item.form == 'raw'}" />
+                        <h:outputText id="itemFormO" value="#{i18n.oil}"
+                                      rendered="#{_item.form == 'oil'}" />
+                        <h:outputText id="itemFormP" value="#{i18n.powder}"
+                                      rendered="#{_item.form == 'powder'}" />
+                        <h:outputText id="itemFormH" value="#{i18n.honey}"
+                                      rendered="#{_item.form == 'honey'}" />
+                        <h:outputText id="itemFormJ" value="#{i18n.juice}"
+                                      rendered="#{_item.form == 'juice'}" />
+                        <h:outputText id="itemFormM" value="#{i18n.mixture}"
+                                      rendered="#{_item.form == 'mixture'}" />
+                    </h:link>
+                </h:column>
+            </h:dataTable>
+            <h:panelGroup id="paginator">
+                <ui:include src="/resources/scaffold/paginator.xhtml">
+                    <ui:param name="paginatorBean" value="#{ingredientBean}" />
+                </ui:include>
+            </h:panelGroup>
+        </h:form>
 
-	</ui:define>
+    </ui:define>
 
 </ui:composition>

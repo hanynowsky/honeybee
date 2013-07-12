@@ -20,7 +20,7 @@
 	</ui:define>
 
 	<ui:define name="subheader">
-		#{i18n.ingredient}
+		#{i18n.ingredient} : #{ingredientBean.switchLabel(ingredientBean.ingredient)}
 	</ui:define>
 
 	<ui:define name="footer" />
@@ -30,14 +30,14 @@
 			<h:outputLabel for="ingredientBeanIngredientPlant"
 				value="#{i18n.plant}" />
 			<h:link id="ingredientBeanIngredientPlant" outcome="/plant/view"
-				value="#{ingredientBean.ingredient.plant}">
+				value="#{utilityBean.switchLabel(ingredientBean.ingredient.plant)}">
 				<f:param name="id" value="#{ingredientBean.ingredient.plant.id}" />
 			</h:link>
 			<h:outputText />
 			<h:outputLabel for="ingredientBeanIngredientHoney"
 				value="#{i18n.honey}" />
 			<h:link id="ingredientBeanIngredientHoney" outcome="/honey/view"
-				value="#{ingredientBean.ingredient.honey}">
+				value="#{utilityBean.switchLabel(ingredientBean.ingredient.honey)}">
 				<f:param name="id" value="#{ingredientBean.ingredient.honey.id}" />
 			</h:link>
 			<h:outputText />
@@ -45,7 +45,7 @@
 				value="#{i18n.substance}" />
 			<h:link id="ingredientBeanIngredientSubstance"
 				outcome="/substance/view"
-				value="#{ingredientBean.ingredient.substance}">
+				value="#{utilityBean.switchLabel(ingredientBean.ingredient.substance)}">
 				<f:param name="id" value="#{ingredientBean.ingredient.substance.id}" />
 			</h:link>
 			<h:outputText />
@@ -197,21 +197,21 @@
 				</p:column>
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="#{i18n.preparation}" />
+						<h:outputText value="#{i18n.witnesses}" />
 					</f:facet>
 					<h:link outcome="/prescription/view">
 						<f:param name="id" value="#{_item.id}" />
-						<h:outputText id="itemPreparation" value="#{_item.preparation}" />
+						<h:outputText id="itemPreparation" value="#{_item.witnesses.size()}" />
 					</h:link>
 				</p:column>
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="#{i18n.preparationfr}" />
+						<h:outputText value="#{i18n.coefficient}" />
 					</f:facet>
 					<h:link outcome="/prescription/view">
 						<f:param name="id" value="#{_item.id}" />
 						<h:outputText id="itemPreparationfr"
-							value="#{_item.preparationfr}" />
+							value="#{_item.coefficient}" />
 					</h:link>
 				</p:column>
 			</p:dataTable>

@@ -28,7 +28,7 @@
 	<ui:define name="main">
 		<h:panelGrid columnClasses="label,component,required" columns="3">
 			<h:outputLabel for="complementBeanComplementIngredient" value="#{i18n.ingredient}"/>
-			<h:link id="complementBeanComplementIngredient" outcome="/ingredient/view" value="#{complementBean.complement.ingredient}">
+			<h:link id="complementBeanComplementIngredient" outcome="/ingredient/view" value="#{utilityBean.switchLabel(complementBean.complement.ingredient)}">
 				<f:param name="id" value="#{complementBean.complement.ingredient.id}"/>
 			</h:link>
 			<h:outputText/>

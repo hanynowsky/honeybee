@@ -109,6 +109,7 @@ public class Plant implements java.io.Serializable {
 		this.label = label;
 	}
 
+	@Field
 	@Column(name = "labelfr", nullable = false, length = 45, unique = true)
 	public String getLabelfr() {
 		return this.labelfr;
@@ -118,6 +119,7 @@ public class Plant implements java.io.Serializable {
 		this.labelfr = labelfr;
 	}
 
+	@Field
 	@Column(name = "labellat", nullable = false, length = 45, unique = true)
 	public String getLabellat() {
 		return this.labellat;
@@ -127,6 +129,7 @@ public class Plant implements java.io.Serializable {
 		this.labellat = labellat;
 	}
 
+	@Field
 	@Column(name = "labelar", nullable = false, length = 45, unique = true)
 	public String getLabelar() {
 		return this.labelar;
@@ -136,6 +139,7 @@ public class Plant implements java.io.Serializable {
 		this.labelar = labelar;
 	}
 
+	@Field
 	@Column(name = "labelmar", length = 45)
 	public String getLabelmar() {
 		return this.labelmar;
@@ -163,6 +167,7 @@ public class Plant implements java.io.Serializable {
 		this.graphic = graphic;
 	}
 
+	@Field
 	@Column(name = "description", length = 65535)
 	public String getDescription() {
 		return this.description;
@@ -172,6 +177,7 @@ public class Plant implements java.io.Serializable {
 		this.description = description;
 	}
 
+	@Field
 	@Column(name = "descriptionfr", length = 65535)
 	public String getDescriptionfr() {
 		return this.descriptionfr;
@@ -181,6 +187,7 @@ public class Plant implements java.io.Serializable {
 		this.descriptionfr = descriptionfr;
 	}
 
+	@Field
 	@Column(name = "descriptionar", length = 65535)
 	public String getDescriptionar() {
 		return this.descriptionar;

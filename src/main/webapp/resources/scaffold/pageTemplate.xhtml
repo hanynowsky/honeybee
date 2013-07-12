@@ -3,13 +3,13 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}">
+	xmlns:p="http://primefaces.org/ui">
 <f:view id="honeybee_view" contentType="text/html"
 	locale="#{localeBean.locale}">
 	<h:head>
 		<title>#{empty pageTitle ? '{#pageTitle}' : pageTitle}</title>
 		<link rel="icon" href="#{resource['favicon.ico']}" />
+		<h:outputScript name="js.js" />
 		<h:outputStylesheet name="primefaces-flick/theme.css" />
 		<h:outputStylesheet name="bootstrap.css" />
 		<h:outputStylesheet name="forge-style.css" />
@@ -19,18 +19,33 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	</h:head>
 
-	<h:body onload="colorify();">
+	<h:body onload="colorify();"
+		dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}">	
+		<p:outputPanel styleClass="feedback" autoUpdate="true">
+			<a target="_blank" href="mailto:kyoshuu.madani@gmail.com"> <h:outputText
+					value="#{i18n.feedback}" />
+			</a>
+		</p:outputPanel>
 
-		<p:ajaxStatus id="ajaxStatus" style="float:left;">
-			<f:facet name="start">				
-				<p:graphicImage value="#{resource['gif.gif']}" />
+		<p:ajaxStatus id="ajaxStatusPanel_reg" styleClass="status">
+			<f:facet name="start">
+				<div class="statusdiv">
+					<h:outputText value="#{i18n.loading}" />
+					<p:separator style="margin:2px;" />
+					<h:graphicImage value="#{resource['gif.gif']}"
+						alt="honeybee_img_loading" />
+				</div>
 			</f:facet>
 			<f:facet name="complete">
 				<h:outputText value="" style="background-color:transparent;" />
 			</f:facet>
 		</p:ajaxStatus>
-		<p:growl autoUpdate="true" life="4500" id="growl_general"
+		<p:growl autoUpdate="true" life="5000" id="growl_general"
 			showDetail="false" />
+		<ui:param name="html-direction"
+			value="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
+		<ui:param name="htmlDirection"
+			value="#{utilityBean.htmlDirection == 'rtl' ? 'right' : 'left'}" />
 		<ui:param name="isAdministrator"
 			value="#{request.isUserInRole('ADMINISTRATOR')}" />
 		<ui:param name="isGuest" value="#{request.isUserInRole('GUEST')}" />
@@ -39,29 +54,52 @@
 		<ui:param name="isAuthor" value="#{request.isUserInRole('AUTHOR')}" />
 
 		<script type="text/javascript">
-        function colorify() {
-            // var items = document.getElementById('navigation').getElementsByTagName('a');
-            var topitems = document.getElementById('top_div').getElementsByTagName('a');
+            function colorify() {
+                // var items = document.getElementById('navigation').getElementsByTagName('a');
+                var topitems = document.getElementById('top_div').getElementsByTagName('a');
 
-                var viewid = "#{utilityBean.viewName}"; // this requires the bean to be request scoped
-            if (viewid !== '/index.xhtml') {
-                document.getElementById(viewid.split('/')[1]).className = 'active-menuitem';
+                var viewid = "#{utilityBean.viewName}";
+                // this requires the bean to be request scoped
+                if (viewid !== '/index.xhtml') {
+                    document.getElementById(viewid.split('/')[1]).className = 'active-menuitem';
+                }
+                if (viewid === '/misc/aboutus.xhtml') {
+                    topitems[1].className = 'active-topmenuitem';
+                    document.getElementById('aboutus_top').className = 'active-topmenuitem';
+                }
             }
-            if (viewid === '/misc/aboutus.xhtml') {
-                topitems[1].className = 'active-topmenuitem';
-                document.getElementById('aboutus_top').className = 'active-topmenuitem';
+
+            function originalView(){
+			/**/ 
+                }
+
+            function customFilter(itemLabel, filterValue) {
+                var label = itemLabel;
+                if (label === null) {
+                    return false;
+                }
+                return filterValue === itemValue;
             }
-        }
             </script>
+
+		<style type="text/css">
+#content h2.success {
+	background-position: #{htmlDirection} 18px;
+}
+</style>
 
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
 					<h:link id="brandLink" outcome="/index.xhtml" styleClass="brand">
 						<h:outputText value="#{i18n.honeybee}" />
+						<p:effect rendered="#{utilityBean.viewName.contains('index')}"
+							type="pulsate" event="load" delay="500">
+							<f:param name="mode" value="'show'" />
+						</p:effect>
 					</h:link>
 					<div style="float: right;" class="nav-collapse collapse">
-						<h:panelGrid columns="2" dir="ltr">
+						<h:panelGrid columns="2" dir="ltr" id="user-panel-grid">
 							<h:panelGroup styleClass="user-panel">
 								<h:link id="userlink" outcome="/login.xhtml">
 									<h:outputText rendered="#{not empty request.remoteUser}"
@@ -69,23 +107,35 @@
 										dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
 								</h:link>
 								<h:outputLink id="userconnect"
-									value="#{request.contextPath}/redirect.html">
+									value="#{request.contextPath}/signin.xhtml">
 									<h:outputText rendered="#{empty request.remoteUser}"
 										value="#{i18n.login}!"
 										dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
 								</h:outputLink>
 							</h:panelGroup>
-							<h:form id="form_locale" style="height:20px;">
-								<h:selectOneMenu id="localemenu" value="#{localeBean.language}"
-									style="width: 90px;margin-right:5px;"
-									onchange="document.getElementById('form_locale').submit();">
-									<f:selectItem itemLabel="Français" itemValue="fr"
-										id="localmenu_items" />
-									<f:selectItem itemLabel="عربية" itemValue="ar"
-										id="localmenu_itemsar" />
-									<f:selectItem itemLabel="English" itemValue="en"
-										id="localmenu_itemsen" />
-								</h:selectOneMenu>
+
+							<h:form id="form_locale" style="height:20px;"
+								styleClass="onemenu">
+								<p:selectOneMenu id="localemenu"
+									value="#{localeBean.selectedLang}"
+									style="width:120px;margin-right:1px;top:3px;"
+									onchange="document.getElementById('form_locale').submit();"
+									var="lang" converter="#{languageBean.converter}">
+									<f:selectItem itemDisabled="true" noSelectionOption="true"
+										itemLabel="#{localeBean.selectedLang.label}"
+										itemValue="#{localeBean.selectedLang}" />
+									<f:selectItems value="#{languageBean.all}" var="lg"
+										itemLabel="#{localeBean.selectedLanguageLabel}"
+										itemValue="#{lg}" />
+									<p:column>
+										<p:graphicImage
+											value="/honeybee/javax.faces.resource/gfx/#{lang.code}.png.xhtml"
+											width="25" height="20" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{lang.label}" />
+									</p:column>
+								</p:selectOneMenu>
 							</h:form>
 						</h:panelGrid>
 					</div>
@@ -98,6 +148,8 @@
 							<li><a id="source_code" target="_blank"
 								href="https://github.com/hanynowsky/honeybee"><h:outputText
 										value="#{i18n.source_code}" /></a></li>
+							<li><h:link id="glossary" outcome="/misc/glossary"
+									value="#{i18n.glossary}" /></li>
 							<li><h:link id="search_menu" outcome="/misc/search"
 									value="#{i18n.search}" /></li>
 						</ul>
@@ -111,7 +163,8 @@
 				<h:link id="homeLink" outcome="/index.xhtml"
 					style="padding-left:0px;">
 					<img src="#{resource['bee.jpg']}" alt="HoneyBee" border="0"
-						style="width: 180px; text-align: center; margin-bottom: 5px;" />
+						style="border: 3px solid #FFF; width: 180px; border-radius: 5px; text-align: center; margin-bottom: 5px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 0, 0, 0.6);">
+					</img>
 				</h:link>
 				<h:panelGroup rendered="#{isAdministrator == true}">
 					<ul>
@@ -126,18 +179,22 @@
 
 				<h:panelGroup>
 					<ul>
-						<li><h:link id="author" outcome="/author/search"
-								value="#{i18n.authors}" /></li>
 						<li><h:link id="prescription" outcome="/prescription/search"
 								value="#{i18n.prescriptions}" /></li>
+						<li><h:link id="author" outcome="/author/search"
+								value="#{i18n.authors}" /></li>
+						<li><h:link id="witness" outcome="/witness/search"
+								value="#{i18n.witnesses}" /></li>
+					</ul>
+				</h:panelGroup>
+				<h:panelGroup>
+					<ul>
 						<li><h:link id="virtue" outcome="/virtue/search"
 								value="#{i18n.virtues}" /></li>
 						<li><h:link id="defect" outcome="/defect/search"
 								value="#{i18n.defects}" /></li>
 						<li><h:link id="bodypart" outcome="/bodypart/search"
 								value="#{i18n.bodyparts}" /></li>
-						<li><h:link id="witness" outcome="/witness/search"
-								value="#{i18n.witnesses}" /></li>
 					</ul>
 				</h:panelGroup>
 				<h:panelGroup>
@@ -170,21 +227,42 @@
 					<ui:insert name="subheader" />
 				</h2>
 				<h:form>
-					<p:messages globalOnly="false" id="messages_global"
-						showDetail="false" />
+					<p:messages globalOnly="true" id="messages_global"
+						showDetail="false">
+						<p:effect type="pulsate" event="load" delay="500">
+							<f:param name="mode" value="'show'" />
+						</p:effect>
+					</p:messages>
+
+					<p:idleMonitor onidle="idleDialog.show();" id="idleMonitor"
+						timeout="1740000">
+						<p:ajax event="idle"
+							listener="#{utilityBean.showMessage('info','IDLE','-')}"
+							update="messages_global" />
+					</p:idleMonitor>
+					<p:dialog header="HoneyBee" widgetVar="idleDialog" modal="true"
+						closable="false">
+						<h:panelGrid columns="1" style="text-align:center;">
+							<h:outputText value="Expired Session!" />
+							<p:separator style="height:1px;" />
+							<p:commandButton value="#{i18n.logout}"
+								action="#{userManagerBean.logout}" ajax="false" />
+						</h:panelGrid>
+					</p:dialog>
 				</h:form>
+
 				<ui:insert name="main" />
 			</div>
 		</div>
 
-		<footer>
+		<footer>		
 			<div id="footer-wrapper">
 				<p>
-					<h:outputText value="Powered By" />
+					<h:outputText value="#{i18n.powered_by}" />
 					<a href="http://opentika-otika.rhcloud.com"> <h:outputText
 							value="OpenTika" />
 					</a>
-					<h:outputText value=" | @2013 - Casablanca" />
+					<h:outputText value=" | @2013 - #{i18n.casablanca}" />						
 				</p>
 			</div>
 		</footer>

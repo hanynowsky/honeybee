@@ -13,6 +13,8 @@ import javax.ws.rs.core.Application;
  * annotation.
  * </p>
  */
+
+
 @ApplicationPath("/rest")
 public class JaxRsActivator extends Application {
 
@@ -39,10 +41,18 @@ public class JaxRsActivator extends Application {
         resources.add(org.otika.honeybee.rest.LanguageEndpoint.class);
         resources.add(org.otika.honeybee.rest.PlantEndpoint.class);
         resources.add(org.otika.honeybee.rest.PrescriptionEndpoint.class);
+        resources.add(org.otika.honeybee.rest.RestService.class);
         resources.add(org.otika.honeybee.rest.StoreEndpoint.class);
         resources.add(org.otika.honeybee.rest.SubstanceEndpoint.class);
         resources.add(org.otika.honeybee.rest.UsergroupEndpoint.class);
         resources.add(org.otika.honeybee.rest.VirtueEndpoint.class);
         resources.add(org.otika.honeybee.rest.WitnessEndpoint.class);
     }
+	/*
+	 * @Override public Set<Class<?>> getClasses() { Set<Class<?>> resources =
+	 * new java.util.HashSet<Class<?>>(); addRestResourceClasses(resources);
+	 * return resources; }
+	 */
+
+
 }

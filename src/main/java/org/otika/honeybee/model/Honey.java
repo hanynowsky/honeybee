@@ -100,6 +100,7 @@ public class Honey implements java.io.Serializable {
 		this.label = label;
 	}
 
+	@Field
 	@Column(name = "labelfr", nullable = false, length = 45)
 	public String getLabelfr() {
 		return this.labelfr;
@@ -109,6 +110,7 @@ public class Honey implements java.io.Serializable {
 		this.labelfr = labelfr;
 	}
 
+	@Field
 	@Column(name = "labelar", nullable = false, length = 45)
 	public String getLabelar() {
 		return this.labelar;
@@ -118,6 +120,7 @@ public class Honey implements java.io.Serializable {
 		this.labelar = labelar;
 	}
 
+	@Field
 	@Column(name = "description", length = 445)
 	public String getDescription() {
 		return this.description;
@@ -127,6 +130,7 @@ public class Honey implements java.io.Serializable {
 		this.description = description;
 	}
 
+	@Field
 	@Column(name = "descriptionar", length = 445)
 	public String getDescriptionar() {
 		return this.descriptionar;
@@ -136,6 +140,7 @@ public class Honey implements java.io.Serializable {
 		this.descriptionar = descriptionar;
 	}
 
+	@Field
 	@Column(name = "descriptionfr", length = 445)
 	public String getDescriptionfr() {
 		return this.descriptionfr;

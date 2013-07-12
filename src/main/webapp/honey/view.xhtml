@@ -28,7 +28,7 @@
 	<ui:define name="main">
 		<h:panelGrid columnClasses="label,component,required" columns="3">
                     <h:outputLabel for="honeyBeanHoneyPlant" value="#{i18n.plant}"/>
-			<h:link id="honeyBeanHoneyPlant" outcome="/plant/view" value="#{honeyBean.honey.plant}">
+			<h:link id="honeyBeanHoneyPlant" outcome="/plant/view" value="#{utilityBean.switchLabel(honeyBean.honey.plant)}">
 				<f:param name="id" value="#{honeyBean.honey.plant.id}"/>
 			</h:link>
 			<h:outputText/>
