@@ -222,12 +222,9 @@
 					onclick="termsDialog.hide()" />
 			</p:dialog>
 			<div class="buttons">
-				<p:commandLink value="#{i18n.save}" action="#{enduserBean.update}"
-					styleClass="btn btn-primary" onclick="return(checkPassConf());">
-					<f:setPropertyActionListener
-						target="#{userManagerBean.originalPassword}"
-						value="#{enduserBean.enduser.password}" />
-				</p:commandLink>
+				<h:commandLink value="#{i18n.save}" action="#{enduserBean.update}"
+					styleClass="btn btn-primary" onclick="return(checkPassConf());">					
+				</h:commandLink>
 				<c:choose>
 					<c:when test="#{!empty enduserBean.id}">
 						<h:link value="#{i18n.cancel}" outcome="view"

@@ -128,7 +128,7 @@ public class EnduserBean implements Serializable {
 				Enduser enduser = repository.findByEmail(user);
 				if (user == null
 						|| (enduser != findById(this.id) && !sessionContext
-                        .isCallerInRole("ADMINISTRATOR"))) {
+								.isCallerInRole("ADMINISTRATOR"))) {
 					// TODO prevent from viewing another user
 					utilityBean.showMessage("warn",
 							bundleBean.i18n("view_another_user"), "");
@@ -169,7 +169,11 @@ public class EnduserBean implements Serializable {
 				createEnduser(this.enduser);
 				System.out.println("Persisted : " + this.enduser.getEmail());
 				registrationEvent.fire(new RegistrationEvent(this.enduser));
-				return "/enduser/search?faces-redirect=true";
+				if (!sessionContext.isCallerInRole("ADMINISTRATOR")) {
+					return "/index?faces-redirect=false";
+				} else {
+					return "/enduser/search?faces-redirect=true";
+				}
 
 				/**
 				 * Updating end user object
@@ -182,7 +186,8 @@ public class EnduserBean implements Serializable {
 						|| sessionContext.isCallerInRole("ADMINISTRATOR")) {
 					System.out.println("Trying to merge end user...");
 					this.entityManager.merge(this.enduser);
-					System.out.println("Merged end user... "+this.enduser.getEmail());
+					System.out.println("Merged end user... "
+							+ this.enduser.getEmail());
 					return "view?faces-redirect=true&id="
 							+ this.enduser.getId();
 				} else {
@@ -479,7 +484,7 @@ public class EnduserBean implements Serializable {
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			context.addMessage(null, message);
 			((UIInput) component).setValid(false);
-        }
+		}
 	}
 
 	/*
