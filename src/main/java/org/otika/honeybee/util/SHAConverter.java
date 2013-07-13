@@ -17,6 +17,8 @@ import javax.faces.convert.FacesConverter;
  */
 @FacesConverter("org.otika.honeybee.util.SHAConverter")
 public class SHAConverter implements Converter {
+	
+	private UserManagerBean userManagerBean = new UserManagerBean();
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,
@@ -33,6 +35,7 @@ public class SHAConverter implements Converter {
 		try {
 			
 			System.out.println("Hashing value: " +value.toString());
+			userManagerBean.setOriginalPassword(value.toString());
 			MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
 			byte[] hash = messageDigest.digest(value.getBytes("UTF-8"));
 			StringBuilder stringBuilder = new StringBuilder();

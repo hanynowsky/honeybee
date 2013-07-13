@@ -40,6 +40,8 @@ public class DumpBean {
 	private Repository repository;
 	@Inject
 	private RequestBean requestBean;
+	@Inject
+	private UserManagerBean userManagerBean;
 
 	/**
 	 * Default constructor.
@@ -133,7 +135,7 @@ public class DumpBean {
 	public void watchSignin(@Observes SigninEvent event) {
 		requestBean.log("SIGNIN"); // The bean is decorated
 		String msg = "Sign in successful: " + event.getEmail();
-		System.out.println("System output: " + msg);		
+		System.out.println("System output: " + msg);
 		Logger.getLogger(getClass().getName()).info(msg);
 	}
 
@@ -152,8 +154,8 @@ public class DumpBean {
 			Enduser user = event.getEnduser();
 			System.out.println("Sending mail to : " + user.getEmail());
 			mailBean.deliverEmail(user.getEmail(), user.getName(),
-					user.getEmail(), user.getPassword(), false,
-					user.getUserkey());
+					user.getEmail(), userManagerBean.getOriginalPassword(),
+					false, user.getUserkey());
 		} catch (Exception ex) {
 			Logger.getLogger(getClass().getName()).log(Level.ALL,
 					ex.getMessage());

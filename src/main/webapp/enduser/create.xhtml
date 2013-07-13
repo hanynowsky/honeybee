@@ -1,257 +1,261 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:c="http://java.sun.com/jsp/jstl/core"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:forgeview="http://jboss.org/forge/view"
-                template="/resources/scaffold/pageTemplate.xhtml">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml">
 
-    <f:metadata>
-        <f:viewParam name="id" value="#{enduserBean.id}" />
-        <f:event type="preRenderView" listener="#{enduserBean.retrieve}" />
-    </f:metadata>
+	<f:metadata>
+		<f:viewParam name="id" value="#{enduserBean.id}" />
+		<f:event type="preRenderView" listener="#{enduserBean.retrieve}" />
+	</f:metadata>
 
-    <ui:param name="pageTitle" value="#{i18n.create} #{i18n.enduser}" />
+	<ui:param name="pageTitle" value="#{i18n.create} #{i18n.enduser}" />
 
-    <ui:define name="header">
-        <h:outputText value="#{i18n.enduser}" />
-    </ui:define>
+	<ui:define name="header">
+		<h:outputText value="#{i18n.enduser}" />
+	</ui:define>
 
-    <ui:define name="subheader">
-        <c:choose>
-            <c:when test="#{!empty enduserBean.id}">
-                <h:outputText value="#{i18n.edit}" />
-            </c:when>
-            <c:otherwise>
-                <h:outputText value="#{i18n.create}" />
-            </c:otherwise>
-        </c:choose>
-    </ui:define>
+	<ui:define name="subheader">
+		<c:choose>
+			<c:when test="#{!empty enduserBean.id}">
+				<h:outputText value="#{i18n.edit}" />
+			</c:when>
+			<c:otherwise>
+				<h:outputText value="#{i18n.create}" />
+			</c:otherwise>
+		</c:choose>
+	</ui:define>
 
-    <ui:define name="footer" />
+	<ui:define name="footer" />
 
-    <ui:define name="main">
-        <h:form id="create"
-                rendered="#{empty enduserBean.id or (not empty request.remoteUser and request.remoteUser == enduserBean.findById(enduserBean.enduser.id).email) or isAdministrator}">
-            <p:tooltip for="enduserBeanEnduserName"/>
-            <h:panelGrid columnClasses="label,component,required" columns="3">
-                <h:outputLabel for="enduserBeanEnduserUsergroup"
-                               value="#{i18n.usergroup}" />
-                <h:panelGroup>
-                    <h:selectOneMenu converter="#{usergroupBean.converter}"
-                                     id="enduserBeanEnduserUsergroup"
-                                     value="#{enduserBean.enduser.usergroup}"
-                                     rendered="#{isAdministrator != false}">
-                        <f:selectItem />
-                        <f:selectItem
-                            itemLabel="#{enduserBean.enduser.usergroup.groupcode}"
-                            itemValue="#{enduserBean.enduser.usergroup}" />
-                        <f:selectItem noSelectionOption="true" itemLabel="----" />
-                        <f:selectItems value="#{usergroupBean.all}" />
-                    </h:selectOneMenu>
-                    <h:selectOneMenu converter="#{usergroupBean.converter}"
-                                     id="enduserBeanEnduserUsergroup2"
-                                     value="#{enduserBean.enduser.usergroup}"
-                                     rendered="#{isAdministrator == false}">
-                        <f:selectItem itemLabel="#{usergroupBean.findById(2).groupcode}"
-                                      itemValue="#{usergroupBean.findById(2)}" />
-                    </h:selectOneMenu>
-                    <h:message for="enduserBeanEnduserUsergroup" styleClass="error" />
-                </h:panelGroup>
-                <h:outputText />
-                <h:outputLabel for="enduserBeanEnduserGender" value="#{i18n.gender}" />
-                <h:panelGroup>
-                    <h:selectOneMenu id="enduserBeanEnduserGender"
-                                     value="#{enduserBean.enduser.gender}">
-                        <f:selectItem itemLabel="#{i18n.male}" itemValue="male" />
-                        <f:selectItem itemLabel="#{i18n.female}" itemValue="female" />
-                    </h:selectOneMenu>
-                    <h:message for="enduserBeanEnduserGender" styleClass="error" />
-                </h:panelGroup>
-                <h:outputText />
-                <h:outputLabel for="enduserBeanEnduserLanguage"
-                               value="#{i18n.language}" />
-                <h:panelGroup>
-                    <h:selectOneMenu converter="#{languageBean.converter}"
-                                     id="enduserBeanEnduserLanguage"
-                                     value="#{enduserBean.enduser.language}">
-                        <f:selectItem />
-                        <f:selectItem />
-                        <f:selectItem itemLabel="#{enduserBean.enduser.language.label}"
-                                      itemValue="#{enduserBean.enduser.language}" />
-                        <f:selectItem noSelectionOption="true" itemLabel="----" />
-                        <f:selectItems value="#{languageBean.all}" var="_lang" itemLabel="#{_lang}" itemValue="#{_lang}"/>
-                    </h:selectOneMenu>
-                    <h:message for="enduserBeanEnduserLanguage" styleClass="error" />
-                </h:panelGroup>
-                <h:outputText />
-                <h:outputLabel for="enduserBeanEnduserName" value="#{i18n.name}" />
-                <h:panelGroup>
-                    <h:inputText id="enduserBeanEnduserName" maxlength="45"
-                                 required="true" value="#{enduserBean.enduser.name}"
-                                 title="#{i18n.name}" requiredMessage="#{i18n.required}">
-                        <f:validateLength minimum="2" maximum="45" />
-                    </h:inputText>
-                    <h:message for="enduserBeanEnduserName" styleClass="error" />
-                </h:panelGroup>
-                <h:outputText value="*" />
-                <h:outputLabel for="enduserBeanEnduserSurname"
-                               value="#{i18n.surname}" />
-                <h:panelGroup>
-                    <h:inputText id="enduserBeanEnduserSurname" maxlength="45"
-                                 required="true" value="#{enduserBean.enduser.surname}"
-                                 title="#{i18n.surname}" requiredMessage="#{i18n.required}">
-                        <f:validateLength minimum="2" maximum="45" />
-                    </h:inputText>
-                    <h:message for="enduserBeanEnduserSurname" styleClass="error" />
-                </h:panelGroup>
-                <h:outputText value="*" />
-                <h:outputLabel for="enduserBeanEnduserPassword"
-                               value="#{i18n.password}" />
-                <h:panelGroup>
-                    <p:password id="enduserBeanEnduserPassword" maxlength="12" 
-                                required="true" value="#{enduserBean.enduser.password}"
-                                feedback="true" weakLabel="#{i18n.weak_password}"
-                                strongLabel="#{i18n.strong_password}"
-                                goodLabel="#{i18n.good_password}"
-                                promptLabel="#{i18n.enter_password}"
-                                validatorMessage="Password length must be 5 at least"
-                                requiredMessage="#{i18n.required}"  >
-                        <f:validateLength minimum="5" />
-                        <f:converter converterId="org.otika.honeybee.util.SHAConverter" />
-                    </p:password>
-                    <h:message for="enduserBeanEnduserPassword" styleClass="error" />
-                </h:panelGroup>
-                <h:outputText value="*" />
-                <h:outputLabel for="enduserBeanEnduserPassconf"
-                               value="#{i18n.password} (#{i18n.confirmation})" />
-                <h:panelGroup>
-                    <h:inputSecret id="enduserBeanEnduserPassconf" maxlength="12"
-                                   required="true" value="#{enduserBean.enduser.passconf}"
-                                   validatorMessage="Password confirmation must contain at least 5 characters"
-                                   title="#{i18n.password} (#{i18n.confirmation})"
-                                   requiredMessage="#{i18n.required}" >
-                        <f:validateLength minimum="5"/>
-                        <f:converter converterId="org.otika.honeybee.util.SHAConverter" />
-                    </h:inputSecret>
-                    <h:message for="enduserBeanEnduserPassconf" styleClass="error" />
-                </h:panelGroup>
-                <h:outputText value="*" />
-                <h:outputLabel for="enduserBeanEnduserEmail" value="#{i18n.email}" />
-                <h:panelGroup>
-                    <h:inputText id="enduserBeanEnduserEmail" maxlength="65"
-                                 required="true" value="#{enduserBean.enduser.email}"
-                                 requiredMessage="#{i18n.required}">
-                        <f:validateLength minimum="10" maximum="65" />
-                    </h:inputText>
-                    <h:message for="enduserBeanEnduserEmail" styleClass="error" />
-                </h:panelGroup>
-                <h:outputText value="*" />
-                <h:outputLabel for="enduserBeanEnduserTelephone"
-                               value="#{i18n.phone}" />
-                <h:panelGroup>
-                    <h:inputText id="enduserBeanEnduserTelephone" maxlength="25"
-                                 value="#{enduserBean.enduser.telephone}" />
-                    <h:message for="enduserBeanEnduserTelephone" styleClass="error" />
-                </h:panelGroup>
-                <h:outputText />
-                <h:outputLabel for="enduserBeanEnduserAddress"
-                               value="#{i18n.address}" />
-                <h:panelGroup>
-                    <h:inputText id="enduserBeanEnduserAddress" maxlength="145"
-                                 value="#{enduserBean.enduser.address}" />
-                    <h:message for="enduserBeanEnduserAddress" styleClass="error" />
-                </h:panelGroup>
-                <h:outputText />
-                <h:outputLabel for="enduserBeanEnduserFacebook" value="Facebook" />
-                <h:panelGroup>
-                    <h:inputText id="enduserBeanEnduserFacebook" maxlength="65"
-                                 value="#{enduserBean.enduser.facebook}" />
-                    <h:message for="enduserBeanEnduserFacebook" styleClass="error" />
-                </h:panelGroup>
-                <h:outputText />
-                <h:outputLabel for="enduserBeanEnduserGoogleplus" value="Google+" />
-                <h:panelGroup>
-                    <h:inputText id="enduserBeanEnduserGoogleplus" maxlength="85"
-                                 value="#{enduserBean.enduser.googleplus}" />
-                    <h:message for="enduserBeanEnduserGoogleplus" styleClass="error" />
-                </h:panelGroup>
-                <h:outputText />
-                <h:outputLabel for="enduserBeanEnduserTwitter" value="Twitter" />
-                <h:panelGroup>
-                    <h:inputText id="enduserBeanEnduserTwitter" maxlength="45"
-                                 value="#{enduserBean.enduser.twitter}" />
-                    <h:message for="enduserBeanEnduserTwitter" styleClass="error" />
-                </h:panelGroup>
-                <h:outputText />
-                <h:outputLabel for="enduserBeanEnduserWebsite"
-                               value="#{i18n.website}" />
-                <h:panelGroup>
-                    <h:inputText id="enduserBeanEnduserWebsite" maxlength="85"
-                                 value="#{enduserBean.enduser.website}" />
-                    <h:message for="enduserBeanEnduserWebsite" styleClass="error" />
-                </h:panelGroup>
-                <h:outputText />
-                <h:outputLabel for="enduserBeanEnduserTermsaccepted"
-                               value="#{i18n.accept_terms}" rendered="#{empty enduserBean.id}"/>
-                <h:panelGroup rendered="#{empty enduserBean.id}">
-                    <p:selectBooleanButton id="enduserBeanEnduserTermsaccepted"
-                                           value="#{enduserBean.termsAccepted}" onLabel="#{i18n.yes}"
-                                           offLabel="#{i18n.no}" onIcon="ui-icon-check"
-                                           offIcon="ui-icon-close"
-                                           validator="#{enduserBean.validateTermsAccepted}"
-                                           style="width:96.5%;" onchange="termsDialog.show()" 
-                                           requiredMessage="#{i18n.required}"/>
-                    <h:message for="enduserBeanEnduserTermsaccepted" styleClass="error" />
-                </h:panelGroup>
-                <h:outputText value="*" rendered="#{empty enduserBean.id}"/>
-            </h:panelGrid>
-            <p:dialog height="500" widgetVar="termsDialog" id="termsDialog"
-                      header="Terms"
-                      style="width:600px;background:white;text-align:center;padding:5px;"
-                      closeOnEscape="true" dynamic="true" minHeight="300"
-                      maximizable="true" width="600">
-                <h:outputText value="#{helpBean.findById(18).content}"
-                              escape="false" />
-                <p:separator style="height:1px;" />
-                <p:commandButton type="button" value="#{i18n.yes}"
-                                 onclick="termsDialog.hide()" />
-            </p:dialog>
-            <div class="buttons">
-                <h:commandLink value="#{i18n.save}" action="#{enduserBean.update}"
-                               styleClass="btn btn-primary" onclick="return(checkPassConf());" />
-                <c:choose>
-                    <c:when test="#{!empty enduserBean.id}">
-                        <h:link value="#{i18n.cancel}" outcome="view"
-                                styleClass="btn btn-primary">
-                            <f:param name="id" value="#{enduserBean.id}" />
-                        </h:link>
-                        <p:commandButton value="#{i18n.delete}" onclick="cd.show();"
-                                         type="button" styleClass="btn btn-primary" />
-                        <p:confirmDialog message="#{i18n.delete} ?"
-                                         header="#{i18n.delete} : #{enduserBean.enduser.surname}"
-                                         severity="alert" widgetVar="cd" 
-                                         styleClass="buttons">
-                            <p:commandLink value="#{i18n.delete}"
-                                           action="#{enduserBean.delete}" oncomplete="cd.hide()"
-                                           styleClass="btn btn-primary">
-                                <f:setPropertyActionListener target="#{utilityBean.viewPath}"
-                                                             value="/enduser/search" />
-                            </p:commandLink>
-                            <p:commandButton value="#{i18n.cancel}" onclick="cd.hide();"
-                                             type="button" styleClass="btn btn-primary" />
-                        </p:confirmDialog>
-                    </c:when>
-                    <c:otherwise>
-                        <h:link value="#{i18n.cancel}" outcome="search"
-                                styleClass="btn btn-primary" />
-                    </c:otherwise>
-                </c:choose>
-            </div>
-        </h:form>
-    </ui:define>
+	<ui:define name="main">
+		<h:form id="create"
+			rendered="#{empty enduserBean.id or (not empty request.remoteUser and request.remoteUser == enduserBean.findById(enduserBean.enduser.id).email) or isAdministrator}">
+			<p:tooltip for="enduserBeanEnduserName" />
+			<h:panelGrid columnClasses="label,component,required" columns="3">
+				<h:outputLabel for="enduserBeanEnduserUsergroup"
+					value="#{i18n.usergroup}" />
+				<h:panelGroup>
+					<h:selectOneMenu converter="#{usergroupBean.converter}"
+						id="enduserBeanEnduserUsergroup"
+						value="#{enduserBean.enduser.usergroup}"
+						rendered="#{isAdministrator != false}">
+						<f:selectItem />
+						<f:selectItem
+							itemLabel="#{enduserBean.enduser.usergroup.groupcode}"
+							itemValue="#{enduserBean.enduser.usergroup}" />
+						<f:selectItem noSelectionOption="true" itemLabel="----" />
+						<f:selectItems value="#{usergroupBean.all}" />
+					</h:selectOneMenu>
+					<h:selectOneMenu converter="#{usergroupBean.converter}"
+						id="enduserBeanEnduserUsergroup2"
+						value="#{enduserBean.enduser.usergroup}"
+						rendered="#{isAdministrator == false}">
+						<f:selectItem itemLabel="#{usergroupBean.findById(2).groupcode}"
+							itemValue="#{usergroupBean.findById(2)}" />
+					</h:selectOneMenu>
+					<h:message for="enduserBeanEnduserUsergroup" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="enduserBeanEnduserGender" value="#{i18n.gender}" />
+				<h:panelGroup>
+					<h:selectOneMenu id="enduserBeanEnduserGender"
+						value="#{enduserBean.enduser.gender}">
+						<f:selectItem itemLabel="#{i18n.male}" itemValue="male" />
+						<f:selectItem itemLabel="#{i18n.female}" itemValue="female" />
+					</h:selectOneMenu>
+					<h:message for="enduserBeanEnduserGender" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="enduserBeanEnduserLanguage"
+					value="#{i18n.language}" />
+				<h:panelGroup>
+					<h:selectOneMenu converter="#{languageBean.converter}"
+						id="enduserBeanEnduserLanguage"
+						value="#{enduserBean.enduser.language}">
+						<f:selectItem />
+						<f:selectItem />
+						<f:selectItem itemLabel="#{enduserBean.enduser.language.label}"
+							itemValue="#{enduserBean.enduser.language}" />
+						<f:selectItem noSelectionOption="true" itemLabel="----" />
+						<f:selectItems value="#{languageBean.all}" var="_lang"
+							itemLabel="#{_lang}" itemValue="#{_lang}" />
+					</h:selectOneMenu>
+					<h:message for="enduserBeanEnduserLanguage" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="enduserBeanEnduserName" value="#{i18n.name}" />
+				<h:panelGroup>
+					<h:inputText id="enduserBeanEnduserName" maxlength="45"
+						required="true" value="#{enduserBean.enduser.name}"
+						title="#{i18n.name}" requiredMessage="#{i18n.required}">
+						<f:validateLength minimum="2" maximum="45" />
+					</h:inputText>
+					<h:message for="enduserBeanEnduserName" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText value="*" />
+				<h:outputLabel for="enduserBeanEnduserSurname"
+					value="#{i18n.surname}" />
+				<h:panelGroup>
+					<h:inputText id="enduserBeanEnduserSurname" maxlength="45"
+						required="true" value="#{enduserBean.enduser.surname}"
+						title="#{i18n.surname}" requiredMessage="#{i18n.required}">
+						<f:validateLength minimum="2" maximum="45" />
+					</h:inputText>
+					<h:message for="enduserBeanEnduserSurname" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText value="*" />
+				<h:outputLabel for="enduserBeanEnduserPassword"
+					value="#{i18n.password}" />
+				<h:panelGroup>
+					<p:password id="enduserBeanEnduserPassword" maxlength="12"
+						required="true" value="#{enduserBean.enduser.password}"
+						feedback="true" weakLabel="#{i18n.weak_password}"
+						strongLabel="#{i18n.strong_password}"
+						goodLabel="#{i18n.good_password}"
+						promptLabel="#{i18n.enter_password}"
+						validatorMessage="Password length must be 5 at least"
+						requiredMessage="#{i18n.required}">
+						<f:validateLength minimum="5" />
+						<f:converter converterId="org.otika.honeybee.util.SHAConverter" />
+					</p:password>
+					<h:message for="enduserBeanEnduserPassword" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText value="*" />
+				<h:outputLabel for="enduserBeanEnduserPassconf"
+					value="#{i18n.password} (#{i18n.confirmation})" />
+				<h:panelGroup>
+					<h:inputSecret id="enduserBeanEnduserPassconf" maxlength="12"
+						required="true" value="#{enduserBean.enduser.passconf}"
+						validatorMessage="Password confirmation must contain at least 5 characters"
+						title="#{i18n.password} (#{i18n.confirmation})"
+						requiredMessage="#{i18n.required}">
+						<f:validateLength minimum="5" />
+						<f:converter converterId="org.otika.honeybee.util.SHAConverter" />
+					</h:inputSecret>
+					<h:message for="enduserBeanEnduserPassconf" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText value="*" />
+				<h:outputLabel for="enduserBeanEnduserEmail" value="#{i18n.email}" />
+				<h:panelGroup>
+					<h:inputText id="enduserBeanEnduserEmail" maxlength="65"
+						required="true" value="#{enduserBean.enduser.email}"
+						requiredMessage="#{i18n.required}">
+						<f:validateLength minimum="10" maximum="65" />
+					</h:inputText>
+					<h:message for="enduserBeanEnduserEmail" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText value="*" />
+				<h:outputLabel for="enduserBeanEnduserTelephone"
+					value="#{i18n.phone}" />
+				<h:panelGroup>
+					<h:inputText id="enduserBeanEnduserTelephone" maxlength="25"
+						value="#{enduserBean.enduser.telephone}" />
+					<h:message for="enduserBeanEnduserTelephone" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="enduserBeanEnduserAddress"
+					value="#{i18n.address}" />
+				<h:panelGroup>
+					<h:inputText id="enduserBeanEnduserAddress" maxlength="145"
+						value="#{enduserBean.enduser.address}" />
+					<h:message for="enduserBeanEnduserAddress" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="enduserBeanEnduserFacebook" value="Facebook" />
+				<h:panelGroup>
+					<h:inputText id="enduserBeanEnduserFacebook" maxlength="65"
+						value="#{enduserBean.enduser.facebook}" />
+					<h:message for="enduserBeanEnduserFacebook" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="enduserBeanEnduserGoogleplus" value="Google+" />
+				<h:panelGroup>
+					<h:inputText id="enduserBeanEnduserGoogleplus" maxlength="85"
+						value="#{enduserBean.enduser.googleplus}" />
+					<h:message for="enduserBeanEnduserGoogleplus" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="enduserBeanEnduserTwitter" value="Twitter" />
+				<h:panelGroup>
+					<h:inputText id="enduserBeanEnduserTwitter" maxlength="45"
+						value="#{enduserBean.enduser.twitter}" />
+					<h:message for="enduserBeanEnduserTwitter" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="enduserBeanEnduserWebsite"
+					value="#{i18n.website}" />
+				<h:panelGroup>
+					<h:inputText id="enduserBeanEnduserWebsite" maxlength="85"
+						value="#{enduserBean.enduser.website}" />
+					<h:message for="enduserBeanEnduserWebsite" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="enduserBeanEnduserTermsaccepted"
+					value="#{i18n.accept_terms}" rendered="#{empty enduserBean.id}" />
+				<h:panelGroup rendered="#{empty enduserBean.id}">
+					<p:selectBooleanButton id="enduserBeanEnduserTermsaccepted"
+						value="#{enduserBean.termsAccepted}" onLabel="#{i18n.yes}"
+						offLabel="#{i18n.no}" onIcon="ui-icon-check"
+						offIcon="ui-icon-close"
+						validator="#{enduserBean.validateTermsAccepted}"
+						style="width:96.5%;" onchange="termsDialog.show()"
+						requiredMessage="#{i18n.required}" />
+					<h:message for="enduserBeanEnduserTermsaccepted" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText value="*" rendered="#{empty enduserBean.id}" />
+			</h:panelGrid>
+			<p:dialog height="500" widgetVar="termsDialog" id="termsDialog"
+				header="Terms"
+				style="width:600px;background:white;text-align:center;padding:5px;"
+				closeOnEscape="true" dynamic="true" minHeight="300"
+				maximizable="true" width="600">
+				<h:outputText value="#{helpBean.findById(18).content}"
+					escape="false" />
+				<p:separator style="height:1px;" />
+				<p:commandButton type="button" value="#{i18n.yes}"
+					onclick="termsDialog.hide()" />
+			</p:dialog>
+			<div class="buttons">
+				<p:commandLink value="#{i18n.save}" action="#{enduserBean.update}"
+					styleClass="btn btn-primary" onclick="return(checkPassConf());">
+					<f:setPropertyActionListener
+						target="#{userManagerBean.originalPassword}"
+						value="#{enduserBean.enduser.password}" />
+				</p:commandLink>
+				<c:choose>
+					<c:when test="#{!empty enduserBean.id}">
+						<h:link value="#{i18n.cancel}" outcome="view"
+							styleClass="btn btn-primary">
+							<f:param name="id" value="#{enduserBean.id}" />
+						</h:link>
+						<p:commandButton value="#{i18n.delete}" onclick="cd.show();"
+							type="button" styleClass="btn btn-primary" />
+						<p:confirmDialog message="#{i18n.delete} ?"
+							header="#{i18n.delete} : #{enduserBean.enduser.surname}"
+							severity="alert" widgetVar="cd" styleClass="buttons">
+							<p:commandLink value="#{i18n.delete}"
+								action="#{enduserBean.delete}" oncomplete="cd.hide()"
+								styleClass="btn btn-primary">
+								<f:setPropertyActionListener target="#{utilityBean.viewPath}"
+									value="/enduser/search" />
+							</p:commandLink>
+							<p:commandButton value="#{i18n.cancel}" onclick="cd.hide();"
+								type="button" styleClass="btn btn-primary" />
+						</p:confirmDialog>
+					</c:when>
+					<c:otherwise>
+						<h:link value="#{i18n.cancel}" outcome="search"
+							styleClass="btn btn-primary" />
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</h:form>
+	</ui:define>
 
 </ui:composition>

@@ -36,6 +36,7 @@ public class UserManagerBean implements Serializable {
 	private UtilityBean utilityBean;
 	@Inject
 	private Event<SignoutEvent> signoutEvent;
+	private String originalPassword;
 
 	public UserManagerBean() {
 
@@ -275,5 +276,13 @@ public class UserManagerBean implements Serializable {
 
 	public void setConnectedMembers(List<Enduser> connectedMembers) {
 		this.connectedUsers = connectedMembers;
+	}
+
+	public String getOriginalPassword() {
+		return originalPassword;
+	}
+
+	public void setOriginalPassword(String originalPassword) {
+		this.originalPassword = originalPassword;
 	}
 } // END OF CLASS
