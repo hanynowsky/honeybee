@@ -129,13 +129,13 @@
 										itemValue="#{lg}" />
 									<p:column>
 										<p:graphicImage
-											value="/honeybee/javax.faces.resource/gfx/#{lang.code}.png.xhtml"
+											value="#{request.contextPath}/javax.faces.resource/gfx/#{lang.code}.png.jsf"
 											width="25" height="20" />
 									</p:column>
 									<p:column>
 										<h:outputText value="#{lang.label}" />
 									</p:column>
-								</p:selectOneMenu>
+								</p:selectOneMenu>								
 							</h:form>
 						</h:panelGrid>
 					</div>
