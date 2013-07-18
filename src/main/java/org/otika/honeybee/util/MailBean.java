@@ -1,6 +1,7 @@
 package org.otika.honeybee.util;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
@@ -12,14 +13,17 @@ import java.util.logging.Logger;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.URLDataSource;
+import javax.annotation.PostConstruct;
 import javax.ejb.AsyncResult;
 import javax.ejb.Asynchronous;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -32,32 +36,50 @@ import javax.mail.internet.MimeMultipart;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
+import org.otika.honeybee.model.Configuration;
 
 @Named(value = "mailBean")
 @RequestScoped
 public class MailBean {
 
-	// Common variables
+	@EJB
+	private Repository repository;
 	final String host = "smtp.gmail.com";
 	final String from = "opentika.contact@gmail.com";
-	final String username = "opentika.contact@gmail.com";
-	final private String password = "BK206789";
+	final private String username = "opentika.contact@gmail.com";
+	private String password = ""; // TODO encode password
 	final String port = "465";
 	private URL pic;
 	private final String fileName = "/opentika-logo-small.png";
 	private Properties props;
 	private Session session;
 	@Inject
-	private Repository repository;
+	private BundleBean bundleBean;
 	private ClassLoader classLoader;
 	private DataSource fds;
 	private URLDataSource uds;
-	private static Logger LOG = Logger.getLogger(MailBean.class.getName());
+	private static final Logger LOG = Logger
+			.getLogger(MailBean.class.getName());
 
 	// @Resource
 	// private SessionContext sessionContext;
 
+	@PostConstruct
+	public void init() {
+		// Mail password
+		try {
+			Configuration c = repository.findAllConfigurationItems().get(0);
+			password = c.getMailpass();
+			System.out.println("assigning mail password: " + password);
+		} catch (Exception ex) {
+			String msg = "Exception assigning mail password " + ex.getMessage();
+			System.err.println(msg);
+			LOG.severe(msg);
+		}
+	}
+
 	public MailBean() {
+
 		// Set properties
 		props = new Properties();
 		props.put("mail.smtp.host", host); // HOST
@@ -71,10 +93,18 @@ public class MailBean {
 
 		// Get session
 		session = Session.getInstance(props, new javax.mail.Authenticator() {
+			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, password);
 			}
 		});
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
 	}
 
 	/**
@@ -96,7 +126,7 @@ public class MailBean {
 					"<h1>Welcome</h1><p>Please browse our website for further information.</p>"
 							+ "<img src='cid:opentika_logo'>" + "<br />"
 							+ "<b>OpenTika @2013</b>", "text/html");
-			part1.setText("OpenTika thanks you for ptrusting us.");
+			part1.setText("OpenTika thanks you for trusting us.");
 			part2.setText("<a href='http://www.opentika.com'>http://www.opentika.com<a>");
 
 			// // Create a new part for the attached image and set the CID image
@@ -115,8 +145,7 @@ public class MailBean {
 				pic.getHost();
 			} catch (MalformedURLException e) {
 				System.err.println(e);
-				// Add Error Faces message here
-				e.printStackTrace();
+				// TODO Add Error Faces message here
 			}
 			MimeBodyPart imagePart = new MimeBodyPart();
 
@@ -157,8 +186,7 @@ public class MailBean {
 			Transport.send(msg);
 			FacesContext.getCurrentInstance().addMessage(email,
 					new FacesMessage("Mail sent to: " + email));
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (MessagingException | IOException e) {
 			System.err.println("MAIL DELIVERY FAILURE: " + e);
 		}
 
@@ -261,8 +289,7 @@ public class MailBean {
 				FacesContext.getCurrentInstance().addMessage(null,
 						successMessage);
 				status = successMessage.getSummary();
-			} catch (Exception e) {
-				e.printStackTrace();
+			} catch (MalformedURLException | EmailException e) {
 				System.err.println("Email Delivery Failure - Apache C : " + e);
 				FacesMessage errorMessage = new FacesMessage(
 						"FAILURE to send Mail to " + mail);
@@ -277,13 +304,16 @@ public class MailBean {
 			FacesContext.getCurrentInstance().addMessage(null, fmsg);
 			status = fmsg.getSummary();
 		}
-		return new AsyncResult<String>(status);
+		return new AsyncResult<>(status);
 	}
 
 	/**
 	 * Method that send an email with a new password
-	 * @param mail Email address
-	 * @param pass User password
+	 * 
+	 * @param mail
+	 *            Email address
+	 * @param pass
+	 *            User password
 	 * @return null Asynchronous result
 	 */
 	@Asynchronous
@@ -298,7 +328,8 @@ public class MailBean {
 		try {
 			email.addTo(mail);
 			email.setFrom("opentika.contact@gmail.com");
-			email.setSubject("Password Recovery");
+			String prMessage = bundleBean.i18n("password_recovery");
+			email.setSubject(prMessage);
 			email.setSentDate(new Date());
 			email.setHtmlMsg(img + html + html1);
 			email.setMailSession(session);
@@ -317,13 +348,16 @@ public class MailBean {
 			System.out.println("Simple Email exception!");
 			System.out.println(e);
 		}
-		return new AsyncResult<String>(null);
+		return new AsyncResult<>(null);
 	}
 
 	/**
 	 * Method that send an email with a file attachment
-	 * @param email receipient email
-	 * @param db File
+	 * 
+	 * @param email
+	 *            receipient email
+	 * @param db
+	 *            File
 	 * @return null Asynchronous result
 	 */
 	@Asynchronous
@@ -332,7 +366,7 @@ public class MailBean {
 		if (FacesContext.getCurrentInstance().getExternalContext().getContext() == null) {
 			status = "Context Session Canceled! Mail not sent.";
 			System.out.println("Cleaning up! Emailing User not possible!");
-		} else {			
+		} else {
 			HtmlEmail mail = new HtmlEmail();
 			String htmlmail = "<h1>HoneyBee Database Dump</h1>"
 					+ "<p>Please find attached HoneyBee database dump.</p>";
@@ -341,28 +375,30 @@ public class MailBean {
 				mail.setFrom("opentika.contact@gmail.com");
 				mail.setSubject("HoneyBee Database Dump");
 				mail.setSentDate(new Date());
-				mail.setHtmlMsg(htmlmail);				
+				mail.setHtmlMsg(htmlmail);
 				mail.attach(db);
 				mail.setMailSession(session);
 				mail.send();
-				FacesMessage successMessage = new FacesMessage("Password sent to "
-						+ mail);
+				FacesMessage successMessage = new FacesMessage(
+						"Password sent to " + mail);
 				successMessage.setDetail("");
 				successMessage.setSeverity(FacesMessage.SEVERITY_INFO);
-				FacesContext.getCurrentInstance().addMessage(null, successMessage);
+				FacesContext.getCurrentInstance().addMessage(null,
+						successMessage);
 			} catch (EmailException e) {
 				FacesMessage errorMessage = new FacesMessage(
 						"FAILURE to send Mail to " + email);
 				errorMessage.setSeverity(FacesMessage.SEVERITY_ERROR);
 				errorMessage.setDetail("");
-				FacesContext.getCurrentInstance().addMessage(null, errorMessage);
+				FacesContext.getCurrentInstance()
+						.addMessage(null, errorMessage);
 				System.out.println("Simple Email exception!");
 				System.out.println(e);
 			}
-			
+
 			status = "User-Emailed-Okay";
 			System.out.println("Email being sent to " + email);
 		}
-		return new AsyncResult<String>(status);
+		return new AsyncResult<>(status);
 	}
 } // END OF CLASS

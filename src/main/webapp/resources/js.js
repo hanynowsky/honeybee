@@ -3,6 +3,12 @@
  * . HoneyBee
  */
 
+function toUppercase(id){
+	var compVal = document.getElementById(id).value;
+	document.getElementById(id).value = compVal.toUpperCase();
+	// javascript:this.value = this.value.substr(0, 1).toUpperCase() + this.value.substr(1);
+}
+
 function additem() {
 	var i = document.getElementById(document.forms[0].id
 			+ ':complementBeanComplementPrescriptionsSelect').selectedIndex;

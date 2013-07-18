@@ -100,12 +100,10 @@ public class DownloadFileBean implements Serializable {
 			try {
 				resource.close();
 			} catch (IOException ex) {
-				// Do the thing with the exception. Print it, log it or mail
-				// it. It may be useful to
-				// know that this will generally only be thrown when the client
-				// aborted the download.
-				ex.printStackTrace();
+				// this will generally only be thrown when the client
+				// aborted the download.				
 				System.out.println(ex);
+                                System.out.println(ex.getMessage());
 				Logger.getLogger(DownloadFileBean.class.getName()).log(
 						Level.ALL, ex.getMessage(), ex);
 			}

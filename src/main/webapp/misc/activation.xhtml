@@ -13,9 +13,9 @@
 	</ui:define>
 
 	<ui:define name="main">
-	
+
 		<h:form>
-			<p:messages autoUpdate="true" globalOnly="true" showDetail="false"/>
+			<p:messages autoUpdate="true" globalOnly="true" showDetail="false" />
 		</h:form>
 		<h:panelGroup layout="block" rendered="#{mailActivationBean.valid}">
 			<h2 class="success" style="border: 1px solid #CCC;">
@@ -40,7 +40,7 @@
 					<p:outputLabel value="#{i18n.email}" for="input_activate" />
 					<p:inputText id="input_activate" required="true"
 						requiredMessage="#{i18n.required}"
-						value="#{mailActivationBean.emailAddress}" >
+						value="#{mailActivationBean.emailAddress}">
 						<f:validateLength minimum="8" />
 					</p:inputText>
 					<p:commandButton id="button_activate" update="panel_activate"
@@ -49,7 +49,8 @@
 				</h:panelGrid>
 			</h:form>
 			<p:separator style="height:1px;" />
-			<h:outputText value="- #{i18n.alternatively} -" style="text-align:center;"/>
+			<h:outputText value="- #{i18n.alternatively} -"
+				style="text-align:center;" />
 			<h:form id="form_activate_key">
 				<p:separator style="margin:20px;" />
 				<h:panelGrid columns="3" id="panel_activate_key"
@@ -68,22 +69,28 @@
 			</h:form>
 		</h:panelGroup>
 		<p:separator style="margin:5px;" />
-		<h1>
+		<h1 style="margin-bottom:10px;">
 			<h:outputText value="#{i18n.password_recovery}" />
 		</h1>
 		<h:panelGroup layout="block" rendered="#{empty userManagerBean.user}">
 			<h:form dir="#{facesBean.direction}">
 				<h:panelGrid columns="4">
+					<h:outputLabel value="#{i18n.warning}" />
+					<code style="font-size: 9pt; color: #867F10;
+					font-family: Kufi,sans-serif;text-decoration: blink;">
+						#{i18n.new_pass_generated} </code>
+					<h:outputText />
+					<h:outputText />
 					<p:outputLabel value="#{i18n.email}" for="inputEmailActiv" />
 					<p:inputText id="inputEmailActiv" required="true"
 						requiredMessage="#{i18n.required}"
 						value="#{mailActivationBean.emailAddress}">
 						<f:validateLength minimum="8" />
 					</p:inputText>
-					<p:message for="inputEmailActiv" showDetail="false" />
 					<p:commandButton id="button_activate" update="@form"
 						process="@form" action="#{mailActivationBean.passwordRecovery}"
 						ajax="true" value="#{i18n.password_recovery}" />
+					<p:message for="inputEmailActiv" showDetail="false" />
 				</h:panelGrid>
 			</h:form>
 		</h:panelGroup>

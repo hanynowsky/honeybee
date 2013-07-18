@@ -174,6 +174,8 @@
 								value="#{i18n.usergroup}" /></li>
 						<li><h:link id="enduser" outcome="/enduser/search"
 								value="#{i18n.endusers}" /></li>
+								<li><h:link id="dashboard" outcome="/admin/dashboard"
+								value="Dashboard" /></li>
 					</ul>
 				</h:panelGroup>
 
@@ -241,12 +243,13 @@
 							update="messages_global" />
 					</p:idleMonitor>
 					<p:dialog header="HoneyBee" widgetVar="idleDialog" modal="true"
-						closable="false">
+						closable="#{empty request.remoteUser}">
 						<h:panelGrid columns="1" style="text-align:center;">
 							<h:outputText value="Expired Session!" />
 							<p:separator style="height:1px;" />
 							<p:commandButton value="#{i18n.logout}"
-								action="#{userManagerBean.logout}" ajax="false" />
+								action="#{userManagerBean.logout}" ajax="false" 
+								rendered="#{not empty request.remoteUser}"/>
 						</h:panelGrid>
 					</p:dialog>
 				</h:form>

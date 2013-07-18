@@ -77,23 +77,26 @@
 				<h:panelGroup>
 					<h:selectOneMenu converter="#{languageBean.converter}"
 						id="enduserBeanEnduserLanguage"
-						value="#{enduserBean.enduser.language}">
+						value="#{enduserBean.enduser.language}" required="true"
+						requiredMessage="#{i18n.required}">
 						<f:selectItem />
 						<f:selectItem />
 						<f:selectItem itemLabel="#{enduserBean.enduser.language.label}"
 							itemValue="#{enduserBean.enduser.language}" />
 						<f:selectItem noSelectionOption="true" itemLabel="----" />
 						<f:selectItems value="#{languageBean.all}" var="_lang"
-							itemLabel="#{_lang}" itemValue="#{_lang}" />
+							itemLabel="#{_lang.label}" itemValue="#{_lang}" />
 					</h:selectOneMenu>
 					<h:message for="enduserBeanEnduserLanguage" styleClass="error" />
 				</h:panelGroup>
-				<h:outputText />
+				<h:outputText value="*" />
 				<h:outputLabel for="enduserBeanEnduserName" value="#{i18n.name}" />
 				<h:panelGroup>
 					<h:inputText id="enduserBeanEnduserName" maxlength="45"
 						required="true" value="#{enduserBean.enduser.name}"
-						title="#{i18n.name}" requiredMessage="#{i18n.required}">
+						title="#{i18n.name}"
+						onkeyup="javascript:this.value = this.value.toUpperCase()"
+						requiredMessage="#{i18n.required}">
 						<f:validateLength minimum="2" maximum="45" />
 					</h:inputText>
 					<h:message for="enduserBeanEnduserName" styleClass="error" />
@@ -104,7 +107,8 @@
 				<h:panelGroup>
 					<h:inputText id="enduserBeanEnduserSurname" maxlength="45"
 						required="true" value="#{enduserBean.enduser.surname}"
-						title="#{i18n.surname}" requiredMessage="#{i18n.required}">
+						title="#{i18n.surname}" requiredMessage="#{i18n.required}"
+						onkeyup="javascript:this.value = this.value.substr(0, 1).toUpperCase() + this.value.substr(1);">
 						<f:validateLength minimum="2" maximum="45" />
 					</h:inputText>
 					<h:message for="enduserBeanEnduserSurname" styleClass="error" />
@@ -213,8 +217,7 @@
 			<p:dialog height="500" widgetVar="termsDialog" id="termsDialog"
 				header="Terms"
 				style="width:600px;background:white;text-align:center;padding:5px;"
-				closeOnEscape="true" dynamic="true" minHeight="300"
-				maximizable="true" width="600">
+				closeOnEscape="true" minHeight="300" maximizable="true" width="600">
 				<h:outputText value="#{helpBean.findById(18).content}"
 					escape="false" />
 				<p:separator style="height:1px;" />
@@ -223,7 +226,7 @@
 			</p:dialog>
 			<div class="buttons">
 				<h:commandLink value="#{i18n.save}" action="#{enduserBean.update}"
-					styleClass="btn btn-primary" onclick="return(checkPassConf());">					
+					styleClass="btn btn-primary" onclick="return(checkPassConf());">
 				</h:commandLink>
 				<c:choose>
 					<c:when test="#{!empty enduserBean.id}">
@@ -251,8 +254,8 @@
 							styleClass="btn btn-primary" />
 					</c:otherwise>
 				</c:choose>
-			</div>
-		</h:form>
+			</div>			
+		</h:form>		
 	</ui:define>
 
 </ui:composition>

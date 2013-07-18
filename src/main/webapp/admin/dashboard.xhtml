@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<ui:param name="pageTitle" value="Dashboard" />
+
+	<ui:define name="header">
+		<h:outputText value="Dashboard" />
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="Dashboard" />
+	</ui:define>
+
+	<ui:define name="main">
+		<h:form id="testForm">
+			<p:messages autoUpdate="true" id="dashMessages" />
+		<p:tabView style="display:compact;">
+		<p:tab title="Registery">
+		<p:dataTable value="#{registeryBean.allRegisteryItems}" paginator="true"
+		paginatorPosition="top"  var="_item" pageLinks="10" rows="10">
+		<p:column>
+		<f:facet name="header">
+		<h:outputText value="Action" />
+		</f:facet>
+		<h:outputText value="#{_item.action}" />
+		</p:column>
+		<p:column>
+		<f:facet name="header">
+		<h:outputText value="Time" />
+		</f:facet>
+		<h:outputText value="#{_item.actiontime}" />
+		</p:column>			
+		<p:column>
+		<f:facet name="header">
+		<h:outputText value="User" />
+		</f:facet>
+		<h:outputText value="#{_item.username}" />
+		</p:column>
+		</p:dataTable>
+		</p:tab>
+		<p:tab title="Configuration">
+		</p:tab>
+		</p:tabView>
+			
+		</h:form>
+		<p:separator style="height:1px;margin:10px;" />
+	</ui:define>
+</ui:composition>

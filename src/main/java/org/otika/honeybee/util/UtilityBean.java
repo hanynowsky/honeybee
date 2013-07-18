@@ -3,17 +3,22 @@ package org.otika.honeybee.util;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -59,6 +64,7 @@ public class UtilityBean implements Serializable {
 	private Long storeId;
 	private BundleBean bundle;
 	static ProcessBuilder pb;
+	private String unhashedPassword;
 
 	/**
 	 * Constructor
@@ -69,7 +75,7 @@ public class UtilityBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		bundle = new BundleBean();
-		facesContext = FacesContext.getCurrentInstance();			
+		facesContext = FacesContext.getCurrentInstance();
 	}
 
 	/**
@@ -170,9 +176,9 @@ public class UtilityBean implements Serializable {
 		try {
 			id = FacesContext.getCurrentInstance().getViewRoot().getViewId();
 		} catch (Exception ex) {
-			Logger.getLogger(getClass().getName()).severe(
-					"NULL view name: " + ex.getMessage() + " "
-							+ ex.getCause().getMessage());
+			String error = "NULL view name: " + ex.getMessage() + " "
+					+ ex.getCause().getMessage();
+			Logger.getLogger(getClass().getName()).severe(error);
 		}
 		return id;
 	}
@@ -414,6 +420,7 @@ public class UtilityBean implements Serializable {
 	}
 
 	/**
+	 * Faces HTML Direction
 	 * 
 	 * @return html_direction
 	 */
@@ -427,8 +434,11 @@ public class UtilityBean implements Serializable {
 				return "ltr";
 			}
 		} catch (Exception ex) {
-			Logger.getLogger(getClass().getName()).severe(
-					"Exception in getting HTML direction: " + ex.getMessage());
+			System.out.println("Exception in HTML Direction " + ex);
+			Logger.getLogger(getClass().getName())
+					.log(Level.SEVERE,
+							"Exception in getting HTML direction: {0}",
+							ex.getMessage());
 			return "ltr";
 		}
 	}
@@ -508,7 +518,7 @@ public class UtilityBean implements Serializable {
 	 * @return referer Formatted Referer url as view name
 	 */
 	public String cutRefererString(String string) {
-		String cut = "";
+		String cut;
 		if (string.contains(".com")) {
 			cut = string.split(".com")[1];
 		} else if (string.contains(".fr")) {
@@ -522,4 +532,82 @@ public class UtilityBean implements Serializable {
 		return cut;
 	}
 
+	/**
+	 * Checks whether there is Internet connectivity
+	 * 
+	 * @return false if no Internet
+	 */
+	public boolean hasInternet() {
+		try {
+			URL url = new URL("http://www.google.com");
+			InputStream is = url.openStream();
+			if (is != null) {
+				return true;
+			}
+		} catch (Exception ex) {
+			System.out.println("No Internet: " + ex.getMessage());
+			return false;
+		}
+		return false;
+	}
+
+	/**
+	 * Encode mail password
+	 * 
+	 * @return
+	 */
+	public static String encodePassword() {
+		String pass = "";
+		// TODO use some algorithm to encode mail password
+		return pass;
+	}
+
+	/**
+	 * Compress a file.
+	 * <p>
+	 * Used to compress an SQL file
+	 * </p>
+	 * 
+	 * @param file
+	 * @return
+	 */
+	public File zipFile(File file) {
+		File zippedFile = file;
+		// TODO process file here
+		try {
+			FileOutputStream fos = new FileOutputStream(file.getPath()+".zip");
+			ZipOutputStream zos = new ZipOutputStream(fos);
+			FileInputStream fis = new FileInputStream(file);
+			int i;
+			byte[] bytes = new byte[10024];
+			while ((i = fis.read(bytes)) != -1){
+			fos.write(bytes, 0, i);
+			//zos.write(bytes, 0, i);
+			}			
+			fis.close();			
+			zos.setLevel(9);
+			ZipEntry ze = new ZipEntry(file.getName());
+			zos.putNextEntry(ze);
+			zos.closeEntry();
+			fos.flush();
+			zos.close();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			String msg = e.getMessage();
+			org.jboss.logging.Logger.getLogger(getClass().getName()).error(msg);
+			return null;
+		}
+		return zippedFile;
+	}
+
+	/*
+	 * Setters & Getters
+	 */
+	public String getUnhashedPassword() {
+		return unhashedPassword;
+	}
+
+	public void setUnhashedPassword(String unhashedPassword) {
+		this.unhashedPassword = unhashedPassword;
+	}
 } // END OF CLASS

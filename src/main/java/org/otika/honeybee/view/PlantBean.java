@@ -343,6 +343,7 @@ public class PlantBean implements Serializable {
 			output.write(file.getContents());
 			file.getInputstream().close();
 			output.flush();
+			output.close(); // TODO bug?
 
 			// Plant plant = new Plant("P2", "P2", "P2", "P2");
 			int height = ImageIO.read(file.getInputstream()).getHeight();

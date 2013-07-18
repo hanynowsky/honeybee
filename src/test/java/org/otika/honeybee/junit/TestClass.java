@@ -3,6 +3,8 @@ package org.otika.honeybee.junit;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +18,8 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
@@ -56,10 +60,10 @@ public class TestClass {
 			RequestBean statelessBean = (RequestBean) ctx
 					.lookup("java:global/classes/StatelessBean");
 			statelessBean.showHello();
-			//assertNotNull(repository.findAllStoreItems());
+			// assertNotNull(repository.findAllStoreItems());
 			for (Store store : repository.findAllStoreItems()) {
 				System.out.println(store.getLabel());
-			}			
+			}
 		} catch (NamingException e) {
 			Logger.getLogger(getClass().getName()).severe(e.getMessage());
 		}
@@ -185,10 +189,41 @@ public class TestClass {
 		return cut;
 	}
 
+	File zipFile(File file) {
+		File zippedFile = file;
+		// TODO process file here
+		try {
+			
+			FileOutputStream fos = new FileOutputStream(file.getPath()+".zip");
+			ZipOutputStream zos = new ZipOutputStream(fos);
+			FileInputStream fis = new FileInputStream(file);
+			int i;
+			byte[] bytes = new byte[10024];
+			while ((i = fis.read(bytes)) != -1){
+			fos.write(bytes, 0, i);
+			//zos.write(bytes, 0, i);
+			}			
+			fis.close();			
+			zos.setLevel(9);
+			ZipEntry ze = new ZipEntry(file.getName());
+			zos.putNextEntry(ze);
+			zos.closeEntry();
+			fos.flush();
+			zos.close();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			String msg = e.getMessage();
+			org.jboss.logging.Logger.getLogger(getClass().getName()).error(msg);
+			return null;
+		}
+		return zippedFile;
+	}
+
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		new TestClass().zipFile(new File("/home/hanine/Desktop/headers.txt"));
 		String s = System.getProperty("user.dir");
 		String h = System.getProperty("user.home");
 		System.out.println(s);

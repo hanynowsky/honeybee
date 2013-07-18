@@ -13,20 +13,22 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 
+import org.otika.honeybee.model.Configuration;
 import org.otika.honeybee.model.Enduser;
 import org.otika.honeybee.model.Honey;
 import org.otika.honeybee.model.Ingredient;
 import org.otika.honeybee.model.Language;
 import org.otika.honeybee.model.Plant;
 import org.otika.honeybee.model.Prescription;
+import org.otika.honeybee.model.Registery;
 import org.otika.honeybee.model.Store;
 import org.otika.honeybee.model.Substance;
 import org.otika.honeybee.model.Witness;
 
 /**
- * Repository to fetch data from database Should be stateless.
- * We don't need to keep state when fetching data from database. The state is kept
- * by the view beans instead.
+ * Repository to fetch data from database Should be stateless. We don't need to
+ * keep state when fetching data from database. The state is kept by the view
+ * beans instead.
  * 
  * @author hanine
  * 
@@ -47,7 +49,6 @@ public class Repository implements Serializable {
 	 * Default constructor.
 	 */
 	public Repository() {
-
 	}
 
 	@PostConstruct
@@ -55,6 +56,13 @@ public class Repository implements Serializable {
 		// TODO
 	}
 
+	/**
+	 * Find a Plant object by its ID
+	 * 
+	 * @param id
+	 *            Plant id
+	 * @return plant PLant
+	 */
 	public Plant findPlantById(Long id) {
 		if (id != null) {
 			try {
@@ -71,6 +79,13 @@ public class Repository implements Serializable {
 		return null;
 	}
 
+	/**
+	 * Finds an end user by his/her email address
+	 * 
+	 * @param email
+	 *            End user email
+	 * @return end-user End user
+	 */
 	public Enduser findByEmail(String email) {
 		if (email != null && !email.equals("")) {
 			try {
@@ -88,11 +103,12 @@ public class Repository implements Serializable {
 	}
 
 	/**
+	 * Finds a Witness object by its prescription and end user
 	 * 
 	 * @param p
-	 *            prescription
+	 *            Prescription
 	 * @param e
-	 *            enduser
+	 *            End-user
 	 * @return witness Witness object
 	 */
 	public Witness findByPrescriptionAndEnduser(Prescription p, Enduser e) {
@@ -212,8 +228,9 @@ public class Repository implements Serializable {
 	}
 
 	/**
-	 * Returns a list of all ingredient items if <em>all</em> is specified as
-	 * a value, otherwise, ingredient items by form (raw, oil, juice, mixture..)
+	 * Returns a list of all ingredient items if <em>all</em> is specified as a
+	 * value, otherwise, ingredient items by form (raw, oil, juice, mixture..)
+	 * 
 	 * @param form
 	 *            Ingredient form (specifying 'all' as a value returns all items
 	 * @return list Ingredient items by form
@@ -388,6 +405,12 @@ public class Repository implements Serializable {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param honey
+	 * @param form
+	 * @return
+	 */
 	public List<Ingredient> findByHoneyAndForm(Honey honey, String form) {
 		if (honey != null) {
 			try {
@@ -447,12 +470,20 @@ public class Repository implements Serializable {
 			query.setParameter("code", code);
 			return query.getSingleResult();
 		} catch (Exception ex) {
-			Logger.getLogger(getClass().getName()).severe(
-					ex.getMessage() + " " + ex.getCause());
+			System.err.println(ex);
+			Logger.getLogger(getClass().getName()).log(Level.SEVERE, "{0} {1}",
+					new Object[] { ex.getMessage(), ex.getCause() });
 		}
 		return null;
 	}
 
+	/**
+	 * Fetches an end user by user key
+	 * 
+	 * @param key
+	 *            User key
+	 * @return end-user
+	 */
 	public Enduser findByUserkey(String key) {
 		try {
 			TypedQuery<Enduser> query = em.createNamedQuery(
@@ -463,12 +494,21 @@ public class Repository implements Serializable {
 			System.out.println("Exception in Repository: FindByUserkey "
 					+ getClass() + " " + ex.getMessage() + " | "
 					+ ex.getClass());
-			Logger.getLogger(getClass().getName()).info(
-					ex.getMessage() + " - Cause: " + ex.getCause());
+			Logger.getLogger(getClass().getName()).log(Level.INFO,
+					"{0} - Cause: {1}",
+					new Object[] { ex.getMessage(), ex.getCause() });
 		}
 		return null;
 	}
 
+	/**
+	 * Fetches an end user by email and password
+	 * 
+	 * @param email
+	 *            <a>End user email</a>
+	 * @param password
+	 * @return end-user
+	 */
 	public Enduser findByEmailAndPassword(String email, String password) {
 		try {
 			TypedQuery<Enduser> query = em.createNamedQuery(
@@ -481,11 +521,63 @@ public class Repository implements Serializable {
 					.println("Exception in Repository: FindByEmailAndPassword "
 							+ getClass() + " " + ex.getMessage() + " | "
 							+ ex.getClass());
-			Logger.getLogger(getClass().getName()).info(
-					ex.getMessage() + " - Cause: " + ex.getCause());
+			Logger.getLogger(getClass().getName()).log(Level.INFO,
+					"{0} - Cause: {1}",
+					new Object[] { ex.getMessage(), ex.getCause() });
 		}
 		return null;
 
 	}
 
+	/**
+	 * Fetches Configuration object by ID
+	 * 
+	 * @param id
+	 *            <a>PK</a>
+	 */
+	public Configuration findById(Long id) {
+		try {
+			if (id != null && id >= 0) {
+				return em.find(Configuration.class, id);
+			}
+		} catch (Exception ex) {
+			System.err.println("Exception finding Configuration object "
+					+ ex.getMessage());
+			String msg = ex.getMessage();
+			org.jboss.logging.Logger.getLogger(getClass().getName()).error(msg);
+			return null;
+		}
+		return null;
+	}
+
+	/**
+	 * List of Configuration items
+	 * 
+	 * @return configuration_list otherwise null
+	 */
+	public List<Configuration> findAllConfigurationItems() {
+		try {
+			TypedQuery<Configuration> query = em.createNamedQuery(
+					"Configuration.findAll", Configuration.class);
+			return query.getResultList();
+		} catch (Exception ex) {
+			System.err.println("Exception finding Configuration list "
+					+ ex.getMessage());
+			String msg = ex.getMessage() + "" + ex.getCause().getMessage();
+			org.jboss.logging.Logger.getLogger(getClass().getName()).error(msg);
+			return null;
+		}
+	}
+
+	public List<Registery> allRegisteryItems() {
+		try {
+			CriteriaQuery<Registery> cq = em.getCriteriaBuilder().createQuery(
+					Registery.class);
+			cq.select(cq.from(Registery.class));
+			return em.createQuery(cq).getResultList();
+		} catch (Exception ex) {
+			System.err.println(ex);
+			return null;
+		}
+	}
 } // END OF CLASS

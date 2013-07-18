@@ -25,218 +25,226 @@ import org.otika.honeybee.events.SignoutEvent;
 import org.otika.honeybee.model.Enduser;
 
 /**
- * 
+ *
  * @author hanine
  */
 @Stateless
 @Named(value = "authenticationBean")
 public class AuthenticationBean {
 
-	private static final Logger LOG = Logger.getLogger(AuthenticationBean.class
-			.getName());
-	@Inject
-	private UtilityBean utilityBean;
-	@EJB
-	private Repository repository;
-	@Inject
-	private Event<SignoutEvent> signoutEvent;
-	@Inject
-	private Event<SigninEvent> signinEvent;
-	@Inject
-	private LocaleBean localeBean;
-	@Inject
-	private SessionBean sessionBean;
-	private FacesContext context;
-	private HttpServletRequest request;
-	private HttpServletResponse response;
-	@NotNull
-	@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email / Email non valide")
-	@Size(min = 8, max = 50, message = "Email size must be between 8 and 50")
-	private String email = "";
-	@NotNull
-	@Size(min = 5, max = 252, message = "Password value must be at least 5")
-	private String password = "";
+    private static final Logger LOG = Logger.getLogger(AuthenticationBean.class
+            .getName());
+    @Inject
+    private UtilityBean utilityBean;
+    @EJB
+    private Repository repository;
+    @Inject
+    private Event<SignoutEvent> signoutEvent;
+    @Inject
+    private Event<SigninEvent> signinEvent;
+    @Inject
+    private LocaleBean localeBean;
+    @Inject
+    private SessionBean sessionBean;
+    @Inject
+    private BundleBean bundleBean;
+    private FacesContext context;
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+    @NotNull
+    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email / Email non valide")
+    @Size(min = 8, max = 50, message = "Email size must be between 8 and 50")
+    private String email = "";
+    @NotNull
+    @Size(min = 5, max = 252, message = "Password value must be at least 5")
+    private String password = "";
 
-	public AuthenticationBean() {
-	}
+    public AuthenticationBean() {
+    }
 
-	@PostConstruct
-	public void init() {
-		context = FacesContext.getCurrentInstance();
-		request = (HttpServletRequest) context.getExternalContext()
-				.getRequest();
-		response = (HttpServletResponse) context.getExternalContext()
-				.getResponse();
-	}
+    @PostConstruct
+    public void init() {
+        context = FacesContext.getCurrentInstance();
+        request = (HttpServletRequest) context.getExternalContext()
+                .getRequest();
+        response = (HttpServletResponse) context.getExternalContext()
+                .getResponse();
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    /**
+     * Programmatic login method. Hashing the password is done using a
+     * converter. But if no faces converter is used, we set hash parameter to
+     * true
+     *
+     * @param hash boolean specifying whether to hash the password or not
+     * @param the success outcome
+     * @return outcome for faces navigation
+     */
+    public String login(boolean hash, String outcome) {
+        context = FacesContext.getCurrentInstance();
+        request = (HttpServletRequest) context.getExternalContext()
+                .getRequest();
+        response = (HttpServletResponse) context.getExternalContext()
+                .getResponse();
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+        try {
+            String pass = utilityBean.hash(this.password);
+            if (!hash) {
+                pass = this.password;
+            }
+            Enduser user = repository.findByEmailAndPassword(email, pass);
+            if (user != null) {
+                request.login(this.email, pass);
+                signinEvent.fire(new SigninEvent(request.getRemoteUser()));
+                // TODO setting view locale does not work for user check view
+                localeBean.setLocale(new Locale(user.getLanguage().getCode()));
+                // response.sendRedirect(request.getContextPath()+
+                // File.separator+request.getRequestURI().toString());
 
-	public String getEmail() {
-		return email;
-	}
+                Cookie cookie = new Cookie("honeybee", "honeybee");
+                cookie.setValue(user.getEmail());
+                cookie.setMaxAge(29000000);
+                response.addCookie(cookie);
+                System.out.println(response.getCharacterEncoding());
+                String uri = "/" + request.getRequestURI().split("/")[2];
+                System.out.println("returning: " + uri);
+                String logsuc = bundleBean.i18n("login_successful");
+                context.addMessage(null, new FacesMessage(logsuc));
+                // return uri;
+            } else {
+                context.addMessage(null, new FacesMessage(
+                        FacesMessage.SEVERITY_ERROR,
+                        bundleBean.i18n("wrong_credentials"), ""));
+                return null;
+            }
+        } catch (Exception e) {
+            LOG.log(Level.FINEST, e.getMessage());
+            System.out.println(e);
+            context.addMessage(null, new FacesMessage(bundleBean.i18n("login_failed")));
+            return "/loginerror";
+        }
+        if (!outcome.equalsIgnoreCase("")
+                && !outcome.contains("referer")) {
+            return outcome;
+        } else if (outcome.contains("referer")) {
+            if (sessionBean.getOriginalViewName().contains("/signin.xhtml")) {
+                return "/index?faces-redirect=false";
+            } else {
+                System.out.println("Redirecting to: "
+                        + sessionBean.getOriginalViewName());
+                return sessionBean.getOriginalViewName() + "?faces-redirect=true";
+            }
+        } else {
+            return null;
+        }
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    /**
+     *
+     * @return logout outcome
+     */
+    public String logout() {
+        context = FacesContext.getCurrentInstance();
+        request = (HttpServletRequest) context.getExternalContext()
+                .getRequest();
+        try {
+            if (request.getRemoteUser() != null) {
+                signoutEvent.fire(new SignoutEvent(request.getRemoteUser()));
+                request.logout();
+                context.addMessage(null, new FacesMessage(bundleBean.i18n("logout_successful")));
+                FacesContext
+                        .getCurrentInstance()
+                        .getApplication()
+                        .getNavigationHandler()
+                        .handleNavigation(FacesContext.getCurrentInstance(), null,
+                        "/signin.xhtml?faces-redirect=false");
+                return "/signin.xhtml?faces-redirect=false";
+            } else {
+                utilityBean.showMessage("warn",bundleBean.i18n("already_logged_in") , "");
+                return null;
+            }
+        } catch (ServletException e) {
+            LOG.severe(e.getMessage());
+            System.out.println(e);
+            context.addMessage(null, new FacesMessage(bundleBean.i18n("logout_failed")));
+            return "/loginerror";
+        }
+    }
 
-	/**
-	 * Programmatic login method. Hashing the password is done using a
-	 * converter. But if no faces converter is used, we set hash parameter to
-	 * true
-	 * 
-	 * @param hash
-	 *            boolean specifying whether to hash the password or not
-	 * @param the
-	 *            success outcome
-	 * @return outcome for faces navigation
-	 */
-	public String login(boolean hash, String outcome) {
-		context = FacesContext.getCurrentInstance();
-		request = (HttpServletRequest) context.getExternalContext()
-				.getRequest();
-		response = (HttpServletResponse) context.getExternalContext()
-				.getResponse();
+    /**
+     * Login Method
+     *
+     * @param mail email address
+     * @param pass password
+     * @param hash boolean whether to hash the password
+     * @return outcome
+     */
+    public String login(String mail, String pass, boolean hash) {
+        context = FacesContext.getCurrentInstance();
+        request = (HttpServletRequest) context.getExternalContext()
+                .getRequest();
+        response = (HttpServletResponse) context.getExternalContext()
+                .getResponse();
+        String secretword;
+        try {
+            secretword = utilityBean.hash(pass);
+            if (!hash) {
+                secretword = pass;
+            }
+            Enduser user = repository.findByEmailAndPassword(mail, secretword);
+            if (user != null
+                    && (request.getRemoteUser() == null || !request
+                    .getRemoteUser().equals(""))) {
+                request.login(mail, secretword);
+                signinEvent.fire(new SigninEvent(request.getRemoteUser()));
+                localeBean.setLocale(new Locale(user.getLanguage().getCode()));
+                // response.sendRedirect(request.getRequestURI().toString());
+                Cookie cookie = new Cookie("honeybee", "honeybee");
+                cookie.setValue("honeybee");
+                cookie.setMaxAge(29000000);
+                response.addCookie(cookie);
+                context.addMessage(null, new FacesMessage(bundleBean.i18n("login_successful")));
+            } else {
+                context.addMessage(null, new FacesMessage(
+                        FacesMessage.SEVERITY_ERROR,
+                        bundleBean.i18n("wrong_credentials"), ""));
+                return null;
+            }
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "{0} | cause: {1}",
+                    new Object[]{e.getMessage(), e.getCause().getMessage()});
+            System.out.println(e);
+            context.addMessage(null, new FacesMessage(bundleBean.i18n("login_failed")));
+            return "/loginerror";
+        }
+        return "/index";
+    }
 
-		try {
-			String pass = utilityBean.hash(this.password);
-			if (!hash) {
-				pass = this.password;
-			}
-			Enduser user = repository.findByEmailAndPassword(email, pass);
-			if (user != null) {
-				request.login(this.email, pass);
-				signinEvent.fire(new SigninEvent(request.getRemoteUser()));
-				// TODO setting view locale does not work for user check view
-				localeBean.setLocale(new Locale(user.getLanguage().getCode()));
-				// response.sendRedirect(request.getContextPath()+
-				// File.separator+request.getRequestURI().toString());
+    /**
+     * Reset values of password and email to empty This can also be achieved
+     * using _<f:setPropertyActionListener />_
+     */
+    public void resetCredentials() {
+        email = "";
+        password = "";
+    }
 
-				Cookie cookie = new Cookie("honeybee", "honeybee");
-				cookie.setValue(user.getEmail());
-				cookie.setMaxAge(29000000);
-				response.addCookie(cookie);
-				System.out.println(response.getCharacterEncoding());
-				String uri = "/" + request.getRequestURI().split("/")[2];
-				System.out.println("returning: " + uri);
-				context.addMessage(null, new FacesMessage("Login Successful."));
-				// return uri;
-			} else {
-				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Wrong credentials. Try again!", ""));
-				return null;
-			}
-		} catch (Exception e) {
-			LOG.log(Level.FINEST, e.getMessage());
-			System.out.println(e);
-			context.addMessage(null, new FacesMessage("Login failed."));
-			return "/loginerror";
-		}
-		if (!outcome.equalsIgnoreCase("") && outcome != null
-				&& !outcome.contains("referer")) {
-			return outcome;
-		} else if (outcome.contains("referer")) {
-			if (sessionBean.getOriginalViewName().contains("/signin.xhtml")) {
-				return "/index?faces-redirect=false";
-			} else {
-				System.out.println("Redirecting to: "
-						+ sessionBean.getOriginalViewName());
-				return sessionBean.getOriginalViewName()+"?faces-redirect=true";
-			}
-		} else {
-			return null;
-		}
-	}
+    /*
+     * Getters & setters
+     */
+    public String getPassword() {
+        return password;
+    }
 
-	/**
-	 * 
-	 * @return logout outcome
-	 */
-	public String logout() {
-		context = FacesContext.getCurrentInstance();
-		request = (HttpServletRequest) context.getExternalContext()
-				.getRequest();
-		try {
-			signoutEvent.fire(new SignoutEvent(request.getRemoteUser()));
-			request.logout();			
-			context.addMessage(null, new FacesMessage("Logout successful."));
-			FacesContext
-					.getCurrentInstance()
-					.getApplication()
-					.getNavigationHandler()
-					.handleNavigation(FacesContext.getCurrentInstance(), null,
-							"/signin.xhtml?faces-redirect=false");
-			return "/signin.xhtml?faces-redirect=false";
-		} catch (ServletException e) {
-			LOG.severe(e.getMessage());
-			System.out.println(e);
-			context.addMessage(null, new FacesMessage("Logout failed."));
-			return "/loginerror";
-		}
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	/**
-	 * Login Method
-	 * 
-	 * @param mail
-	 *            email address
-	 * @param pass
-	 *            password
-	 *            @param hash boolean whether to hash the password
-	 * @return outcome
-	 */
-	public String login(String mail, String pass, boolean hash) {
-		context = FacesContext.getCurrentInstance();
-		request = (HttpServletRequest) context.getExternalContext()
-				.getRequest();
-		response = (HttpServletResponse) context.getExternalContext()
-				.getResponse();
-		try {
-			String password = utilityBean.hash(pass);
-			if (!hash) {
-				password = pass;
-			}
-			Enduser user = repository.findByEmailAndPassword(mail, password);
-			if (user != null
-					&& (request.getRemoteUser() == null || !request
-							.getRemoteUser().equals(""))) {
-				request.login(mail, password);
-				signinEvent.fire(new SigninEvent(request.getRemoteUser()));
-				localeBean.setLocale(new Locale(user.getLanguage().getCode()));
-				// response.sendRedirect(request.getRequestURI().toString());
-				Cookie cookie = new Cookie("honeybee", "honeybee");
-				cookie.setValue("honeybee");
-				cookie.setMaxAge(29000000);
-				response.addCookie(cookie);
-				context.addMessage(null, new FacesMessage("Login Successful."));
-			} else {
-				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Wrong credentials. Try again!", ""));
-				return null;
-			}
-		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "{0} | cause: {1}",
-					new Object[] { e.getMessage(), e.getCause().getMessage() });
-			System.out.println(e);
-			context.addMessage(null, new FacesMessage("Login failed."));
-			return "/loginerror";
-		}
-		return "/index";
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	/**
-	 * Reset values of password and email to empty This can also be achieved
-	 * using _<f:setPropertyActionListener />_
-	 */
-	public void resetCredentials() {
-		email = "";
-		password = "";
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }// END OF CLASS

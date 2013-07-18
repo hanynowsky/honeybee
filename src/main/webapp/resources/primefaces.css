@@ -236,3 +236,8 @@ white-space: normal;
     margin-top: 4px;
     text-shadow: none;
 }
+
+.ui-tabs-nav  {
+height: 35px;
+}
+

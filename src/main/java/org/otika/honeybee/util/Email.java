@@ -16,7 +16,7 @@ import javax.validation.Payload;
 import javax.validation.constraints.Pattern;
 
 /**
- * Custom Annotation to validate emails
+ * Custom Annotation to validate e-mails
  * @author Hanine H.A.M <kyoshuu.madani@gmail.com>
  *
  */

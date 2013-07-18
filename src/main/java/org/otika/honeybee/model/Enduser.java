@@ -42,6 +42,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Enduser implements java.io.Serializable {
 			
 	private static final String ENTER_VALUE = "Enter a value / Entrez une valeur";
+	private static final String MALFORMED_EMAIL = "Mal-formed email / Email mal formé";
 	private static final long serialVersionUID = -5640669438836852305L;
 	private Long id;
 	private Integer version;
@@ -185,7 +186,7 @@ public class Enduser implements java.io.Serializable {
 	}
 
 	@NotEmpty(message=ENTER_VALUE)
-	@Email
+	@Email(message=MALFORMED_EMAIL)
 	@Column(name = "email", unique = true, nullable = false, length = 65)
 	public String getEmail() {
 		return this.email;
