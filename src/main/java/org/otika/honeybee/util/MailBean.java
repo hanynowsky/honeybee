@@ -261,7 +261,7 @@ public class MailBean {
 						+ " <br /> <em><b>Your activation code is: </b></em>: "
 						+ uuid
 						+ "<br />"
-						+ "<a href='https://honeybee-otika.rhcloud.com/misc/activation?key="
+						+ "<a href='https://honeybee-otika.rhcloud.com/misc/activation.xhtml?key="
 						+ uuid
 						+ "'"
 						+ " target='_blank'>Click here to activate your account.</a>";
