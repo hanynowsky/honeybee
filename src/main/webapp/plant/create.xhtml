@@ -7,7 +7,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:forgeview="http://jboss.org/forge/view"
-	template="/resources/scaffold/pageTemplate.xhtml" >
+	template="/resources/scaffold/pageTemplate.xhtml">
 
 	<f:metadata>
 		<f:viewParam name="id" value="#{plantBean.id}" />
@@ -34,8 +34,8 @@
 	<ui:define name="footer" />
 
 	<ui:define name="main">
-		<h:form id="create" rendered="#{isAdministrator or isAuthor}"> 
-		<!-- enctype="multipart/form-data" -->
+		<h:form id="create" rendered="#{isAdministrator or isAuthor}">
+			<!-- enctype="multipart/form-data" -->
 			<h:messages globalOnly="true" styleClass="error" />
 
 			<h:panelGrid columnClasses="label,component,required" columns="3">
@@ -74,6 +74,29 @@
 					<h:message for="plantBeanPlantLabelmar" styleClass="error" />
 				</h:panelGroup>
 				<h:outputText />
+
+				<h:outputLabel for="plantBeanExampleSeason" value="#{i18n.season}" />
+				<h:panelGroup>
+					<h:selectOneMenu id="plantBeanExampleSeason"
+						value="#{plantBean.plant.season}" style="font-family=sans-serif;">
+						<f:selectItems var="_s" value="#{plantBean.seasons}"
+							itemValue="#{_s}" itemLabel="#{bundleBean.i18n(_s)}" />
+					</h:selectOneMenu>
+					<h:message for="plantBeanExampleSeason" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+
+				<h:outputLabel for="plantBeanExampleType" value="#{i18n.type}" />
+				<h:panelGroup>
+					<h:selectOneMenu id="plantBeanExampleType"
+						value="#{plantBean.plant.type}">
+						<f:selectItems var="_t" value="#{plantBean.types}"
+							itemValue="#{_t}" itemLabel="#{bundleBean.i18n(_t)}" />
+					</h:selectOneMenu>
+					<h:message for="plantBeanExampleType" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+
 				<h:outputLabel for="plantBeanPlantImage" value="#{i18n.image}" />
 				<h:panelGroup>
 					<h:inputText id="plantBeanPlantImage" maxlength="100"
@@ -84,16 +107,17 @@
 				<h:outputLabel for="plantBeanPlantImage" value="#{i18n.graphic}" />
 				<h:panelGroup>
 					<p:fileUpload validator="#{plantBean.imageValidator}"
-					id="fileupload_plant" sizeLimit="500000" 
-					invalidSizeMessage="Size limit is 500 Kb" 
-					invalidFileMessage="Invalid extension"
-					cancelLabel="#{i18n.cancel}" label="#{i18n.search}" 
+						id="fileupload_plant" sizeLimit="500000"
+						invalidSizeMessage="Size limit is 500 Kb"
+						invalidFileMessage="Invalid extension"
+						cancelLabel="#{i18n.cancel}" label="#{i18n.search}"
 						allowTypes="/(\.|\/)(gif|jpe?g|png)$/" auto="false"
-						fileUploadListener="#{plantBean.handleFileUpload}" update="msgbox" />						
+						fileUploadListener="#{plantBean.handleFileUpload}" update="msgbox" />
 					<p:message for="fileupload_plant" redisplay="true" id="msgbox" />
 				</h:panelGroup>
 				<h:outputText />
-				<h:outputLabel for="plantBeanPlantDescription" value="#{i18n.description}" />
+				<h:outputLabel for="plantBeanPlantDescription"
+					value="#{i18n.description}" />
 				<h:panelGroup>
 					<h:inputText id="plantBeanPlantDescription" maxlength="65535"
 						value="#{plantBean.plant.description}" />
@@ -116,7 +140,8 @@
 					<h:message for="plantBeanPlantDescriptionar" styleClass="error" />
 				</h:panelGroup>
 				<h:outputText />
-				<h:outputLabel for="plantBeanPlantIngredients" value="#{i18n.ingredients}" />
+				<h:outputLabel for="plantBeanPlantIngredients"
+					value="#{i18n.ingredients}" />
 				<h:panelGroup>
 					<ui:param name="_collection" value="#{plantBean.plant.ingredients}" />
 					<h:dataTable id="plantBeanPlantIngredients" styleClass="data-table"
@@ -185,7 +210,8 @@
 					styleClass="btn btn-primary" />
 				<c:choose>
 					<c:when test="#{!empty plantBean.id}">
-						<h:link value="#{i18n.cancel}" outcome="view" styleClass="btn btn-primary">
+						<h:link value="#{i18n.cancel}" outcome="view"
+							styleClass="btn btn-primary">
 							<f:param name="id" value="#{plantBean.id}" />
 						</h:link>
 						<h:commandLink value="#{i18n.delete}" action="#{plantBean.delete}"

@@ -31,6 +31,7 @@ import org.hibernate.search.annotations.Field;
 		@UniqueConstraint(columnNames = "labellat")})
 @NamedQueries(value = {
 		@NamedQuery(name = "Plant.findById", query = "SELECT p FROM Plant p WHERE p.id = :id"),
+		@NamedQuery(name = "Plant.findBySeason", query = "SELECT p FROM Plant p WHERE p.season = :season"),
 		@NamedQuery(name = "Plant.findByLabel", query = "select p from Plant p where p.label = :label") })
 public class Plant implements java.io.Serializable {
 
@@ -42,6 +43,8 @@ public class Plant implements java.io.Serializable {
 	private String labellat;
 	private String labelar;
 	private String labelmar;
+	private String type;
+	private String season;
 	private String image;
 	private byte[] graphic;
 	private String description;
@@ -61,7 +64,7 @@ public class Plant implements java.io.Serializable {
 	}
 
 	public Plant(String label, String labelfr, String labellat, String labelar,
-			String labelmar, String image, byte[] graphic, String description,
+			String labelmar, String type, String season, String image, byte[] graphic, String description,
 			String descriptionfr, String descriptionar, Set<Honey> honeys,
 			Set<Ingredient> ingredients) {
 		this.label = label;
@@ -69,6 +72,8 @@ public class Plant implements java.io.Serializable {
 		this.labellat = labellat;
 		this.labelar = labelar;
 		this.labelmar = labelmar;
+		this.type = type;
+		this.season = season;
 		this.image = image;
 		this.graphic = graphic;
 		this.description = description;
@@ -147,6 +152,26 @@ public class Plant implements java.io.Serializable {
 
 	public void setLabelmar(String labelmar) {
 		this.labelmar = labelmar;
+	}
+
+	@Field
+	@Column(name = "type", length = 25)
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	@Field
+	@Column(name = "season", length = 25)
+	public String getSeason() {
+		return season;
+	}
+
+	public void setSeason(String season) {
+		this.season = season;
 	}
 
 	@Column(name = "image", length = 100)

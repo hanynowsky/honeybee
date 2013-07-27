@@ -49,7 +49,8 @@
                        <f:selectItem itemValue="#{null}" itemLabel="-----"/>
                         <f:selectItem itemValue="#{witnessBean.witness.enduser}"
                                       itemLabel="#{witnessBean.witness.enduser.name}" />
-                        <f:selectItem itemLabel="----" noSelectionOption="true" itemValue="#{null}"/>
+                        <f:selectItem itemLabel="----" noSelectionOption="true" 
+                        itemValue="#{null}"/>
                         <f:selectItems value="#{enduserBean.dummyList}"
                                        itemDisabled="#{false}" />
                     </p:selectOneMenu>
@@ -126,11 +127,11 @@
                     rendered="#{witnessBean.checkWitnessEnduser == true or isAdministrator}">
                     <h:commandLink value="#{i18n.save}" action="#{witnessBean.update}"
                                    styleClass="btn btn-primary"
-                                   rendered="#{not empty witnessBean.id or isAdministrator}" />
+                                   rendered="#{not empty witnessBean.id}" />
                 </h:panelGroup>
 
-                <h:panelGroup rendered="#{true}">
-                    <h:commandLink value="#{i18n.save}" action="#{witnessBean.update}"
+                <h:panelGroup rendered="#{true}">                
+                    <h:commandLink value="#{i18n.create} &amp; #{i18n.save}" action="#{witnessBean.update}"
                                    styleClass="btn btn-primary" rendered="#{empty witnessBean.id}" />
                 </h:panelGroup>
 

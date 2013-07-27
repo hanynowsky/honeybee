@@ -19,34 +19,53 @@
 	<ui:define name="main">
 		<h:form id="testForm">
 			<p:messages autoUpdate="true" id="dashMessages" />
-		<p:tabView style="display:compact;">
-		<p:tab title="Registery">
-		<p:dataTable value="#{registeryBean.allRegisteryItems}" paginator="true"
-		paginatorPosition="top"  var="_item" pageLinks="10" rows="10">
-		<p:column>
-		<f:facet name="header">
-		<h:outputText value="Action" />
-		</f:facet>
-		<h:outputText value="#{_item.action}" />
-		</p:column>
-		<p:column>
-		<f:facet name="header">
-		<h:outputText value="Time" />
-		</f:facet>
-		<h:outputText value="#{_item.actiontime}" />
-		</p:column>			
-		<p:column>
-		<f:facet name="header">
-		<h:outputText value="User" />
-		</f:facet>
-		<h:outputText value="#{_item.username}" />
-		</p:column>
-		</p:dataTable>
-		</p:tab>
-		<p:tab title="Configuration">
-		</p:tab>
-		</p:tabView>
-			
+			<p:tabView style="display:compact;">
+				<p:tab title="Registery">
+					<p:dataTable value="#{registeryBean.allRegisteryItems}"
+						paginator="true" paginatorPosition="top" var="_item"
+						pageLinks="10" rows="10">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Action" />
+							</f:facet>
+							<h:outputText value="#{_item.action}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Time" />
+							</f:facet>
+							<h:outputText value="#{_item.actiontime}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="User" />
+							</f:facet>
+							<h:outputText value="#{_item.username}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="City" />
+							</f:facet>
+							<h:outputText value="#{_item.cityname}" />
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+				<p:tab title="Configuration">
+					<ui:param name="configurationItem"
+						value="#{repository.findAllConfigurationItems().get(0)}" />
+					<p:panelGrid columns="2">
+						<h:outputLabel value="Mail Password" />
+						<h:outputText value="#{configurationItem.mailpass}" />
+						<h:outputLabel value="Maintenance" />
+						<h:outputText value="#{configurationItem.inmaintenance}" />
+						<h:outputLabel value="Licence" />
+						<h:outputText value="#{configurationItem.licence}" />
+						<h:outputLabel value="Counter Hits" />
+						<h:outputText value="#{configurationItem.hitcounts}" />
+					</p:panelGrid>
+				</p:tab>
+			</p:tabView>
+
 		</h:form>
 		<p:separator style="height:1px;margin:10px;" />
 	</ui:define>

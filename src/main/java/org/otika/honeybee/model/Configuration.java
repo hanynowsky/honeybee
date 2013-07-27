@@ -18,22 +18,26 @@ public class Configuration implements Serializable {
 	private boolean inmaintenance;
 	private String licence;
 	private String mailpass;
+	private int hitcounts;
 
 	public Configuration() {
 	}
 
-	public Configuration(boolean inmaintenance, String licence, String mailpass) {
+	public Configuration(boolean inmaintenance, String licence,
+			String mailpass, int hitcounts) {
 		this.inmaintenance = inmaintenance;
 		this.licence = licence;
 		this.mailpass = mailpass;
+		this.hitcounts = hitcounts;
 	}
 
 	public Configuration(Long id, boolean inmaintenance, String licence,
-			String mailpass) {
+			String mailpass, int hitcounts) {
 		this.id = id;
 		this.inmaintenance = inmaintenance;
 		this.licence = licence;
 		this.mailpass = mailpass;
+		this.hitcounts = hitcounts;
 	}
 
 	@Id
@@ -79,6 +83,15 @@ public class Configuration implements Serializable {
 
 	public void setMailpass(String mailpass) {
 		this.mailpass = mailpass;
+	}
+
+	@Column(name = "hitcounts", nullable = false)
+	public int getHitcounts() {
+		return hitcounts;
+	}
+
+	public void setHitcounts(int hitcounts) {
+		this.hitcounts = hitcounts;
 	}
 
 	/*

@@ -22,7 +22,7 @@
 		text-align: #{utilityBean.htmlDirection == 'rtl' ? 'right' : 'left'};
 		}
 		</style>
-		<div align="center">
+		<div align="center" style="height: 200px;margin-bottom:10px;">
 			<h:form id="swicth_form">
 				<p:imageSwitch effect="slideX" styleClass="imageswitch"
 					slideshowSpeed="2000" id="imageswitch_plant">
@@ -70,7 +70,11 @@
 						<h:outputText value="#{i18n.labelfr}" />
 						<h:outputText value="#{plant_param.labelfr}" />
 						<h:outputText value="#{i18n.labelar}" />
-						<h:outputText value="#{plant_param.labelar}" />						
+						<h:outputText value="#{plant_param.labelar}" />
+						<h:outputText value="#{i18n.season}" />
+						<h:outputText value="#{bundleBean.i18n(plant_param.season)}" />
+						<h:outputText value="#{i18n.type}" />
+						<h:outputText value="#{bundleBean.i18n(plant_param.type)}" />								
 						<h:outputText value="#{i18n.description}" rendered="#{localeBean.language == 'en'}"/>
 						<h:outputText value="#{plant_param.description}" rendered="#{localeBean.language == 'en'}"/>
 						<h:outputText value="#{i18n.descriptionar}" rendered="#{localeBean.language == 'ar'}"/>

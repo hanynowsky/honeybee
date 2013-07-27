@@ -48,6 +48,14 @@
 			<h:outputText id="plantBeanPlantLabelmar"
 				value="#{plantBean.plant.labelmar}" />
 			<h:outputText />
+			<h:outputLabel for="plantBeanPlantSeason" value="#{i18n.season}" />
+			<h:outputText id="plantBeanPlantSeason"
+				value="#{bundleBean.i18n(plantBean.plant.season)}" />
+			<h:outputText />
+			<h:outputLabel for="plantBeanPlantType" value="#{i18n.type}" />
+			<h:outputText id="plantBeanPlantType"
+				value="#{bundleBean.i18n(plantBean.plant.type)}" />
+			<h:outputText />
 			<h:outputLabel for="plantBeanPlantImage" value="#{i18n.image}" />
 			<h:graphicImage id="plantBeanPlantImage" width="250"
 				value="/resources/plants/#{plantBean.plant.image}" />

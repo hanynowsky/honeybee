@@ -7,11 +7,11 @@
 	template="/resources/scaffold/pageTemplate.xhtml">
 
 	<f:metadata>
-		<f:viewParam name="page" value="#{plantBean.page}"/>
-		<f:event type="preRenderView" listener="#{plantBean.paginate(this)}"/>
+		<f:viewParam name="page" value="#{plantBean.page}" />
+		<f:event type="preRenderView" listener="#{plantBean.paginate(this)}" />
 	</f:metadata>
 
-	<ui:param name="pageTitle" value="#{i18n.plants}"/>
+	<ui:param name="pageTitle" value="#{i18n.plants}" />
 
 	<ui:define name="header">
 		#{i18n.plants}
@@ -21,107 +21,149 @@
 		#{i18n.search}
 	</ui:define>
 
-	<ui:define name="footer"/>
+	<ui:define name="footer" />
 
 	<ui:define name="main">
 		<h:form id="search">
 			<f:validateBean disabled="true">
 				<h:panelGroup styleClass="search">
-
 					<h:panelGrid columnClasses="label,component,required" columns="3">
-						<h:outputLabel for="plantBeanExampleLabel" value="#{i18n.label}"/>
+						<h:outputLabel for="plantBeanExampleSeason" value="#{i18n.season}" />
 						<h:panelGroup>
-							<h:inputText id="plantBeanExampleLabel" maxlength="45" value="#{plantBean.example.label}">
-							<f:ajax execute="@form" render="plantBeanPageItems paginator" event="keyup"/>
-							</h:inputText>
-							<h:message for="plantBeanExampleLabel" styleClass="error"/>
+							<h:selectOneMenu id="plantBeanExampleSeason"
+								value="#{plantBean.example.season}">
+								<f:selectItem  />
+								<f:selectItems var="_s" value="#{plantBean.seasons}"
+									itemValue="#{_s}" itemLabel="#{bundleBean.i18n(_s)}" />
+								<f:ajax execute="@form" render="plantBeanPageItems paginator" />
+							</h:selectOneMenu>
+							<h:message for="plantBeanExampleSeason" styleClass="error" />
 						</h:panelGroup>
-						<h:outputText/>
-						<h:outputLabel for="plantBeanExampleLabelfr" value="#{i18n.labelfr}"/>
+						<h:outputText />
+						<h:outputLabel for="plantBeanExampleType" value="#{i18n.type}" />
 						<h:panelGroup>
-							<h:inputText id="plantBeanExampleLabelfr" maxlength="45" value="#{plantBean.example.labelfr}">
-							<f:ajax execute="@form" render="plantBeanPageItems paginator" event="keyup"/>
-							</h:inputText>
-							<h:message for="plantBeanExampleLabelfr" styleClass="error"/>
+							<h:selectOneMenu id="plantBeanExampleType"
+								value="#{plantBean.example.type}">
+								<f:selectItem  />
+								<f:selectItems var="_t" value="#{plantBean.types}"
+									itemValue="#{_t}" itemLabel="#{bundleBean.i18n(_t)}" />
+								<f:ajax execute="@form" render="plantBeanPageItems paginator" />
+							</h:selectOneMenu>
+							<h:message for="plantBeanExampleType" styleClass="error" />
 						</h:panelGroup>
-						<h:outputText/>
-						<h:outputLabel for="plantBeanExampleLabellat" value="#{i18n.labellat}"/>
+						<h:outputText />
+
+						<h:outputLabel for="plantBeanExampleLabel" value="#{i18n.label}" />
 						<h:panelGroup>
-							<h:inputText id="plantBeanExampleLabellat" maxlength="45" value="#{plantBean.example.labellat}">
-							<f:ajax execute="@form" render="plantBeanPageItems paginator" event="keyup"/>
+							<h:inputText id="plantBeanExampleLabel" maxlength="45"
+								value="#{plantBean.example.label}">
+								<f:ajax execute="@form" render="plantBeanPageItems paginator"
+									event="keyup" />
 							</h:inputText>
-							<h:message for="plantBeanExampleLabellat" styleClass="error"/>
+							<h:message for="plantBeanExampleLabel" styleClass="error" />
 						</h:panelGroup>
-						<h:outputText/>
-						<h:outputLabel for="plantBeanExampleLabelar" value="#{i18n.labelar}"/>
+						<h:outputText />
+						<h:outputLabel for="plantBeanExampleLabelfr"
+							value="#{i18n.labelfr}" />
 						<h:panelGroup>
-							<h:inputText id="plantBeanExampleLabelar" maxlength="45" value="#{plantBean.example.labelar}">
-							<f:ajax execute="@form" render="plantBeanPageItems paginator" event="keyup"/>
+							<h:inputText id="plantBeanExampleLabelfr" maxlength="45"
+								value="#{plantBean.example.labelfr}">
+								<f:ajax execute="@form" render="plantBeanPageItems paginator"
+									event="keyup" />
 							</h:inputText>
-							<h:message for="plantBeanExampleLabelar" styleClass="error"/>
+							<h:message for="plantBeanExampleLabelfr" styleClass="error" />
 						</h:panelGroup>
-						<h:outputText/>
-						<h:outputLabel for="plantBeanExampleLabelmar" value="#{i18n.labelmar}"/>
+						<h:outputText />
+						<h:outputLabel for="plantBeanExampleLabellat"
+							value="#{i18n.labellat}" />
 						<h:panelGroup>
-							<h:inputText id="plantBeanExampleLabelmar" maxlength="45" value="#{plantBean.example.labelmar}">
-							<f:ajax execute="@form" render="plantBeanPageItems paginator" event="keyup"/>
+							<h:inputText id="plantBeanExampleLabellat" maxlength="45"
+								value="#{plantBean.example.labellat}">
+								<f:ajax execute="@form" render="plantBeanPageItems paginator"
+									event="keyup" />
 							</h:inputText>
-							<h:message for="plantBeanExampleLabelmar" styleClass="error"/>
+							<h:message for="plantBeanExampleLabellat" styleClass="error" />
 						</h:panelGroup>
-						<h:outputText/>
+						<h:outputText />
+						<h:outputLabel for="plantBeanExampleLabelar"
+							value="#{i18n.labelar}" />
+						<h:panelGroup>
+							<h:inputText id="plantBeanExampleLabelar" maxlength="45"
+								value="#{plantBean.example.labelar}">
+								<f:ajax execute="@form" render="plantBeanPageItems paginator"
+									event="keyup" />
+							</h:inputText>
+							<h:message for="plantBeanExampleLabelar" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+						<h:outputLabel for="plantBeanExampleLabelmar"
+							value="#{i18n.labelmar}" />
+						<h:panelGroup>
+							<h:inputText id="plantBeanExampleLabelmar" maxlength="45"
+								value="#{plantBean.example.labelmar}">
+								<f:ajax execute="@form" render="plantBeanPageItems paginator"
+									event="keyup" />
+							</h:inputText>
+							<h:message for="plantBeanExampleLabelmar" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
 					</h:panelGrid>
 					<h:panelGroup styleClass="buttons">
-						<h:commandLink value="#{i18n.search}" action="#{plantBean.search}" styleClass="btn btn-primary"/>
-						<h:commandLink rendered="#{isAdministrator or isAuthor}" value="#{i18n.create}" action="#{plantBean.create}" styleClass="btn btn-primary"/>
+						<h:commandLink value="#{i18n.search}" action="#{plantBean.search}"
+							styleClass="btn btn-primary" />
+						<h:commandLink rendered="#{isAdministrator or isAuthor}"
+							value="#{i18n.create}" action="#{plantBean.create}"
+							styleClass="btn btn-primary" />
 					</h:panelGroup>
 				</h:panelGroup>
 			</f:validateBean>
-			
-			<h:dataTable id="plantBeanPageItems" styleClass="data-table" value="#{plantBean.pageItems}" var="_item">
+
+			<h:dataTable id="plantBeanPageItems" styleClass="data-table"
+				value="#{plantBean.pageItems}" var="_item">
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="#{i18n.label}"/>
+						<h:outputText value="#{i18n.label}" />
 					</f:facet>
 					<h:link outcome="/plant/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemLabel" value="#{_item.label}"/>
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabel" value="#{_item.label}" />
 					</h:link>
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="#{i18n.labelfr}"/>
+						<h:outputText value="#{i18n.labelfr}" />
 					</f:facet>
 					<h:link outcome="/plant/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemLabelfr" value="#{_item.labelfr}"/>
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabelfr" value="#{_item.labelfr}" />
 					</h:link>
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="#{i18n.labellat}"/>
+						<h:outputText value="#{i18n.labellat}" />
 					</f:facet>
 					<h:link outcome="/plant/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemLabellat" value="#{_item.labellat}"/>
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabellat" value="#{_item.labellat}" />
 					</h:link>
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="#{i18n.labelar}"/>
+						<h:outputText value="#{i18n.labelar}" />
 					</f:facet>
 					<h:link outcome="/plant/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemLabelar" value="#{_item.labelar}"/>
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemLabelar" value="#{_item.labelar}" />
 					</h:link>
 				</h:column>
 			</h:dataTable>
 			<h:panelGroup id="paginator">
-			<ui:include src="/resources/scaffold/paginator.xhtml">
-				<ui:param name="paginatorBean" value="#{plantBean}"/>
-			</ui:include>
+				<ui:include src="/resources/scaffold/paginator.xhtml">
+					<ui:param name="paginatorBean" value="#{plantBean}" />
+				</ui:include>
 			</h:panelGroup>
 		</h:form>
-			
+
 	</ui:define>
 
 </ui:composition>

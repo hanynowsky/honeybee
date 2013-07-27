@@ -20,7 +20,7 @@
 	</h:head>
 
 	<h:body onload="colorify();"
-		dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}">	
+		dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}">
 		<p:outputPanel styleClass="feedback" autoUpdate="true">
 			<a target="_blank" href="mailto:kyoshuu.madani@gmail.com"> <h:outputText
 					value="#{i18n.feedback}" />
@@ -84,7 +84,13 @@
 
 		<style type="text/css">
 #content h2.success {
-	background-position: #{htmlDirection} 18px;
+	background-position: #{htmlDirection
+}
+18
+px
+;
+
+
 }
 </style>
 
@@ -135,7 +141,7 @@
 									<p:column>
 										<h:outputText value="#{lang.label}" />
 									</p:column>
-								</p:selectOneMenu>								
+								</p:selectOneMenu>
 							</h:form>
 						</h:panelGrid>
 					</div>
@@ -152,6 +158,8 @@
 									value="#{i18n.glossary}" /></li>
 							<li><h:link id="search_menu" outcome="/misc/search"
 									value="#{i18n.search}" /></li>
+									<li><h:link id="contact_menu" outcome="/misc/contact"
+									value="#{i18n.contact}" /></li>
 						</ul>
 					</div>
 				</div>
@@ -174,8 +182,8 @@
 								value="#{i18n.usergroup}" /></li>
 						<li><h:link id="enduser" outcome="/enduser/search"
 								value="#{i18n.endusers}" /></li>
-								<li><h:link id="dashboard" outcome="/admin/dashboard"
-								value="Dashboard" /></li>
+						<li><h:link id="dashboard" outcome="/admin/dashboard"
+								value="#{i18n.dashboard}" /></li>
 					</ul>
 				</h:panelGroup>
 
@@ -248,8 +256,8 @@
 							<h:outputText value="Expired Session!" />
 							<p:separator style="height:1px;" />
 							<p:commandButton value="#{i18n.logout}"
-								action="#{userManagerBean.logout}" ajax="false" 
-								rendered="#{not empty request.remoteUser}"/>
+								action="#{userManagerBean.logout}" ajax="false"
+								rendered="#{not empty request.remoteUser}" />
 						</h:panelGrid>
 					</p:dialog>
 				</h:form>
@@ -258,14 +266,14 @@
 			</div>
 		</div>
 
-		<footer>		
+		<footer>
 			<div id="footer-wrapper">
 				<p>
 					<h:outputText value="#{i18n.powered_by}" />
 					<a href="http://opentika-otika.rhcloud.com"> <h:outputText
 							value="OpenTika" />
 					</a>
-					<h:outputText value=" | @2013 - #{i18n.casablanca}" />						
+					<h:outputText value=" | @2013 - #{i18n.casablanca}" />
 				</p>
 			</div>
 		</footer>

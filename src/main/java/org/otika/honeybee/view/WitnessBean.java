@@ -67,6 +67,13 @@ public class WitnessBean implements Serializable {
 
 	private Witness witness;
 
+	/**
+	 * @param witness the witness to set
+	 */
+	public void setWitness(Witness witness) {
+		this.witness = witness;
+	}
+
 	public Witness getWitness() {
 		return this.witness;
 	}

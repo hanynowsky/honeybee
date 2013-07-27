@@ -306,6 +306,7 @@
 					styleClass="btn btn-primary" ajax="false"
 					action="#{prescriptionBean.printPrescription(false,false)}" />
 			</h:form>
+			<h:form style="margin:10px;">
 			<h:link value="#{i18n.view_all}" outcome="search"
 				styleClass="btn btn-primary" />
 			<h:link rendered="#{isAdministrator or isAuthor}"
@@ -313,6 +314,21 @@
 				styleClass="btn btn-primary" />
 			<h:link rendered="#{isAdministrator or isAuthor}"
 				value="#{i18n.create}" outcome="create" styleClass="btn btn-primary" />
+			
+				<p:commandButton id="add_witness_button" icon="ui-icon ui-icon-plus" 
+				action="/witness/create"
+					ajax="false" styleClass="btn btn-primary"
+					value="#{i18n.create} #{i18n.witness}"
+					rendered="#{not empty request.remoteUser}" >
+					<f:setPropertyActionListener target="#{witnessBean.witness}" 
+					value="#{witnessBean.example}" />
+					<f:setPropertyActionListener target="#{witnessBean.witness.prescription}" 
+					value="#{prescriptionBean.prescription}" />
+					<f:setPropertyActionListener target="#{witnessBean.witness.enduser}" 
+					value="#{userManagerBean.userObject}" />
+					</p:commandButton>
+					
+			</h:form>
 		</div>
 	</ui:define>
 

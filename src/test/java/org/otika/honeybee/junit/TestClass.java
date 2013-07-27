@@ -9,6 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -18,6 +20,7 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.GZIPOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -189,27 +192,35 @@ public class TestClass {
 		return cut;
 	}
 
+	/**
+	 * Zip Utility.
+	 * <p>
+	 * Writes a zipped file in the same folder as the file given as parameter
+	 * </p>
+	 * 
+	 * @param file
+	 * @return
+	 */
 	File zipFile(File file) {
 		File zippedFile = file;
-		// TODO process file here
 		try {
-			
-			FileOutputStream fos = new FileOutputStream(file.getPath()+".zip");
+			byte[] buffer = new byte[1024];
+			FileOutputStream fos = new FileOutputStream(file.getPath() + ".zip");
 			ZipOutputStream zos = new ZipOutputStream(fos);
-			FileInputStream fis = new FileInputStream(file);
-			int i;
-			byte[] bytes = new byte[10024];
-			while ((i = fis.read(bytes)) != -1){
-			fos.write(bytes, 0, i);
-			//zos.write(bytes, 0, i);
-			}			
-			fis.close();			
-			zos.setLevel(9);
 			ZipEntry ze = new ZipEntry(file.getName());
 			zos.putNextEntry(ze);
+			FileInputStream in = new FileInputStream(file.getPath());
+			int len;
+			while ((len = in.read(buffer)) > 0) {
+				zos.write(buffer, 0, len);
+			}
+			in.close();
 			zos.closeEntry();
-			fos.flush();
 			zos.close();
+			System.out.println("Compression Done");
+			org.jboss.logging.Logger.getLogger(getClass().getName()).info(
+					"\nZipped! " + file.getPath());
+
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			String msg = e.getMessage();
@@ -219,11 +230,35 @@ public class TestClass {
 		return zippedFile;
 	}
 
+	File compressObject(final File objectToCompress, OutputStream outstream)
+			throws IOException {
+		outstream = new FileOutputStream(objectToCompress.getPath() + ".gz");
+		final GZIPOutputStream gz = new GZIPOutputStream(outstream);
+		final ObjectOutputStream oos = new ObjectOutputStream(gz);
+		try {
+			oos.writeObject(objectToCompress);
+			oos.flush();
+			return objectToCompress;
+		} finally {
+			oos.close();
+			outstream.close();
+		}
+	}
+
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new TestClass().zipFile(new File("/home/hanine/Desktop/headers.txt"));
+		// new TestClass().zipFile(new
+		// File("/home/hanine/Desktop/headers.txt"));
+		System.out.println(System.getProperties());
+		try {
+			String path = System.getProperty("user.home")
+					+ "/Desktop/headers.txt";
+			new TestClass().compressObject(new File(path), null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		String s = System.getProperty("user.dir");
 		String h = System.getProperty("user.home");
 		System.out.println(s);

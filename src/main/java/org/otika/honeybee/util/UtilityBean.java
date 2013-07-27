@@ -501,7 +501,7 @@ public class UtilityBean implements Serializable {
 	public File dumpFile(String path) {
 		try {
 			File file = new File(System.getenv("HOME") + path);
-			return file;
+			return zipFile(file);
 		} catch (Exception ex) {
 			System.out.println("dumpFile: Failure retrieving file");
 			Logger.getLogger(getClass().getName()).severe(ex.getMessage());
@@ -572,32 +572,31 @@ public class UtilityBean implements Serializable {
 	 * @return
 	 */
 	public File zipFile(File file) {
-		File zippedFile = file;
-		// TODO process file here
 		try {
-			FileOutputStream fos = new FileOutputStream(file.getPath()+".zip");
+			byte[] buffer = new byte[1024];
+			FileOutputStream fos = new FileOutputStream(file.getPath() + ".zip");
 			ZipOutputStream zos = new ZipOutputStream(fos);
-			FileInputStream fis = new FileInputStream(file);
-			int i;
-			byte[] bytes = new byte[10024];
-			while ((i = fis.read(bytes)) != -1){
-			fos.write(bytes, 0, i);
-			//zos.write(bytes, 0, i);
-			}			
-			fis.close();			
-			zos.setLevel(9);
 			ZipEntry ze = new ZipEntry(file.getName());
 			zos.putNextEntry(ze);
+			FileInputStream in = new FileInputStream(file.getPath());
+			int len;
+			while ((len = in.read(buffer)) > 0) {
+				zos.write(buffer, 0, len);
+			}		
+			in.close();
 			zos.closeEntry();
-			fos.flush();
 			zos.close();
+			org.jboss.logging.Logger.getLogger(getClass().getName()).info( 
+					"\nZipped! " + file.getPath()); 
+
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			String msg = e.getMessage();
-			org.jboss.logging.Logger.getLogger(getClass().getName()).error(msg);
+			org.jboss.logging.Logger.getLogger(getClass().getName()).error(
+					"\n" + msg);
 			return null;
 		}
-		return zippedFile;
+		return new File(file.getPath() + ".zip");
 	}
 
 	/*

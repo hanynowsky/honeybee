@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="pageTitle" value="Contact us" />
+
+	<ui:define name="header">
+		<h:outputText value="#{i18n.contact}" />
+	</ui:define>
+
+	<ui:define name="main">
+		<script type="text/javascript">
+function resetInputs(){
+	document.getElementById('contactForm:contactName').value = ' ';
+	document.getElementById('contactForm:contactContent').value = ' ';
+	document.getElementById('contactForm:contactEmail').value = ' ';
+	document.getElementById('contactForm:contactCaptcha').value = ' ';
+}
+	</script>
+		<p:messages autoUpdate="true" id="contactMessages" />
+		<h:form id="contactForm" styleClass="contactform">
+			<h:panelGrid columns="3" id="contactGrid">
+				<p:outputLabel value="#{i18n.fullname}" for="contactName" />
+				<p:inputText value="#{contactBean.fullname}" id="contactName"
+					required="true" requiredMessage="#{i18n.required}" />
+				<p:message for="contactName" />
+				<p:outputLabel value="#{i18n.email}" for="contactEmail" />
+				<p:inputText value="#{contactBean.email}" id="contactEmail"
+					required="true" requiredMessage="#{i18n.required}" />
+				<p:message for="contactEmail" />
+				<p:outputLabel for="contactSubject" value="#{i18n.subject}" />
+				<p:inputText id="contactSubject" value="#{contactBean.subject}"
+					required="true" requiredMessage="#{i18n.required}" />
+				<p:message for="contactSubject" />
+				<p:outputLabel value="#{i18n.content}" for="contactContent" />
+				<p:editor id="contactContent" value="#{contactBean.content}"
+					required="true" requiredMessage="#{i18n.required}">
+					<f:validateLength minimum="10" />
+				</p:editor>
+				<p:message for="contactContent" />
+
+				<p:outputLabel value="#{i18n.attachment}" for="contactFile" />
+				<p:fileUpload fileUploadListener="#{contactBean.handleFileUpload}"
+					sizeLimit="900000" invalidSizeMessage="Size limit is 900 Kb"
+					cancelLabel="#{i18n.cancel}" label="#{i18n.search}"
+					update="contactForm:fuMessage" id="contactFile"
+					uploadLabel="#{i18n.upload}" />
+				<p:message for="contactFile" id="fuMessage" />
+
+				<p:outputLabel value="#{i18n.captcha}" for="contactCaptcha" />
+				<p:inputText value="#{contactBean.captcha}" id="contactCaptcha"
+					validator="#{contactBean.validateCaptcha}" required="true"
+					requiredMessage="#{i18n.required}" />
+				<p:message for="contactCaptcha" />
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+				<h:outputLabel value="Captcha = " />
+				<h:outputText value="HoneyBee" />
+			</h:panelGrid>
+			<div align="center">
+				<p:commandButton value="#{i18n.send}" style="margin:20px;"
+					action="#{contactBean.dummyAction}" id="contactSendButton"
+					update=":contactMessages contactForm" onsuccess="resetInputs();">
+					<f:setPropertyActionListener target="#{contactBean.formId}"
+						value="contactForm" />
+				</p:commandButton>
+				<p:commandButton value="#{i18n.cancel}"
+					action="/index.xhtml?faces-redirect=true" immediate="true" />
+			</div>
+		</h:form>
+		<p:watermark value="HoneyBee" for="contactForm:contactCaptcha" />
+		<p:tooltip for="contactForm:contactCaptcha" value="HoneyBee" />
+		<p:blockUI block="contactForm:contactGrid"
+			trigger="contactForm:contactSendButton" />
+		<p:separator style="height:1px;" />
+	</ui:define>
+
+</ui:composition>

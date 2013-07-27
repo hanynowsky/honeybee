@@ -569,6 +569,10 @@ public class Repository implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Registery> allRegisteryItems() {
 		try {
 			CriteriaQuery<Registery> cq = em.getCriteriaBuilder().createQuery(
@@ -580,4 +584,24 @@ public class Repository implements Serializable {
 			return null;
 		}
 	}
+
+	/**
+	 * Find Plant by season
+	 * 
+	 * @return
+	 */
+	public List<Plant> findPlantItemsBySeason() {
+		try {
+			TypedQuery<Plant> query = em.createNamedQuery("Plant.findBySeason",
+					Plant.class);
+			return query.getResultList();
+		} catch (Exception ex) {
+			System.err.println("Exception finding Plant by Season list "
+					+ ex.getMessage());
+			String msg = ex.getMessage() + "" + ex.getCause().getMessage();
+			org.jboss.logging.Logger.getLogger(getClass().getName()).error(msg);
+			return null;
+		}
+	}
+
 } // END OF CLASS

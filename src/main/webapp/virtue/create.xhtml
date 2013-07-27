@@ -1,202 +1,226 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:c="http://java.sun.com/jsp/jstl/core"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:forgeview="http://jboss.org/forge/view"	
-                template="/resources/scaffold/pageTemplate.xhtml">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml">
 
-    <f:metadata>
-        <f:viewParam name="id" value="#{virtueBean.id}"/>
-        <f:event type="preRenderView" listener="#{virtueBean.retrieve}"/>
-    </f:metadata>
+	<f:metadata>
+		<f:viewParam name="id" value="#{virtueBean.id}" />
+		<f:event type="preRenderView" listener="#{virtueBean.retrieve}" />
+	</f:metadata>
 
-    <ui:param name="pageTitle" value="#{i18n.create} #{i18n.virtue}"/>
+	<ui:param name="pageTitle" value="#{i18n.create} #{i18n.virtue}" />
 
-    <ui:define name="header">
+	<ui:define name="header">
         #{i18n.virtue}
     </ui:define>
 
-    <ui:define name="subheader">
-        <c:choose>
-            <c:when test="#{!empty virtueBean.id}">
+	<ui:define name="subheader">
+		<c:choose>
+			<c:when test="#{!empty virtueBean.id}">
                 #{i18n.edit}
             </c:when>
-            <c:otherwise>
+			<c:otherwise>
                 #{i18n.create}
             </c:otherwise>
-        </c:choose>
-    </ui:define>
+		</c:choose>
+	</ui:define>
 
-    <ui:define name="footer"/>
+	<ui:define name="footer" />
 
-    <ui:define name="main">
-        <h:form id="create" rendered="#{isAdministrator or isAuthor}">
-            <h:messages globalOnly="true" styleClass="error"/>
+	<ui:define name="main">
+		<h:form id="create" rendered="#{isAdministrator or isAuthor}">
+			<h:messages globalOnly="true" styleClass="error" />
 
-            <h:panelGrid columnClasses="label,component,required" columns="3">
-                <h:outputLabel for="virtueBeanVirtueBodypart" value="#{i18n.bodypart}"/>
-                <h:panelGroup styleClass="onemenu">
-                    <p:selectOneMenu filter="true" filterMatchMode="contains"
-                                     converter="#{bodypartBean.converter}" id="virtueBeanVirtueBodypart" value="#{virtueBean.virtue.bodypart}">
-                        <f:selectItem itemValue="#{null}" itemLabel="-----"/>
-                        <f:selectItem  itemLabel="#{utilityBean.switchLabel(virtueBean.virtue.bodypart)}" itemValue="#{virtueBean.virtue.bodypart}"/>
-                        <f:selectItem noSelectionOption="true" itemLabel="-----" itemValue="#{null}"/>
-                        <f:selectItems value="#{bodypartBean.all}" var="_b" itemLabel="#{utilityBean.switchLabel(_b)}" itemValue="#{_b}"/>
-                    </p:selectOneMenu>
-                    <h:message for="virtueBeanVirtueBodypart" styleClass="error"/>
-                </h:panelGroup>
-                <h:outputText/>
-                <h:outputLabel for="virtueBeanVirtueLabel" value="#{i18n.label}"/>
-                <h:panelGroup>
-                    <h:inputText id="virtueBeanVirtueLabel" maxlength="145" required="true" value="#{virtueBean.virtue.label}"/>
-                    <h:message for="virtueBeanVirtueLabel" styleClass="error"/>
-                </h:panelGroup>
-                <h:outputText value="*"/>
-                <h:outputLabel for="virtueBeanVirtueLabelfr" value="#{i18n.labelfr}"/>
-                <h:panelGroup>
-                    <h:inputText id="virtueBeanVirtueLabelfr" maxlength="145" required="true" value="#{virtueBean.virtue.labelfr}"/>
-                    <h:message for="virtueBeanVirtueLabelfr" styleClass="error"/>
-                </h:panelGroup>
-                <h:outputText value="*"/>
-                <h:outputLabel for="virtueBeanVirtueLabelar" value="#{i18n.labelar}"/>
-                <h:panelGroup>
-                    <h:inputText id="virtueBeanVirtueLabelar" maxlength="145" required="true" value="#{virtueBean.virtue.labelar}"/>
-                    <h:message for="virtueBeanVirtueLabelar" styleClass="error"/>
-                </h:panelGroup>
-                <h:outputText value="*"/>
-                <h:outputLabel for="virtueBeanVirtuePrescriptions" value="#{i18n.prescriptions}"/>
-                <h:panelGroup>
-                    <ui:param name="_collection" value="#{virtueBean.virtue.prescriptions}"/>
-                    <h:dataTable id="virtueBeanVirtuePrescriptions" styleClass="data-table" value="#{forgeview:asList(_collection)}" var="_item">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{i18n.title}"/>
-                            </f:facet>
-                            <h:link outcome="/prescription/view">
-                                <f:param name="id" value="#{_item.id}"/>
-                                <h:outputText id="itemTitle" value="#{_item.title}"/>
-                            </h:link>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{i18n.titlear}"/>
-                            </f:facet>
-                            <h:link outcome="/prescription/view">
-                                <f:param name="id" value="#{_item.id}"/>
-                                <h:outputText id="itemTitlear" value="#{_item.titlear}"/>
-                            </h:link>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{i18n.titlefr}"/>
-                            </f:facet>
-                            <h:link outcome="/prescription/view">
-                                <f:param name="id" value="#{_item.id}"/>
-                                <h:outputText id="itemTitlefr" value="#{_item.titlefr}"/>
-                            </h:link>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{i18n.preparation}"/>
-                            </f:facet>
-                            <h:link outcome="/prescription/view">
-                                <f:param name="id" value="#{_item.id}"/>
-                                <h:outputText id="itemPreparation" value="#{_item.preparation}"/>
-                            </h:link>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{i18n.preparationfr}"/>
-                            </f:facet>
-                            <h:link outcome="/prescription/view">
-                                <f:param name="id" value="#{_item.id}"/>
-                                <h:outputText id="itemPreparationfr" value="#{_item.preparationfr}"/>
-                            </h:link>
-                        </h:column>
-                        <h:column footerClass="remove-column" headerClass="remove-column">
-                            <h:commandLink action="#{_collection.remove(_item)}" styleClass="remove-button"/>
-                        </h:column>
-                    </h:dataTable>
-                    <h:panelGrid columnClasses=",remove-column" columns="2" styleClass="data-table-footer">
-                        <h:selectOneMenu converter="#{prescriptionBean.converter}" id="virtueBeanVirtuePrescriptionsSelect" value="#{requestScope['virtueBeanVirtuePrescriptionsSelect']}">
-                            <f:selectItem/>
-                            <f:selectItems value="#{prescriptionBean.all}"/>
-                        </h:selectOneMenu>
-                        <h:commandLink action="#{_collection.add(requestScope['virtueBeanVirtuePrescriptionsSelect'])}" id="virtueBeanVirtuePrescriptionsAdd" onclick="if (1 > document.getElementById('create:virtueBeanVirtuePrescriptionsSelect').selectedIndex) {
+			<h:panelGrid columnClasses="label,component,required" columns="3">
+				<h:outputLabel for="virtueBeanVirtueBodypart"
+					value="#{i18n.bodypart}" />
+				<h:panelGroup styleClass="onemenu">
+					<p:selectOneMenu filter="true" filterMatchMode="contains"
+						converter="#{bodypartBean.converter}"
+						id="virtueBeanVirtueBodypart"
+						value="#{virtueBean.virtue.bodypart}">
+						<f:selectItem itemValue="#{null}" itemLabel="-----" />
+						<f:selectItem
+							itemLabel="#{utilityBean.switchLabel(virtueBean.virtue.bodypart)}"
+							itemValue="#{virtueBean.virtue.bodypart}" />
+						<f:selectItem noSelectionOption="true" itemLabel="-----"
+							itemValue="#{null}" />
+						<f:selectItems value="#{bodypartBean.all}" var="_b"
+							itemLabel="#{utilityBean.switchLabel(_b)}" itemValue="#{_b}" />
+					</p:selectOneMenu>
+					<h:message for="virtueBeanVirtueBodypart" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="virtueBeanVirtueLabel" value="#{i18n.label}" />
+				<h:panelGroup>
+					<h:inputText id="virtueBeanVirtueLabel" maxlength="145"
+						required="true" value="#{virtueBean.virtue.label}" />
+					<h:message for="virtueBeanVirtueLabel" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText value="*" />
+				<h:outputLabel for="virtueBeanVirtueLabelfr" value="#{i18n.labelfr}" />
+				<h:panelGroup>
+					<h:inputText id="virtueBeanVirtueLabelfr" maxlength="145"
+						required="true" value="#{virtueBean.virtue.labelfr}" />
+					<h:message for="virtueBeanVirtueLabelfr" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText value="*" />
+				<h:outputLabel for="virtueBeanVirtueLabelar" value="#{i18n.labelar}" />
+				<h:panelGroup>
+					<h:inputText id="virtueBeanVirtueLabelar" maxlength="145"
+						required="true" value="#{virtueBean.virtue.labelar}" />
+					<h:message for="virtueBeanVirtueLabelar" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText value="*" />
+				<h:outputLabel for="virtueBeanVirtuePrescriptions"
+					value="#{i18n.prescriptions}" />
+				<h:panelGroup>
+					<ui:param name="_collection"
+						value="#{virtueBean.virtue.prescriptions}" />
+					<h:dataTable id="virtueBeanVirtuePrescriptions"
+						styleClass="data-table" value="#{forgeview:asList(_collection)}"
+						var="_item">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.title}" />
+							</f:facet>
+							<h:link outcome="/prescription/view">
+								<f:param name="id" value="#{_item.id}" />
+								<h:outputText id="itemTitle" value="#{_item.title}" />
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.titlear}" />
+							</f:facet>
+							<h:link outcome="/prescription/view">
+								<f:param name="id" value="#{_item.id}" />
+								<h:outputText id="itemTitlear" value="#{_item.titlear}" />
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.titlefr}" />
+							</f:facet>
+							<h:link outcome="/prescription/view">
+								<f:param name="id" value="#{_item.id}" />
+								<h:outputText id="itemTitlefr" value="#{_item.titlefr}" />
+							</h:link>
+						</h:column>
+						<h:column footerClass="remove-column" headerClass="remove-column">
+							<h:commandLink action="#{_collection.remove(_item)}"
+								styleClass="remove-button" />
+						</h:column>
+					</h:dataTable>
+					<h:panelGrid columnClasses=",remove-column" columns="2"
+						styleClass="data-table-footer onemenu">
+						<p:selectOneMenu converter="#{prescriptionBean.converter}"
+							id="virtueBeanVirtuePrescriptionsSelect"
+							value="#{requestScope['virtueBeanVirtuePrescriptionsSelect']}"
+							filter="true" filterMatchMode="contains">
+							<f:selectItem itemLabel="----" itemValue="#{null}" />
+							<f:selectItems value="#{prescriptionBean.all}" var="_p"
+								itemValue="#{_p}" itemLabel="#{utilityBean.switchLabel(_p)}" />
+						</p:selectOneMenu>
+						<h:commandLink
+							action="#{_collection.add(requestScope['virtueBeanVirtuePrescriptionsSelect'])}"
+							id="virtueBeanVirtuePrescriptionsAdd"
+							onclick="if (1 > document.getElementById('create:virtueBeanVirtuePrescriptionsSelect').selectedIndex) {
                                                             alert('Must select a Prescription');
                                                             return false;
-                                                        }" styleClass="add-button"/>
-                    </h:panelGrid>
-                </h:panelGroup>
-                <h:outputText/>
-                <h:outputLabel for="virtueBeanVirtueIngredients" value="#{i18n.ingredients}"/>
-                <h:panelGroup>
-                    <ui:param name="_collection" value="#{virtueBean.virtue.ingredients}"/>
-                    <h:dataTable id="virtueBeanVirtueIngredients" styleClass="data-table" value="#{forgeview:asList(_collection)}" var="_item">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{i18n.label}"/>
-                            </f:facet>
-                            <h:link outcome="/ingredient/view">
-                                <f:param name="id" value="#{_item.id}"/>
-                                <h:outputText id="itemLabel" value="#{_item.label}"/>
-                            </h:link>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{i18n.labelfr}"/>
-                            </f:facet>
-                            <h:link outcome="/ingredient/view">
-                                <f:param name="id" value="#{_item.id}"/>
-                                <h:outputText id="itemLabelfr" value="#{_item.labelfr}"/>
-                            </h:link>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{i18n.labelar}"/>
-                            </f:facet>
-                            <h:link outcome="/ingredient/view">
-                                <f:param name="id" value="#{_item.id}"/>
-                                <h:outputText id="itemLabelar" value="#{_item.labelar}"/>
-                            </h:link>
-                        </h:column>
-                        <h:column footerClass="remove-column" headerClass="remove-column">
-                            <h:commandLink action="#{_collection.remove(_item)}" styleClass="remove-button"/>
-                        </h:column>
-                    </h:dataTable>
-                    <h:panelGrid columnClasses=",remove-column" columns="2" styleClass="data-table-footer">
-                        <h:selectOneMenu converter="#{ingredientBean.converter}" id="virtueBeanVirtueIngredientsSelect" value="#{requestScope['virtueBeanVirtueIngredientsSelect']}">
-                            <f:selectItem/>
-                            <f:selectItems value="#{ingredientBean.all}"/>
-                        </h:selectOneMenu>
-                        <h:commandLink action="#{_collection.add(requestScope['virtueBeanVirtueIngredientsSelect'])}" id="virtueBeanVirtueIngredientsAdd" onclick="if (1 > document.getElementById('create:virtueBeanVirtueIngredientsSelect').selectedIndex) {
+                                                        }"
+							styleClass="add-button" />
+					</h:panelGrid>
+				</h:panelGroup>
+				<h:outputText />
+				<h:outputLabel for="virtueBeanVirtueIngredients"
+					value="#{i18n.ingredients}" />
+				<h:panelGroup>
+					<ui:param name="_collection"
+						value="#{virtueBean.virtue.ingredients}" />
+					<h:dataTable id="virtueBeanVirtueIngredients"
+						styleClass="data-table" value="#{forgeview:asList(_collection)}"
+						var="_item">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.label}" />
+							</f:facet>
+							<h:link outcome="/ingredient/view">
+								<f:param name="id" value="#{_item.id}" />
+								<h:outputText id="itemLabel" value="#{_item.label}" />
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.labelfr}" />
+							</f:facet>
+							<h:link outcome="/ingredient/view">
+								<f:param name="id" value="#{_item.id}" />
+								<h:outputText id="itemLabelfr" value="#{_item.labelfr}" />
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{i18n.labelar}" />
+							</f:facet>
+							<h:link outcome="/ingredient/view">
+								<f:param name="id" value="#{_item.id}" />
+								<h:outputText id="itemLabelar" value="#{_item.labelar}" />
+							</h:link>
+						</h:column>
+						<h:column footerClass="remove-column" headerClass="remove-column">
+							<h:commandLink action="#{_collection.remove(_item)}"
+								styleClass="remove-button" />
+						</h:column>
+					</h:dataTable>
+					<h:panelGrid columnClasses=",remove-column" columns="2"
+						styleClass="data-table-footer onemenu">
+						<p:selectOneMenu converter="#{ingredientBean.converter}" 
+							id="virtueBeanVirtueIngredientsSelect"
+							value="#{requestScope['virtueBeanVirtueIngredientsSelect']}"
+							filter="true" filterMatchMode="contains">
+							<f:selectItem itemValue="#{null}" itemLabel="----" />
+							<f:selectItems value="#{ingredientBean.all}" var="_i" 
+								itemLabel="#{utilityBean.switchLabel(_i)} : #{bundleBean.i18n(_i.form)}"
+								itemValue="#{_i}" />
+						</p:selectOneMenu>
+						<h:commandLink
+							action="#{_collection.add(requestScope['virtueBeanVirtueIngredientsSelect'])}"
+							id="virtueBeanVirtueIngredientsAdd"
+							onclick="if (1 > document.getElementById('create:virtueBeanVirtueIngredientsSelect').selectedIndex) {
                                                             alert('Must select a Ingredient');
                                                             return false;
-                                                        }" styleClass="add-button"/>
-                    </h:panelGrid>
-                </h:panelGroup>
-                <h:outputText/>
-            </h:panelGrid>
+                                                        }"
+							styleClass="add-button" />
+					</h:panelGrid>
+				</h:panelGroup>
+				<h:outputText />
+			</h:panelGrid>
 
-            <div class="buttons">
-                <h:commandLink value="#{i18n.save}" action="#{virtueBean.update}" styleClass="btn btn-primary"/>
-                <c:choose>
-                    <c:when test="#{!empty virtueBean.id}">
-                        <h:link value="Cancel" outcome="view" styleClass="btn btn-primary">
-                            <f:param name="id" value="#{virtueBean.id}"/>
-                        </h:link>
-                        <h:commandLink value="#{i18n.delete}" action="#{virtueBean.delete}" styleClass="btn btn-primary"/>
-                    </c:when>
-                    <c:otherwise>
-                        <h:link value="#{i18n.cancel}" outcome="search" styleClass="btn btn-primary"/>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-        </h:form>
-    </ui:define>
+			<div class="buttons">
+				<h:commandLink value="#{i18n.save}" action="#{virtueBean.update}"
+					styleClass="btn btn-primary" />
+				<c:choose>
+					<c:when test="#{!empty virtueBean.id}">
+						<h:link value="Cancel" outcome="view" styleClass="btn btn-primary">
+							<f:param name="id" value="#{virtueBean.id}" />
+						</h:link>
+						<h:commandLink value="#{i18n.delete}"
+							action="#{virtueBean.delete}" styleClass="btn btn-primary" />
+					</c:when>
+					<c:otherwise>
+						<h:link value="#{i18n.cancel}" outcome="search"
+							styleClass="btn btn-primary" />
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</h:form>
+	</ui:define>
 
 </ui:composition>

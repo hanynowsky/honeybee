@@ -395,9 +395,75 @@ public class MailBean {
 				System.out.println("Simple Email exception!");
 				System.out.println(e);
 			}
-
 			status = "User-Emailed-Okay";
 			System.out.println("Email being sent to " + email);
+		}
+		return new AsyncResult<>(status);
+	}
+
+	/**
+	 * Contact Email
+	 * 
+	 * @param email
+	 *            Sender email
+	 * @param fullname
+	 *            Sender Full name
+	 * @param content
+	 *            Contact email content
+	 * @param valid
+	 *            validity of captcha
+	 * @param attachment
+	 *            Attached file
+	 * @return AsyncResult
+	 */
+	@Asynchronous
+	public Future<String> contactEmail(String email, String fullname,
+			String content, boolean valid, File attachment, String subject) {
+		String status;
+		if (FacesContext.getCurrentInstance().getExternalContext().getContext() == null) {
+			status = "Context Session Canceled! Mail not sent.";
+			System.out.println("Cleaning up! Emailing User not possible!");
+		} else {
+			HtmlEmail mail = new HtmlEmail();
+			String htmlmail = "<h1>HoneyBee Database Dump</h1>" + "" + content;
+			try {
+				mail.addTo("opentika.contact@gmail.com");
+				mail.setFrom(email);
+				mail.setSubject("Honeybee Contact: "+subject);
+				mail.setSentDate(new Date());
+				mail.setHtmlMsg(htmlmail);				
+				if (attachment != null) {
+					mail.attach(attachment);
+				}
+				mail.setMailSession(session);
+				mail.send();
+				if (valid) {
+					FacesMessage successMessage = new FacesMessage(
+							"Mail sent from " + email);
+					successMessage.setDetail("");
+					successMessage.setSeverity(FacesMessage.SEVERITY_INFO);
+					FacesContext.getCurrentInstance().addMessage(null,
+							successMessage);
+				} else {
+					FacesMessage successMessage = new FacesMessage(
+							"Captcha not valid. Mail not sent from " + email);
+					successMessage.setDetail("");
+					successMessage.setSeverity(FacesMessage.SEVERITY_ERROR);
+					FacesContext.getCurrentInstance().addMessage(null,
+							successMessage);
+				}
+			} catch (EmailException e) {
+				FacesMessage errorMessage = new FacesMessage(
+						"FAILURE to send Contact Mail");
+				errorMessage.setSeverity(FacesMessage.SEVERITY_ERROR);
+				errorMessage.setDetail("");
+				FacesContext.getCurrentInstance()
+						.addMessage(null, errorMessage);
+				System.out.println("Contact Email exception!");
+				System.out.println(e);
+			}
+			status = "Contact-Email-Okay";
+			System.out.println("Email being sent to opentika from " + email);
 		}
 		return new AsyncResult<>(status);
 	}

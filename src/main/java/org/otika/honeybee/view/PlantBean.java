@@ -59,7 +59,9 @@ public class PlantBean implements Serializable {
 	private EntityManager entityManager;
 	private Plant plant;
 	private static final long serialVersionUID = 1L;
-    private StreamedContent graphic;
+	private StreamedContent graphic;
+	private List<String> seasons;
+	private List<String> types;
 
 	/*
 	 * Support creating and retrieving Plant entities
@@ -85,7 +87,17 @@ public class PlantBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-         // TODO
+		seasons = new ArrayList<>();
+		types = new ArrayList<>();
+		seasons.add("summer");
+		seasons.add("winter");
+		seasons.add("autumn");
+		seasons.add("spring");
+		seasons.add("all");
+		types.add("vegetable");
+		types.add("fruit");
+		types.add("herb");
+		types.add("other");
 	}
 
 	/**
@@ -227,6 +239,19 @@ public class PlantBean implements Serializable {
 			predicatesList.add(builder.like(root.<String> get("label"),
 					'%' + label + '%'));
 		}
+
+		String season = this.example.getSeason();
+		if (season != null && !"".equals(season)) {
+			predicatesList.add(builder.like(root.<String> get("season"),
+					'%' + season + '%'));
+		}
+
+		String type = this.example.getType();
+		if (type != null && !"".equals(type)) {
+			predicatesList.add(builder.like(root.<String> get("type"),
+					'%' + type + '%'));
+		}
+
 		String labelfr = this.example.getLabelfr();
 		if (labelfr != null && !"".equals(labelfr)) {
 			predicatesList.add(builder.like(root.<String> get("labelfr"),
@@ -318,10 +343,35 @@ public class PlantBean implements Serializable {
 		return added;
 	}
 
-    /**
-     * File upload listener
-     * @param event File Upload Event
-     */
+	/**
+	 * @return the seasons
+	 */
+	public List<String> getSeasons() {
+		return seasons;
+	}
+
+	/**
+	 * @param seasons
+	 *            the seasons to set
+	 */
+	public void setSeasons(List<String> seasons) {
+		this.seasons = seasons;
+	}
+
+	public List<String> getTypes() {
+		return types;
+	}
+
+	public void setTypes(List<String> types) {
+		this.types = types;
+	}
+
+	/**
+	 * File upload listener
+	 * 
+	 * @param event
+	 *            File Upload Event
+	 */
 	public void handleFileUpload(FileUploadEvent event) {
 		String p = System.getProperty("user.home");
 		String separator = File.separator;
@@ -334,7 +384,7 @@ public class PlantBean implements Serializable {
 						+ separator + "pics").mkdirs();
 				f.createNewFile();
 			}
-            OutputStream output = new FileOutputStream(f);
+			OutputStream output = new FileOutputStream(f);
 			/*
 			 * byte[] content = new byte[1024]; int read; while ((read =
 			 * file.getInputstream().read(content)) != -1) {
@@ -381,9 +431,12 @@ public class PlantBean implements Serializable {
 	/**
 	 * Validator for plant graphic
 	 * 
-	 * @param context FacesContext
-	 * @param component UIComponent
-	 * @param value Object value
+	 * @param context
+	 *            FacesContext
+	 * @param component
+	 *            UIComponent
+	 * @param value
+	 *            Object value
 	 */
 	public void imageValidator(FacesContext context, UIComponent component,
 			Object value) {
@@ -404,7 +457,7 @@ public class PlantBean implements Serializable {
 						FacesMessage.SEVERITY_ERROR,
 						"File was not uploaded: Graphic must be square-sized: "
 								+ width + " # " + height, null));
-            }
+			}
 		} catch (IOException e) {
 			Logger.getLogger(getClass().getName()).severe(
 					"IO Exception reading graphic width & height "
