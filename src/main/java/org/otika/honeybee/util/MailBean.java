@@ -419,6 +419,7 @@ public class MailBean {
 	@Asynchronous
 	public Future<String> contactEmail(String email, String fullname,
 			String content, boolean valid, File attachment, String subject) {
+		System.out.println("Triggering Contact Email");
 		String status;
 		if (FacesContext.getCurrentInstance().getExternalContext().getContext() == null) {
 			status = "Context Session Canceled! Mail not sent.";

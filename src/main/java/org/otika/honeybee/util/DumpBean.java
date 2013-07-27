@@ -192,11 +192,16 @@ public class DumpBean {
 	 */
 	public void watchContact(@Observes ContactEvent event) {
 		try {
+			System.out.println("Triggering Watch contact");
 			if (utilityBean.hasInternet()) {
+				System.out.println("Internet is on");
+				System.out.println("Contact full name: "
+						+ contactBean.getFullname());
 				mailBean.contactEmail(contactBean.getEmail(),
 						contactBean.getFullname(), contactBean.getContent(),
 						contactBean.isValid(), contactBean.getAttachment(),
 						contactBean.getSubject());
+				System.out.println("contactEmail() invoked!");
 			} else {
 				System.out.println("No Internet. Contact Mail not delivered.");
 				utilityBean.showMessage("warn", "No internet connectivity", "");
@@ -204,8 +209,9 @@ public class DumpBean {
 		} catch (Exception ex) {
 			Logger.getLogger(getClass().getName()).log(Level.ALL,
 					ex.getMessage(), ex);
-			System.out.println("Watch Contact Observer: Exception : "
+			System.err.println("Watch Contact Observer: Exception : "
 					+ ex.getMessage() + " | " + ex.getCause());
+			System.err.println(ex);
 		}
 	}
 } // END OF CLASS
