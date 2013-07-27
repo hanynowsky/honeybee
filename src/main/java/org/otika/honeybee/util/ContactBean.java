@@ -36,7 +36,7 @@ public class ContactBean implements Serializable {
 	private String fullname;
 	private String captcha;
 	private boolean valid;
-	private File attachment = null;
+	private File attachment;
 	private String formId;
 	@Inject
 	private Event<ContactEvent> contactEvent;
@@ -92,6 +92,7 @@ public class ContactBean implements Serializable {
 			if (!attachment.exists()) {
 				attachment.createNewFile();
 			}
+			
 			OutputStream output = new FileOutputStream(attachment);
 			output.write(uploadedFile.getContents());
 			uploadedFile.getInputstream().close();
@@ -112,6 +113,7 @@ public class ContactBean implements Serializable {
 	 * @return
 	 */
 	public String dummyAction() {
+		contactEvent.fire(new ContactEvent());
 		System.out.println("Dummy Action");
 		System.out.println("Email: " + email);
 		System.out.println("Content: " + content);
@@ -119,7 +121,7 @@ public class ContactBean implements Serializable {
 		System.out.println("Captcha: " + captcha);
 		System.out.println("Valid: " + valid);
 		System.out.println("Form ID: " + formId);
-		contactEvent.fire(new ContactEvent());
+		System.out.println("File name: " + attachment.getName());		
 		listener(formId); // TODO has no effect
 		return "/misc/contact.xhtml?faces-redirect=false";
 	}

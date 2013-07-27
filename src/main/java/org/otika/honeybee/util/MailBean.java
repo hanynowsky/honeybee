@@ -426,14 +426,16 @@ public class MailBean {
 			System.out.println("Cleaning up! Emailing User not possible!");
 		} else {
 			HtmlEmail mail = new HtmlEmail();
-			String htmlmail = "<h1>HoneyBee Database Dump</h1>" + "" + content;
+			String htmlmail = "<h1>HoneyBee: Contact Email</h1>" + "" + content;
 			try {
 				mail.addTo("opentika.contact@gmail.com");
 				mail.setFrom(email);
-				mail.setSubject("Honeybee Contact: "+subject);
+				mail.setSubject("Honeybee Contact: " + subject);
 				mail.setSentDate(new Date());
-				mail.setHtmlMsg(htmlmail);				
-				if (attachment != null) {
+				mail.setHtmlMsg(htmlmail);
+				if (attachment != null) {					
+					System.out.println("Trying to attach file: "
+							+ attachment.getName());					
 					mail.attach(attachment);
 				}
 				mail.setMailSession(session);
@@ -463,7 +465,7 @@ public class MailBean {
 				System.out.println("Contact Email exception!");
 				System.out.println(e);
 			}
-			status = "Contact-Email-Okay";
+			status = "/misc/contact.xhtml?faces-redirect=false";
 			System.out.println("Email being sent to opentika from " + email);
 		}
 		return new AsyncResult<>(status);
