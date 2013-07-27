@@ -7,9 +7,8 @@ import java.io.Serializable;
 import java.util.logging.Logger;
 
 import javax.enterprise.event.Event;
+import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
@@ -24,8 +23,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
-@ManagedBean
-@ViewScoped
+@Model
 public class ContactBean implements Serializable {
 
 	private static final long serialVersionUID = -323869350566070872L;
