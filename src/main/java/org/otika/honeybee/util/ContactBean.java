@@ -149,7 +149,7 @@ public class ContactBean implements Serializable {
 		System.out.println("Form ID: " + formId);
 		// System.out.println("File name: " + uploadedFile.getFileName());
 		listener(formId); // TODO has no effect
-		return "/misc/contact.xhtml?faces-redirect=false";
+		return "/index.xhtml?faces-redirect=false";
 	}
 
 	/**
