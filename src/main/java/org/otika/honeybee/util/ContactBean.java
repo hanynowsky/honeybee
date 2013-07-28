@@ -6,14 +6,15 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.logging.Logger;
 
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Event;
-import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -23,7 +24,8 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
-@Model
+@Named
+@SessionScoped
 public class ContactBean implements Serializable {
 
 	private static final long serialVersionUID = -323869350566070872L;
@@ -111,22 +113,22 @@ public class ContactBean implements Serializable {
 	public void validator(FacesContext context, UIComponent component
 			,Object value) {
 		try {
-			if (attachment == null) {
+			UploadedFile uf = ((UploadedFile) value);
 				attachment = new File(System.getProperty("java.io.tmpdir")
-						+ File.separator + uploadedFile.getFileName());
+						+ File.separator + uf.getFileName());
 				if (!attachment.exists()) {
 					attachment.createNewFile();
-				}
+				
 				OutputStream output = new FileOutputStream(attachment);
-				output.write(uploadedFile.getContents());
-				uploadedFile.getInputstream().close();
+				output.write(uf.getContents());
+				uf.getInputstream().close();
 				output.flush();
-				output.close();			
+				output.close();	
+				
 			}
 		} catch (Exception ex) {
-			System.err.println("Exception getting contact File " + ex);
-			Logger.getLogger(getClass().getName()).severe(ex.getMessage());
-			
+			System.err.println("Exception validating File " + ex);
+			Logger.getLogger(getClass().getName()).severe(ex.getMessage());			
 		}
 		
 	}
