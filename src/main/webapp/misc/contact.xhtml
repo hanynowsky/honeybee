@@ -49,7 +49,8 @@ function resetInputs(){
 					sizeLimit="900000" invalidSizeMessage="Size limit is 900 Kb"
 					cancelLabel="#{i18n.cancel}" label="#{i18n.search}"
 					update="contactForm:fuMessage" id="contactFile"
-					uploadLabel="#{i18n.upload}" />
+					uploadLabel="#{i18n.upload}" auto="true" 
+					value="#{contactBean.uploadedFile}"/>
 				<p:message for="contactFile" id="fuMessage" />
 
 				<p:outputLabel value="#{i18n.captcha}" for="contactCaptcha" />

@@ -38,6 +38,7 @@ public class ContactBean implements Serializable {
 	private boolean valid;
 	private File attachment;
 	private String formId;
+	private UploadedFile uploadedFile;
 	@Inject
 	private Event<ContactEvent> contactEvent;
 	@Inject
@@ -85,8 +86,7 @@ public class ContactBean implements Serializable {
 	 *            File upload event
 	 */
 	public void handleFileUpload(FileUploadEvent event) {
-		try {
-			UploadedFile uploadedFile = event.getFile();
+		try {			
 			attachment = new File(System.getProperty("java.io.tmpdir")
 					+ File.separator + event.getFile().getFileName());
 			if (!attachment.exists()) {
@@ -106,6 +106,27 @@ public class ContactBean implements Serializable {
 			Logger.getLogger(getClass().getName()).severe(ex.getMessage());
 		}
 	}
+	
+	public File getContactFile(){
+		try {
+			if (attachment == null){
+				attachment = new File(System.getProperty("java.io.tmpdir")
+						+ File.separator + uploadedFile.getFileName());
+				if (!attachment.exists()) {
+					attachment.createNewFile();
+				}
+				OutputStream output = new FileOutputStream(attachment);
+				output.write(uploadedFile.getContents());
+				uploadedFile.getInputstream().close();
+				output.flush();
+				output.close();
+			}
+		} catch(Exception ex){
+			System.err.println("Exception getting contact File "+ex);
+			Logger.getLogger(getClass().getName()).severe(ex.getMessage());
+		}
+		return null;
+	}
 
 	/**
 	 * Dummy method
@@ -121,7 +142,7 @@ public class ContactBean implements Serializable {
 		System.out.println("Captcha: " + captcha);
 		System.out.println("Valid: " + valid);
 		System.out.println("Form ID: " + formId);
-		System.out.println("File name: " + attachment.getName());		
+		System.out.println("File name: " + uploadedFile.getFileName());		
 		listener(formId); // TODO has no effect
 		return "/misc/contact.xhtml?faces-redirect=false";
 	}
@@ -217,6 +238,14 @@ public class ContactBean implements Serializable {
 
 	public void setAttachment(File attachment) {
 		this.attachment = attachment;
+	}
+
+	public UploadedFile getUploadedFile() {
+		return uploadedFile;
+	}
+
+	public void setUploadedFile(UploadedFile uploadedFile) {
+		this.uploadedFile = uploadedFile;
 	}
 
 	public String getFormId() {
