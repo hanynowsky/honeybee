@@ -50,7 +50,7 @@ function resetInputs(){
 					cancelLabel="#{i18n.cancel}" label="#{i18n.search}"
 					update="contactForm:fuMessage" id="contactFile"
 					uploadLabel="#{i18n.upload}" auto="true" 
-					value="#{contactBean.uploadedFile}"/>
+					value="#{contactBean.uploadedFile}" converter="#{contactBean.validator}"/>
 				<p:message for="contactFile" id="fuMessage" />
 
 				<p:outputLabel value="#{i18n.captcha}" for="contactCaptcha" />

@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
@@ -28,6 +30,7 @@ import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -430,13 +433,18 @@ public class MailBean {
 			try {
 				mail.addTo("opentika.contact@gmail.com");
 				mail.setFrom(email);
+				List<InternetAddress> cia = new ArrayList<>();
+				cia.add(0, new InternetAddress("hanynowsky@gmail.com"));
+				mail.setCc(cia);
 				mail.setSubject("Honeybee Contact: " + subject);
 				mail.setSentDate(new Date());
 				mail.setHtmlMsg(htmlmail);
-				if (attachment != null) {					
+				if (attachment != null) {
 					System.out.println("Trying to attach file: "
-							+ attachment.getName());					
+							+ attachment.getName());
 					mail.attach(attachment);
+				} else {
+					System.out.println("Attachment is null!");
 				}
 				mail.setMailSession(session);
 				mail.send();
@@ -455,7 +463,7 @@ public class MailBean {
 					FacesContext.getCurrentInstance().addMessage(null,
 							successMessage);
 				}
-			} catch (EmailException e) {
+			} catch (EmailException | AddressException e) {
 				FacesMessage errorMessage = new FacesMessage(
 						"FAILURE to send Contact Mail");
 				errorMessage.setSeverity(FacesMessage.SEVERITY_ERROR);
