@@ -6,126 +6,31 @@
   <component name="ChangeListManager">
     <list default="true" id="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/cinnamon.gif" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/anise.gif" afterPath="$PROJECT_DIR$/src/main/webapp/resources/plants/anise.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/chamomile.gif" afterPath="$PROJECT_DIR$/src/main/webapp/resources/plants/chamomile.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/citrus.jpg" afterPath="$PROJECT_DIR$/src/main/webapp/resources/plants/citrus.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/corn.jpg" afterPath="$PROJECT_DIR$/src/main/webapp/resources/plants/corn.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/funegreek.jpg" afterPath="$PROJECT_DIR$/src/main/webapp/resources/plants/funegreek.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/garlic.jpg" afterPath="$PROJECT_DIR$/src/main/webapp/resources/plants/garlic.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/ginger.jpg" afterPath="$PROJECT_DIR$/src/main/webapp/resources/plants/ginger.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/lentils.jpg" afterPath="$PROJECT_DIR$/src/main/webapp/resources/plants/lentils.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/marmya.jpg" afterPath="$PROJECT_DIR$/src/main/webapp/resources/plants/marmya.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/olive.jpg" afterPath="$PROJECT_DIR$/src/main/webapp/resources/plants/olive.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/onion.jpg" afterPath="$PROJECT_DIR$/src/main/webapp/resources/plants/onion.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/parsley.jpg" afterPath="$PROJECT_DIR$/src/main/webapp/resources/plants/parsley.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/saffron.gif" afterPath="$PROJECT_DIR$/src/main/webapp/resources/plants/saffron.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/salvia.jpg" afterPath="$PROJECT_DIR$/src/main/webapp/resources/plants/salvia.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/thyme.jpg" afterPath="$PROJECT_DIR$/src/main/webapp/resources/plants/thyme.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.classpath" afterPath="$PROJECT_DIR$/.classpath" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.forge_settings" afterPath="$PROJECT_DIR$/.forge_settings" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/AuthorBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/AuthorBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/AuthorEndpoint.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/AuthorEndpoint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/BodypartEndpoint.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/BodypartEndpoint.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/AuthenticationBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/AuthenticationBean.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/BundleBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/BundleBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/CharacterEncodingChecker.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/CharacterEncodingChecker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Defect.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Defect.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/DefectEndpoint.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/DefectEndpoint.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/ContactBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/ContactBean.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/DumpBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/DumpBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Enduser.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Enduser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/EnduserBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/EnduserBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/EnduserEndpoint.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/EnduserEndpoint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Help.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Help.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/HelpBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/HelpBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/HelpEndpoint.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/HelpEndpoint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Honey.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Honey.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/HoneyEndpoint.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/HoneyEndpoint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/ImagesBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/ImagesBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Ingredient.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Ingredient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/IngredientBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/IngredientBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/IngredientEndpoint.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/IngredientEndpoint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/JaxRsActivator.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/JaxRsActivator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Language.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Language.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/LanguageEndpoint.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/LanguageEndpoint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/LocaleBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/LocaleBean.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/MailBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/MailBean.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Plant.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Plant.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/PlantBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/PlantBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/PlantEndpoint.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/PlantEndpoint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Prescription.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Prescription.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/PrescriptionBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/PrescriptionBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/PrescriptionEndpoint.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/PrescriptionEndpoint.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/Repository.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/Repository.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/SearchBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/SearchBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/StoreBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/StoreBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/StoreEndpoint.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/StoreEndpoint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Substance.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Substance.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/SubstanceEndpoint.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/SubstanceEndpoint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/TestClass.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/TestClass.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/UserManagerBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/UserManagerBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/UsergroupEndpoint.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/UsergroupEndpoint.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/SessionListener.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/SessionListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/org/otika/honeybee/junit/TestClass.java" afterPath="$PROJECT_DIR$/src/test/java/org/otika/honeybee/junit/TestClass.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/UtilityBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/UtilityBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/ViewUtils.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/ViewUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Virtue.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Virtue.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/VirtueEndpoint.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/VirtueEndpoint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/WitnessBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/WitnessBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/WitnessEndpoint.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/rest/WitnessEndpoint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/misc/aboutus.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/misc/aboutus.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/beans.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/beans.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/bootstrap.css" afterPath="$PROJECT_DIR$/src/main/webapp/resources/bootstrap.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/author/create.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/author/create.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/complement/create.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/complement/create.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/defect/create.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/defect/create.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/enduser/create.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/enduser/create.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/help/create.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/help/create.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/honey/create.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/honey/create.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/ingredient/create.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/ingredient/create.xhtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/misc/contact.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/misc/contact.xhtml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/plant/create.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/plant/create.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/prescription/create.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/prescription/create.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/virtue/create.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/virtue/create.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/witness/create.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/witness/create.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/faces-config.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/faces-config.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/forge-style.css" afterPath="$PROJECT_DIR$/src/main/webapp/resources/forge-style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/i18n.properties" afterPath="$PROJECT_DIR$/src/main/resources/i18n.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/i18n_ar.properties" afterPath="$PROJECT_DIR$/src/main/resources/i18n_ar.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/i18n_en.properties" afterPath="$PROJECT_DIR$/src/main/resources/i18n_en.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/i18n_fr.properties" afterPath="$PROJECT_DIR$/src/main/resources/i18n_fr.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/index.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/index.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jboss-web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jboss-web.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/js.js" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/login.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/login.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/loginerror.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/loginerror.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" afterPath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.settings/org.eclipse.wst.common.project.facet.core.xml" afterPath="$PROJECT_DIR$/.settings/org.eclipse.wst.common.project.facet.core.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/scaffold/pageTemplate.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/resources/scaffold/pageTemplate.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/primefaces.css" afterPath="$PROJECT_DIR$/src/main/webapp/resources/primefaces.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/author/search.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/author/search.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/complement/search.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/complement/search.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/defect/search.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/defect/search.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/help/search.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/help/search.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/honey/search.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/honey/search.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/ingredient/search.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/ingredient/search.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/language/search.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/language/search.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/misc/search.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/misc/search.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/prescription/search.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/prescription/search.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/virtue/search.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/virtue/search.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/witness/search.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/witness/search.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/primefaces-flick/theme.css" afterPath="$PROJECT_DIR$/src/main/webapp/resources/primefaces-flick/theme.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/author/view.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/author/view.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/complement/view.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/complement/view.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/defect/view.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/defect/view.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/enduser/view.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/enduser/view.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/honey/view.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/honey/view.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/ingredient/view.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/ingredient/view.xhtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/plant/search.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/plant/search.xhtml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/plant/view.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/plant/view.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/prescription/view.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/prescription/view.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/virtue/view.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/virtue/view.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/witness/view.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/witness/view.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
     </list>
     <ignored path="honeybee.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="$PROJECT_DIR$/../../test/HelloWorld/.idea/workspace.xml" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372420807078" ignored="false" />
-    <file path="/Dummy.txt" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372676025097" ignored="false" />
+    <file path="/Dummy.txt" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1375331740657" ignored="false" />
     <file path="/a.java" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372677334565" ignored="false" />
     <file path="/sample.java" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372677332218" ignored="false" />
     <file path="/AuthorEndpoint.java" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372677959995" ignored="false" />
@@ -179,6 +84,7 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -213,7 +119,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -264,6 +169,11 @@
       <MavenGeneralSettings>
         <option name="mavenHome" value="/usr/local/maven3" />
       </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
     </option>
   </component>
   <component name="ProjectFrameBounds">
@@ -359,8 +269,8 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -375,19 +285,6 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -415,6 +312,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -491,23 +401,23 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24940991" sideWeight="0.6006192" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3993808" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3993808" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -572,16 +482,12 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/webapp/login.xhtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="18" selection-start="850" selection-end="850" vertical-scroll-proportion="-6.875">
-          <folding />
-        </state>
+        <state line="23" column="18" selection-start="850" selection-end="850" vertical-scroll-proportion="-6.875" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/admin/test.xhtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="122" selection-end="122" vertical-scroll-proportion="-0.625">
-          <folding />
-        </state>
+        <state line="1" column="0" selection-start="122" selection-end="122" vertical-scroll-proportion="-0.625" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
@@ -592,106 +498,80 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/i18n_fr.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="159" column="13" selection-start="3574" selection-end="3574" vertical-scroll-proportion="0.30555555" />
+      </provider>
       <provider editor-type-id="ResourceBundle">
         <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="159" column="13" selection-start="3574" selection-end="3574" vertical-scroll-proportion="0.30555555">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/i18n_en.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="18" selection-end="18" vertical-scroll-proportion="0.044510387" />
+      </provider>
       <provider editor-type-id="ResourceBundle">
         <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="18" selection-end="18" vertical-scroll-proportion="0.044510387">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/i18n_ar.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="65" selection-end="65" vertical-scroll-proportion="0.046296295" />
+      </provider>
       <provider editor-type-id="ResourceBundle">
         <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="65" selection-end="65" vertical-scroll-proportion="0.046296295">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/i18n.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="18" selection-end="18" vertical-scroll-proportion="-0.0" />
+      </provider>
       <provider editor-type-id="ResourceBundle">
         <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="18" selection-end="18" vertical-scroll-proportion="-0.0">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/TestClass.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="8" selection-start="939" selection-end="939" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="33" column="8" selection-start="939" selection-end="939" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/IngredientBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="509" column="12" selection-start="13322" selection-end="13322" vertical-scroll-proportion="0.24861878">
-          <folding />
-        </state>
+        <state line="509" column="12" selection-start="13322" selection-end="13322" vertical-scroll-proportion="0.24861878" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/UtilityBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="314" column="8" selection-start="8067" selection-end="8067" vertical-scroll-proportion="0.3314917">
-          <folding />
-        </state>
+        <state line="314" column="8" selection-start="8067" selection-end="8067" vertical-scroll-proportion="0.3314917" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/ApplicationBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="8" selection-start="1025" selection-end="1025" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="33" column="8" selection-start="1025" selection-end="1025" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Help.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="39" selection-start="1760" selection-end="1760" vertical-scroll-proportion="0.7044199">
-          <folding />
-        </state>
+        <state line="90" column="39" selection-start="1760" selection-end="1760" vertical-scroll-proportion="0.7044199" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/MailBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="4" selection-start="1600" selection-end="1600" vertical-scroll-proportion="0.3323782">
-          <folding />
-        </state>
+        <state line="52" column="4" selection-start="1600" selection-end="1600" vertical-scroll-proportion="0.3323782" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/PlantBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="342" column="45" selection-start="8531" selection-end="8531" vertical-scroll-proportion="1.0414364">
-          <folding />
-        </state>
+        <state line="342" column="45" selection-start="8531" selection-end="8531" vertical-scroll-proportion="1.0414364" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.openshift/action_hooks/post_deploy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="9" selection-start="230" selection-end="230" vertical-scroll-proportion="0.24861878">
-          <folding />
-        </state>
+        <state line="6" column="9" selection-start="230" selection-end="230" vertical-scroll-proportion="0.24861878" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.project">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
   </component>

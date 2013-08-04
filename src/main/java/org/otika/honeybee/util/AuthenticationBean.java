@@ -89,37 +89,55 @@ public class AuthenticationBean {
 		response = (HttpServletResponse) context.getExternalContext()
 				.getResponse();
 
+		String pass = utilityBean.hash(this.password);
+		if (!hash) {
+			pass = this.password;
+		}
+
 		try {
-			String pass = utilityBean.hash(this.password);
-			if (!hash) {
-				pass = this.password;
-			}
 			Enduser user = repository.findByEmailAndPassword(email, pass);
-			if (user != null) {
-				if (repository.findByEmail(email) != null
-						&& !repository.findByEmail(email).getIsactive()) {
+			if (user.getEmail() != null && !user.getEmail().equals("")) {
+				System.out.println("Login: Found user: " + user.getEmail());
+				if (!repository.findByEmail(email).getIsactive()) {
 					context.addMessage(
 							null,
 							new FacesMessage(FacesMessage.SEVERITY_ERROR,
 									bundleBean.i18n("account_notactivated"), ""));
 					return null;
 				} else {
+					System.out.println("Attempt to login: " + this.email);
 					request.login(this.email, pass);
-					signinEvent.fire(new SigninEvent(request.getRemoteUser()));
+					if (request.getRemoteUser() != null) {
+						System.out.println("Attempt to fire login event: ");
+						signinEvent.fire(new SigninEvent(request
+								.getRemoteUser()));
+					}
 					// TODO setting view locale does not work for user check
 					// view
-					localeBean.setLocale(new Locale(user.getLanguage()
+					System.out.println("Setting locale to: "
+							+ user.getLanguage().getCode());					
+					localeBean.setSelectedLang(repository.findByCode(user.getLanguage().getCode()));
+					/*localeBean.setLocale(new Locale(user.getLanguage()
 							.getCode()));
+					FacesContext
+							.getCurrentInstance()
+							.getViewRoot()
+							.setLocale(new Locale(user.getLanguage().getCode()));*/
+					System.out.println("Locale set to: "
+							+ FacesContext.getCurrentInstance().getViewRoot()
+									.getLocale().getLanguage());
 					// response.sendRedirect(request.getContextPath()+
 					// File.separator+request.getRequestURI().toString());
 
-					Cookie cookie = new Cookie("honeybee", "honeybee");
-					cookie.setValue(user.getEmail());
-					cookie.setMaxAge(29000000);
-					response.addCookie(cookie);
-					System.out.println(response.getCharacterEncoding());
-					String uri = "/" + request.getRequestURI().split("/")[2];
-					System.out.println("returning: " + uri);
+					// Cookie cookie = new Cookie("honeybee", "honeybee");
+					// cookie.setValue(user.getEmail());
+					// cookie.setMaxAge(29000000);
+					// response.addCookie(cookie);
+
+					// System.out.println(response.getCharacterEncoding());
+					// String uri = "/" + request.getRequestURI().split("/")[2];
+					// System.out.println("returning: " + uri);
+
 					String logsuc = bundleBean.i18n("login_successful");
 					context.addMessage(null, new FacesMessage(logsuc));
 				}
@@ -137,17 +155,18 @@ public class AuthenticationBean {
 				return null;
 			}
 		} catch (Exception e) {
-			LOG.log(Level.FINEST, e.getMessage());
+			LOG.log(Level.ALL, e.getMessage());
 			System.out.println(e);
 			context.addMessage(null,
 					new FacesMessage(bundleBean.i18n("login_failed")));
 			return "/loginerror";
 		}
+
 		if (!outcome.equalsIgnoreCase("") && !outcome.contains("referer")) {
 			return outcome;
 		} else if (outcome.contains("referer")) {
-			if (sessionBean.getOriginalViewName().contains("/signin.xhtml")) {
-				return "/index?faces-redirect=false";
+			if (sessionBean.getOriginalViewName().contains("signin.xhtml")) {
+				return "/index.xhtml?faces-redirect=false";
 			} else {
 				System.out.println("Redirecting to: "
 						+ sessionBean.getOriginalViewName());
@@ -157,7 +176,8 @@ public class AuthenticationBean {
 		} else {
 			return null;
 		}
-	}
+
+	} // END OF LOGIN METHOD
 
 	/**
 	 * 

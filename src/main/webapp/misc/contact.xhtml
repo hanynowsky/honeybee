@@ -72,6 +72,9 @@ function resetInputs(){
 				</p:commandButton>
 				<p:commandButton value="#{i18n.cancel}"
 					action="/index.xhtml?faces-redirect=true" immediate="true" />
+				<p:commandButton value="#{i18n.clear}" style="margin-left:20px;"
+					action="#{contactBean.resetValues()}" update="contactForm" 
+					immediate="true"/>
 			</div>
 		</h:form>
 		<p:watermark value="HoneyBee" for="contactForm:contactCaptcha" />
@@ -85,7 +88,6 @@ function resetInputs(){
 					alt="honeybee_img_loading" />
 			</div>
 		</p:blockUI>
-		<p:separator style="height:1px;" />
+		<p:separator style="height:1px;" />		
 	</ui:define>
-
 </ui:composition>

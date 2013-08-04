@@ -88,9 +88,11 @@
 }
 18
 px
+
+
+
+
 ;
-
-
 }
 </style>
 
@@ -158,7 +160,7 @@ px
 									value="#{i18n.glossary}" /></li>
 							<li><h:link id="search_menu" outcome="/misc/search"
 									value="#{i18n.search}" /></li>
-									<li><h:link id="contact_menu" outcome="/misc/contact"
+							<li><h:link id="contact_menu" outcome="/misc/contact"
 									value="#{i18n.contact}" /></li>
 						</ul>
 					</div>
@@ -255,9 +257,14 @@ px
 						<h:panelGrid columns="1" style="text-align:center;">
 							<h:outputText value="Expired Session!" />
 							<p:separator style="height:1px;" />
+							<h:link value="#{i18n.home}" styleClass="btn btn-primary"
+								outcome="/index" rendered="#{empty request.remoteUser}" />
+							<p:separator style="height:1px;" />
 							<p:commandButton value="#{i18n.logout}"
 								action="#{userManagerBean.logout}" ajax="false"
 								rendered="#{not empty request.remoteUser}" />
+							<h:link value="#{i18n.home}" styleClass="btn btn-primary"
+								outcome="/index" rendered="#{not empty request.remoteUser}" />
 						</h:panelGrid>
 					</p:dialog>
 				</h:form>

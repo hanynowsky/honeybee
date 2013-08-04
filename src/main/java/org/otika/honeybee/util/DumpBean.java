@@ -64,15 +64,15 @@ public class DumpBean {
 		// TODO
 	}
 
-	// @Schedule(second = "*/10", minute = "*", hour = "*", dayOfWeek = "*",
-	// dayOfMonth = "*", month = "*", year = "*", info = "DataBaseDumpTimer")
 	/**
 	 * Scheduled method that executes periodically
 	 * 
 	 * @param t
 	 *            Timer
 	 */
-	@Schedule(second = "1", minute = "1", hour = "12", dayOfWeek = "*", dayOfMonth = "*", month = "*", year = "*", info = "DataBaseDumpTimer")
+	// @Schedule(second = "*/30", minute = "*", hour = "*", dayOfWeek = "*",
+	// dayOfMonth = "*", month = "*", year = "*", info = "DataBaseDumpTimer")
+	@Schedule(second = "59", minute = "40", hour = "8", dayOfWeek = "*", dayOfMonth = "*", month = "*", year = "*", info = "DataBaseDumpTimer")
 	private void scheduledTimeout(final Timer t) {
 		Date date = new Date();
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
@@ -87,22 +87,50 @@ public class DumpBean {
 			utilityBean.execBash("mkdir -v -p $HOME/app-root/data");
 			utilityBean
 					.execBash(" notify-send -u low -a HoneyBee -i emblem-default HoneyBee-DB-Dump-Done");
-			utilityBean
-					.execBash("mysqldump -v -u root -pmonsql honeybee > $HOME/app-root/data/honeybeedump"
-							+ dateFormat + ".sql");
+			String dumpPath = System.getProperty("java.io.tmpdir")
+					+ File.separator + "honeybeedump" + dateFormat + ".sql";
+			utilityBean.execBash("mysqldump -v -u root -pmonsql honeybee > "
+					+ dumpPath);
+			utilityBean.dumpFile(dumpPath);
+			try {
+				File tempFile = new File(dumpPath);
+				if (tempFile.exists()) {
+					tempFile.delete();
+				}
+				utilityBean.execBash("mv " + dumpPath + ".zip"
+						+ " $HOME/app-root/data/");
+			} catch (Exception ex) {
+				Logger.getLogger(getClass().getName()).severe(
+						"Exception handling dump file: " + ex.getMessage());
+			}
+			// TODO move the zipped file and delete the temporary file
+
 		} else {
 			String username = System.getenv("OPENSHIFT_MYSQLDB_USERNAME");
 			String pass = System.getenv("OPENSHIFT_MYSQLDB_PASSWORD");
+			String fileName = System.getProperty("java.io.tmpdir")
+					+ File.separator + "honeybeedump" + dateFormat + ".sql";
 			utilityBean.execBash("mysqldump -v -u " + username + " -p" + pass
-					+ " honeybee > $HOME/app-root/data/honeybeedump"
-					+ dateFormat + ".sql");
+					+ " honeybee >" + fileName);
 
-			// Send DB by email
-			String dbpath = File.separator + "app-root" + File.separator
-					+ "data" + File.separator + "honeybeedump" + dateFormat
-					+ ".sql";
+			/* Send DB by email */
+			Logger.getLogger(getClass().getName()).info(
+					"Attempt to send DB email");
 			mailBean.emailDatabase("kyoshuu.madani@gmail.com",
-					utilityBean.zipFile(utilityBean.dumpFile(dbpath)));
+					utilityBean.dumpFile(fileName));
+			try {
+				File tempFile = new File(fileName);
+				if (tempFile.exists()) {
+					System.out.println("Deleting DB temp file");
+					tempFile.delete();
+				}
+				// TODO use SCP instead
+				utilityBean.execBash("mv " + fileName + ".zip"
+						+ " $HOME/app-root/data/");
+			} catch (Exception ex) {
+				Logger.getLogger(getClass().getName()).severe(
+						"Exception handling dump file: " + ex.getMessage());
+			}
 		}
 
 		System.out.println("@Schedule called at: " + new java.util.Date());
@@ -143,6 +171,7 @@ public class DumpBean {
 		requestBean.log("SIGNIN"); // The bean is decorated
 		String msg = "Sign in successful: " + event.getEmail();
 		System.out.println("System output: " + msg);
+		// TODO set redirection to referer here instead of login method
 		Logger.getLogger(getClass().getName()).info(msg);
 	}
 
@@ -202,6 +231,7 @@ public class DumpBean {
 						contactBean.isValid(), contactBean.getAttachment(),
 						contactBean.getSubject());
 				System.out.println("contactEmail() invoked!");
+				contactBean.resetValues();
 			} else {
 				System.out.println("No Internet. Contact Mail not delivered.");
 				utilityBean.showMessage("warn", "No internet connectivity", "");

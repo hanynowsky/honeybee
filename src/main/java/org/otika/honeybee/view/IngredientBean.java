@@ -145,7 +145,7 @@ public class IngredientBean implements Serializable {
 					return null;
 				}
 			} else {
-				if (!isOneParentIngredientPresent()) {
+				if (this.id != null) { //!isOneParentIngredientPresent()
 					isHoney();
 					this.conversation.end();
 					this.entityManager.merge(this.ingredient);
@@ -550,6 +550,7 @@ public class IngredientBean implements Serializable {
 	 */
 
 	public boolean isOneParentIngredientPresent() {
+		// TODO refactor in order to allow edition
 		try {
 			List<Ingredient> ipList = repository.findByPlantAndForm(
 					this.ingredient.getPlant(), this.ingredient.getForm());

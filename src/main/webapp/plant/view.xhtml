@@ -56,6 +56,12 @@
 			<h:outputText id="plantBeanPlantType"
 				value="#{bundleBean.i18n(plantBean.plant.type)}" />
 			<h:outputText />
+
+			<h:outputLabel for="plantBeanPlantCategory" value="#{i18n.category}" />
+			<h:outputText id="plantBeanPlantCategory"
+				value="#{bundleBean.i18n(plantBean.plant.category)}" />
+			<h:outputText />
+
 			<h:outputLabel for="plantBeanPlantImage" value="#{i18n.image}" />
 			<h:graphicImage id="plantBeanPlantImage" width="250"
 				value="/resources/plants/#{plantBean.plant.image}" />
@@ -76,7 +82,7 @@
 			<h:outputLabel for="plantBeanPlantDescription"
 				value="#{i18n.description}" />
 			<h:outputText id="plantBeanPlantDescription"
-				value="#{plantBean.plant.description}" />
+				value="#{plantBean.plant.description}" escape="false"/>
 			<h:outputText />
 			<h:outputLabel value="" for="sep_pbpdfr" />
 			<h:outputText id="sep_pbpdfr" style="color: #ccc;margin:15px;"
@@ -85,7 +91,7 @@
 			<h:outputLabel for="plantBeanPlantDescriptionfr"
 				value="#{i18n.descriptionfr}" />
 			<h:outputText id="plantBeanPlantDescriptionfr"
-				value="#{plantBean.plant.descriptionfr}" />
+				value="#{plantBean.plant.descriptionfr}" escape="false"/>
 			<h:outputText />
 			<h:outputLabel value="" for="sep_pbpdar" />
 			<h:outputText id="sep_pbpdar" style="color: #ccc;margin:15px;"
@@ -94,7 +100,7 @@
 			<h:outputLabel for="plantBeanPlantDescriptionar"
 				value="#{i18n.descriptionar}" />
 			<h:outputText dir="rtl" id="plantBeanPlantDescriptionar"
-				value="#{plantBean.plant.descriptionar}" />
+				value="#{plantBean.plant.descriptionar}" escape="false"/>
 			<h:outputText />
 			<h:outputLabel value="" for="sep_pbpi" />
 			<h:outputText id="sep_pbpi" style="color: #ccc;margin:15px;"
@@ -102,8 +108,9 @@
 			<h:outputText />
 			<h:outputLabel for="plantBeanPlantIngredients"
 				value="#{i18n.ingredients}" />
-			<p:dataTable id="plantBeanPlantIngredients" 
-			styleClass="primedatatable" paginator="true" paginatorPosition="top" rows="3" paginatorAlwaysVisible="false"
+			<p:dataTable id="plantBeanPlantIngredients"
+				styleClass="primedatatable" paginator="true" paginatorPosition="top"
+				rows="5" paginatorAlwaysVisible="false"
 				value="#{forgeview:asList(plantBean.plant.ingredients)}" var="_item">
 				<p:column>
 					<f:facet name="header">
@@ -144,6 +151,10 @@
 							rendered="#{_item.form == 'oil'}" />
 						<h:outputText id="itemFormP" value="#{i18n.powder}"
 							rendered="#{_item.form == 'powder'}" />
+						<h:outputText id="itemFormM" value="#{i18n.mixture}"
+							rendered="#{_item.form == 'mixture'}" />
+							<h:outputText id="itemFormJ" value="#{i18n.juice}"
+							rendered="#{_item.form == 'juice'}" />
 					</h:link>
 				</p:column>
 			</p:dataTable>

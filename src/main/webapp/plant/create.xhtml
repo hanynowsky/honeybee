@@ -91,9 +91,23 @@
 					<h:selectOneMenu id="plantBeanExampleType"
 						value="#{plantBean.plant.type}">
 						<f:selectItems var="_t" value="#{plantBean.types}"
-							itemValue="#{_t}" itemLabel="#{bundleBean.i18n(_t)}" />
+							itemValue="#{_t.label}"
+							itemLabel="#{utilityBean.switchLabel(_t)}" />
 					</h:selectOneMenu>
 					<h:message for="plantBeanExampleType" styleClass="error" />
+				</h:panelGroup>
+				<h:outputText />
+
+				<h:outputLabel for="plantBeanExampleCategory"
+					value="#{i18n.category}" />
+				<h:panelGroup>
+					<h:selectOneMenu id="plantBeanExampleCategory"
+						value="#{plantBean.plant.category}">
+						<f:selectItems var="_c" value="#{plantBean.categories}"
+							itemValue="#{_c.label}"
+							itemLabel="#{utilityBean.switchLabel(_c)}" />
+					</h:selectOneMenu>
+					<h:message for="plantBeanExampleCategory" styleClass="error" />
 				</h:panelGroup>
 				<h:outputText />
 
@@ -119,7 +133,11 @@
 				<h:outputLabel for="plantBeanPlantDescription"
 					value="#{i18n.description}" />
 				<h:panelGroup>
-					<h:inputText id="plantBeanPlantDescription" maxlength="65535"
+					<p:editor required="true"
+						controls="font size style color highlight bullets numbering alignleft 
+					center alignright justify rule image link unlink source 
+					 bold italic underline strikethrough"
+						id="plantBeanPlantDescription" maxlength="65535"
 						value="#{plantBean.plant.description}" />
 					<h:message for="plantBeanPlantDescription" styleClass="error" />
 				</h:panelGroup>
@@ -127,7 +145,11 @@
 				<h:outputLabel for="plantBeanPlantDescriptionfr"
 					value="#{i18n.descriptionfr}" />
 				<h:panelGroup>
-					<h:inputText id="plantBeanPlantDescriptionfr" maxlength="65535"
+					<p:editor required="true"
+						controls="font size style color highlight bullets numbering alignleft 
+					center alignright justify rule image link unlink source 
+					 bold italic underline strikethrough"
+						id="plantBeanPlantDescriptionfr" maxlength="65535"
 						value="#{plantBean.plant.descriptionfr}" />
 					<h:message for="plantBeanPlantDescriptionfr" styleClass="error" />
 				</h:panelGroup>
@@ -135,7 +157,11 @@
 				<h:outputLabel for="plantBeanPlantDescriptionar"
 					value="#{i18n.descriptionar}" />
 				<h:panelGroup>
-					<h:inputText id="plantBeanPlantDescriptionar" maxlength="65535"
+					<p:editor required="true" maxlength="65535"
+						controls="font size style color highlight bullets numbering alignleft 
+					center alignright justify rule image link unlink source 
+					 bold italic underline strikethrough"
+						id="plantBeanPlantDescriptionar"
 						value="#{plantBean.plant.descriptionar}" />
 					<h:message for="plantBeanPlantDescriptionar" styleClass="error" />
 				</h:panelGroup>

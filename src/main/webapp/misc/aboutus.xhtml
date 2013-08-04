@@ -55,11 +55,21 @@
 				</p>
 				<p>
 					<h:outputText
-						value="يمكنك برنامج نحلة العسل من تفحص قاعدة معلوماتية حول الطب البديل أو ما يسميه العامة بالتداوي بالأعشاب
-				. يمكنك الإطلاع على وصفات طبيعية مجربة والبحث بواسطة أعشاب, مزيات صحية, أمراض, أعضاء الجسم, 
+						value="يمكنك برنامج نحلة العسل من تفحص قاعدة معلوماتية حول الطب البديل أو ما يسميه العامة بالمعالجة بالطبيعة
+				. يمكنك الإطلاع على وصفات طبيعية مجربة والبحث بواسطة أعشاب, نبات, مزيات صحية, أمراض, أعضاء الجسم, 
 				..." />
 				</p>
 			</h:panelGroup>
+			<h:panelGroup>
+				<h:panelGrid columns="2">
+					<h:outputLabel value="#{i18n.author}" />
+					<h:outputLink value="http://hanynowsky.wordpress.com"
+						target="_blank">
+						<h:outputText value="#{i18n.hanine_h_almadani}" />
+					</h:outputLink>
+				</h:panelGrid>
+			</h:panelGroup>
+			<p:separator style="height:2px;" />
 			<p>
 				<a target="_blank" href="http://www.google.com"> <h:outputText
 						value="#{i18n.search_web}" />

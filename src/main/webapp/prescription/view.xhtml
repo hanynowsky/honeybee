@@ -26,6 +26,7 @@
 	<ui:define name="footer" />
 
 	<ui:define name="main">
+	<h:form  id="PrescriptionviewForm">
 		<h:panelGrid columnClasses="label,component,required" columns="3"
 			id="viewPresGrid">
 			<h:outputLabel for="prescriptionBeanPrescriptionAuthor"
@@ -37,57 +38,51 @@
 					value="#{prescriptionBean.prescription.author.id}" />
 			</h:link>
 			<h:outputText />
+
 			<h:outputLabel for="prescriptionBeanPrescriptionTitle"
 				value="#{i18n.title}" />
 			<h:outputText id="prescriptionBeanPrescriptionTitle"
-				value="#{prescriptionBean.prescription.title}" />
-			<h:outputText />
-			<h:outputLabel for="prescriptionBeanPrescriptionTitlear"
-				value="#{i18n.titlear}" />
+				value="#{prescriptionBean.prescription.title}"
+				rendered="#{localeBean.selectedLang.code == 'en'}" />
 			<h:outputText id="prescriptionBeanPrescriptionTitlear"
-				value="#{prescriptionBean.prescription.titlear}" />
-			<h:outputText />
-			<h:outputLabel for="prescriptionBeanPrescriptionTitlefr"
-				value="#{i18n.titlefr}" />
+				value="#{prescriptionBean.prescription.titlear}"
+				rendered="#{localeBean.selectedLang.code == 'ar'}" />
 			<h:outputText id="prescriptionBeanPrescriptionTitlefr"
-				value="#{prescriptionBean.prescription.titlefr}" />
+				value="#{prescriptionBean.prescription.titlefr}"
+				rendered="#{localeBean.selectedLang.code == 'fr'}" />
 			<h:outputText />
+
 			<h:outputLabel for="prescriptionBeanPrescriptionPreparation"
 				value="#{i18n.preparation}" />
 			<h:outputText id="prescriptionBeanPrescriptionPreparation"
-				value="#{prescriptionBean.prescription.preparation}" escape="false" />
-			<h:outputText />
-			<h:outputLabel for="prescriptionBeanPrescriptionPreparationfr"
-				value="#{i18n.prescriptionfr}" />
+				value="#{prescriptionBean.prescription.preparation}" escape="false"
+				rendered="#{localeBean.selectedLang.code == 'en'}" />
 			<h:outputText id="prescriptionBeanPrescriptionPreparationfr"
 				value="#{prescriptionBean.prescription.preparationfr}"
-				escape="false" />
-			<h:outputText />
-			<h:outputLabel for="prescriptionBeanPrescriptionPreparationar"
-				value="#{i18n.prescriptionar}" />
+				escape="false" rendered="#{localeBean.selectedLang.code == 'fr'}" />
 			<h:outputText id="prescriptionBeanPrescriptionPreparationar"
 				value="#{prescriptionBean.prescription.preparationar}"
-				escape="false" />
+				escape="false" rendered="#{localeBean.selectedLang.code == 'ar'}" />
 			<h:outputText />
+
 			<h:outputLabel for="prescriptionBeanPrescriptionTreatment"
 				value="#{i18n.treatment}" />
 			<h:outputText id="prescriptionBeanPrescriptionTreatment"
-				value="#{prescriptionBean.prescription.treatment}" escape="false" />
-			<h:outputText />
-			<h:outputLabel for="prescriptionBeanPrescriptionTreatmentfr"
-				value="#{i18n.treatmentfr}" />
+				value="#{prescriptionBean.prescription.treatment}" escape="false"
+				rendered="#{localeBean.selectedLang.code == 'en'}" />
 			<h:outputText id="prescriptionBeanPrescriptionTreatmentfr"
-				value="#{prescriptionBean.prescription.treatmentfr}" escape="false" />
-			<h:outputText />
-			<h:outputLabel for="prescriptionBeanPrescriptionTreatmentar"
-				value="#{i18n.treatmentar}" />
+				value="#{prescriptionBean.prescription.treatmentfr}" escape="false"
+				rendered="#{localeBean.selectedLang.code == 'fr'}" />
 			<h:outputText id="prescriptionBeanPrescriptionTreatmentar"
-				value="#{prescriptionBean.prescription.treatmentar}" escape="false" />
+				value="#{prescriptionBean.prescription.treatmentar}" escape="false"
+				rendered="#{localeBean.selectedLang.code == 'ar'}" />
 			<h:outputText />
+
 			<h:outputLabel for="prescriptionBeanPrescriptionCoefficient"
 				value="#{i18n.coefficient}" />
-			<h:outputText id="prescriptionBeanPrescriptionCoefficient"
-				value="#{prescriptionBean.prescription.coefficient}" escape="false" />
+			<p:rating id="prescriptionBeanPrescriptionCoefficient"
+				value="#{prescriptionBean.prescription.coefficient}" stars="5"
+				readonly="true" />
 			<h:outputText />
 			<h:outputLabel for="prescriptionBeanWitnessCreationdate"
 				value="#{i18n.creation_date}" />
@@ -128,6 +123,16 @@
 					<h:link outcome="/ingredient/view">
 						<f:param name="id" value="#{_item.id}" />
 						<h:outputText id="itemLabelar" value="#{_item.labelar}" />
+					</h:link>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{i18n.form}" />
+					</f:facet>
+					<h:link outcome="/ingredient/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="itemForm"
+							value="#{utilityBean.IngformName(_item.form)}" />
 					</h:link>
 				</p:column>
 			</p:dataTable>
@@ -293,13 +298,13 @@
 			</p:dataTable>
 			<h:outputText />
 		</h:panelGrid>
-
+</h:form>
 		<div class="buttons">
 			<h:form>
 				<p:commandButton id="presPrintButton" style="float:right;"
 					icon="ui-icon ui-icon-document" styleClass="btn btn-primary"
 					ajax="false">
-					<p:printer target=":viewPresGrid" />
+					<p:printer target=":PrescriptionviewForm:viewPresGrid" />
 				</p:commandButton>
 				<p:commandButton id="presDetailPrintButton" style="float:right;"
 					icon="ui-icon ui-icon-document" value="#{i18n.print}"
@@ -307,27 +312,29 @@
 					action="#{prescriptionBean.printPrescription(false,false)}" />
 			</h:form>
 			<h:form style="margin:10px;">
-			<h:link value="#{i18n.view_all}" outcome="search"
-				styleClass="btn btn-primary" />
-			<h:link rendered="#{isAdministrator or isAuthor}"
-				value="#{i18n.edit}" outcome="create" includeViewParams="true"
-				styleClass="btn btn-primary" />
-			<h:link rendered="#{isAdministrator or isAuthor}"
-				value="#{i18n.create}" outcome="create" styleClass="btn btn-primary" />
-			
-				<p:commandButton id="add_witness_button" icon="ui-icon ui-icon-plus" 
-				action="/witness/create"
-					ajax="false" styleClass="btn btn-primary"
+				<h:link value="#{i18n.view_all}" outcome="search"
+					styleClass="btn btn-primary" />
+				<h:link rendered="#{isAdministrator or isAuthor}"
+					value="#{i18n.edit}" outcome="create" includeViewParams="true"
+					styleClass="btn btn-primary" />
+				<h:link rendered="#{isAdministrator or isAuthor}"
+					value="#{i18n.create}" outcome="create"
+					styleClass="btn btn-primary" />
+
+				<p:commandButton id="add_witness_button" icon="ui-icon ui-icon-plus"
+					action="/witness/create" ajax="false" styleClass="btn btn-primary"
 					value="#{i18n.create} #{i18n.witness}"
-					rendered="#{not empty request.remoteUser}" >
-					<f:setPropertyActionListener target="#{witnessBean.witness}" 
-					value="#{witnessBean.example}" />
-					<f:setPropertyActionListener target="#{witnessBean.witness.prescription}" 
-					value="#{prescriptionBean.prescription}" />
-					<f:setPropertyActionListener target="#{witnessBean.witness.enduser}" 
-					value="#{userManagerBean.userObject}" />
-					</p:commandButton>
-					
+					rendered="#{not empty request.remoteUser}">
+					<f:setPropertyActionListener target="#{witnessBean.witness}"
+						value="#{witnessBean.example}" />
+					<f:setPropertyActionListener
+						target="#{witnessBean.witness.prescription}"
+						value="#{prescriptionBean.prescription}" />
+					<f:setPropertyActionListener
+						target="#{witnessBean.witness.enduser}"
+						value="#{userManagerBean.userObject}" />
+				</p:commandButton>
+
 			</h:form>
 		</div>
 	</ui:define>

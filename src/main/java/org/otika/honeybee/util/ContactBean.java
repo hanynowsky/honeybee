@@ -110,27 +110,33 @@ public class ContactBean implements Serializable {
 		}
 	}
 
-	public void validator(FacesContext context, UIComponent component
-			,Object value) {
+	/**
+	 * 
+	 * @param context
+	 * @param component
+	 * @param value
+	 */
+	public void validator(FacesContext context, UIComponent component,
+			Object value) {
 		try {
 			UploadedFile uf = ((UploadedFile) value);
-				attachment = new File(System.getProperty("java.io.tmpdir")
-						+ File.separator + uf.getFileName());
-				if (!attachment.exists()) {
-					attachment.createNewFile();
-				
+			attachment = new File(System.getProperty("java.io.tmpdir")
+					+ File.separator + uf.getFileName());
+			if (!attachment.exists()) {
+				attachment.createNewFile();
+
 				OutputStream output = new FileOutputStream(attachment);
 				output.write(uf.getContents());
 				uf.getInputstream().close();
 				output.flush();
-				output.close();	
-				
+				output.close();
+
 			}
 		} catch (Exception ex) {
 			System.err.println("Exception validating File " + ex);
-			Logger.getLogger(getClass().getName()).severe(ex.getMessage());			
+			Logger.getLogger(getClass().getName()).severe(ex.getMessage());
 		}
-		
+
 	}
 
 	/**
@@ -150,6 +156,18 @@ public class ContactBean implements Serializable {
 		// System.out.println("File name: " + uploadedFile.getFileName());
 		listener(formId); // TODO has no effect
 		return "/index.xhtml?faces-redirect=false";
+	}
+
+	public void resetValues() {
+		setAttachment(null);
+		setCaptcha("");
+		setContent("");
+		setEmail("");
+		setFullname("");
+		setSubject("");
+		setUploadedFile(null);
+		setValid(false);
+		System.out.println("Contact form Values cleared");
 	}
 
 	/**

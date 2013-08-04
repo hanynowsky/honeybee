@@ -36,7 +36,7 @@
                         <h:panelGroup>
                             <h:selectOneMenu id="ingredientBeanExampleForm"
                                              value="#{ingredientBean.example.form}">
-                                <f:selectItem />
+                                <f:selectItem  itemLabel="----" itemValue="#{null}"/>
                                 <f:selectItem itemLabel="#{i18n.raw}" itemValue="raw" />
                                 <f:selectItem itemLabel="#{i18n.oil}" itemValue="oil" />
                                 <f:selectItem itemLabel="#{i18n.powder}" itemValue="powder" />
@@ -67,10 +67,11 @@
                         <h:outputLabel for="ingredientBeanExampleHoney"
                                        value="#{i18n.honey}" />
                         <h:panelGroup styleClass="onemenu">
-                            <p:selectOneMenu converter="#{honeyBean.converter}"
+                            <p:selectOneMenu 
+                            converter="#{honeyBean.converter}"
                                              id="ingredientBeanExampleHoney"
                                              value="#{ingredientBean.example.honey}"
-                                             filter="" filterMatchMode="contains">
+                                             filter="true" filterMatchMode="contains">
                                 <f:selectItem itemValue="#{null}" itemLabel="-----"/> 
                                 <f:selectItems value="#{honeyBean.all}" var="_h" itemLabel="#{utilityBean.switchLabel(_h)}" itemValue="#{_h}"/>
                                 <f:ajax execute="@form"

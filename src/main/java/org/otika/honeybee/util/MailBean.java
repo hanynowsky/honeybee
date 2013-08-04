@@ -64,6 +64,7 @@ public class MailBean {
 	private static final Logger LOG = Logger
 			.getLogger(MailBean.class.getName());
 
+	// TODO get mail session from container subsystem as a @Resource
 	// @Resource
 	// private SessionContext sessionContext;
 
@@ -86,7 +87,7 @@ public class MailBean {
 		// Set properties
 		props = new Properties();
 		props.put("mail.smtp.host", host); // HOST
-		props.put("mail.debug", "true"); // DEBUG
+		props.put("mail.debug", "false"); // TODO DEBUG
 		props.put("mail.smtp.auth", "true"); // AUTH
 		// props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.port", port);
@@ -379,11 +380,13 @@ public class MailBean {
 				mail.setSubject("HoneyBee Database Dump");
 				mail.setSentDate(new Date());
 				mail.setHtmlMsg(htmlmail);
-				mail.attach(db);
+				if (db != null) {
+					mail.attach(db);
+				}
 				mail.setMailSession(session);
 				mail.send();
 				FacesMessage successMessage = new FacesMessage(
-						"Password sent to " + mail);
+						"Database recovery ok! " + mail);
 				successMessage.setDetail("");
 				successMessage.setSeverity(FacesMessage.SEVERITY_INFO);
 				FacesContext.getCurrentInstance().addMessage(null,
@@ -395,10 +398,10 @@ public class MailBean {
 				errorMessage.setDetail("");
 				FacesContext.getCurrentInstance()
 						.addMessage(null, errorMessage);
-				System.out.println("Simple Email exception!");
+				System.out.println("DB Email exception!");
 				System.out.println(e);
 			}
-			status = "User-Emailed-Okay";
+			status = "db_emailed";
 			System.out.println("Email being sent to " + email);
 		}
 		return new AsyncResult<>(status);

@@ -15,6 +15,7 @@ public class SigninEvent {
     
     public SigninEvent(String email) {
         this.email = email;
+        System.out.println("Sign in event fired");
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage("Signed in"));
     }

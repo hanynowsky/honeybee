@@ -21,7 +21,7 @@ public class SessionListener implements HttpSessionListener {
 	@EJB
 	private Repository repository;
 	@EJB
-	private ConfigurationBean configurationBean;	
+	private ConfigurationBean configurationBean;
 
 	/**
 	 * Default constructor.
@@ -53,11 +53,12 @@ public class SessionListener implements HttpSessionListener {
 			Configuration c = new Configuration();
 			c = repository.findAllConfigurationItems().get(0);
 			System.out.println("Licence: " + c.getLicence());
-			c.setHitcounts(hitCount);
-			configurationBean.update(c);			
+			c.setHitcounts(hitCount + c.getHitcounts());
+			configurationBean.update(c);
 			System.out.println("new hit counts " + c.getHitcounts());
 		} catch (Exception ex) {
 			Logger.getLogger(getClass().getName()).severe(ex.getMessage());
+			System.err.println(ex);
 		}
 	}
 

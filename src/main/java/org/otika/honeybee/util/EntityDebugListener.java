@@ -81,11 +81,11 @@ public class EntityDebugListener {
 
 	@PostRemove
 	void postRemove(Object object) {
-		System.out.println("postRemove");
+		System.out.println("postRemove" + object.getClass().getName());
 	}
 
 	@PostLoad
 	void postLoad(Object object) {
-		System.out.println("postLoad " + object.getClass().getName());
+		//System.out.println("postLoad " + object.getClass().getName());
 	}
 } // END OF CLASS
