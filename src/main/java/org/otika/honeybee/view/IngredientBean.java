@@ -577,8 +577,7 @@ public class IngredientBean implements Serializable {
 		} catch (Exception ex) {
 			// TODO Properly handle exception
 			System.out.println("IngredientBean: Exception in isOneIngredient: "
-					+ getClass().getName() + " : " + ex);
-			ex.printStackTrace();
+					+ getClass().getName() + " : " + ex);		
 			Logger.getLogger(getClass().getName()).log(Level.ALL,
 					ex.getMessage(), ex);
 		}
