@@ -518,6 +518,21 @@ public class PlantBean implements Serializable {
 	}
 
 	/**
+	 * 
+	 * @return
+	 */
+	public String i18nLabel(String type) {
+		if (this.plant.getId() != null) {
+			if (type.equals("type")) {
+				return getLocalizedLabel(this.plant.getType(), type);
+			} else {
+				return getLocalizedLabel(this.plant.getCategory(), type);
+			}
+		}
+		return "";
+	}
+
+	/**
 	 * Return localized label
 	 * 
 	 * @param value
@@ -525,28 +540,30 @@ public class PlantBean implements Serializable {
 	 */
 	public String getLocalizedLabel(String value, String type) {
 		try {
+			String lang = FacesContext.getCurrentInstance().getViewRoot()
+					.getLocale().getLanguage();
 			if (type.equals("type")) {
 				Ptype p = repository.findPtypeByLabel(value);
-				if (localeBean.getSelectedLang().getCode().equals("ar")) {
+				if (lang.equals("ar")) {
 					return p.getLabelar();
 				}
-				if (localeBean.getSelectedLang().getCode().equals("fr")) {
+				if (lang.equals("fr")) {
 					return p.getLabelfr();
 				}
-				if (localeBean.getSelectedLang().getCode().equals("en")) {
+				if (lang.equals("en")) {
 					return p.getLabel();
 				}
 			}
 			if (type.equals("category")) {
 				Pcategory pc = (Pcategory) repository
 						.findPcategoryByLabel(value);
-				if (localeBean.getSelectedLang().getCode().equals("ar")) {
+				if (lang.equals("ar")) {
 					return pc.getLabelar();
 				}
-				if (localeBean.getSelectedLang().getCode().equals("fr")) {
+				if (lang.equals("fr")) {
 					return pc.getLabelfr();
 				}
-				if (localeBean.getSelectedLang().getCode().equals("en")) {
+				if (lang.equals("en")) {
 					return pc.getLabel();
 				}
 			}

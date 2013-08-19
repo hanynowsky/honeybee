@@ -659,7 +659,7 @@ public class Repository implements Serializable {
 	}
 
 	/**
-	 * Find a Plantg type by its label
+	 * Find a Plant type by its label
 	 * 
 	 * @param label
 	 *            Label
@@ -669,7 +669,7 @@ public class Repository implements Serializable {
 		try {
 			TypedQuery<Ptype> query = em.createNamedQuery("Ptype.findByLabel",
 					Ptype.class);
-			query.setParameter("label", label);
+			query.setParameter("label", label);			
 			return query.getSingleResult();
 		} catch (Exception ex) {
 			String msg = ex.getMessage() + " " + ex.getCause().getMessage();

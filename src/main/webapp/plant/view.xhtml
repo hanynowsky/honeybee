@@ -54,12 +54,12 @@
 			<h:outputText />
 			<h:outputLabel for="plantBeanPlantType" value="#{i18n.type}" />
 			<h:outputText id="plantBeanPlantType"
-				value="#{plantBean.getLocalizedLabel(plantBean.plant.type,'type')}" />
+				value="#{utilityBean.capitalize(plantBean.i18nLabel('type'))}" />
 			<h:outputText />
 
 			<h:outputLabel for="plantBeanPlantCategory" value="#{i18n.category}" />
 			<h:outputText id="plantBeanPlantCategory"
-				value="#{plantBean.getLocalizedLabel(plantBean.plant.category,'category')}" />
+				value="#{utilityBean.capitalize(plantBean.i18nLabel('category'))}" />
 			<h:outputText />
 
 			<h:outputLabel for="plantBeanPlantImage" value="#{i18n.image}" />
@@ -82,14 +82,14 @@
 			<h:outputLabel for="plantBeanPlantDescription"
 				value="#{i18n.description}" />
 			<h:outputText id="plantBeanPlantDescription"
-				value="#{plantBean.plant.description}" escape="false" 
-				rendered="#{localeBean.selectedLang.code == 'en'}"/>						
+				value="#{plantBean.plant.description}" escape="false"
+				rendered="#{localeBean.selectedLang.code == 'en'}" />
 			<h:outputText id="plantBeanPlantDescriptionfr"
-				value="#{plantBean.plant.descriptionfr}" escape="false" 
-				rendered="#{localeBean.selectedLang.code == 'fr'}"/>			
+				value="#{plantBean.plant.descriptionfr}" escape="false"
+				rendered="#{localeBean.selectedLang.code == 'fr'}" />
 			<h:outputText dir="rtl" id="plantBeanPlantDescriptionar"
-				value="#{plantBean.plant.descriptionar}" escape="false" 
-				rendered="#{localeBean.selectedLang.code == 'ar'}"/>
+				value="#{plantBean.plant.descriptionar}" escape="false"
+				rendered="#{localeBean.selectedLang.code == 'ar'}" />
 			<h:outputText />
 			<h:outputLabel value="" for="sep_pbpi" />
 			<h:outputText id="sep_pbpi" style="color: #ccc;margin:15px;"
@@ -142,7 +142,7 @@
 							rendered="#{_item.form == 'powder'}" />
 						<h:outputText id="itemFormM" value="#{i18n.mixture}"
 							rendered="#{_item.form == 'mixture'}" />
-							<h:outputText id="itemFormJ" value="#{i18n.juice}"
+						<h:outputText id="itemFormJ" value="#{i18n.juice}"
 							rendered="#{_item.form == 'juice'}" />
 					</h:link>
 				</p:column>

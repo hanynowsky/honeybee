@@ -90,7 +90,7 @@ label {
 }
 
 option {
-	font-family: sans-serif,arial,helvetica,verdana;
+	font-family: sans-serif,Roboto,arial,helvetica,verdana;
 }
 
 
@@ -409,7 +409,7 @@ footer p {
 
 #content h1 {
 	border-bottom: 1px solid #ffffff;
-    font-family: DroidArabicKufi, 'Open Sans', sans-serif;
+    font-family: DroidArabicKufi, Roboto, 'Open Sans', sans-serif;
     font-size: 49px;
     font-weight: 300;
     letter-spacing: -2px;
@@ -613,7 +613,7 @@ button::-moz-focus-inner {
   	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#B0A826', endColorstr='#979026', GradientType=0);
   	filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 
-	font-family: DroidArabicKufi, "Helvetica Neue", Helvetica, Arial, sans-serif !important; 
+	font-family: DroidArabicKufi, Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif !important; 
 	font-weight:bold;
 	text-align:center;
 	color:#fff!important;
@@ -758,7 +758,7 @@ h4.page-header {
 	font-size: large;
 	text-align: center;
 	padding: 5px;
-	font-family: DroidArabicKufi, sans-serif, Verdana, Arial;
+	font-family: DroidArabicKufi, Roboto, sans-serif, Verdana, Arial;
 }
 
 .feedback {	
@@ -870,5 +870,17 @@ font-weight:bold;
 font-family: Nunito; 
 src: url("#{resource['Nunito-Light.ttf']}");
 font-weight:100;
+}
+
+@font-face {
+font-family: Roboto; 
+src: url("#{resource['Roboto-Regular.ttf']}");
+font-weight:normal;
+}
+
+@font-face {
+font-family: Roboto; 
+src: url("#{resource['Roboto-Bold.ttf']}");
+font-weight:600;
 }
 /* END */

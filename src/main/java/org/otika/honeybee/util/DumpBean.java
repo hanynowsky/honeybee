@@ -114,11 +114,14 @@ public class DumpBean {
             if (username == null || username.equals("")) {
                 username = "adminwNJulYt";
             }
-            String fileName = System.getProperty("java.io.tmpdir")
+           
+            try {
+            
+             String fileName = System.getProperty("java.io.tmpdir")
                     + File.separator + "honeybeedump" + dateFormat + ".sql";
             Logger.getLogger(getClass().getName()).log(
                     Level.INFO, "Attempt to dump DB : username & pass = {0} {1}", new Object[]{username, pass});
-            utilityBean.execBash("mysqldump -v -u " + username + " -p" + pass
+            utilityBean.execBash("mysqldump -h 127.7.193.130 -v -u " + username + " -p" + pass
                     + " honeybee >" + fileName);
 
             /* Send DB by email */
@@ -126,7 +129,7 @@ public class DumpBean {
                     "Attempt to send DB email");
             mailBean.emailDatabase("kyoshuu.madani@gmail.com",
                     utilityBean.dumpFile(fileName));
-            try {
+            
                 File tempFile = new File(fileName);
                 if (tempFile.exists()) {
                     System.out.println("Deleting DB temp file");
