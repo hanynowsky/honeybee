@@ -42,13 +42,16 @@
 			<h:outputText id="honeyBeanHoneyLabelar" value="#{honeyBean.honey.labelar}"/>
 			<h:outputText/>
                         <h:outputLabel for="honeyBeanHoneyDescription" value="#{i18n.description}"/>
-			<h:outputText id="honeyBeanHoneyDescription" value="#{honeyBean.honey.description}"/>
+			<h:outputText id="honeyBeanHoneyDescription" value="#{honeyBean.honey.description}" 
+			escape="false"/>
 			<h:outputText/>
                         <h:outputLabel for="honeyBeanHoneyDescriptionar" value="#{i18n.descriptionar}"/>
-			<h:outputText id="honeyBeanHoneyDescriptionar" value="#{honeyBean.honey.descriptionar}"/>
+			<h:outputText id="honeyBeanHoneyDescriptionar" value="#{honeyBean.honey.descriptionar}" 
+			escape="false"/>
 			<h:outputText/>
                         <h:outputLabel for="honeyBeanHoneyDescriptionfr" value="#{i18n.descriptionfr}"/>
-			<h:outputText id="honeyBeanHoneyDescriptionfr" value="#{honeyBean.honey.descriptionfr}"/>
+			<h:outputText id="honeyBeanHoneyDescriptionfr" value="#{honeyBean.honey.descriptionfr}" 
+			escape="false"/>
 			<h:outputText/>
                         <h:outputLabel for="honeyBeanHoneyIngredients" value="#{i18n.ingredients}"/>
 			<p:dataTable id="honeyBeanHoneyIngredients" 

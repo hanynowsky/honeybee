@@ -208,7 +208,7 @@ public class Repository implements Serializable {
 	} // END OF METHOD
 
 	/**
-	 * 
+	 * Finds an object by its id and type
 	 * @param <T>
 	 * @param id
 	 * @return
@@ -264,7 +264,7 @@ public class Repository implements Serializable {
 	}
 
 	/**
-	 * 
+	 * Finds an ingredient by its label and form
 	 * @param label
 	 * @param form
 	 * @return ingredient

@@ -76,11 +76,11 @@
 						<h:outputText value="#{i18n.type}" />
 						<h:outputText value="#{bundleBean.i18n(plant_param.type)}" />								
 						<h:outputText value="#{i18n.description}" rendered="#{localeBean.language == 'en'}"/>
-						<h:outputText value="#{plant_param.description}" rendered="#{localeBean.language == 'en'}"/>
+						<h:outputText value="#{plant_param.description}" rendered="#{localeBean.language == 'en'}" escape="false"/>
 						<h:outputText value="#{i18n.descriptionar}" rendered="#{localeBean.language == 'ar'}"/>
-						<h:outputText value="#{plant_param.descriptionar}" rendered="#{localeBean.language == 'ar'}"/>
+						<h:outputText value="#{plant_param.descriptionar}" rendered="#{localeBean.language == 'ar'}" escape="false"/>
 						<h:outputText value="#{i18n.descriptionfr}" rendered="#{localeBean.language == 'fr'}"/>
-						<h:outputText value="#{plant_param.descriptionfr}" rendered="#{localeBean.language == 'fr'}"/>
+						<h:outputText value="#{plant_param.descriptionfr}" rendered="#{localeBean.language == 'fr'}" escape="false"/>
 					</h:panelGrid>
 				</p:fieldset>
 			</p:outputPanel>
