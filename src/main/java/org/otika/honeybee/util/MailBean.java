@@ -87,7 +87,7 @@ public class MailBean {
 		// Set properties
 		props = new Properties();
 		props.put("mail.smtp.host", host); // HOST
-		props.put("mail.debug", "false"); // TODO DEBUG
+		props.put("mail.debug", "true"); // TODO DEBUG
 		props.put("mail.smtp.auth", "true"); // AUTH
 		// props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.port", port);
@@ -432,8 +432,9 @@ public class MailBean {
 			System.out.println("Cleaning up! Emailing User not possible!");
 		} else {
 			HtmlEmail mail = new HtmlEmail();
-			String htmlmail = "<h1>HoneyBee: Contact Email</h1>" + "" + content;
+			String htmlmail = "<h3>HoneyBee: Contact Email</h3>" + "" + content;
 			try {
+			System.out.println("Appending contact Email properties");
 				mail.addTo("opentika.contact@gmail.com");
 				mail.setFrom(email);
 				List<InternetAddress> cia = new ArrayList<>();
