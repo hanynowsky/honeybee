@@ -17,7 +17,7 @@ import javax.inject.Named;
 public class SessionBean implements Serializable {
 
 	private static final long serialVersionUID = -8662407596761655172L;
-	private String originalViewName;
+	private String originalViewName = "/index.xhtml";
 
 	public SessionBean() {
 		

@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<ui:param name="pageTitle" value="Dumper" />
+
+	<ui:define name="header">
+		<h:outputText value="Dumper" />
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="Database Dumper" />
+	</ui:define>
+
+	<ui:define name="main">
+		<p:messages autoUpdate="true" id="dumpMessages" />
+		<h:form id="dumpForm">
+			<h:panelGrid columns="3">
+				<p:outputLabel for="input_db" value="Database" />
+				<p:inputText id="input_db" value="#{remoteDumpBean.db}" />
+				<p:message for="input_db"/>
+				<h:outputLabel for="input_uname" value="Username" />
+				<p:inputText  id="input_uname" value="#{remoteDumpBean.username}" />
+				<p:message for="input_uname"/>
+				<h:outputLabel for="input_pass" value="Password" />
+				<p:inputText id="input_pass" value="#{remoteDumpBean.password}" />
+				<p:message for="input_pass"/>
+				<h:outputLabel for="input_host" value="Host" />
+				<p:inputText id="input_host" value="#{remoteDumpBean.host}" />
+				<p:message for="input_host"/>
+				<h:outputLabel for="input_recp" value="Recipient" />
+				<p:inputText id="input_recp" value="#{remoteDumpBean.recipient}" />
+				<p:message for="input_recp"/>
+			</h:panelGrid>
+			<p:commandButton value="Dump" 
+				action="#{remoteDumpBean.dumpFile}" />
+		</h:form>
+		<p:separator style="height:1px;margin:10px;" />
+		<h:link outcome="/admin/dashboard" value="Dashboard"/>
+	</ui:define>
+</ui:composition>
