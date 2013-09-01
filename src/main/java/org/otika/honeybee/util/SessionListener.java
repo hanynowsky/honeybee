@@ -31,7 +31,10 @@ public class SessionListener implements HttpSessionListener {
 			hitCount = repository.findAllConfigurationItems().get(0)
 					.getHitcounts();
 		} catch (Exception ex) {
-			Logger.getLogger(getClass().getName()).severe(ex.getMessage());
+			System.err.println(getClass().getName()
+					+ " : Exception fetching repository hit counts");
+			Logger.getLogger(getClass().getName()).severe(
+					"Exception Hit counts: " + ex.getMessage());
 		}
 	}
 
@@ -58,7 +61,7 @@ public class SessionListener implements HttpSessionListener {
 			System.out.println("new hit counts " + c.getHitcounts());
 		} catch (Exception ex) {
 			Logger.getLogger(getClass().getName()).severe(ex.getMessage());
-			System.err.println(ex);
+			System.err.println("Exception in Session Destroyed: " + ex);
 		}
 	}
 

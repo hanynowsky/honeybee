@@ -1,0 +1,299 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="pageTitle" value="#{i18n.bim}" />
+
+	<ui:define name="header">
+		<h:outputText value="#{i18n.bim}" />
+		<p:spacer width="10" />
+		<h:outputLink value="#{request.contextPath}/misc/guide.html">
+			<p:graphicImage width="24" value="#{resource['gfx/info.png']}" />
+		</h:outputLink>
+	</ui:define>
+
+	<ui:define name="main">
+		<h:form>
+			<p:remoteCommand autoRun="true"
+				actionListener="#{utilityBean.showMessage('INFO',bundleBean.i18n('bim'),'HoneyBee')}"
+				name="bim" />
+		</h:form>
+		<p:messages autoUpdate="true" id="messages_bim" />
+		<h:form>
+			<p:panelGrid columns="2">
+				<p:outputLabel for="i_h" value="#{i18n.height} (Cm)" />
+				<p:inputMask id="i_h" value="#{computerBean.personHeight}" size="3"
+					mask="999" maxlength="3" />
+				<h:outputText value="" />
+				<p:slider for="i_h" maxValue="240" minValue="30" />
+
+				<p:outputLabel for="i_w" value="#{i18n.weight} (#{i18n.Kg})" />
+				<h:outputText value="#{computerBean.personWeight}" id="output_w" />
+				<h:inputHidden id="i_w" value="#{computerBean.personWeight}" />
+				<p:slider id="i_w_slider" for="i_w" maxValue="150" minValue="30"
+					display="output_w" />
+
+				<p:outputLabel for="i_age" value="#{i18n.age} (#{i18n.year})" />
+				<h:outputText id="output_age" value="#{computerBean.personAge}" />
+				<h:inputHidden id="i_age" value="#{computerBean.personAge}" />
+				<p:slider id="i_age_slider" for="i_age" maxValue="110" minValue="1"
+					display="output_age" />
+
+				<p:outputLabel for="i_activity" value="#{i18n.activity}" />
+				<p:selectOneListbox id="i_activity"
+					value="#{computerBean.personActivity}">
+					<f:selectItem itemLabel="#{i18n.sedentary}" itemValue="0" />
+					<f:selectItem itemLabel="#{i18n.low_active}" itemValue="1" />
+					<f:selectItem itemLabel="#{i18n.activ}" itemValue="2" />
+					<f:selectItem itemLabel="#{i18n.very_active}" itemValue="3" />
+					<f:selectItem itemLabel="#{i18n.extremely_active}" itemValue="4" />
+				</p:selectOneListbox>
+
+				<p:outputLabel for="i_gender" value="#{i18n.gender}" />
+				<p:selectOneRadio id="i_gender"
+					value="#{computerBean.personActivity}">
+					<f:selectItem itemLabel="#{i18n.male}" itemValue="0" />
+					<f:selectItem itemLabel="#{i18n.female}" itemValue="1" />
+				</p:selectOneRadio>
+
+				<p:outputLabel for="i_formula" value="#{i18n.formula}" />
+				<p:selectOneListbox id="i_formula" value="#{computerBean.formula}">
+					<f:selectItem itemLabel="Miller" itemValue="Miller" />
+					<f:selectItem itemLabel="Robinson" itemValue="Robinson" />
+					<f:selectItem itemLabel="Hamwi" itemValue="Hamwi" />
+					<f:selectItem itemLabel="Devine" itemValue="Devine" />
+					<f:selectItem itemLabel="Social" itemValue="Social" />
+				</p:selectOneListbox>
+
+				<p:outputLabel for="i_morph" value="#{i18n.morphology}" />
+				<p:selectOneListbox id="i_morph" value="#{computerBean.personMorph}">
+					<f:selectItem id="i_ecto" itemLabel="Ectomorph" itemValue="0" />
+					<f:selectItem id="i_meso" itemLabel="Mesomorph" itemValue="1" />
+					<f:selectItem id="i_endo" itemLabel="Endomorph" itemValue="2" />
+				</p:selectOneListbox>
+
+				<p:outputLabel for="i_origin" value="#{i18n.origin}" />
+				<p:selectOneRadio id="i_origin" value="#{computerBean.personOrigin}">
+					<f:selectItem itemLabel="#{i18n.caucasian}" itemValue="0" />
+					<f:selectItem itemLabel="#{i18n.asian}" itemValue="1" />
+				</p:selectOneRadio>
+
+
+				<p:outputLabel for="i_echoice" value="#{i18n.measure_choice}" />
+				<p:selectOneRadio id="i_echoice" value="#{computerBean.elbowChoice}">
+					<f:selectItem itemLabel="#{i18n.wrist}" itemValue="false" />
+					<f:selectItem itemLabel="#{i18n.elbow}" itemValue="true" />
+				</p:selectOneRadio>
+
+				<p:outputLabel for="i_elbow" value="#{i18n.elbow} (Cm)" />
+				<h:outputText id="output_elbow" value="#{computerBean.personElbow}" />
+				<h:inputHidden id="i_elbow" value="#{computerBean.personElbow}" />
+				<p:slider for="i_elbow" maxValue="15" minValue="3"
+					display="output_elbow" id="i_elbow_slider" />
+
+				<p:outputLabel for="i_wrist" value="#{i18n.wrist} (Cm)" />
+				<h:outputText id="output_wrist" value="#{computerBean.personWrist}" />
+				<h:inputHidden id="i_wrist" value="#{computerBean.personWrist}" />
+				<p:slider for="i_wrist" maxValue="35" minValue="5"
+					display="output_wrist" id="i_wrist_slider" />
+
+				<p:outputLabel for="i_waist" value="#{i18n.waist} (Cm)" />
+				<h:outputText id="output_waist" value="#{computerBean.personWaist}" />
+				<h:inputHidden id="i_waist" value="#{computerBean.personWaist}" />
+				<p:slider for="i_waist" maxValue="150" minValue="15"
+					display="output_waist" id="i_waist_slider" />
+
+				<p:outputLabel for="i_hip" value="#{i18n.hip} (Cm)" />
+				<h:outputText id="output_hip" value="#{computerBean.personHip}" />
+				<h:inputHidden id="i_hip" value="#{computerBean.personHip}" />
+				<p:slider for="i_hip" maxValue="200" minValue="30"
+					display="output_hip" id="i_hip_slider" />
+
+				<p:outputLabel for="i_neck" value="#{i18n.neck} (Cm)" />
+				<h:outputText id="output_neck" value="#{computerBean.personNeck}" />
+				<h:inputHidden id="i_neck" value="#{computerBean.personNeck}" />
+				<p:slider for="i_neck" maxValue="70" minValue="15"
+					display="output_neck" id="i_neck_slider" />
+			</p:panelGrid>
+			<div align="center" style="text-align: center; margin: 20px;">
+				<p:commandButton action="#{computerBean.computeBMI()}"
+					value="#{i18n.compute}" update=":messages_bim :bmi_results" />
+			</div>
+			<p:tooltip for="i_h">
+				<p:graphicImage value="#{resource['gfx/info.png']}" />
+				<p:spacer width="5px" />
+				<h:outputText value="Height" />
+			</p:tooltip>
+			<p:tooltip for="i_age_slider">
+				<p:graphicImage value="#{resource['gfx/info.png']}" />
+				<p:spacer width="5px" />
+				<h:outputText value="Age" />
+			</p:tooltip>
+			<p:tooltip for="i_w_slider">
+				<p:graphicImage value="#{resource['gfx/info.png']}" />
+				<p:spacer width="5px" />
+				<h:outputText value="Weight" />
+			</p:tooltip>
+			<p:tooltip for="i_morph" showEvent="click">
+				<p:panelGrid columns="3">
+					<h:outputLabel value="#{i18n.ectomorph}" />
+					<h:outputText value="#{i18n.ecto}" />
+					<p:graphicImage width="50" value="#{resource['bmi/ectomorph.gif']}" />
+					<h:outputLabel value="#{i18n.mesomorph}" />
+					<h:outputText value="#{i18n.meso}" />
+					<p:graphicImage width="50" value="#{resource['bmi/mesomorph.gif']}" />
+					<h:outputLabel value="#{i18n.endomorph}" />
+					<h:outputText value="#{i18n.endo}" />
+					<p:graphicImage width="50" value="#{resource['bmi/endomorph.gif']}" />
+				</p:panelGrid>
+			</p:tooltip>
+
+			<p:tooltip for="i_elbow_slider">
+				<p:panelGrid columns="1" style="text-align:center;">
+					<h:outputLabel value="#{i18n.elbow}" />
+					<p:graphicImage width="200" value="#{resource['bmi/elbow.jpg']}" />
+				</p:panelGrid>
+			</p:tooltip>
+
+			<p:tooltip for="i_wrist_slider">
+				<p:panelGrid columns="1" style="text-align:center;">
+					<h:outputLabel value="#{i18n.wrist}" />
+					<p:graphicImage width="200" value="#{resource['bmi/wrist.gif']}" />
+				</p:panelGrid>
+			</p:tooltip>
+
+			<p:tooltip for="i_waist_slider">
+				<p:panelGrid columns="1" style="text-align:center;">
+					<h:outputLabel value="#{i18n.waist}" />
+					<p:graphicImage width="200" value="#{resource['bmi/measures.jpg']}" />
+				</p:panelGrid>
+			</p:tooltip>
+
+			<p:tooltip for="i_neck_slider">
+				<p:panelGrid columns="1" style="text-align:center;">
+					<h:outputLabel value="#{i18n.neck}" />
+					<p:graphicImage width="200" value="#{resource['bmi/neck.jpg']}" />
+				</p:panelGrid>
+			</p:tooltip>
+
+			<p:tooltip for="i_hip_slider">
+				<p:panelGrid columns="1" style="text-align:center;">
+					<h:outputLabel value="#{i18n.hip}" />
+					<p:graphicImage width="200" value="#{resource['bmi/measures.jpg']}" />
+				</p:panelGrid>
+			</p:tooltip>
+		</h:form>
+		<p:separator style="height:2px;margin:5px;" />
+		<p:outputPanel id="bmi_results" style="margin:5px;">
+			<p:panelGrid columns="3" rendered="#{computerBean.result > 1}">
+				<h:outputLabel value="#{i18n.bmi}" />
+				<h:outputText value="#{computerBean.result}"
+					style="color:#{computerBean.statusColor};" />
+				<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
+					id="img_result" />
+				<h:outputLabel value="#{i18n.tdee}" />
+				<h:outputText value="#{computerBean.TDEE} #{i18n.cal_day}" />
+				<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
+					id="img_tdee" />
+				<h:outputLabel value="#{i18n.health}" />
+				<h:outputText value="#{computerBean.health}" />
+				<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
+					id="img_health" />
+				<h:outputLabel value="#{i18n.health_status}" />
+				<h:outputText value="#{computerBean.healthText}" />
+				<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
+					id="img_healtht" />
+				<h:outputLabel value="#{i18n.bodytype}" />
+				<h:outputText value="#{computerBean.personBodytype}" />
+				<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
+					id="img_bodytype" />
+				<h:outputLabel value="#{i18n.bodyfat}" />
+				<h:outputText value="#{computerBean.personBodyfat} %" />
+				<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
+					id="img_bodyfat" />
+				<h:outputLabel value="#{i18n.bmr}" />
+				<h:outputText value="#{computerBean.BMR} #{i18n.cal_day}" />
+				<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
+					id="img_bmr" />
+				<h:outputLabel value="#{i18n.eer}" />
+				<h:outputText value="#{computerBean.EER} #{i18n.cal_day}" />
+				<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
+					id="img_eer" />
+				<h:outputLabel value="#{i18n.ideal_bmi}" />
+				<h:outputText value="#{computerBean.ideal}" />
+				<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
+					id="img_ibmi" />
+				<h:outputLabel value="#{i18n.ideal_weight}" />
+				<h:outputText value="#{computerBean.iweight} #{i18n.Kg}" />
+				<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
+					id="img_iweight" />
+				<h:outputLabel value="#{i18n.bodytype_status}" />
+				<h:outputText value="#{computerBean.BFString}" />
+				<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
+					id="img_bfs" />
+			</p:panelGrid>
+			<p:tooltip for="img_result">
+				<p:graphicImage value="#{resource['gfx/info.png']}" />
+				<p:spacer width="5px" />
+				<h:outputText value="#{i18n.bim}" />
+			</p:tooltip>
+			<p:tooltip for="img_tdee">
+				<p:graphicImage value="#{resource['gfx/info.png']}" />
+				<p:spacer width="5px" />
+				<h:outputText value="#{i18n.tdee_exp}" />
+			</p:tooltip>
+			<p:tooltip for="img_health">
+				<p:graphicImage value="#{resource['gfx/info.png']}" />
+				<p:spacer width="5px" />
+				<h:outputText value="#{i18n.health}" />
+			</p:tooltip>
+			<p:tooltip for="img_healtht">
+				<p:graphicImage value="#{resource['gfx/info.png']}" />
+				<p:spacer width="5px" />
+				<h:outputText value="#{i18n.health}" />
+			</p:tooltip>
+			<p:tooltip for="img_bodytype">
+				<p:graphicImage value="#{resource['gfx/info.png']}" />
+				<p:spacer width="5px" />
+				<h:outputText value="#{i18n.bodytype}" />
+			</p:tooltip>
+			<p:tooltip for="img_bodyfat">
+				<p:graphicImage value="#{resource['gfx/info.png']}" />
+				<p:spacer width="5px" />
+				<h:outputText value="#{i18n.bodyfat}" />
+			</p:tooltip>
+			<p:tooltip for="img_bmr">
+				<p:graphicImage value="#{resource['gfx/info.png']}" />
+				<p:spacer width="5px" />
+				<h:outputText value="#{i18n.bmr_exp}" />
+			</p:tooltip>
+			<p:tooltip for="img_eer">
+				<p:graphicImage value="#{resource['gfx/info.png']}" />
+				<p:spacer width="5px" />
+				<h:outputText value="#{i18n.eer_exp}" />
+			</p:tooltip>
+			<p:tooltip for="img_ibmi">
+				<p:graphicImage value="#{resource['gfx/info.png']}" />
+				<p:spacer width="5px" />
+				<h:outputText value="#{i18n.ideal_bmi}" />
+			</p:tooltip>
+			<p:tooltip for="img_iweight">
+				<p:graphicImage value="#{resource['gfx/info.png']}" />
+				<p:spacer width="5px" />
+				<h:outputText value="#{i18n.ideal_weight}" />
+			</p:tooltip>
+			<p:tooltip for="img_bfs">
+				<p:graphicImage value="#{resource['gfx/info.png']}" />
+				<p:spacer width="5px" />
+				<h:outputText value="#{i18n.bodyfat} status" />
+			</p:tooltip>
+		</p:outputPanel>
+		<p:separator style="height:2px;" />
+	</ui:define>
+
+</ui:composition>

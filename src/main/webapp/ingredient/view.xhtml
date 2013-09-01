@@ -82,22 +82,20 @@
 			<h:outputLabel for="ingredientBeanIngredientImage"
 				value="#{i18n.image}" />
 			<h:graphicImage id="ingredientBeanIngredientImage"
-				value="/resources/plants/#{ingredientBean.ingredient.image}" />
+				value="/resources/plants/#{ingredientBean.ingredient.image}" 
+				height="225" style="border:2px solid #CCCCCC;"/>
 			<h:outputText />
 			<h:outputLabel for="ingredientBeanIngredientDescription"
 				value="#{i18n.description}" />
 			<h:outputText id="ingredientBeanIngredientDescription"
-				value="#{ingredientBean.ingredient.description}" />
-			<h:outputText />
-			<h:outputLabel for="ingredientBeanIngredientDescriptionfr"
-				value="#{i18n.descriptionfr}" />
+				value="#{ingredientBean.ingredient.description}" escape="false"
+				rendered="#{localeBean.selectedLang.code == 'en'}"/>					
 			<h:outputText id="ingredientBeanIngredientDescriptionfr"
-				value="#{ingredientBean.ingredient.descriptionfr}" />
-			<h:outputText />
-			<h:outputLabel for="ingredientBeanIngredientDescriptionar"
-				value="#{i18n.descriptionar}" />
+				value="#{ingredientBean.ingredient.descriptionfr}" escape="false"
+				rendered="#{localeBean.selectedLang.code == 'fr'}"/>					
 			<h:outputText id="ingredientBeanIngredientDescriptionar"
-				value="#{ingredientBean.ingredient.descriptionar}" />
+				value="#{ingredientBean.ingredient.descriptionar}" escape="false"
+				rendered="#{localeBean.selectedLang.code == 'ar'}"/>
 			<h:outputText />
 			<h:outputLabel for="ingredientBeanIngredientCoefficient"
 				value="#{i18n.coefficient}" />

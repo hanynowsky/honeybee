@@ -27,58 +27,75 @@
 
 	<ui:define name="main">
 		<p:messages autoUpdate="true" showDetail="false" />
+		<p:dialog widgetVar="plantViewDialog" id="pvDialog" closable="true" 
+		header="#{plantBean.plant.labellat}" maximizable="false" resizable="true"
+		minimizable="true" style="text-align:center;">
+		<p:graphicImage id="plantGraphic" onclick="plantViewDialog.hide();"
+					value="#{imagesBean.image}" style="border:solid 1px #DDDDDD;"
+					rendered="#{plantBean.plant.graphic != null}">
+					<f:param name="plant_id" value="#{plantBean.plant.id}" />
+				</p:graphicImage>
+		</p:dialog>
+		<p:tooltip for="plantBeanPlantGraphic" value="#{i18n.graphic}"/>
+		<p:tooltip for="plantBeanPlantImage" value="#{i18n.image}"/>
+		<h:panelGrid columns="3">
+			<h:panelGrid columnClasses="label,component,required" columns="3">
+				<h:outputLabel for="plantBeanPlantLabel" value="#{i18n.label}" />
+				<h:outputText id="plantBeanPlantLabel"
+					value="#{plantBean.plant.label}" />
+				<h:outputText />
+				<h:outputLabel for="plantBeanPlantLabelfr" value="#{i18n.labelfr}" />
+				<h:outputText id="plantBeanPlantLabelfr"
+					value="#{plantBean.plant.labelfr}" />
+				<h:outputText />
+				<h:outputLabel for="plantBeanPlantLabellat" value="#{i18n.labellat}" />
+				<h:outputText id="plantBeanPlantLabellat"
+					value="#{plantBean.plant.labellat}" />
+				<h:outputText />
+				<h:outputLabel for="plantBeanPlantLabelar" value="#{i18n.labelar}" />
+				<h:outputText id="plantBeanPlantLabelar"
+					value="#{plantBean.plant.labelar}" />
+				<h:outputText />
+				<h:outputLabel for="plantBeanPlantLabelmar" value="#{i18n.labelmar}" />
+				<h:outputText id="plantBeanPlantLabelmar"
+					value="#{plantBean.plant.labelmar}" />
+				<h:outputText />
+				<h:outputLabel for="plantBeanPlantSeason" value="#{i18n.season}" />
+				<h:outputText id="plantBeanPlantSeason"
+					value="#{bundleBean.i18n(plantBean.plant.season)}" />
+				<h:outputText />
+				<h:outputLabel for="plantBeanPlantType" value="#{i18n.type}" />
+				<h:outputText id="plantBeanPlantType"
+					value="#{utilityBean.capitalize(plantBean.i18nLabel('type'))}" />
+				<h:outputText />
+				<h:outputLabel for="plantBeanPlantCategory" value="#{i18n.category}" />
+				<h:outputText id="plantBeanPlantCategory"
+					value="#{utilityBean.capitalize(plantBean.i18nLabel('category'))}" />
+				<h:outputText />
+			</h:panelGrid>
+			<h:panelGrid columns="1" style="text-align:center;margin:0px;">
+				<h:outputLabel for="plantBeanPlantGraphic" value="#{i18n.graphic}"
+					rendered="false" />
+				<p:graphicImage onclick="plantViewDialog.show();" 
+				id="plantBeanPlantGraphic" width="215"
+					value="#{imagesBean.image}" style="border:solid 1px #DDDDDD;"
+					rendered="#{plantBean.plant.graphic != null}">
+					<f:param name="plant_id" value="#{plantBean.plant.id}" />
+				</p:graphicImage>
+				<p:graphicImage value="#{resource['search.png']}"
+					rendered="#{plantBean.plant.graphic == null}" />
+			</h:panelGrid>
+			<h:panelGrid columns="1" style="text-align:center;margin:àpx;">
+				<h:outputLabel for="plantBeanPlantImage" value="#{i18n.image}"
+					rendered="false" />
+				<h:graphicImage id="plantBeanPlantImage" width="215"
+					value="/resources/plants/#{plantBean.plant.image}"
+					style="border:solid 1px #DDDDDD;" />
+				<h:outputText />
+			</h:panelGrid>
+		</h:panelGrid>
+		<p:separator style="height:2px; margin:5px;" />
 		<h:panelGrid columnClasses="label,component,required" columns="3">
-			<h:outputLabel for="plantBeanPlantLabel" value="#{i18n.label}" />
-			<h:outputText id="plantBeanPlantLabel"
-				value="#{plantBean.plant.label}" />
-			<h:outputText />
-			<h:outputLabel for="plantBeanPlantLabelfr" value="#{i18n.labelfr}" />
-			<h:outputText id="plantBeanPlantLabelfr"
-				value="#{plantBean.plant.labelfr}" />
-			<h:outputText />
-			<h:outputLabel for="plantBeanPlantLabellat" value="#{i18n.labellat}" />
-			<h:outputText id="plantBeanPlantLabellat"
-				value="#{plantBean.plant.labellat}" />
-			<h:outputText />
-			<h:outputLabel for="plantBeanPlantLabelar" value="#{i18n.labelar}" />
-			<h:outputText id="plantBeanPlantLabelar"
-				value="#{plantBean.plant.labelar}" />
-			<h:outputText />
-			<h:outputLabel for="plantBeanPlantLabelmar" value="#{i18n.labelmar}" />
-			<h:outputText id="plantBeanPlantLabelmar"
-				value="#{plantBean.plant.labelmar}" />
-			<h:outputText />
-			<h:outputLabel for="plantBeanPlantSeason" value="#{i18n.season}" />
-			<h:outputText id="plantBeanPlantSeason"
-				value="#{bundleBean.i18n(plantBean.plant.season)}" />
-			<h:outputText />
-			<h:outputLabel for="plantBeanPlantType" value="#{i18n.type}" />
-			<h:outputText id="plantBeanPlantType"
-				value="#{utilityBean.capitalize(plantBean.i18nLabel('type'))}" />
-			<h:outputText />
-
-			<h:outputLabel for="plantBeanPlantCategory" value="#{i18n.category}" />
-			<h:outputText id="plantBeanPlantCategory"
-				value="#{utilityBean.capitalize(plantBean.i18nLabel('category'))}" />
-			<h:outputText />
-
-			<h:outputLabel for="plantBeanPlantImage" value="#{i18n.image}" />
-			<h:graphicImage id="plantBeanPlantImage" width="250"
-				value="/resources/plants/#{plantBean.plant.image}" />
-			<h:outputText />
-			<h:outputLabel for="plantBeanPlantGraphic" value="#{i18n.graphic}" />
-			<p:graphicImage id="plantBeanPlantGraphic" width="250"
-				value="#{imagesBean.image}"
-				rendered="#{plantBean.plant.graphic != null}">
-				<f:param name="plant_id" value="#{plantBean.plant.id}" />
-			</p:graphicImage>
-			<p:graphicImage value="#{resource['search.png']}"
-				rendered="#{plantBean.plant.graphic == null}" />
-			<h:outputText />
-			<h:outputLabel value="" for="sep_pbpd" />
-			<h:outputText id="sep_pbpd" style="color: #ccc;margin:15px;"
-				value="---------------------------------------------------------" />
-			<h:outputText />
 			<h:outputLabel for="plantBeanPlantDescription"
 				value="#{i18n.description}" />
 			<h:outputText id="plantBeanPlantDescription"
@@ -90,10 +107,6 @@
 			<h:outputText dir="rtl" id="plantBeanPlantDescriptionar"
 				value="#{plantBean.plant.descriptionar}" escape="false"
 				rendered="#{localeBean.selectedLang.code == 'ar'}" />
-			<h:outputText />
-			<h:outputLabel value="" for="sep_pbpi" />
-			<h:outputText id="sep_pbpi" style="color: #ccc;margin:15px;"
-				value="---------------------------------------------------------" />
 			<h:outputText />
 			<h:outputLabel for="plantBeanPlantIngredients"
 				value="#{i18n.ingredients}" />

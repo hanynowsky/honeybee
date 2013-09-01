@@ -524,14 +524,18 @@ public class UtilityBean implements Serializable {
 	 *            Path to file located in a directory
 	 * @return file DB dump file
 	 */
-	public File dumpFile(String path) {
+	public File dumpFile(String somepath) {
 		try {
-			File file = new File(path);
-			showMessage("info", path+" : DB file dumped", "");
-			return zipFile(file);
+			File file = new File(somepath);
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			zipFile(file);		
+			return new File(file.getPath() + ".zip");
 		} catch (Exception ex) {
 			System.out.println("dumpFile: Failure retrieving file");
-			Logger.getLogger(getClass().getName()).severe(ex.getMessage());
+			Logger.getLogger(getClass().getName()).severe(
+					ex.getCause().getMessage());
 			return null;
 		}
 	}
@@ -597,34 +601,40 @@ public class UtilityBean implements Serializable {
 	 * 
 	 * @param file
 	 * @return
+	 * @throws IOException
 	 */
-	public File zipFile(File file) {
+	public void zipFile(File file) {
 		try {
-			byte[] buffer = new byte[1024];
+			System.out.println("Attempt to zip a file: " + file.getPath());
 			FileOutputStream fos = new FileOutputStream(file.getPath() + ".zip");
 			ZipOutputStream zos = new ZipOutputStream(fos);
 			ZipEntry ze = new ZipEntry(file.getName());
 			zos.putNextEntry(ze);
 			FileInputStream in = new FileInputStream(file.getPath());
+			byte[] buffer = new byte[10000024];
 			int len;
+			System.out.println("Writing to Zip output stream");
 			while ((len = in.read(buffer)) > 0) {
 				zos.write(buffer, 0, len);
 			}
+			System.out.println("buffer written!");
 			in.close();
+			System.out.println("input stream closed");
 			zos.closeEntry();
+			System.out.println("zos close entry achieved!");
 			zos.close();
+			System.out.println("zos closed");
+			System.out.println("Zipped! " + file.getPath());
 			org.jboss.logging.Logger.getLogger(getClass().getName()).info(
-					"\nZipped! " + file.getPath());
+					"Zipped! " + file.getPath());			
 
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			String msg = e.getMessage();
+		} catch (IOException e) {
+			System.err.println("Zipping file failed: " + e.getMessage());
+			String msg = e.getMessage() + "" + e.getCause().getMessage();
 			org.jboss.logging.Logger.getLogger(getClass().getName()).error(
 					"\n" + msg);
-			return null;
 		}
-		return new File(file.getPath() + ".zip");
-	}	
+	}
 
 	/**
 	 * Capitalize a String

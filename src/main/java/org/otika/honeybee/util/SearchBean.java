@@ -32,118 +32,139 @@ import org.otika.honeybee.model.Ingredient;
 @StatefulTimeout(value = 29, unit = TimeUnit.MINUTES)
 public class SearchBean implements Serializable {
 
-    private static final long serialVersionUID = 7346308736815039014L;
-    private String keyword;
-    private List<?> ingredients;
-    @PersistenceContext(type = PersistenceContextType.EXTENDED)
-    private EntityManager entityManager;
-    protected FullTextSession fullTextSession;
-    private FullTextEntityManager fullTextEntityManager;
-    @Inject
-    private UtilityBean utilityBean;
+	private static final long serialVersionUID = 7346308736815039014L;
+	private String keyword;
+	private List<?> ingredients;
+	@PersistenceContext(type = PersistenceContextType.EXTENDED)
+	private EntityManager entityManager;
+	protected FullTextSession fullTextSession;
+	private FullTextEntityManager fullTextEntityManager;
+	@Inject
+	private UtilityBean utilityBean;
 
-    @PostConstruct
-    public void init() {
+	@PostConstruct
+	public void init() {
 
-        ingredients = new ArrayList<>();
+		ingredients = new ArrayList<>();
 
-        try {
-            fullTextEntityManager = Search
-                    .getFullTextEntityManager(this.entityManager);
-            fullTextEntityManager.createIndexer().startAndWait();
-        } catch (InterruptedException e) {
-            Logger.getLogger(getClass().getName()).
-                    error(e.getMessage() + " : " + e.getCause());
-        }
-    }
+		try {
+			fullTextEntityManager = Search
+					.getFullTextEntityManager(this.entityManager);
+			fullTextEntityManager.createIndexer().startAndWait();
+		} catch (InterruptedException e) {
+			Logger.getLogger(getClass().getName()).error(
+					e.getMessage() + " : " + e.getCause());
+		}
+	}
 
-    /**
-     * Hibernate Search Method to search ingredients
-     */
-    public void searchIngredients() {
-        if (keyword != null && !keyword.equals("")) {
-            QueryBuilder qb = fullTextEntityManager.getSearchFactory()
-                    .buildQueryBuilder().forEntity(Ingredient.class).get();
-            org.apache.lucene.search.Query query = qb
-                    .keyword()
-                    .fuzzy()
-                    .withThreshold(.7f)
-                    .withPrefixLength(1)
-                    .onFields("label", "labelfr", "labelar", "labelmar",
-                    "plant.label", "honey.labelar", "substance.label",
-                    "substance.labelar", "substance.labelfr",
-                    "honey.labelfr", "honey.label", "plant.labelfr",
-                    "plant.labelar", "plant.season","plant.type",
-                    "description", "descriptionar",
-                    "descriptionfr", "form", "virtues.label",
-                    "virtues.labelar", "virtues.labelfr",
-                    "defects.label", "defects.labelar",
-                    "defects.labelfr", "prescriptions.title",
-                    "prescriptions.titlear", "virtues.bodypart.label",
-                    "prescriptions.treatment",
-                    "virtues.bodypart.labelar",
-                    "virtues.bodypart.labelfr",
-                    "prescriptions.treatmentfr",
-                    "prescriptions.treatmentar",
-                    "prescriptions.preparation",
-                    "prescriptions.preparationfr",
-                    "prescriptions.preparationar",
-                    "prescriptions.titlefr", "defects.bodypart.label",
-                    "prescriptions.witnesses.subject",
-                    "defects.bodypart.labelar",
-                    "defects.bodypart.labelfr",
-                    "prescriptions.author.name",
-                    "prescriptions.author.namear",
-                    "prescriptions.author.surname",
-                    "prescriptions.author.surnamear",
-                    "prescriptions.author.bio",
-                    "prescriptions.author.expertise",
-                    "prescriptions.author.country",
-                    "prescriptions.author.countryar").matching(keyword)
-                    .createQuery();
+	/**
+	 * Refresh hibernate indexer
+	 */
+	public void refreshIndex() {
+		try {
+			Logger.getLogger(getClass().getName()).info(
+					"Re-indexing hibernate search");
+			fullTextEntityManager = null;
+			ingredients = new ArrayList<>();
+			fullTextEntityManager = Search
+					.getFullTextEntityManager(this.entityManager);
+			fullTextEntityManager.createIndexer().startAndWait();
+		} catch (Exception ex) {
+			Logger.getLogger(getClass().getName()).error(
+					"Failure refreshing Hibernate Search Indexer");
+		}
+	}
 
-            // TODO add sorting by id
-            javax.persistence.Query persistenceQuery = fullTextEntityManager
-                    .createFullTextQuery(query, Ingredient.class);
-            int i = persistenceQuery.getResultList().size();
-            String message = "Search returned " + i + " Results";
-            utilityBean.showMessage("INFO", message, "-");
-            ingredients = persistenceQuery.getResultList();
+	/**
+	 * Hibernate Search Method to search ingredients
+	 */
+	public void searchIngredients() {
+		if (keyword != null && !keyword.equals("")) {
+			QueryBuilder qb = fullTextEntityManager.getSearchFactory()
+					.buildQueryBuilder().forEntity(Ingredient.class).get();
+			org.apache.lucene.search.Query query = qb
+					.keyword()
+					.fuzzy()
+					.withThreshold(.7f)
+					.withPrefixLength(1)
+					.onFields("label", "labelfr", "labelar", "labelmar",
+							"plant.label", "honey.labelar", "substance.label",
+							"substance.labelar", "substance.labelfr",
+							"honey.labelfr", "honey.label", "plant.labelfr",
+							"plant.labelar", "plant.season", "plant.type",
+							"description", "descriptionar", "descriptionfr",
+							"form", "virtues.label", "virtues.labelar",
+							"virtues.labelfr", "defects.label",
+							"defects.labelar", "defects.labelfr",
+							"prescriptions.title", "prescriptions.titlear",
+							"virtues.bodypart.label",
+							"prescriptions.treatment",
+							"virtues.bodypart.labelar",
+							"virtues.bodypart.labelfr",
+							"prescriptions.treatmentfr",
+							"prescriptions.treatmentar",
+							"prescriptions.preparation",
+							"prescriptions.preparationfr",
+							"prescriptions.preparationar",
+							"prescriptions.titlefr", "defects.bodypart.label",
+							"prescriptions.witnesses.subject",
+							"defects.bodypart.labelar",
+							"defects.bodypart.labelfr",
+							"prescriptions.author.name",
+							"prescriptions.author.namear",
+							"prescriptions.author.surname",
+							"prescriptions.author.surnamear",
+							"prescriptions.author.bio",
+							"prescriptions.author.expertise",
+							"prescriptions.author.country",
+							"prescriptions.author.countryar").matching(keyword)
+					.createQuery();
 
-            // entityManager.getTransaction().commit();
-            // entityManager.close();
-        } else {
-            String message = "Please type a keyword";
-            utilityBean.showMessage("WARN", message, "-");
-        }
-    }
+			// TODO add sorting by id
+			javax.persistence.Query persistenceQuery = fullTextEntityManager
+					.createFullTextQuery(query, Ingredient.class);
+			int i = persistenceQuery.getResultList().size();
+			String message = "Search returned " + i + " Results";
+			utilityBean.showMessage("INFO", message, "-");
+			ingredients = persistenceQuery.getResultList();
 
-    /**
-     * Reset keyword and ingredient list.
-     * <p>
-     * The method cannot be decorated by <em>@Remove</em> in order to free from
-     * memory the instance of Search Bean, for it is a non-dependant bean
-     * </p>
-     */
-    //@Remove
-    public void release() {
-        setKeyword("");
-        ingredients.clear();
-    }
+			// entityManager.getTransaction().commit();
+			// entityManager.close();
+		} else {
+			String message = "Please type a keyword";
+			utilityBean.showMessage("WARN", message, "-");
+		}
+	}
 
-    public String getKeyword() {
-        return keyword;
-    }
+	/**
+	 * Reset keyword and ingredient list.
+	 * <p>
+	 * The method cannot be decorated by <em>@Remove</em> in order to free from
+	 * memory the instance of Search Bean, for it is a non-dependant bean
+	 * </p>
+	 */
+	// @Remove
+	public void release() {
+		Logger.getLogger(getClass().getName()).info(
+				"Clearing hibernate search indexed list");
+		setKeyword("");
+		ingredients.clear();
+		refreshIndex();
+	}
 
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
+	public String getKeyword() {
+		return keyword;
+	}
 
-    public List<?> getIngredients() {
-        return ingredients;
-    }
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 
-    public void setIngredients(List<?> ingredients) {
-        this.ingredients = ingredients;
-    }
+	public List<?> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(List<?> ingredients) {
+		this.ingredients = ingredients;
+	}
 }

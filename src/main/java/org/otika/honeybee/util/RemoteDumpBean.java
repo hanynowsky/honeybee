@@ -15,7 +15,7 @@ public class RemoteDumpBean {
 	private String username = "adminwNJulYt";
 	private String password = "1GK_z_NqUW7g";
 	private String host = "127.7.193.130";
-	private String recipient = "contact.opentika@gmail.com";
+	private String recipient = "opentika.contact@gmail.com";
 	private String db = "honeybee";
 	@Inject
 	private UtilityBean utilityBean;
@@ -48,7 +48,7 @@ public class RemoteDumpBean {
 			/* Send DB by email */
 
 			if (utilityBean.hasInternet()) {
-				mailBean.emailDatabase("kyoshuu.madani@gmail.com",
+				mailBean.emailDatabase(recipient,
 						utilityBean.dumpFile(fileName));
 				System.out.println("Attempt to email DB");
 				Logger.getLogger(getClass().getName()).info(

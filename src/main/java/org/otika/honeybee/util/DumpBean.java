@@ -1,9 +1,6 @@
 package org.otika.honeybee.util;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -72,38 +69,55 @@ public class DumpBean {
 	 */
 	// @Schedule(second = "*/30", minute = "*", hour = "*", dayOfWeek = "*",
 	// dayOfMonth = "*", month = "*", year = "*", info = "DataBaseDumpTimer")
-	@Schedule(second = "59", minute = "40", hour = "8", dayOfWeek = "*", dayOfMonth = "*", month = "*", year = "*", info = "DataBaseDumpTimer")
+	@Schedule(second = "11", minute = "06", hour = "16", dayOfWeek = "*", dayOfMonth = "*", month = "*", year = "*", info = "DataBaseDumpTimer")
 	private void scheduledTimeout(final Timer t) {
-		Date date = new Date();
-		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
-		DateFormat monthFormat = new SimpleDateFormat("MM");
-		DateFormat yearFormat = new SimpleDateFormat("yyyy");
-		DateFormat dayFormat = new SimpleDateFormat("dd");
-
-		String dateFormat = yearFormat.format(date) + monthFormat.format(date)
-				+ dayFormat.format(date) + "-" + timeFormat.format(date);
+		/*
+		 * Date date = new Date(); DateFormat timeFormat = new
+		 * SimpleDateFormat("HH:mm"); DateFormat monthFormat = new
+		 * SimpleDateFormat("MM"); DateFormat yearFormat = new
+		 * SimpleDateFormat("yyyy"); DateFormat dayFormat = new
+		 * SimpleDateFormat("dd");
+		 * 
+		 * String dateFormat = yearFormat.format(date) +
+		 * monthFormat.format(date) + dayFormat.format(date);
+		 */
 
 		if (System.getProperty("user.home").contains("hanin")) {
-			utilityBean.execBash("mkdir -v -p $HOME/app-root/data");
 			String dumpPath = System.getProperty("java.io.tmpdir")
-					+ File.separator + "honeybeedump" + dateFormat + ".sql";
+					+ File.separator + "honeybee.sql";
+			utilityBean.execBash("mkdir -v -p $HOME/app-root/data");
+
 			utilityBean.execBash("mysqldump -v -u root -pmonsql honeybee > "
 					+ dumpPath);
-			utilityBean.dumpFile(dumpPath);
-			utilityBean
-					.execBash(" notify-send -u low -a HoneyBee -i emblem-default HoneyBee-DB-Dump-Done");
 			try {
-				File tempFile = new File(dumpPath);
-				if (tempFile.exists()) {
-					tempFile.delete();
-				}
-				utilityBean.execBash("mv " + dumpPath + ".zip"
-						+ " $HOME/app-root/data/");
+				System.out.println("Attempt to call zip file function");
+				utilityBean.zipFile(new File(dumpPath)); 
+				// Produces exception if we use faces Message
+				System.out.println("zip file function called");
+
 			} catch (Exception ex) {
-				String msg = "Exception handling dump file: " + ex.getMessage();
+				String msg = "Hanin: Exception handling dump file: "
+						+ ex.getMessage();
 				Logger.getLogger(getClass().getName()).severe(msg);
 			}
-			// TODO move the zipped file and delete the temporary file
+
+			try {
+				File tempFile = new File(dumpPath);
+				File comFile = new File(dumpPath + ".zip");
+				if (tempFile.exists()) {
+					utilityBean
+							.execBash("notify-send -u low -a HoneyBee -i emblem-default HoneyBee-DB-Dump-Done");
+					utilityBean.execBash("mv " + dumpPath + ""
+							+ " $HOME/app-root/data/");
+					tempFile.delete();
+				}
+				if (comFile.exists()) {
+					utilityBean.execBash("mv " + dumpPath + ".zip"
+							+ " $HOME/app-root/data/");
+				}
+			} catch (Exception exp) {
+				System.err.println(exp.getMessage());
+			}
 
 		} else {
 			String username = System.getenv("OPENSHIFT_MYSQLDB_USERNAME");
@@ -118,7 +132,7 @@ public class DumpBean {
 			try {
 
 				String fileName = System.getProperty("java.io.tmpdir")
-						+ File.separator + "honeybeedump" + dateFormat + ".sql";
+						+ File.separator + "honeybee.sql";
 				Logger.getLogger(getClass().getName()).log(Level.INFO,
 						"Attempt to dump DB : username & pass = {0} {1}",
 						new Object[] { username, pass });
@@ -128,7 +142,7 @@ public class DumpBean {
 				/* Send DB by email */
 				Logger.getLogger(getClass().getName()).info(
 						"Attempt to send DB email");
-				mailBean.emailDatabase("kyoshuu.madani@gmail.com",
+				mailBean.emailDatabase("opentika.contact@gmail.com",
 						utilityBean.dumpFile(fileName));
 
 				File tempFile = new File(fileName);
