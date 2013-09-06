@@ -208,25 +208,25 @@
 				<p:tab title="Somatotype">
 					<p:panelGrid columns="2">
 						<p:outputLabel for="i_subtricepsSkinFold"
-							value="#{i18n.subtriceps_skinFold} (Cm)" />
+							value="#{i18n.subtriceps_skinFold} (mm)" />
 						<p:spinner id="i_subtricepsSkinFold" stepFactor="0.10"
 							maxlength="4" max="25" min="2"
 							value="#{somatotypeBean.subtricepsSkinFold}" styleClass="spinner" />
-						<p:outputLabel value="#{i18n.subcapular_skinFold} (Cm)" />
+						<p:outputLabel value="#{i18n.subcapular_skinFold} (mm)" />
 						<p:spinner id="i_subcapularSkinFold" stepFactor="0.10"
 							maxlength="4" max="25" min="2"
 							value="#{somatotypeBean.subcapularSkinFold}" styleClass="spinner" />
-						<p:outputLabel value="#{i18n.suprailiac_skinFold} (Cm)" />
+						<p:outputLabel value="#{i18n.suprailiac_skinFold} (mm)" />
 						<p:spinner id="i_suprailiacSkinFold" stepFactor="0.10"
 							maxlength="4" max="25" min="2"
 							value="#{somatotypeBean.suprailiacSkinFold}" styleClass="spinner" />
 						<p:outputLabel for="i_calfSkinFold"
-							value="#{i18n.calf_skinFold} (Cm)" />
+							value="#{i18n.calf_skinFold} (mm)" />
 						<p:spinner id="i_calfSkinFold" stepFactor="0.10" maxlength="4"
 							max="2" min="0.0" value="#{somatotypeBean.calfSkinFold}"
 							styleClass="spinner" />
 						<p:outputLabel for="i_tricepsSkinFold"
-							value="#{i18n.triceps_skinFold} (Cm)" />
+							value="#{i18n.triceps_skinFold} (mm)" />
 						<p:spinner id="i_tricepsSkinFold" stepFactor="0.10" maxlength="4"
 							max="25" min="2.0" value="#{somatotypeBean.tricepsSkinFold}"
 							styleClass="spinner" />
@@ -385,21 +385,21 @@
 					<h:outputText value="#{i18n.ideal_weight} Range" />
 				</p:tooltip>
 			</h:panelGrid>
-			<p:panel>
-				<p:panelGrid columns="3">
+			<p:panel style="text-align:center;"
+				rendered="#{computerBean.result > 1}">
+				<p:panelGrid columns="6">
 					<h:outputLabel value="#{i18n.somatotype}" />
 					<h:outputText value="#{somatotypeBean.somatotype}" />
 					<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
 						id="img_soma" />
-				</p:panelGrid>
-				<p:panelGrid columns="3">
 					<h:outputLabel value="#{i18n.somatotype_desc}" />
 					<h:outputText value="#{somatotypeBean.somatotypeDesc}" />
 					<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
 						id="img_somaDesc" />
 				</p:panelGrid>
-				<p:graphicImage width="400" id="stoma_chart_img"
-					value="#{resource['gfx/stoma-chart.jpg']}" />
+				<p:graphicImage width="500" id="stoma_chart_img"
+					value="#{resource['bmi/stoma-chart.jpg']}"
+					style="margin:5px;border:1px solid gray;" />
 			</p:panel>
 		</p:outputPanel>
 		<p:separator style="height:2px;" id="sep_1" />

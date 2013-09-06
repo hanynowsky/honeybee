@@ -28,6 +28,7 @@ public class RemoteDumpBean {
 
 	/**
 	 * Dump DB File and send it by email
+	 * 
 	 * @return null
 	 */
 	public String dumpFile() {
@@ -48,17 +49,21 @@ public class RemoteDumpBean {
 			/* Send DB by email */
 
 			if (utilityBean.hasInternet()) {
-				mailBean.emailDatabase(recipient,
-						utilityBean.dumpFile(fileName));
-				System.out.println("Attempt to email DB");
+				System.out
+						.println("We have internet access: Attempt to email DB");
 				Logger.getLogger(getClass().getName()).info(
 						"Attempt to send DB email");
+				mailBean.emailDatabase(recipient,
+						utilityBean.dumpFile(fileName));
+
 			}
 			File tempFile = new File(fileName);
 			if (tempFile.exists()) {
-				if (System.getProperty("user.home").contains("hanin")){
+				if (System.getProperty("user.home").contains("hanin")) {
 					File cFile = utilityBean.dumpFile(fileName);
-					utilityBean.execBash("mv " + cFile + " $HOME/app-root/data/");}
+					utilityBean.execBash("mv " + cFile
+							+ " $HOME/app-root/data/");
+				}
 				System.out.println("Deleting DB temp file");
 				tempFile.delete();
 			}

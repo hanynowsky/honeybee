@@ -380,13 +380,21 @@ public class MailBean {
 				mail.setSubject("HoneyBee Database Dump");
 				mail.setSentDate(new Date());
 				mail.setHtmlMsg(htmlmail);
+
 				if (db != null) {
+					System.out.println("Attaching File to email "
+							+ db.getName());
 					mail.attach(db);
+					System.out
+							.println("Attached File to email " + db.getName());
 				}
+
 				mail.setMailSession(session);
+				System.out.println("Sending mail ");
 				mail.send();
+				System.out.println("Mail probably sent!");
 				FacesMessage successMessage = new FacesMessage(
-						"Database recovery ok! " + mail);
+						"Database recovery ok! " + email);
 				successMessage.setDetail("");
 				successMessage.setSeverity(FacesMessage.SEVERITY_INFO);
 				FacesContext.getCurrentInstance().addMessage(null,
@@ -434,7 +442,7 @@ public class MailBean {
 			HtmlEmail mail = new HtmlEmail();
 			String htmlmail = "<h3>HoneyBee: Contact Email</h3>" + "" + content;
 			try {
-			System.out.println("Appending contact Email properties");
+				System.out.println("Appending contact Email properties");
 				mail.addTo("opentika.contact@gmail.com");
 				mail.setFrom(email);
 				List<InternetAddress> cia = new ArrayList<>();
