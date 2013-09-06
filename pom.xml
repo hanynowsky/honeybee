@@ -300,4 +300,7 @@
     	<name>OpenTika</name>
     	<url>https://opentika-otika.rhcloud.com</url>
     </organization>
+    <scm>
+    	<developerConnection>Hanine HAMZIOUI</developerConnection>
+    </scm>
 </project>

@@ -4,13 +4,29 @@
  */
 package org.otika.honeybee.util;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
+import javax.inject.Inject;
 
 /**
  * CLass to compute the Body Mass Index using the international Formula
@@ -22,40 +38,35 @@ public class ComputerBean implements Serializable {
 
 	private static final long serialVersionUID = 9092549948616601919L;
 	private String health = "";
-	ResourceBundle bundle = java.util.ResourceBundle.getBundle("/i18n");
-	String healthy = bundle.getString("HEALTHY");
-	String nhealthy = bundle.getString("NORMAL");
-	String ill = bundle.getString("UNDERWEIGHT");
-	String fat = bundle.getString("OVERWEIGHT");
-	String obese = bundle.getString("OBESE");
-	String skinny = bundle.getString("SKINNY");
-	String extreme = bundle.getString("EXTREME");
-	String sthinness = bundle.getString("SEVERE_THINNESS");
-	String modthinness = bundle.getString("MODERATE_THINNESS");
-	String mildthinness = bundle.getString("MILD_THINNESS");
-	String obese1 = bundle.getString("OBESE_CLASS_I");
-	String obese2 = bundle.getString("OBESE_CLASS_II");
-	String obese3 = bundle.getString("OBESE_CLASS_III");
-	String preobese = bundle.getString("FATNESS");
-	String nomeasure_F = bundle.getString("MEASURE_F");
-	String nomeasure_M = bundle.getString("MEASURE_M");
-	String small = bundle.getString("SMALL");
-	String medium = bundle.getString("MEDIUM");
-	String large = bundle.getString("LARGE");
-	String useElbow = bundle.getString("USE_ELBOW");
-	String unknown = bundle.getString("UNKNOWN");
-	String healthyT = bundle.getString("HEALTHY_TEXT");
-	String nhealthyT = bundle.getString("NHEALTHY_TEXT");
-	String illT = bundle.getString("ILL_TEXT");
-	String fatT = bundle.getString("FAT_TEXT");
-	String obeseT = bundle.getString("OBESE_TEXT");
-	String skinnyT = bundle.getString("SKINNY_TEXT");
-	String essFat = bundle.getString("ESSENTIAL_FAT");
-	String athlete = bundle.getString("ATHLETE");
-	String fitness = bundle.getString("FITNESS");
-	String acceptable = bundle.getString("ACCEPTABLE");
-	String ob = bundle.getString("OBESE_BODYTYPE");
-	String HealthText = "";
+	@Inject
+	private BundleBean bundleBean;
+	@Inject
+	private UtilityBean utilityBean;
+	@Inject
+	private SomatotypeBean somatotypeBean;
+	ResourceBundle bundle = java.util.ResourceBundle.getBundle("/i18n",
+			FacesContext.getCurrentInstance().getViewRoot().getLocale());
+	String healthy;
+	String nhealthy;
+	String ill;
+	String fat;
+	String obese;
+	String skinny;
+	String extreme;
+	String sthinness;
+	String modthinness;
+	String mildthinness;
+	String obese1;
+	String obese2;
+	String obese3;
+	String preobese;
+	String healthyT;
+	String nhealthyT;
+	String illT;
+	String fatT;
+	String obeseT;
+	String skinnyT;
+	String HealthText;
 	private double result = 0;
 	private double ideal = 0;
 	private double iweight;
@@ -65,8 +76,20 @@ public class ComputerBean implements Serializable {
 	private double BMR;
 	private double TDEE;
 	double BF;
+	String essFat = bundle.getString("ESSENTIAL_FAT");
+	String athlete = bundle.getString("ATHLETE");
+	String fitness = bundle.getString("FITNESS");
+	String acceptable = bundle.getString("ACCEPTABLE");
+	String ob = bundle.getString("OBESE_BODYTYPE");
 	String[] BFS = { essFat, athlete, fitness, acceptable, ob, "N/A" };
 	String BFString = ""; // Receives the value of BFS when BF is calculated
+	String small = bundle.getString("SMALL");
+	String medium = bundle.getString("MEDIUM");
+	String large = bundle.getString("LARGE");
+	String nomeasure_F = bundle.getString("MEASURE_F");
+	String nomeasure_M = bundle.getString("MEASURE_M");
+	String useElbow = bundle.getString("USE_ELBOW");
+	String unknown = bundle.getString("UNKNOWN");
 	String[] bodytype = { small, medium, large, useElbow, nomeasure_M,
 			nomeasure_F, unknown };
 	String btmsg = "";
@@ -77,7 +100,7 @@ public class ComputerBean implements Serializable {
 	private double personHeight = 163;
 	private double personWeight = 50;
 	private int personGender;
-	private String formula = "Devine";
+	private String formula = "Hamwi";
 	private int personMorph;
 	private int personOrigin;
 	private double personNeck = 38;
@@ -90,9 +113,50 @@ public class ComputerBean implements Serializable {
 	private double personBodyfat;
 
 	private String statusColor = "#484887";
+	private boolean stomaDisabled = false;
+
+	private Map<String, String> manMap = new HashMap<String, String>();
+	private Map<String, String> womanMap = new HashMap<String, String>();
+	private String ibmirange = "";
+	int row;
+
+	private List<String> formulaList;
 
 	// Constructor
 	public ComputerBean() {
+	}
+
+	@PostConstruct
+	public void init() {
+
+		healthy = bundle.getString("HEALTHY");
+		nhealthy = bundle.getString("NORMAL");
+		ill = bundle.getString("UNDERWEIGHT");
+		fat = bundle.getString("OVERWEIGHT");
+		obese = bundle.getString("OBESE");
+		skinny = bundle.getString("SKINNY");
+		extreme = bundle.getString("EXTREME");
+		sthinness = bundle.getString("SEVERE_THINNESS");
+		modthinness = bundle.getString("MODERATE_THINNESS");
+		mildthinness = bundle.getString("MILD_THINNESS");
+		obese1 = bundle.getString("OBESE_CLASS_I");
+		obese2 = bundle.getString("OBESE_CLASS_II");
+		obese3 = bundle.getString("OBESE_CLASS_III");
+		preobese = bundle.getString("FATNESS");
+		healthyT = bundle.getString("HEALTHY_TEXT");
+		nhealthyT = bundle.getString("NHEALTHY_TEXT");
+		illT = bundle.getString("ILL_TEXT");
+		fatT = bundle.getString("FAT_TEXT");
+		obeseT = bundle.getString("OBESE_TEXT");
+		skinnyT = bundle.getString("SKINNY_TEXT");
+		HealthText = "";
+
+		formulaList = new ArrayList<>();
+		formulaList.add(0, "Hamwi");
+		formulaList.add(1, "Robinson");
+		formulaList.add(2, "Devine");
+		formulaList.add(3, "Miller");
+		formulaList.add(4, "Social");
 	}
 
 	/**
@@ -137,12 +201,28 @@ public class ComputerBean implements Serializable {
 		computeIdealWeight();
 		computeBodyFat();
 		computeBodyType();
-		String msgContent = bundle.getString("bmi") + " = "
-				+ String.valueOf(result) + "\n | "
-				+ bundle.getString("ideal_weight") + " = "
-				+ String.valueOf(iweight);
+		computeIbmiRange();
+		computeSomatotype();
+
+		String severity;
+		if (result < 18 && result > 16) {
+			severity = "warn";
+		} else if (result < 16) {
+			severity = "fatal";
+		} else if (result > 18.5 && result < 25) {
+			severity = "info";
+		} else if (result > 25) {
+			severity = "error";
+		} else {
+			severity = "info";
+		}
+
+		String msgBMI = bundle.getString("bmi") + " = " + formatDecimal(result);
+		String msgIWEIGHT = bundle.getString("ideal_weight") + " = "
+				+ formatDecimal(iweight);
+		utilityBean.showMessage(severity, msgBMI, "");
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(msgContent));
+				new FacesMessage(msgIWEIGHT));
 		return null;
 	}
 
@@ -150,8 +230,7 @@ public class ComputerBean implements Serializable {
 	 * Compute the Ideal weight using the specified formulas. Beware: Formula
 	 * Strings are case sensitive (First Letter is Capital).
 	 * 
-	 * @param hei
-	 *            Height in centimeters
+	 * @param <em>hei Height in centimeters</em>
 	 * @param formula
 	 *            Ideal Weight Formula
 	 * @param gender
@@ -394,9 +473,10 @@ public class ComputerBean implements Serializable {
 
 	/**
 	 * Computes Health Rank
+	 * 
 	 * @return
 	 */
-	public String computeHealth(){
+	public String computeHealth() {
 		return computeHealth(personOrigin);
 	}
 
@@ -511,8 +591,10 @@ public class ComputerBean implements Serializable {
 	 */
 	public double computeBMR(double w, double h, int a, String g) {
 
-		if (g.equalsIgnoreCase("female")) { // Women BMR = 655
-											// +(9.6*w)+(1.8*h)-(4.7*a)
+		if (g.equalsIgnoreCase("female")) {
+			/*
+			 * Women BMR = 655 +(9.6*w)+(1.8*h)-(4.7*a)
+			 */
 			BMR = 655 + (9.6 * w) + (1.8 * h) - (4.7 * a);
 		} else {
 			BMR = 66 + (13.7 * w) + (5 * h) - (6.8 * a);
@@ -945,6 +1027,153 @@ public class ComputerBean implements Serializable {
 		return cm * 0.393700787;
 	}
 
+	/**
+	 * Returns formatted decimal
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public String formatDecimal(Object value) {
+		return new DecimalFormat("#.##").format(value);
+	}
+
+	/**
+	 * Parses the BMI correspondence table (CSV File) and sets the BMI Range.
+	 * 
+	 * @param gender
+	 *            Gender (Male = 0 or Female = 1)
+	 * @param height
+	 *            Height as double (in centimeters. ex: 175)
+	 */
+	public void readIBMITABLE(int gender, double heit) {
+		double height = heit / 100; // Get height in meters instead of Cms
+		BufferedReader bufRdr;
+		try {
+			File f = new File(System.getProperty("java.io.tmpdir")
+					+ File.separator + "ibmitable.csv");
+			if (!f.exists()) {
+				InputStream inputStream = getClass().getResourceAsStream(
+						"/ibmitable.csv");
+				OutputStream out = new FileOutputStream(f);
+				byte buf[] = new byte[1024];
+				int len;
+				while ((len = inputStream.read(buf)) > 0) {
+					out.write(buf, 0, len);
+				}
+				out.close();
+				System.out.println("\nibmitable.csv File is created.......");
+			}
+			bufRdr = new BufferedReader(new FileReader(f)); //
+			String line;
+
+			row = 0;
+			while ((line = bufRdr.readLine()) != null) {
+				String[] content = line.split(";", 3);
+				/*
+				 * Three columns Height | Man | Woman
+				 */
+				manMap.put(content[0], content[1]);
+				womanMap.put(content[0], content[2]);
+				row++;
+			}
+			bufRdr.close();
+
+			int g = gender;
+			double j = 0;
+			double e = 0;
+			double s;
+			double arg = height;
+			double diff;
+			double dim;
+			double ah = 0;
+			Iterator<String> kset = manMap.keySet().iterator();
+			int k;
+			for (k = 0; k < manMap.keySet().size(); k++) {
+				while (kset.hasNext()) {
+					s = Double.parseDouble(kset.next().toString());
+					diff = Math.max(s, arg);
+					dim = Math.min(s, arg);
+					/*
+					 * 0.013 is the maximum difference between two ordered
+					 * height values System.out.println(" here is FIRST  diff: "
+					 * + diff);
+					 */
+					double daf = diff - arg;
+					if (daf <= 0.013 && (diff - arg != 0)) {
+						j = diff;
+					}
+					if (arg - dim <= 0.013 && (dim - arg != 0)) {
+						e = dim;
+					}
+				}
+			}
+			// System.err.println(j + " " + (j - arg));
+			// System.err.println(e + " " + (arg - e));
+			if ((arg - e) < (j - arg)) {
+				ah = e;
+			}
+			if ((arg - e) > (j - arg)) {
+				ah = j;
+			}
+
+			height = ah;
+			String h = String.valueOf(height);
+			if (g == 0) { /* 0 for male and 1 for female */
+				ibmirange = String.valueOf(manMap.get(h));
+				System.out.println("Ideal BMI Range = "
+						+ String.valueOf(manMap.get(h)));
+			}
+			if (g == 1) {
+				ibmirange = String.valueOf(womanMap.get(h));
+				System.out.println("Ideal BMI Range = "
+						+ String.valueOf(womanMap.get(h)));
+			}
+		} catch (Exception ex) {
+			String msg = "iBMI Ranges CSV File is not present or corrupted."
+					+ "Please delete it manually and relaunch the application.";
+			Logger.getLogger(getClass().getName()).log(Level.SEVERE, msg, ex);
+			System.err.println(msg);
+		}
+	}
+
+	/**
+	 * Returns Medical Ideal BMI Range
+	 * 
+	 * @return
+	 */
+	public String computeIbmiRange() {
+		readIBMITABLE(personGender, personHeight);
+		return ibmirange;
+	}
+
+	/**
+	 * Change Listener for the JSF Select One Menu or List
+	 * <p>
+	 * Use the Facelet Ajax component inside the list menu using the change
+	 * event to render the target component
+	 * </p>
+	 * 
+	 * @param <em>event</em> <b>Value Change Event</b>
+	 */
+	public void formulaChangeListener(ValueChangeEvent event) {
+		if (event != null) {
+			if (!String.valueOf(event).equalsIgnoreCase("hamwi")) {
+				stomaDisabled = true;
+				System.out.println(event.getNewValue()
+						+ " :Changing stomaDisabled to: " + stomaDisabled);
+			}
+		}
+	}
+
+	/**
+	 * <p>
+	 * Function that reads csv files and retrieves somatotype value
+	 * </p>
+	 */
+	public void computeSomatotype() {
+		somatotypeBean.computeSomatotype();
+	}
+
 	/* Getters & Setters */
 
 	/**
@@ -1344,6 +1573,81 @@ public class ComputerBean implements Serializable {
 	 */
 	public void setStatusColor(String statusColor) {
 		this.statusColor = statusColor;
+	}
+
+	/**
+	 * @return the manMap
+	 */
+	public Map<String, String> getManMap() {
+		return manMap;
+	}
+
+	/**
+	 * @param manMap
+	 *            the manMap to set
+	 */
+	public void setManMap(Map<String, String> manMap) {
+		this.manMap = manMap;
+	}
+
+	/**
+	 * @return the womanMap
+	 */
+	public Map<String, String> getWomanMap() {
+		return womanMap;
+	}
+
+	/**
+	 * @param womanMap
+	 *            the womanMap to set
+	 */
+	public void setWomanMap(Map<String, String> womanMap) {
+		this.womanMap = womanMap;
+	}
+
+	/**
+	 * @return the ibmirange
+	 */
+	public String getIbmirange() {
+		return ibmirange;
+	}
+
+	/**
+	 * @param ibmirange
+	 *            the ibmirange to set
+	 */
+	public void setIbmirange(String ibmirange) {
+		this.ibmirange = ibmirange;
+	}
+
+	/**
+	 * @return the stomaDisabled
+	 */
+	public boolean isStomaDisabled() {
+		return stomaDisabled;
+	}
+
+	/**
+	 * @param stomaDisabled
+	 *            the stomaDisabled to set
+	 */
+	public void setStomaDisabled(boolean stomaDisabled) {
+		this.stomaDisabled = stomaDisabled;
+	}
+
+	/**
+	 * @return the forumlaList
+	 */
+	public List<String> getForumlaList() {
+		return formulaList;
+	}
+
+	/**
+	 * @param forumlaList
+	 *            the forumlaList to set
+	 */
+	public void setForumlaList(List<String> forumlaList) {
+		this.formulaList = forumlaList;
 	}
 
 } // END OF CLASS
