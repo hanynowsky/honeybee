@@ -38,8 +38,7 @@ public class ComputerBean implements Serializable {
 
 	private static final long serialVersionUID = 9092549948616601919L;
 	private String health = "";
-	@Inject
-	private BundleBean bundleBean;
+	// @Inject private BundleBean bundleBean;
 	@Inject
 	private UtilityBean utilityBean;
 	@Inject
@@ -95,10 +94,10 @@ public class ComputerBean implements Serializable {
 	String btmsg = "";
 	static String soundStatus = "normal";
 
-	private int personAge = 18;
+	private int personAge = 20;
 	private int personActivity;
 	private double personHeight = 163;
-	private double personWeight = 50;
+	private double personWeight = 55;
 	private int personGender;
 	private String formula = "Hamwi";
 	private int personMorph;
@@ -119,6 +118,10 @@ public class ComputerBean implements Serializable {
 	private Map<String, String> womanMap = new HashMap<String, String>();
 	private String ibmirange = "";
 	int row;
+
+	private float centimeter = 2.54f;
+	private float inch = 1;
+	private boolean cm2inch = true;
 
 	private List<String> formulaList;
 
@@ -223,6 +226,11 @@ public class ComputerBean implements Serializable {
 		utilityBean.showMessage(severity, msgBMI, "");
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(msgIWEIGHT));
+
+		if (result > 0 && result < 36) {
+			utilityBean.getGaugeMeterModel().setValue(result);
+		}
+
 		return null;
 	}
 
@@ -771,13 +779,17 @@ public class ComputerBean implements Serializable {
 				setBFString(BFS[5]);
 			}
 		}
-		System.out.println("Height is " + h + " inches");
-		System.out.println("Hip is " + p + " inches");
-		System.out.println("Neck is " + n + " inches");
-		System.out.println("Waist is " + w + " inches");
-		System.out.println("Body Fat Percentage is "
-				+ new DecimalFormat("#.##").format(BF) + " %");
-		System.out.println(getBFString());
+		if (UtilityBean.APP_DEBUG) {
+			System.out.println("Height is "
+					+ new DecimalFormat("#.##").format(h) + " inches");
+			System.out.println("Hip is " + p + " inches");
+			System.out.println("Neck is " + n + " inches");
+			System.out.println("Waist is " + w + " inches");
+			System.out.println("Body Fat Percentage is "
+					+ new DecimalFormat("#.##").format(BF) + " %");
+			System.out.println(getBFString());
+		}
+
 		setPersonBodyfat(BF);
 		return BF;
 
@@ -1061,7 +1073,6 @@ public class ComputerBean implements Serializable {
 					out.write(buf, 0, len);
 				}
 				out.close();
-				System.out.println("\nibmitable.csv File is created.......");
 			}
 			bufRdr = new BufferedReader(new FileReader(f)); //
 			String line;
@@ -1120,13 +1131,14 @@ public class ComputerBean implements Serializable {
 			String h = String.valueOf(height);
 			if (g == 0) { /* 0 for male and 1 for female */
 				ibmirange = String.valueOf(manMap.get(h));
-				System.out.println("Ideal BMI Range = "
-						+ String.valueOf(manMap.get(h)));
 			}
 			if (g == 1) {
 				ibmirange = String.valueOf(womanMap.get(h));
-				System.out.println("Ideal BMI Range = "
-						+ String.valueOf(womanMap.get(h)));
+			}
+
+			/* delete BMI file at the end of the operation */
+			if (f.exists()) {
+				f.delete();
 			}
 		} catch (Exception ex) {
 			String msg = "iBMI Ranges CSV File is not present or corrupted."
@@ -1172,6 +1184,36 @@ public class ComputerBean implements Serializable {
 	 */
 	public void computeSomatotype() {
 		somatotypeBean.computeSomatotype();
+	}
+
+	/**
+	 * Centimeter <-> inch converter
+	 * 
+	 * @param cm
+	 * @param in
+	 * @param cmtoin
+	 * @return
+	 */
+	private float centimeterToInchConverter(float cm, float in, boolean cmtoin) {
+		if (cmtoin) {
+			in = (float) (cm * 0.393700787);
+			setInch(in);
+			return in;
+		} else {
+			cm = (float) (in / 0.393700787);
+			setCentimeter(cm);
+			return cm;
+		}
+	}
+
+	/**
+	 * Centimeter to inch converter
+	 * 
+	 * @return
+	 */
+	public float centimeterToInchConverter() {
+		return centimeterToInchConverter(this.centimeter, this.inch,
+				this.cm2inch);
 	}
 
 	/* Getters & Setters */
@@ -1648,6 +1690,51 @@ public class ComputerBean implements Serializable {
 	 */
 	public void setForumlaList(List<String> forumlaList) {
 		this.formulaList = forumlaList;
+	}
+
+	/**
+	 * @return the centimeter
+	 */
+	public float getCentimeter() {
+		return centimeter;
+	}
+
+	/**
+	 * @param centimeter
+	 *            the centimeter to set
+	 */
+	public void setCentimeter(float centimeter) {
+		this.centimeter = centimeter;
+	}
+
+	/**
+	 * @return the inch
+	 */
+	public float getInch() {
+		return inch;
+	}
+
+	/**
+	 * @param inch
+	 *            the inch to set
+	 */
+	public void setInch(float inch) {
+		this.inch = inch;
+	}
+
+	/**
+	 * @return the cm2inch
+	 */
+	public boolean isCm2inch() {
+		return cm2inch;
+	}
+
+	/**
+	 * @param cm2inch
+	 *            the cm2inch to set
+	 */
+	public void setCm2inch(boolean cm2inch) {
+		this.cm2inch = cm2inch;
 	}
 
 } // END OF CLASS

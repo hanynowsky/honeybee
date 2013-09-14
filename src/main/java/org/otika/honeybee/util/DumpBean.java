@@ -41,8 +41,7 @@ public class DumpBean {
 	private Repository repository;
 	@Inject
 	private RequestBean requestBean;
-	@Inject
-	private UserManagerBean userManagerBean;
+	// @Inject private UserManagerBean userManagerBean;
 	@Inject
 	private BundleBean bundleBean;
 	@Inject

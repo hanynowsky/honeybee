@@ -84,20 +84,8 @@
 
 		<style type="text/css">
 #content h2.success {
-	background-position: #{htmlDirection
-}
-18
-px
-
-
-
-
-
-
-;
-}
+	background-position: #{htmlDirection} 18px;}
 </style>
-
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
@@ -179,13 +167,7 @@ px
 					</img>
 				</h:link>
 				<h:panelGroup rendered="#{isAdministrator == true}">
-					<ul>
-						<li><h:link id="language" outcome="/language/search"
-								value="#{i18n.languages}" /></li>
-						<li><h:link id="usergroup" outcome="/usergroup/search"
-								value="#{i18n.usergroup}" /></li>
-						<li><h:link id="enduser" outcome="/enduser/search"
-								value="#{i18n.endusers}" /></li>
+					<ul>						
 						<li><h:link id="dashboard" outcome="/admin/dashboard"
 								value="#{i18n.dashboard}" /></li>
 					</ul>
@@ -234,9 +216,7 @@ px
 				<h:panelGroup>
 					<ul>
 						<li>
-						<a href="#{request.contextPath}/misc/bmi.xhtml">
-						#{i18n.bmi}
-						</a>
+						<h:link id="bmi" outcome="/bmi/bmi" value="#{i18n.bmi}"/>						
 						</li>
 					</ul>
 				</h:panelGroup>

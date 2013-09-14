@@ -2,7 +2,9 @@
 <html> 
 <head> 
 	<title>HoneyBee</title> 
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="shortcut icon" type="image/x-icon"
+	href="./resources/favicon.ico" /> 
 	<meta name="viewport" 
 		content="width=device-width, initial-scale=1" /> 
 	<link rel="stylesheet" 
@@ -13,7 +15,7 @@
 		src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script> 
 	<script type="text/javascript"> 
 		$(document).on("pageinit", "#page1", function(event){ 
-			alert("Ready To Go"); 
+			alert("HoneyBee Ready To Go"); 
 		}); 
 	</script> 
 </head> 
@@ -25,9 +27,9 @@
 		<div data-role="content"> 
 			<ul id="listOfItems" data-role="listview" data-inset="true" 
 				data-filter="true"> 
-				<li><a href="">One</a></li> 
-				<li><a href="">Two</a></li> 
-				<li><a href="">Three</a></li> 
+				<li><a href="./index.xhtml">Home</a></li> 
+				<li><a href="./misc/search.xhtml">Search</a></li> 
+				<li><a href="./misc/aboutus.xhtml">About us</a></li> 
 			</ul> 
 		</div> 
 		<div data-role="footer"> 

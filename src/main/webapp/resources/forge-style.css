@@ -111,6 +111,7 @@ option {
     box-shadow: 0 2px 4px #000000;
 	padding: 0 10px 20px 10px;
 	padding-right: 20px;/*added for Arabic support*/
+	min-height: 530px;
 }
 
 footer {
@@ -140,9 +141,11 @@ footer p {
  * Navigation
  */
 #navigation {
-	float: left;
 	margin-left: 10px;
-	margin-top: 30px;
+	margin-top: 18px;
+	margin-right: 740px;
+	position: fixed;
+	float: left;
 }
 
 #navigation h3 {
@@ -836,6 +839,23 @@ h4.page-header {
 	.spinner input{	
 	text-align: center;
 	}
+	
+	/* Panel Grid Classes */
+	.rowclass {
+	text-align: center;	
+	border: 1px solid #DDDDDD;
+	}
+	
+	.columnclass {
+	text-align: center;
+	border: 1px solid #DDDDDD;
+	}
+	
+	.gridclass {
+	border: 1px solid #DDDDDD;
+	width: 100%;
+	}
+	/* --------------- */
 
 /* CUSTOM FONT */
 @font-face {

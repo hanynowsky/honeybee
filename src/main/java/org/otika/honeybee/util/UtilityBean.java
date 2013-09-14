@@ -42,6 +42,7 @@ import org.otika.honeybee.model.Substance;
 import org.otika.honeybee.model.Virtue;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.model.chart.MeterGaugeChartModel;
 
 /**
  * <p>
@@ -57,6 +58,7 @@ import org.primefaces.model.StreamedContent;
 public class UtilityBean implements Serializable {
 
 	private static final long serialVersionUID = -5489916236604357383L;
+	static boolean APP_DEBUG = false;
 	private ExternalContext externalContext;
 	private FacesContext facesContext;
 	private StreamedContent image;
@@ -68,16 +70,30 @@ public class UtilityBean implements Serializable {
 	static ProcessBuilder pb;
 	private String unhashedPassword;
 
+	private MeterGaugeChartModel gaugeMeterModel;
+
 	/**
 	 * Constructor
 	 */
-	public UtilityBean() {
+	public UtilityBean() {	
 	}
 
 	@PostConstruct
 	public void init() {
 		bundle = new BundleBean();
 		facesContext = FacesContext.getCurrentInstance();
+		gaugeMeterModel = new MeterGaugeChartModel();
+		gaugeMeterModel.addInterval(5);
+		gaugeMeterModel.addInterval(16);
+		gaugeMeterModel.addInterval(18.5);
+		gaugeMeterModel.addInterval(20);
+		gaugeMeterModel.addInterval(25);
+		gaugeMeterModel.addInterval(27.5);
+		gaugeMeterModel.addInterval(30);
+		gaugeMeterModel.addInterval(35);
+		gaugeMeterModel.addInterval(40);
+		gaugeMeterModel.addInterval(50);
+		gaugeMeterModel.setValue(0);
 	}
 
 	/**
@@ -530,7 +546,7 @@ public class UtilityBean implements Serializable {
 			if (!file.exists()) {
 				file.createNewFile();
 			}
-			zipFile(file);		
+			zipFile(file);
 			return new File(file.getPath() + ".zip");
 		} catch (Exception ex) {
 			System.out.println("dumpFile: Failure retrieving file");
@@ -626,7 +642,7 @@ public class UtilityBean implements Serializable {
 			System.out.println("zos closed");
 			System.out.println("Zipped! " + file.getPath());
 			org.jboss.logging.Logger.getLogger(getClass().getName()).info(
-					"Zipped! " + file.getPath());			
+					"Zipped! " + file.getPath());
 
 		} catch (IOException e) {
 			System.err.println("Zipping file failed: " + e.getMessage());
@@ -666,4 +682,20 @@ public class UtilityBean implements Serializable {
 	public void setUnhashedPassword(String unhashedPassword) {
 		this.unhashedPassword = unhashedPassword;
 	}
+
+	/**
+	 * @return the gaugeMeterModel
+	 */
+	public MeterGaugeChartModel getGaugeMeterModel() {
+		return gaugeMeterModel;
+	}
+
+	/**
+	 * @param gaugeMeterModel
+	 *            the gaugeMeterModel to set
+	 */
+	public void setGaugeMeterModel(MeterGaugeChartModel gaugeMeterModel) {
+		this.gaugeMeterModel = gaugeMeterModel;
+	}
+
 } // END OF CLASS

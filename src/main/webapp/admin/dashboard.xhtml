@@ -20,6 +20,14 @@
 		<h:form id="testForm">
 			<p:messages autoUpdate="true" id="dashMessages" />
 			<p:tabView style="display:compact;">
+				<p:tab title="User Management">
+					<li><h:link id="language" outcome="/language/search"
+							value="#{i18n.languages}" /></li>
+					<li><h:link id="usergroup" outcome="/usergroup/search"
+							value="#{i18n.usergroup}" /></li>
+					<li><h:link id="enduser" outcome="/enduser/search"
+							value="#{i18n.endusers}" /></li>
+				</p:tab>
 				<p:tab title="Registery">
 					<p:dataTable value="#{registeryBean.allRegisteryItems}"
 						paginator="true" paginatorPosition="top" var="_item"
@@ -65,7 +73,7 @@
 					</p:panelGrid>
 				</p:tab>
 				<p:tab title="DB Dumper">
-				<h:link outcome="/admin/dumper" value="DB Dumper"/>
+					<h:link outcome="/admin/dumper" value="DB Dumper" />
 				</p:tab>
 			</p:tabView>
 		</h:form>

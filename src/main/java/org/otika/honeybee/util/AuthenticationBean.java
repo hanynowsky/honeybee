@@ -165,12 +165,12 @@ public class AuthenticationBean {
 		if (!outcome.equalsIgnoreCase("") && !outcome.contains("referer")) {
 			return outcome;
 		} else if (outcome.contains("referer")) {
-			if (sessionBean.getOriginalViewName().contains("signin.xhtml")) {
+			if (sessionBean.getOriginalViewName().contains("signin")) {
 				return "/index.xhtml?faces-redirect=false";
 			} else {
 				System.out.println("Redirecting to: "
-						+ sessionBean.getOriginalViewName());
-				return sessionBean.getOriginalViewName()
+						+ sessionBean.getOriginalViewName().replace(".xhtml", ""));
+				return sessionBean.getOriginalViewName().replace(".xhtml", "")
 						+ "?faces-redirect=true";
 			}
 		} else {
@@ -199,7 +199,7 @@ public class AuthenticationBean {
 						.getNavigationHandler()
 						.handleNavigation(FacesContext.getCurrentInstance(),
 								null, "/signin.xhtml?faces-redirect=false");
-				return "/signin.xhtml?faces-redirect=false";
+				return "/signin?faces-redirect=false";
 			} else {
 				utilityBean.showMessage("warn",
 						bundleBean.i18n("already_logged_in"), "");
@@ -265,7 +265,7 @@ public class AuthenticationBean {
 					new FacesMessage(bundleBean.i18n("login_failed")));
 			return "/loginerror";
 		}
-		return "/index";
+		return "/home";
 	}
 
 	/**

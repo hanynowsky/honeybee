@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import org.otika.honeybee.util.LocaleBean;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -34,12 +33,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import org.otika.honeybee.model.Pcategory;
 
+import org.otika.honeybee.model.Pcategory;
 import org.otika.honeybee.model.Plant;
 import org.otika.honeybee.model.Ptype;
 import org.otika.honeybee.util.Repository;
-import org.otika.honeybee.util.UtilityBean;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -70,11 +68,9 @@ public class PlantBean implements Serializable {
 	private List<Pcategory> categories;
 	@EJB
 	private Repository repository;
-	@Inject
-	private UtilityBean utilityBean;
+	// @Inject private UtilityBean utilityBean;
 	private int imageLimit = 600;
-	@Inject
-	private LocaleBean localeBean;
+	// @Inject private LocaleBean localeBean;
 
 	/*
 	 * Support creating and retrieving Plant entities
