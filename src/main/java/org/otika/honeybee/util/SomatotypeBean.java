@@ -36,16 +36,15 @@ public class SomatotypeBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 5165441473749452832L;
 	/* Measurments */
-	private double subtricepsSkinFold = 8.1; // mm
-	private double subcapularSkinFold = 10.6; // mm
-	private double suprailiacSkinFold = 9.5; // mm
-	private double calfSkinFold = 2.1; // mm
+	private double subcapularSkinFold = 8.6; // mm
+	private double suprailiacSkinFold = 8.3; // mm
+	private double calfSkinFold = 3.1; // mm
 	private double tricepsSkinFold = 8.3; // mm
 	private double height = 177; // Cm
 	private double weight = 57.2; // Kg
-	private double humerusBicondyle = 5.15; // cm
+	private double humerusBicondyle = 5.65; // cm
 	private double femurBicondyle = 10.95; // cm
-	private double upperArmCirumference = 22.3; // cm
+	private double upperArmCirumference = 25.3; // cm
 	private double calfCirumference = 31.2; // cm
 
 	/* ------------ */
@@ -59,10 +58,16 @@ public class SomatotypeBean implements Serializable {
 	private int somatotype;
 	private String somatotypeDesc;
 	private String somatotypeGlobalDesc;
+	private String roundedSomatotype;
+	private String panel;
 
 	/* Somatotype Coordinates */
 	private double somatotypeX;
 	private double somatotypeY;
+
+	/* SVG Chart X & Y */
+	private double svgX = 364;
+	private double svgY = 347;
 
 	int row;
 	int mesoComponentRow;
@@ -77,6 +82,8 @@ public class SomatotypeBean implements Serializable {
 
 	@Inject
 	private ComputerBean computerBean;
+	@Inject
+	private SessionBean sessionBean;
 
 	/**
 	 * Constructor
@@ -235,8 +242,8 @@ public class SomatotypeBean implements Serializable {
 			while ((line = bufferedReader.readLine()) != null) {
 				/* 3 columns : Lower Limit | Upper Limit | Component */
 				String[] content = line.split(";", 3);
-				endoEvaluation = subcapularSkinFold + subtricepsSkinFold
-						+ suprailiacSkinFold - calfSkinFold;
+				endoEvaluation = (subcapularSkinFold + tricepsSkinFold + suprailiacSkinFold)
+						* (170.18 / height);
 				if (endoEvaluation >= Double.parseDouble(content[0])
 						&& endoEvaluation <= Double.parseDouble(content[1])) {
 					setEndoComponent(Double.parseDouble(content[2]));
@@ -255,7 +262,7 @@ public class SomatotypeBean implements Serializable {
 			int calfMeasureIndex = 0;
 			double armMeasure = upperArmCirumference - (tricepsSkinFold / 10);
 			double calfMeasure = calfCirumference - (calfSkinFold / 10);
-			int mesoEvaluation;
+			double mesoEvaluation;
 			row = 0;
 			while ((mesoLine = bufferedReader.readLine()) != null) {
 				/*
@@ -285,17 +292,33 @@ public class SomatotypeBean implements Serializable {
 					calfMeasureIndex = row;
 				}
 
-				/* 4.0 is always the starting point for mesomorphic component */
-				mesoEvaluation = ((humerusIndex - heightIndex)
-						+ (femurIndex - heightIndex)
-						+ (armMeasureIndex - heightIndex) + (calfMeasureIndex - heightIndex)) / 4;
-				if (Double.parseDouble(content[10]) <= 4
-						&& 4 <= Double.parseDouble(content[11])) {
-					mesoComponentRow = row + mesoEvaluation;
-				}
+				/*
+				 * TODO Doubt: 4.0 is always the starting point for mesomorphic
+				 * component if ratings are ambiguous or extreme
+				 */
+				// mesoEvaluation = ((humerusIndex - heightIndex)
+				// + (femurIndex - heightIndex)
+				// + (armMeasureIndex - heightIndex) + (calfMeasureIndex -
+				// heightIndex)) / 4;
+				// if (Double.parseDouble(content[10]) <= 4
+				// && 4 <= Double.parseDouble(content[11])) {
+				// mesoComponentRow = row + mesoEvaluation;
+				// }
 				row++;
 			}
 			bufferedReader.close();
+
+			/**
+			 * Mesomorphy pre-equation Sum of deviations divided by 8 and then
+			 * added to 4.0.
+			 * 
+			 * */
+			int D = ((humerusIndex - heightIndex) + (femurIndex - heightIndex)
+					+ (armMeasureIndex - heightIndex) + (calfMeasureIndex - heightIndex));
+			mesoEvaluation = (D / 8) + 4;
+			double mesoValue = halfRoundedSoma(mesoEvaluation);
+			setMesoComponent(mesoValue);
+
 			/**
 			 * Browse Mesomorphic file again and assign a value to component
 			 * <p>
@@ -304,18 +327,15 @@ public class SomatotypeBean implements Serializable {
 			 * 4.0.
 			 * </p>
 			 */
-			bufferedReader = new BufferedReader(new FileReader(mesoFile));
-			String mLine;
-			int i = 0;
-			while ((mLine = bufferedReader.readLine()) != null) {
-				String[] contentLine = mLine.split(";", 12);
-				if (i == mesoComponentRow) {
-					setMesoComponent(Double.parseDouble(contentLine[11]));
-				}
-				i++;
-			}
-
-			bufferedReader.close();
+			/*
+			 * bufferedReader = new BufferedReader(new FileReader(mesoFile));
+			 * String mLine; int i = 0; while ((mLine =
+			 * bufferedReader.readLine()) != null) { String[] contentLine =
+			 * mLine.split(";", 12); if (i == mesoComponentRow) {
+			 * setMesoComponent(Double.parseDouble(contentLine[11])); } i++; }
+			 * 
+			 * bufferedReader.close();
+			 */
 
 			/* Browse Ectomorphic File */
 			bufferedReader = new BufferedReader(new FileReader(ectoFile));
@@ -368,7 +388,7 @@ public class SomatotypeBean implements Serializable {
 				 * – height 0.131 + 4.5.
 				 * </p>
 				 * */
-				// TODO equation is suspicious
+
 				double mesoEval = ((0.858 * humerusBicondyle)
 						+ (0.601 * femurBicondyle) + (0.188 * armMeasure) + (0.161 * calfMeasure))
 						- (height * 0.131) + 4.5;
@@ -411,15 +431,16 @@ public class SomatotypeBean implements Serializable {
 			 * should be rounded up (e.g. 4.5 becomes 5 and 5.5 becomes 6).
 			 * </p>
 			 */
+
+			String rsoma = halfRoundedSoma(endoComponent) + " - "
+					+ halfRoundedSoma(mesoComponent) + " - "
+					+ halfRoundedSoma(ectoComponent);
+			setRoundedSomatotype(rsoma);
+
 			String somaCharSeq = Math.round(endoComponent) + ""
 					+ Math.round(mesoComponent) + ""
 					+ Math.round(ectoComponent);
 			setSomatotype(Integer.parseInt(somaCharSeq));
-
-			/*
-			 * TODO use the global somatotype chart to plot the somatotype value
-			 * against the chart value translation
-			 */
 
 			/* Define Somatotype category */
 			double endo_meso = endoComponent - mesoComponent;
@@ -574,6 +595,10 @@ public class SomatotypeBean implements Serializable {
 				setSomatotypeGlobalDesc("@See chart!");
 			}
 
+			/* Set Sport Panel (Category) */
+			// TODO set a panel depending on categgory
+			setPanel("N/A");
+
 			/* Set somatotype X & Y coordinates */
 			double ectoComponentRounded = Math.round(ectoComponent);
 			double mesoComponentRounded = Math.round(mesoComponent);
@@ -636,6 +661,9 @@ public class SomatotypeBean implements Serializable {
 			somatotypeLineModel.addSeries(personSomato);
 			somatotypeLineModel.addSeries(chartGirth);
 			somatotypeLineModel.addSeries(basePath);
+
+			/* Translate SVG Coordinates */
+			translateXY();
 
 			/* Finally Delete csv files */
 			for (File f : fileList) {
@@ -708,19 +736,15 @@ public class SomatotypeBean implements Serializable {
 	}
 
 	/**
-	 * @return the subtricepsSkinFold
+	 * Translate Chart X & Y to HTML SVG cX & cY
+	 * 
 	 */
-	public double getSubtricepsSkinFold() {
-		return Double.parseDouble(new DecimalFormat("#.##")
-				.format(subtricepsSkinFold));
-	}
-
-	/**
-	 * @param subtricepsSkinFold
-	 *            the subtricepsSkinFold to set
-	 */
-	public void setSubtricepsSkinFold(double subtricepsSkinFold) {
-		this.subtricepsSkinFold = subtricepsSkinFold;
+	public void translateXY() {
+		svgX += somatotypeX * 39;
+		svgY = (svgY) - (somatotypeY * (45 / 2));
+		sessionBean.setSvgCX(svgX);
+		sessionBean.setSvgCY(svgY);
+		// System.out.println("svgX = " + svgX + " svgY = " + svgY);
 	}
 
 	/**
@@ -1119,6 +1143,66 @@ public class SomatotypeBean implements Serializable {
 	 */
 	public void setEquationMethod(boolean equationMethod) {
 		this.equationMethod = equationMethod;
+	}
+
+	/**
+	 * @return the roundedSomatotype
+	 */
+	public String getRoundedSomatotype() {
+		return roundedSomatotype;
+	}
+
+	/**
+	 * @param roundedSomatotype
+	 *            the roundedSomatotype to set
+	 */
+	public void setRoundedSomatotype(String roundedSomatotype) {
+		this.roundedSomatotype = roundedSomatotype;
+	}
+
+	/**
+	 * @return the panel
+	 */
+	public String getPanel() {
+		return panel;
+	}
+
+	/**
+	 * @param panel
+	 *            the panel to set
+	 */
+	public void setPanel(String panel) {
+		this.panel = panel;
+	}
+
+	/**
+	 * @return the svgX
+	 */
+	public double getSvgX() {
+		return svgX;
+	}
+
+	/**
+	 * @param svgX
+	 *            the svgX to set
+	 */
+	public void setSvgX(double svgX) {
+		this.svgX = svgX;
+	}
+
+	/**
+	 * @return the svgY
+	 */
+	public double getSvgY() {
+		return svgY;
+	}
+
+	/**
+	 * @param svgY
+	 *            the svgY to set
+	 */
+	public void setSvgY(double svgY) {
+		this.svgY = svgY;
 	}
 
 }

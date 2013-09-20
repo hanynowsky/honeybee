@@ -1,6 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
-    <Scope Scope="Project"/>
+    <Scope Scope="Project">
+        <Node id="plant/view.xhtml" x="150" y="1200" zoom="true"/>
+        <Node id="substance/search.xhtml" x="1400" y="600" zoom="true"/>
+        <Node id="help/create.xhtml" x="2900" y="150" zoom="true"/>
+        <Node id="bodypart/view.xhtml" x="900" y="1350" zoom="true"/>
+        <Node id="enduser/search.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="help/search.xhtml" x="1400" y="750" zoom="true"/>
+        <Node id="usergroup/search.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="welcome.html" x="150" y="1050" zoom="true"/>
+        <Node id="language/view.xhtml" x="2400" y="300" zoom="true"/>
+        <Node id="misc/activation.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="honey/search.xhtml" x="400" y="900" zoom="true"/>
+        <Node id="substance/view.xhtml" x="1150" y="450" zoom="true"/>
+        <Node id="language/search.xhtml" x="2150" y="450" zoom="true"/>
+        <Node id="ingredient/create.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="honey/view.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="tags.html" x="2150" y="150" zoom="true"/>
+        <Node id="virtue/search.xhtml" x="150" y="1500" zoom="true"/>
+        <Node id="defect/create.xhtml" x="2650" y="150" zoom="true"/>
+        <Node id="error.xhtml" x="650" y="1500" zoom="true"/>
+        <Node id="author/view.xhtml" x="1150" y="300" zoom="true"/>
+        <Node id="ingredient/view.xhtml" x="900" y="750" zoom="true"/>
+        <Node id="misc/void.xhtml" x="650" y="900" zoom="true"/>
+        <Node id="resources/scaffold/paginator.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="store/view.xhtml" x="1650" y="300" zoom="true"/>
+        <Node id="prescription/create.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="redirect.html" x="1900" y="750" zoom="true"/>
+        <Node id="admin/dumper.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="help/view.xhtml" x="1900" y="150" zoom="true"/>
+        <Node id="index.html" x="400" y="1350" zoom="true"/>
+        <Node id="language/create.xhtml" x="2150" y="300" zoom="true"/>
+        <Node id="plant/search.xhtml" x="1400" y="1050" zoom="true"/>
+        <Node id="bmi/bmi.xhtml" x="650" y="1350" zoom="true"/>
+        <Node id="store/search.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="loginerror.xhtml" x="1900" y="600" zoom="true"/>
+        <Node id="defect/view.xhtml" x="150" y="1650" zoom="true"/>
+        <Node id="bmi/somatotype.xhtml" x="400" y="1500" zoom="true"/>
+        <Node id="honey/create.xhtml" x="150" y="1350" zoom="true"/>
+        <Node id="store/create.xhtml" x="650" y="750" zoom="true"/>
+        <Node id="bmi/guide.xhtml" x="2150" y="600" zoom="true"/>
+        <Node id="admin/dashboard.xhtml" x="1650" y="150" zoom="true"/>
+        <Node id="google381242e94ba107ef.html" x="1400" y="900" zoom="true"/>
+        <Node id="ingredient/search.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="enduser/view.xhtml" x="400" y="1050" zoom="true"/>
+        <Node id="witness/search.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="usergroup/view.xhtml" x="400" y="1650" zoom="true"/>
+        <Node id="misc/search.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="prescription/search.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="complement/search.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="resources/scaffold/pageTemplate.xhtml" x="900" y="900" zoom="true"/>
+        <Node id="substance/create.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="denied.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="prescription/view.xhtml" x="1650" y="750" zoom="true"/>
+        <Node id="misc/redirect.xhtml" x="2400" y="150" zoom="true"/>
+        <Node id="complement/create.xhtml" x="900" y="1200" zoom="true"/>
+        <Node id="bodypart/create.xhtml" x="1900" y="300" zoom="true"/>
+        <Node id="defect/search.xhtml" x="1150" y="600" zoom="true"/>
+        <Node id="author/create.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="complement/view.xhtml" x="1150" y="1050" zoom="true"/>
+        <Node id="bodypart/search.xhtml" x="1150" y="1200" zoom="true"/>
+        <Node id="login.xhtml" x="1900" y="450" zoom="true"/>
+        <Node id="summary.html" x="1650" y="900" zoom="true"/>
+        <Node id="misc/glossary.xhtml" x="1150" y="900" zoom="true"/>
+        <Node id="admin/test.xhtml" x="150" y="900" zoom="true"/>
+        <Node id="witness/create.xhtml" x="400" y="1200" zoom="true"/>
+        <Node id="misc/contact.xhtml" x="1400" y="450" zoom="true"/>
+        <Node id="witness/view.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="enduser/create.xhtml" x="2650" y="300" zoom="true"/>
+        <Node id="home.html" x="1150" y="150" zoom="true"/>
+        <Node id="author/search.xhtml" x="1150" y="750" zoom="true"/>
+        <Node id="plant/create.xhtml" x="400" y="750" zoom="true"/>
+        <Node id="index.xhtml" x="1650" y="450" zoom="true"/>
+        <Node id="usergroup/create.xhtml" x="900" y="1050" zoom="true"/>
+        <Node id="misc/aboutus.xhtml" x="900" y="600" zoom="true"/>
+        <Node id="virtue/view.xhtml" x="1650" y="600" zoom="true"/>
+        <Node id="virtue/create.xhtml" x="650" y="1050" zoom="true"/>
+        <Node id="signin.xhtml" x="650" y="1200" zoom="true"/>
+        <Node id="retry.xhtml" x="2400" y="450" zoom="true"/>
+    </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

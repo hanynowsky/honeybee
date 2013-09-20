@@ -981,7 +981,7 @@
 } /* PrimeFaces Extensions */
 .ui-inputfield,.ui-widget-content .ui-inputfield,.ui-widget-header .ui-inputfield
 	{
-	background: #ffffff;
+	/*background: #ffffff;*/
 	-moz-box-shadow: inset 0 0px 0px #8f8f8f;
 	-webkit-box-shadow: inset 0 0px 0px #8f8f8f;
 	box-shadow: inset 0 0px 0px #8f8f8f;

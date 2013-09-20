@@ -1,23 +1,25 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"
-              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
-http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
-    <application>
-        <locale-config>
-            <default-locale>fr</default-locale>
-            <supported-locale>en</supported-locale>
-            <supported-locale>ar</supported-locale>
-        </locale-config>
-        <resource-bundle>
-            <base-name>i18n</base-name>
-            <var>i18n</var>
-        </resource-bundle>
-    </application>
-    <navigation-rule>
-        <navigation-case>
-            <from-outcome>/index</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee  http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>/index</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<application>
+		<locale-config>
+			<default-locale>fr</default-locale>
+			<supported-locale>en</supported-locale>
+			<supported-locale>ar</supported-locale>
+		</locale-config>
+		<resource-bundle>
+			<base-name>i18n</base-name>
+			<var>i18n</var>
+		</resource-bundle>
+	</application>
+	<lifecycle>
+		<phase-listener>org.otika.honeybee.util.MultiPageMessagesSupport</phase-listener>
+	</lifecycle>
 </faces-config>

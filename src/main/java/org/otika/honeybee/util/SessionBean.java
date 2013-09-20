@@ -18,6 +18,8 @@ public class SessionBean implements Serializable {
 
 	private static final long serialVersionUID = -8662407596761655172L;
 	private String originalViewName = "/index.xhtml";
+	private double svgCX;
+	private double svgCY;
 
 	public SessionBean() {
 		
@@ -35,6 +37,34 @@ public class SessionBean implements Serializable {
 
 	public void setOriginalViewName(String originalViewName) {
 		this.originalViewName = originalViewName;
+	}
+
+	/**
+	 * @return the svgCX
+	 */
+	public double getSvgCX() {
+		return svgCX;
+	}
+
+	/**
+	 * @param svgCX the svgCX to set
+	 */
+	public void setSvgCX(double svgCX) {
+		this.svgCX = svgCX;
+	}
+
+	/**
+	 * @return the svgCY
+	 */
+	public double getSvgCY() {
+		return svgCY;
+	}
+
+	/**
+	 * @param svgCY the svgCY to set
+	 */
+	public void setSvgCY(double svgCY) {
+		this.svgCY = svgCY;
 	}
 
 }

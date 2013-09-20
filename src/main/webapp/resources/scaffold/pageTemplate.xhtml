@@ -16,7 +16,7 @@
 		<h:outputStylesheet name="primefaces.css" />
 		<link rel="shortcut icon" type="image/x-icon"
 			href="#{request.contextPath}/resources/favicon.ico" />
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />		
 	</h:head>
 
 	<h:body onload="colorify();"
@@ -26,6 +26,26 @@
 					value="#{i18n.feedback}" />
 			</a>
 		</p:outputPanel>
+		
+		<div id="socialmedia" class="socialmedia">
+			<a style="padding: 2px;"
+				href="http://www.facebook.com/09089309480930442"
+				title="OpenTika Facebook" target="_blank"> <img
+				src="#{resource['gfx/facebook-gray.png']}" width="16" height="16"
+				alt="opentika_img" /></a> <a
+				href="https://plus.google.com/109883863577461705256"
+				title="OpenTika Google+" target="_blank"> <img
+				src="#{resource['gfx/googleplus-gray.png']}" width="16" height="16"
+				alt="opentika_img" /></a> <a style="padding: 2px;"
+				href="http://www.twitter.com/opentika2014" title="OpenTika Twitter"
+				target="_blank"> <img src="#{resource['gfx/twitter-gray.png']}"
+				width="16" height="16" alt="opentika_img" /></a> <a
+				style="padding: 2px;" href="http://www.youtube.com/opentika"
+				title="OpenTika Youtube" target="_blank"> <img
+				src="#{resource['gfx/youtube-gray.png']}" width="16" height="16"
+				alt="opentika_img" /></a>
+		</div>
+
 
 		<p:ajaxStatus id="ajaxStatusPanel_reg" styleClass="status">
 			<f:facet name="start">
@@ -84,13 +104,14 @@
 
 		<style type="text/css">
 #content h2.success {
-	background-position: #{htmlDirection} 18px;}
+	background-position: #{htmlDirection} 18px;		 	
+}
 </style>
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
-				<div class="container">
-					<h:link id="brandLink" outcome="/index.xhtml" styleClass="brand">
-						<h:outputText value="#{i18n.honeybee}" />
+				<div class="container">											
+					<h:link id="brandLink" outcome="/index.xhtml" styleClass="brand">					
+						<h:outputText value="#{i18n.honeybee}" />					
 						<p:effect rendered="#{utilityBean.viewName.contains('index')}"
 							type="pulsate" event="load" delay="500">
 							<f:param name="mode" value="'show'" />
@@ -160,19 +181,20 @@
 
 		<div class="container forgecontainer">
 			<div id="navigation">
-				<h:link id="homeLink" outcome="/index.xhtml"
-					style="padding-left:0px;">
-					<img src="#{resource['bee.jpg']}" alt="HoneyBee" border="0"
-						style="border: 3px solid #FFF; width: 180px; border-radius: 5px; text-align: center; margin-bottom: 5px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 0, 0, 0.6);">
-					</img>
-				</h:link>
+				<h:panelGroup id="top_nav_logo">
+				<div class="toplogo">				
+				<h:link outcome="/index" 
+				id="link_top_nav_logo">
+				<h:graphicImage value="#{resource['library.png']}" width="140px"/>
+				</h:link>				
+				</div>				
+				</h:panelGroup>
 				<h:panelGroup rendered="#{isAdministrator == true}">
-					<ul>						
+					<ul>
 						<li><h:link id="dashboard" outcome="/admin/dashboard"
 								value="#{i18n.dashboard}" /></li>
 					</ul>
 				</h:panelGroup>
-
 				<h:panelGroup>
 					<ul>
 						<li><h:link id="prescription" outcome="/prescription/search"
@@ -215,8 +237,7 @@
 				</h:panelGroup>
 				<h:panelGroup>
 					<ul>
-						<li>
-						<h:link id="bmi" outcome="/bmi/bmi" value="#{i18n.bmi}"/>						
+						<li><h:link id="bmi" outcome="/bmi/bmi" value="#{i18n.bmi}" />
 						</li>
 					</ul>
 				</h:panelGroup>
@@ -244,18 +265,20 @@
 							update="messages_global" />
 					</p:idleMonitor>
 					<p:dialog header="HoneyBee" widgetVar="idleDialog" modal="true"
-						closable="#{empty request.remoteUser}">
+						closable="#{empty request.remoteUser}" id="dialog_idle">
 						<h:panelGrid columns="1" style="text-align:center;">
 							<h:outputText value="Expired Session!" />
 							<p:separator style="height:1px;" />
-							<h:link value="#{i18n.home}" styleClass="btn btn-primary"
-								outcome="/index" rendered="#{empty request.remoteUser}" />
+							<h:link id="link_idle_home" value="#{i18n.home}"
+								styleClass="btn btn-primary" outcome="/index"
+								rendered="#{empty request.remoteUser}" />
 							<p:separator style="height:1px;" />
-							<p:commandButton value="#{i18n.logout}"
-								action="#{userManagerBean.logout}" ajax="false"
+							<p:commandButton id="button_idle" value="#{i18n.logout}"
+								action="/index" ajax="false"
 								rendered="#{not empty request.remoteUser}" />
-							<h:link value="#{i18n.home}" styleClass="btn btn-primary"
-								outcome="/index" rendered="#{not empty request.remoteUser}" />
+							<h:link id="link_idle_back" value="#{i18n.home}"
+								styleClass="btn btn-primary" outcome="/index"
+								rendered="#{not empty request.remoteUser}" />
 						</h:panelGrid>
 					</p:dialog>
 				</h:form>
@@ -266,13 +289,11 @@
 
 		<footer>
 			<div id="footer-wrapper">
-				<p>
-					<h:outputText value="#{i18n.powered_by}" />
-					<a href="http://opentika-otika.rhcloud.com"> <h:outputText
-							value="OpenTika" />
-					</a>
-					<h:outputText value=" | @2013 - #{i18n.casablanca}" />
-				</p>
+				<h:outputText value="#{i18n.powered_by}" />
+				<a href="http://opentika-otika.rhcloud.com"> <h:outputText
+						value="OpenTika" />
+				</a>
+				<h:outputText value=" | @2013 - #{i18n.casablanca}" />
 			</div>
 		</footer>
 	</h:body>

@@ -79,7 +79,6 @@ public class AuthorBean implements Serializable {
 		return "create?faces-redirect=true";
 	}
 
-
 	public void retrieve() {
 
 		if (FacesContext.getCurrentInstance().isPostback()) {
@@ -112,6 +111,10 @@ public class AuthorBean implements Serializable {
 		try {
 			if (this.id == null) {
 				this.entityManager.persist(this.author);
+				FacesMessage msg = new FacesMessage("Author created: "
+						+ this.author.getName() + " "
+						+ this.author.getSurname());
+				FacesContext.getCurrentInstance().addMessage(null, msg);
 				return "search?faces-redirect=true";
 			} else {
 				this.entityManager.merge(this.author);
@@ -172,7 +175,7 @@ public class AuthorBean implements Serializable {
 		this.page = 0;
 	}
 
-	public void paginate(AjaxBehaviorEvent evt) {          
+	public void paginate(AjaxBehaviorEvent evt) {
 		CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
 
 		// Populate this.count

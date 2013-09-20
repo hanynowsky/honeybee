@@ -11,9 +11,9 @@
 	<ui:define name="header">
 		<h:outputText value="#{i18n.bim}" />
 		<p:spacer width="10" />
-		<h:outputLink value="#{request.contextPath}/bmi/guide.html">
+		<h:outputLink value="#{request.contextPath}/bmi/guide.xhtml">
 			<p:graphicImage width="24" value="#{resource['gfx/info.png']}"
-				style="border:1px solid rgba(0,0,0,0.05);margin-top:15px;" />
+				style="margin-top:15px;" />
 		</h:outputLink>
 	</ui:define>
 
@@ -32,7 +32,7 @@
 						<p:inputMask id="i_h" value="#{computerBean.personHeight}"
 							size="3" mask="999" maxlength="3" />
 						<h:outputText value="" />
-						<p:slider for="i_h" maxValue="240" minValue="30" />
+						<p:slider for="i_h" maxValue="240" minValue="30" id="i_h_slider" />
 						<p:outputLabel for="i_w" value="#{i18n.weight} (#{i18n.Kg})" />
 						<h:outputText value="#{computerBean.personWeight}" id="output_w" />
 						<h:inputHidden id="i_w" value="#{computerBean.personWeight}" />
@@ -133,10 +133,10 @@
 						<p:slider for="i_neck" maxValue="70" minValue="15"
 							display="output_neck" id="i_neck_slider" />
 					</h:panelGrid>
-					<p:tooltip for="i_h">
+					<p:tooltip for="i_h_slider">
 						<p:graphicImage value="#{resource['gfx/info.png']}" />
 						<p:spacer width="5px" />
-						<h:outputText value="Height" />
+						<h:outputText value="#{i18n.stature}" />
 					</p:tooltip>
 					<p:tooltip for="i_age_slider">
 						<p:graphicImage value="#{resource['gfx/info.png']}" />
@@ -207,16 +207,6 @@
 							<p:graphicImage width="200"
 								value="#{resource['bmi/measures.jpg']}" />
 						</p:panelGrid>
-					</p:tooltip>
-					<p:tooltip for="img_soma_subtricepsSkinfold"
-						style="text-align:center;">
-						<p:panelGrid columns="2">
-							<h:outputText value="#{i18n.subtriceps_skinFold}" />
-							<p:graphicImage value="#{resource['gfx/info.png']}" />
-						</p:panelGrid>
-						<p:separator style="margin:5px;" />
-						<p:graphicImage value="#{resource['bmi/triceps-skinfold.jpg']}"
-							width="150" />
 					</p:tooltip>
 					<p:tooltip for="img_soma_subscapularSkinfold"
 						style="text-align:center;">
@@ -296,13 +286,6 @@
 				</p:tab>
 				<p:tab title="#{i18n.somatotype}">
 					<p:panelGrid columns="3" style="text-align:center;">
-						<p:outputLabel for="i_subtricepsSkinFold"
-							value="#{i18n.subtriceps_skinFold} (mm)" />
-						<p:spinner id="i_subtricepsSkinFold" stepFactor="0.10"
-							maxlength="4" max="25" min="2"
-							value="#{somatotypeBean.subtricepsSkinFold}" styleClass="spinner" />
-						<p:graphicImage value="#{resource['gfx/info.png']}"
-							id="img_soma_subtricepsSkinfold" />
 						<p:outputLabel value="#{i18n.subscapular_skinFold} (mm)" />
 						<p:spinner id="i_subcapularSkinFold" stepFactor="0.10"
 							maxlength="4" max="25" min="2"
@@ -358,11 +341,11 @@
 							styleClass="spinner" />
 						<p:graphicImage value="#{resource['gfx/info.png']}"
 							id="img_soma_calfCirc" />
-						<p:outputLabel for="i_equation" value="#{i18n.equation_method}" />
+						<p:outputLabel for="i_equation" value="#{i18n.method}" />
 						<p:selectOneRadio id="i_equation"
 							value="#{somatotypeBean.equationMethod}">
-							<f:selectItem itemLabel="#{i18n.yes}" itemValue="true" />
-							<f:selectItem itemLabel="#{i18n.no}" itemValue="false" />
+							<f:selectItem itemLabel="#{i18n.equation}" itemValue="true" />
+							<f:selectItem itemLabel="#{i18n.chart_form}" itemValue="false" />
 						</p:selectOneRadio>
 						<p:graphicImage value="#{resource['gfx/info.png']}"
 							id="img_equation" />
@@ -557,10 +540,23 @@
 					<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
 						id="img_soma_ectoComp" />
 					<h:outputLabel value="#{i18n.somatotype}" />
-					<h:outputText value="#{somatotypeBean.somatotype}"
-						style="color:blue;" />
+					<h:link outcome="/bmi/somatotype">
+						<h:outputText value="#{somatotypeBean.somatotype}"
+							style="color:blue;" />
+					</h:link>
 					<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
 						id="img_soma" />
+					<h:outputLabel value="#{i18n.rounded_somatotype}" />
+					<h:outputText value="#{somatotypeBean.roundedSomatotype}"
+						style="color:brown;" />
+					<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
+						id="img_rsoma" />
+					<h:outputLabel value="#{i18n.panel}" />
+					<h:outputText value="#{somatotypeBean.panel}"
+						style="color:#D9DFF1;" />
+					<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
+						id="img_panel" />
+
 					<h:outputLabel value="#{i18n.somatotype_desc}" />
 					<h:outputText value="#{somatotypeBean.somatotypeDesc}" />
 					<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
@@ -593,6 +589,10 @@
 				<p:graphicImage width="650" id="stoma_chart_img"
 					value="#{resource['bmi/somato-chart.jpg']}"
 					style="margin:5px;border:1px solid #DDDDDD;" />
+			</p:panel>
+			<p:panel header="Somato plot" toggleable="true"
+				style="text-align:center;" rendered="#{computerBean.result > 0}">
+				<h:link outcome="/bmi/somatotype" value="Detailed Somatotype" />
 			</p:panel>
 		</p:outputPanel>
 		<p:separator style="height:2px;" id="sep_1" />

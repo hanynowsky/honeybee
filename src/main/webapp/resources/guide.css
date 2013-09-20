@@ -6,6 +6,7 @@ body {
 	font-family: sans-serif, Arial, Helvetica;
 	color: #3a4f54;
 	background: #ffffff url('gfx/graybg.png') repeat;
+	font-size: 10pt;	
 }
 
 a {
@@ -37,25 +38,11 @@ table {
 th,td th {
 	font-size: 8pt;
 	color: #333333;
-	border-top-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-right-style: solid;
-	border-top-width: 1px;
-	border-bottom-width: 1px;
-	border-left-width: 1px;
-	border-right-width: 1px;
-	border-top-color: #b2d5d6;
-	border-bottom-color: #b2d5d6;
-	border-left-color: #90b4bd;
-	border-right-color: #90b4bd;
+	border: 1px solid rgba(0,0,0,0.1);
 	letter-spacing: 3px;
 	text-align: left;
-	padding-top: 6px;
-	padding-bottom: 6px;
-	padding-left: 6px;
-	padding-right: 6px;
-	background-color: #dfeeee;
+	padding: 6px;
+	background: rgba(0,0,0,0.1);
 }
 
 td {
@@ -64,18 +51,7 @@ td {
 }
 
 td,td td {
-	border-top-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-right-style: solid;
-	border-top-width: 1px;
-	border-bottom-width: 1px;
-	border-left-width: 1px;
-	border-right-width: 1px;
-	border-top-color: #b2d5d6;
-	border-bottom-color: #b2d5d6;
-	border-left-color: #b2d5d6;
-	border-right-color: #b2d5d6;
+	border: 1px solid rgba(0,0,0,0.1);
 	vertical-align: baseline;
 	padding-bottom: 0px;
 }
@@ -121,32 +97,26 @@ tr._even_row {
 	text-indent: 3px;
 	width: 71%;
 	box-shadow: 0 5px 8px rgba(100, 100, 100, 0.8);
+	background: rgba(0,0,0,0.1);
 }
 
 #summary {
 	text-shadow: 0px 0.2px 0px rgba(0, 0, 0, 0.2);
-	font-size: 10pt;	
-	margin-right: 1px;
-	margin-left: 1px;
-	margin-bottom: 1px;
-	margin-top: 1px;
-	padding-right: 1px;
-	padding-left: 1px;
-	padding-bottom: 1px;
-	padding-top: 1px;
+	font-size: 0.9em;	
+	margin: 1px 75% 1px 0%;
+	padding: 1px;
 	text-align: center;
-	width: 23%;
-	margin-right: 75%;
-	margin-left: 0%;
+	width: 23%;	
 	height: 100%;
 	float: left;
 	position: fixed;	
-	font-family: sans-serif, Arial, Helvetica, verdana;
+	font-family: sans-serif,Helvetica, arial,monospace,verdana;
 	font-variant: inherit;
 	font-weight: normal;
 	font-style: normal;
 	color: #000099;
 	box-shadow: 0 5px 8px rgba(100, 100, 100, 0.8);
+	background: rgba(0,0,0,0.1);
 }
 
 .creditbody {
@@ -176,7 +146,7 @@ tr._even_row {
 	margin-bottom: 10px;
 	display: block;
 	background-clip: padding-box;
-	background-color: rgba(228, 228, 228, 0.3);
+	background-color: rgba(0, 0, 0, 0.1);
 	border-radius: 6px;
 	border: 3px solid rgba(0, 0, 0, 0.1);
 	box-shadow: 0 0 4px rgba(0, 0, 0, 0.12) inset, 0 0 1px

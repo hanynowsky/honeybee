@@ -94,10 +94,10 @@ public class ComputerBean implements Serializable {
 	String btmsg = "";
 	static String soundStatus = "normal";
 
-	private int personAge = 20;
+	private int personAge = 30;
 	private int personActivity;
-	private double personHeight = 163;
-	private double personWeight = 55;
+	private double personHeight = 177;
+	private double personWeight = 58.5;
 	private int personGender;
 	private String formula = "Hamwi";
 	private int personMorph;
