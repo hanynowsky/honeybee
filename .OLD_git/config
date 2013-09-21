@@ -1,0 +1,14 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = ssh://51b8b47c4382ec3cf90002c3@honeybee-otika.rhcloud.com/~/git/honeybee.git/
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[remote "honeybee-github"]
+	url = https://github.com/hanynowsky/honeybee.git
+	fetch = +refs/heads/*:refs/remotes/honeybee-github/*
