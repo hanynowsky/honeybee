@@ -9,13 +9,13 @@
         </image:image>
     </url>
     <url> 
-        <loc>https://honeybee-otika.rhcloud.com/index.xhtml</loc> 
+        <loc>https://honeybee-otika.rhcloud.com/home</loc> 
         <image:image>
             <image:loc>https://honeybee-otika.rhcloud.com/honeybee.png</image:loc> 
         </image:image>
     </url>
     <url> 
-        <loc>https://honeybee-otika.rhcloud.com/misc/aboutus.xhtml</loc> 
+        <loc>https://honeybee-otika.rhcloud.com/misc/aboutus</loc> 
         <image:image>
             <image:loc>https://honeybee-otika.rhcloud.com/honeybee.png</image:loc> 
         </image:image>
