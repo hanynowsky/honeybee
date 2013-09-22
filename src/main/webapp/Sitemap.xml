@@ -26,4 +26,34 @@
             <image:loc>https://honeybee-otika.rhcloud.com/honeybee.png</image:loc> 
         </image:image>
     </url>
+     <url> 
+        <loc>https://honeybee-otika.rhcloud.com/google-rich-snippet.html</loc> 
+        <image:image>
+            <image:loc>https://honeybee-otika.rhcloud.com/honeybee.png</image:loc> 
+        </image:image>
+    </url>
+    <url> 
+        <loc>https://honeybee-otika.rhcloud.com/bmi/somatotype</loc> 
+        <image:image>
+            <image:loc>https://honeybee-otika.rhcloud.com/honeybee.png</image:loc> 
+        </image:image>
+    </url>
+    <url> 
+        <loc>https://honeybee-otika.rhcloud.com/prescription/search</loc> 
+        <image:image>
+            <image:loc>https://honeybee-otika.rhcloud.com/honeybee.png</image:loc> 
+        </image:image>
+    </url>
+    <url> 
+        <loc>https://honeybee-otika.rhcloud.com/honey/search</loc> 
+        <image:image>
+            <image:loc>https://honeybee-otika.rhcloud.com/honeybee.png</image:loc> 
+        </image:image>
+    </url>
+    <url> 
+        <loc>https://honeybee-otika.rhcloud.com/plant/search</loc> 
+        <image:image>
+            <image:loc>https://honeybee-otika.rhcloud.com/honeybee.png</image:loc> 
+        </image:image>
+    </url>
 </urlset>
