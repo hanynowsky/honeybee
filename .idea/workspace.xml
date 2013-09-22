@@ -5,32 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/resources/plants/cinnamon.gif" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.forge_settings" afterPath="$PROJECT_DIR$/.forge_settings" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/AuthenticationBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/AuthenticationBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/BundleBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/BundleBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/ContactBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/ContactBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/DumpBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/DumpBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/MailBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/MailBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Plant.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/model/Plant.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/PlantBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/PlantBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/Repository.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/Repository.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/SessionListener.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/SessionListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/org/otika/honeybee/junit/TestClass.java" afterPath="$PROJECT_DIR$/src/test/java/org/otika/honeybee/junit/TestClass.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/UtilityBean.java" afterPath="$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/UtilityBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/misc/contact.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/misc/contact.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/plant/create.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/plant/create.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/i18n.properties" afterPath="$PROJECT_DIR$/src/main/resources/i18n.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/i18n_ar.properties" afterPath="$PROJECT_DIR$/src/main/resources/i18n_ar.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/i18n_en.properties" afterPath="$PROJECT_DIR$/src/main/resources/i18n_en.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/i18n_fr.properties" afterPath="$PROJECT_DIR$/src/main/resources/i18n_fr.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/plant/search.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/plant/search.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/plant/view.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/plant/view.xhtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/google-rich-snippet.html" afterPath="$PROJECT_DIR$/src/main/google-rich-snippet.html" />
     </list>
     <ignored path="honeybee.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="$PROJECT_DIR$/../../test/HelloWorld/.idea/workspace.xml" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372420807078" ignored="false" />
-    <file path="/Dummy.txt" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1375331740657" ignored="false" />
+    <file path="/Dummy.txt" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1379850531369" ignored="false" />
     <file path="/a.java" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372677334565" ignored="false" />
     <file path="/sample.java" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372677332218" ignored="false" />
     <file path="/AuthorEndpoint.java" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372677959995" ignored="false" />
@@ -84,7 +64,6 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -119,6 +98,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -177,10 +157,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="48" />
-    <option name="y" value="-8" />
-    <option name="width" value="1319" />
-    <option name="height" value="777" />
+    <option name="x" value="49" />
+    <option name="y" value="-1" />
+    <option name="width" value="1317" />
+    <option name="height" value="769" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -269,8 +249,8 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -285,6 +265,19 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -312,19 +305,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -395,7 +375,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="48" y="-8" width="1319" height="777" extended-state="6" />
+    <frame x="49" y="-1" width="1317" height="769" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -492,9 +472,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="1" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/i18n_fr.properties">
@@ -527,11 +505,6 @@
       </provider>
       <provider editor-type-id="ResourceBundle">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/otika/honeybee/util/TestClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="8" selection-start="939" selection-end="939" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/IngredientBean.java">
