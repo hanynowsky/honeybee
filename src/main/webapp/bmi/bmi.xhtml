@@ -24,30 +24,45 @@
 				name="bim" />
 		</h:form>
 		<h:form id="bmi_form">
+			<p:panelGrid columns="2" style="width:100%;">
+				<p:outputLabel for="i_h" value="#{i18n.height} (Cm)" />
+				<p:inputMask id="i_h" value="#{computerBean.personHeight}" size="3"
+					mask="999" maxlength="3" />
+				<h:outputText value="" />
+				<p:slider for="i_h" maxValue="240" minValue="30" id="i_h_slider" />
+				<p:outputLabel for="i_w" value="#{i18n.weight} (#{i18n.Kg})" />
+				<h:outputText value="#{computerBean.personWeight}" id="output_w" />
+				<h:inputHidden id="i_w" value="#{computerBean.personWeight}" />
+				<p:slider id="i_w_slider" for="i_w" maxValue="150" minValue="30"
+					display="output_w">
+					<p:ajax process="@form" update=":bmi_results"
+						listener="#{computerBean.computeBMI()}" />
+				</p:slider>
+				<p:outputLabel for="i_age" value="#{i18n.age} (#{i18n.year})" />
+				<h:outputText id="output_age" value="#{computerBean.personAge}" />
+				<h:inputHidden id="i_age" value="#{computerBean.personAge}" />
+				<p:slider id="i_age_slider" for="i_age" maxValue="110" minValue="1"
+					display="output_age" />
+				<p:tooltip for="i_h_slider">
+					<p:graphicImage value="#{resource['gfx/info.png']}" />
+					<p:spacer width="5px" />
+					<h:outputText value="#{i18n.stature}" />
+				</p:tooltip>
+				<p:tooltip for="i_age_slider">
+					<p:graphicImage value="#{resource['gfx/info.png']}" />
+					<p:spacer width="5px" />
+					<h:outputText value="Age" />
+				</p:tooltip>
+				<p:tooltip for="i_w_slider">
+					<p:graphicImage value="#{resource['gfx/info.png']}" />
+					<p:spacer width="5px" />
+					<h:outputText value="Weight" />
+				</p:tooltip>
+			</p:panelGrid>
 			<p:tabView id="tabview_bmi" dir="#{utilityBean.htmlDirection}"
 				style="text-align:center;">
 				<p:tab title="#{i18n.bmi}">
 					<p:panelGrid columns="2" style="width:100%;">
-						<p:outputLabel for="i_h" value="#{i18n.height} (Cm)" />
-						<p:inputMask id="i_h" value="#{computerBean.personHeight}"
-							size="3" mask="999" maxlength="3" />
-						<h:outputText value="" />
-						<p:slider for="i_h" maxValue="240" minValue="30" id="i_h_slider" />
-						<p:outputLabel for="i_w" value="#{i18n.weight} (#{i18n.Kg})" />
-						<h:outputText value="#{computerBean.personWeight}" id="output_w" />
-						<h:inputHidden id="i_w" value="#{computerBean.personWeight}" />
-						<p:slider id="i_w_slider" for="i_w" maxValue="150" minValue="30"
-							display="output_w">
-							<p:ajax process="@form" update=":bmi_results"
-								listener="#{computerBean.computeBMI()}" />
-						</p:slider>
-
-						<p:outputLabel for="i_age" value="#{i18n.age} (#{i18n.year})" />
-						<h:outputText id="output_age" value="#{computerBean.personAge}" />
-						<h:inputHidden id="i_age" value="#{computerBean.personAge}" />
-						<p:slider id="i_age_slider" for="i_age" maxValue="110"
-							minValue="1" display="output_age" />
-
 						<p:outputLabel for="i_activity" value="#{i18n.activity}" />
 						<p:selectOneListbox id="i_activity"
 							value="#{computerBean.personActivity}">
@@ -133,21 +148,7 @@
 						<p:slider for="i_neck" maxValue="70" minValue="15"
 							display="output_neck" id="i_neck_slider" />
 					</h:panelGrid>
-					<p:tooltip for="i_h_slider">
-						<p:graphicImage value="#{resource['gfx/info.png']}" />
-						<p:spacer width="5px" />
-						<h:outputText value="#{i18n.stature}" />
-					</p:tooltip>
-					<p:tooltip for="i_age_slider">
-						<p:graphicImage value="#{resource['gfx/info.png']}" />
-						<p:spacer width="5px" />
-						<h:outputText value="Age" />
-					</p:tooltip>
-					<p:tooltip for="i_w_slider">
-						<p:graphicImage value="#{resource['gfx/info.png']}" />
-						<p:spacer width="5px" />
-						<h:outputText value="Weight" />
-					</p:tooltip>
+
 					<p:tooltip for="i_formula" showEvent="click">
 						<p:panelGrid columns="1">
 							<h:outputText
@@ -271,7 +272,7 @@
 							<p:graphicImage value="#{resource['gfx/info.png']}" />
 						</p:panelGrid>
 						<p:separator style="margin:5px;" />
-						<p:graphicImage value="#{resource['bmi/man-measures.gif']}"
+						<p:graphicImage value="#{resource['bmi/upperarm.gif']}"
 							width="250" />
 					</p:tooltip>
 					<p:tooltip for="img_soma_calfCirc" style="text-align:center;">
@@ -280,8 +281,26 @@
 							<p:graphicImage value="#{resource['gfx/info.png']}" />
 						</p:panelGrid>
 						<p:separator style="margin:5px;" />
-						<p:graphicImage value="#{resource['bmi/man-measures.gif']}"
+						<p:graphicImage value="#{resource['bmi/calf-girth.jpg']}"
 							width="250" />
+					</p:tooltip>
+					<p:tooltip for="img_equation" style="text-align:center;">
+						<p:panelGrid columns="2">
+							<h:outputText value="#{i18n.equation_method}" />
+							<p:graphicImage value="#{resource['gfx/info.png']}" />
+						</p:panelGrid>
+						<p:separator style="margin:5px;" />
+						<p:panelGrid columns="2">
+							<h:outputLabel value="#{i18n.equation}" />
+							<h:outputText
+								value="Somatotype calculation is based on World 
+								Health Organization mathematical equations" />
+							<h:outputLabel value="#{i18n.chart_form}" />
+							<h:outputText
+								value="Somatotype calculation is based on plotting 
+								body measures on Health Carter Chart using a 
+								pre-defined form" />
+						</p:panelGrid>
 					</p:tooltip>
 				</p:tab>
 				<p:tab title="#{i18n.somatotype}">
@@ -379,9 +398,10 @@
 				</p:tab>
 			</p:tabView>
 
-			<div align="center" style="text-align: center; margin: 20px;">
+			<div align="center" style="text-align: center; margin: 20px;" 
+			id="div_cmdButton">
 				<p:commandButton action="#{computerBean.computeBMI()}" id="but_bmi"
-					value="#{i18n.compute}" update=":messages_bim :bmi_results"
+					value="#{i18n.compute}" update=":form_msgs :form_msgs:messages_bim :bmi_results"
 					onsuccess="scrollBy(1,400);" />
 			</div>
 		</h:form>
@@ -390,7 +410,7 @@
 
 
 		<p:outputPanel id="bmi_results" style="margin:5px;">
-			<p:panel header="#{i18n.somatotype}" toggleable="true"
+			<p:panel header="#{i18n.bim}" toggleable="true"
 				style="text-align:center;" rendered="#{computerBean.result > 0}">
 				<h:panelGrid columns="2" rendered="#{computerBean.result > 1}"
 					style="text-align:center;width:100%;">
@@ -516,26 +536,18 @@
 					</p:tooltip>
 				</h:panelGrid>
 			</p:panel>
-			<p:panel header="#{i18n.bmi}" toggleable="true"
-				rendered="#{computerBean.result > 0}" style="text-align:center;	">
-				<p:meterGaugeChart id="meterChart_bmi" min="0" max="50"
-					seriesColors="d31919,e27228,f3df0f,4dB849,09431b,f3df0f,4dB849,e27228,cc6666,d31919"
-					value="#{utilityBean.gaugeMeterModel}"
-					rendered="#{computerBean.result > 1}" title="#{i18n.bim}"
-					style="border:1px solid #dddddd;" label="#{i18n.bmi}" />
-			</p:panel>
 			<p:panel style="text-align:center;" toggleable="true"
 				rendered="#{computerBean.result > 1}" header="#{i18n.somatotype}">
 				<p:panelGrid columns="6">
-					<h:outputLabel value="#{i18n.endomorphic_component}" />
+					<h:outputLabel value="#{i18n.endomorphy}" />
 					<h:outputText value="#{somatotypeBean.endoComponent}" />
 					<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
 						id="img_soma_endoComp" />
-					<h:outputLabel value="#{i18n.mesomorphic_component}" />
+					<h:outputLabel value="#{i18n.mesomorphy}" />
 					<h:outputText value="#{somatotypeBean.mesoComponent}" />
 					<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
 						id="img_soma_mesoComp" />
-					<h:outputLabel value="#{i18n.ectomorphic_component}" />
+					<h:outputLabel value="#{i18n.ectomorphy}" />
 					<h:outputText value="#{somatotypeBean.ectoComponent}" />
 					<p:graphicImage value="#{resource['gfx/info.png']}" width="24"
 						id="img_soma_ectoComp" />
@@ -575,28 +587,39 @@
 						id="img_somatotypeY" />
 				</p:panelGrid>
 			</p:panel>
+			<p:panel header="#{i18n.bmi}" toggleable="true"
+				rendered="#{computerBean.result > 0}" style="text-align:center;	">
+				<p:meterGaugeChart id="meterChart_bmi" min="0" max="50"
+					seriesColors="d31919,e27228,f3df0f,4dB849,09431b,f3df0f,4dB849,e27228,cc6666,d31919"
+					value="#{utilityBean.gaugeMeterModel}"
+					rendered="#{computerBean.result > 1}" title="#{i18n.bim}"
+					style="border:1px solid #dddddd;" label="#{i18n.bmi}" />
+			</p:panel>
 			<p:panel header="SomatoPlot" style="text-align:center;"
 				toggleable="true" rendered="#{computerBean.result > 0}">
 				<p:lineChart value="#{somatotypeBean.somatotypeLineModel}"
 					legendPosition="s" animate="true" style="height:400px;"
 					legendRows="1" legendCols="4">
-					<p:ajax event="itemSelect" update="growl_bmi messages_bim"
+					<p:ajax event="itemSelect" update="growl_bmi form_msgs form_msgs:messages_bim"
 						listener="#{somatotypeBean.chartItemSelect}" />
 				</p:lineChart>
-			</p:panel>
-			<p:panel header="#{i18n.somatotype_category}" toggleable="true"
-				style="text-align:center;" rendered="#{computerBean.result > 0}">
-				<p:graphicImage width="650" id="stoma_chart_img"
-					value="#{resource['bmi/somato-chart.jpg']}"
-					style="margin:5px;border:1px solid #DDDDDD;" />
 			</p:panel>
 			<p:panel header="Somato plot" toggleable="true"
 				style="text-align:center;" rendered="#{computerBean.result > 0}">
 				<h:link outcome="/bmi/somatotype" value="Detailed Somatotype" />
 			</p:panel>
+			<p:panel header="#{i18n.somatotype_category}" toggleable="true"
+				style="text-align:center;" rendered="#{computerBean.result > 0}"
+				collapsed="true">
+				<p:graphicImage width="650" id="stoma_chart_img"
+					value="#{resource['bmi/somato-chart.jpg']}"
+					style="margin:5px;border:1px solid #DDDDDD;" />
+			</p:panel>
 		</p:outputPanel>
 		<p:separator style="height:2px;" id="sep_1" />
-		<p:messages autoUpdate="true" id="messages_bim" />
+		<h:form id="form_msgs" >
+			<p:messages autoUpdate="true" id="messages_bim"/>
+		</h:form>
 		<p:growl autoUpdate="true" showDetail="false" id="growl_bmi" />
 	</ui:define>
 

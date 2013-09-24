@@ -43,15 +43,11 @@
 			<h:outputText/>
                         <h:outputLabel for="honeyBeanHoneyDescription" value="#{i18n.description}"/>
 			<h:outputText id="honeyBeanHoneyDescription" value="#{honeyBean.honey.description}" 
-			escape="false"/>
-			<h:outputText/>
-                        <h:outputLabel for="honeyBeanHoneyDescriptionar" value="#{i18n.descriptionar}"/>
+			escape="false" rendered="#{localeBean.language=='en'}"/>                   
 			<h:outputText id="honeyBeanHoneyDescriptionar" value="#{honeyBean.honey.descriptionar}" 
-			escape="false"/>
-			<h:outputText/>
-                        <h:outputLabel for="honeyBeanHoneyDescriptionfr" value="#{i18n.descriptionfr}"/>
+			escape="false" rendered="#{localeBean.language=='ar'}"/>                      
 			<h:outputText id="honeyBeanHoneyDescriptionfr" value="#{honeyBean.honey.descriptionfr}" 
-			escape="false"/>
+			escape="false" rendered="#{localeBean.language=='fr'}"/>
 			<h:outputText/>
                         <h:outputLabel for="honeyBeanHoneyIngredients" value="#{i18n.ingredients}"/>
 			<p:dataTable id="honeyBeanHoneyIngredients" 

@@ -10,80 +10,115 @@
 	<ui:param name="pageTitle" value="#{i18n.glossary}" />
 
 	<ui:define name="header">
+		<h:outputText value="#{i18n.glossary}" rendered="false" />
+	</ui:define>
+	<ui:define name="subheader">
 		<h:outputText value="#{i18n.glossary}" />
 	</ui:define>
-
 	<ui:define name="main">
 		<h2 class="success">
-			<h:outputText value="#{i18n.glossary}" />
+			<h:outputText value="#{i18n.plants}" />
 		</h2>
 		<style type="text/css">
-		#content table .label {
-		text-align: #{utilityBean.htmlDirection == 'rtl' ? 'right' : 'left'};
-		}
-		</style>
-		<div align="center" style="height: 200px;margin-bottom:10px;">
-			<h:form id="swicth_form">
-				<p:imageSwitch effect="slideX" styleClass="imageswitch"
-					slideshowSpeed="2000" id="imageswitch_plant">
-					<ui:repeat var="_p" value="#{plantBean.all}">
-						<p:graphicImage
-							value="/honeybee/javax.faces.resource/plants/#{_p.label.toLowerCase()}.jpg.jsf"
-							rendered="false" />
-						<p:graphicImage id="plantBeanPlantGraphic" width="350"
-							value="#{imagesBean.image}" rendered="#{true}">
-							<f:param name="plant_id" value="#{_p.id}" />
-						</p:graphicImage>
-					</ui:repeat>
-				</p:imageSwitch>
-			</h:form>
-		</div>
-		<p:separator style="height:1px;" />
-		<h:form id="ring_form">
-			<p:ring value="#{plantBean.all}" var="_plant" id="ring_plant">
-				<p:column id="plant_link">
-					<p:commandLink update=":plant_form:panel_plant"
-						id="plant_commandlink">
-						<p:graphicImage id="plantBeanPlantGraphic_" width="350"
-							value="#{imagesBean.image}" rendered="#{true}">
-							<f:param name="plant_id" value="#{_plant.id}" />
-						</p:graphicImage>
-						<f:setPropertyActionListener target="#{plantBean.id}"
-							value="#{_plant.id}" />
-					</p:commandLink>
-				</p:column>
-			</p:ring>
+#content table .label {
+	text-align: #{utilityBean.htmlDirection=='rtl'?   'right':'left'
+}
+;
+}
+</style>
+		<h:form id="form_gloss">
+				<div align="center" style="height: 200px; margin-bottom: 10px;">
+					<p:imageSwitch effect="slideX" styleClass="imageswitch"
+						slideshowSpeed="3000" id="imageswitch_plant"
+						widgetVar="imageswitch_plant">
+						<ui:repeat var="_p" value="#{plantBean.all}">
+							<p:graphicImage id="img_plant_gloss"
+								value="/honeybee/javax.faces.resource/plants/#{_p.label.toLowerCase()}.jpg.jsf"
+								rendered="false" />
+							<h:link id="link_img_gloss" outcome="/plant/view?id=#{_p.id}">
+								<p:graphicImage id="plantBeanPlantGraphic" width="350"
+									value="#{imagesBean.image}" rendered="#{true}">
+									<f:param name="plant_id" value="#{_p.id}" />
+								</p:graphicImage>
+							</h:link>
+							<p:tooltip for="plantBeanPlantGraphic">
+								<h:outputText value="#{_p.labellat}" />
+							</p:tooltip>
+						</ui:repeat>
+					</p:imageSwitch>
+					<div
+						style="margin-right: 20%; margin-left: 20%; text-align: center; padding: 5px;">
+						<h:graphicImage id="img_previous_gloss"
+							onclick="imageswitch_plant.previous();" alt="#{i18n.previous}"
+							value="#{resource['gfx/arrow-left.png']}"
+							style="margin-right:5px;" />
+						<h:graphicImage id="img_next_gloss"
+							onclick="imageswitch_plant.next();" alt="#{i18n.next}"
+							value="#{resource['gfx/arrow-right.png']}"
+							style="margin-left:5px;" />
+					</div>
+
+				</div>
+		
+			<p:separator style="height:1px;" />
 		</h:form>
-		<h:form id="plant_form">
-			<ui:param name="plant_param"
-				value="#{plantBean.findById(plantBean.id)}" />
-			<p:outputPanel id="panel_plant">
-				<p:fieldset id="plant_fieldset" legend="#{plant_param.labellat}"
-					style="width:85%;margin:25px;text-align:center;">
-					<h:panelGrid style="whitespace:inherit;" id="gridplantoutput"
-						columnClasses="label,component" columns="2"
-						rendered="#{not empty plantBean.id}" cellspacing="10px" >
-						<h:outputText value="#{i18n.label}" />
-						<h:link outcome="/plant/view?id=#{plant_param.id}" includeViewParams="true">
-						<h:outputText value="#{plant_param.label}" />
-						</h:link>
-						<h:outputText value="#{i18n.labelfr}" />
-						<h:outputText value="#{plant_param.labelfr}" />
-						<h:outputText value="#{i18n.labelar}" />
-						<h:outputText value="#{plant_param.labelar}" />
-						<h:outputText value="#{i18n.season}" />
-						<h:outputText value="#{bundleBean.i18n(plant_param.season)}" />
-						<h:outputText value="#{i18n.type}" />
-						<h:outputText value="#{bundleBean.i18n(plant_param.type)}" />								
-						<h:outputText value="#{i18n.description}" rendered="#{localeBean.language == 'en'}"/>
-						<h:outputText value="#{plant_param.description}" rendered="#{localeBean.language == 'en'}" escape="false"/>
-						<h:outputText value="#{i18n.descriptionar}" rendered="#{localeBean.language == 'ar'}"/>
-						<h:outputText value="#{plant_param.descriptionar}" rendered="#{localeBean.language == 'ar'}" escape="false"/>
-						<h:outputText value="#{i18n.descriptionfr}" rendered="#{localeBean.language == 'fr'}"/>
-						<h:outputText value="#{plant_param.descriptionfr}" rendered="#{localeBean.language == 'fr'}" escape="false"/>
-					</h:panelGrid>
-				</p:fieldset>
-			</p:outputPanel>
+		<h:form id="form_ring_gloss" >
+			<p:panel header="#{i18n.plants}" id="panel_ring_gloss"
+				toggleable="true" collapsed="true" >
+				<p:ajax process="@form" event="toggle" 
+				update=":form_ring_gloss:panel_plant :form_ring_gloss:ring_plant"/>				
+				<p:ring  easing="swing" value="#{plantBean.all}" var="_plant"
+					id="ring_plant" style="min-width:300px;">
+					<p:column id="plant_link">
+						<p:commandLink update=":form_ring_gloss:panel_plant"
+							id="plant_commandlink">
+							<p:graphicImage id="plantBeanPlantGraphic_" width="350"
+								value="#{imagesBean.image}" rendered="#{true}">
+								<f:param name="plant_id" value="#{_plant.id}" />
+							</p:graphicImage>
+							<f:setPropertyActionListener target="#{plantBean.id}"
+								value="#{_plant.id}" />
+						</p:commandLink>
+					</p:column>
+				</p:ring>
+
+				<ui:param name="plant_param"
+					value="#{plantBean.findById(plantBean.id)}" />
+				<p:outputPanel id="panel_plant">
+					<p:fieldset id="plant_fieldset" legend="#{plant_param.labellat}"
+						style="width:85%;margin:25px;text-align:center;">
+						<h:panelGrid style="whitespace:inherit;" id="gridplantoutput"
+							columnClasses="label,component" columns="2"
+							rendered="#{not empty plantBean.id}" cellspacing="10px">
+							<h:outputText value="#{i18n.label}" />
+							<h:link outcome="/plant/view?id=#{plant_param.id}"
+								includeViewParams="true">
+								<h:outputText value="#{plant_param.label}" />
+							</h:link>
+							<h:outputText value="#{i18n.labelfr}" />
+							<h:outputText value="#{plant_param.labelfr}" />
+							<h:outputText value="#{i18n.labelar}" />
+							<h:outputText value="#{plant_param.labelar}" />
+							<h:outputText value="#{i18n.season}" />
+							<h:outputText value="#{bundleBean.i18n(plant_param.season)}" />
+							<h:outputText value="#{i18n.type}" />
+							<h:outputText value="#{bundleBean.i18n(plant_param.type)}" />
+							<h:outputText value="#{i18n.description}"
+								rendered="#{localeBean.language == 'en'}" />
+							<h:outputText value="#{plant_param.description}"
+								rendered="#{localeBean.language == 'en'}" escape="false" />
+							<h:outputText value="#{i18n.descriptionar}"
+								rendered="#{localeBean.language == 'ar'}" />
+							<h:outputText value="#{plant_param.descriptionar}"
+								rendered="#{localeBean.language == 'ar'}" escape="false" />
+							<h:outputText value="#{i18n.descriptionfr}"
+								rendered="#{localeBean.language == 'fr'}" />
+							<h:outputText value="#{plant_param.descriptionfr}"
+								rendered="#{localeBean.language == 'fr'}" escape="false" />
+						</h:panelGrid>
+					</p:fieldset>
+				</p:outputPanel>
+			</p:panel>
 		</h:form>
 	</ui:define>
 </ui:composition>

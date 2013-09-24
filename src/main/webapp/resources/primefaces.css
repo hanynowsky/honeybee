@@ -203,7 +203,7 @@ white-space: normal;
 	border: 1px solid gray;
 	font-weight: lighter;
 	text-shadow: 0px 0 #EFEFEF;
-	font-family: arial,helevetica,sans-serif;
+	font-family: Kufi,Nunito,arial,helevetica,sans-serif;
 }
 
 .imageswitch img {
@@ -254,4 +254,48 @@ height: 35px;
 
 .jqplot-target {
 	font-family: Kufi, DroidArabicKufi,sans-serif,arial,verdana;
+}
+
+.ui-button-text-icon-left .ui-button-text {
+	text-shadow: none;
+}
+
+.ui-button {
+	border: 1px solid rgba(0,0,0,0.4);
+	font-family: Kufi,arial,sans-serif;
+}
+
+.ui-fieldset, .ui-fieldset .ui-fieldset-legend {	
+	width: 95%;
+}
+
+.ui-fieldset .ui-fieldset-legend {
+	background: rgba(0,0,0,0.1);
+}
+
+.primedatatable tbody tr:hover, .primedatatable tfoot tr:hover {
+     /*#D2E8F2*/
+	background-color: rgba(93,138,16,0.3);
+}
+
+.ui-messages-info, .ui-messages-warn, .ui-messages-error, .ui-messages-fatal {
+    background: none repeat scroll 0 0 rgba(254, 254, 254, 0.15);
+    border: 1px solid;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.ui-message-info {
+	background: inherit;
+}
+
+.ui-messages-info, .ui-message-info {
+    border: 1px solid rgba(2,129,2,0.90); /* #BCE8F1*/
+    color: rgba(254,254,254,0.9);/* #3A87AD;*/
+	background: rgba(2,129,2,0.10); /*#3A87AD*/ /*#028102*/
+}
+
+.ui-messages-info-summary {
+	color: #666;/*rgba(2,129,2,0.95); /* #BCE8F1*/
+    
 }

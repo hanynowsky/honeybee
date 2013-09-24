@@ -38,13 +38,13 @@ public class SomatotypeBean implements Serializable {
 	/* Measurments */
 	private double subcapularSkinFold = 8.6; // mm
 	private double suprailiacSkinFold = 8.3; // mm
-	private double calfSkinFold = 3.1; // mm
-	private double tricepsSkinFold = 8.3; // mm
+	private double calfSkinFold = 1.8; // mm
+	private double tricepsSkinFold = 6.3; // mm
 	private double height = 177; // Cm
-	private double weight = 57.2; // Kg
+	private double weight = 58.1; // Kg
 	private double humerusBicondyle = 5.65; // cm
 	private double femurBicondyle = 10.95; // cm
-	private double upperArmCirumference = 25.3; // cm
+	private double upperArmCirumference = 23.3; // cm
 	private double calfCirumference = 31.2; // cm
 
 	/* ------------ */

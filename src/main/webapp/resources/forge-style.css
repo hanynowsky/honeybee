@@ -1,15 +1,20 @@
 @charset "UTF-8";
 
 body {
-   	margin: 0;
-   	padding: 0;
-   	font-size: 0.9em;
-	/*background-color: #5F5F5F;*/
-	background: url("../resources/gfx/graybg.png") repeat scroll 0 0 transparent;
-	color: #333333; /*5b5b5b*/
-	font-size:13px;
+   	background-attachment: scroll, scroll;
+    background-clip: content-box;
+    background-color: rgba(0, 0, 0, 0.1);    
+    background-image: url("../resources/gfx/bg.png"), url("../resources/gfx/bg.png");
+    background-image: url("../resources/gfx/bg.png"), -moz-linear-gradient(top center , #E7E7E7, #FBFBFB);       
+    background-origin: content-box;
+    background-position: center center;
+    background-repeat: repeat-y;
+    background-size: auto auto, auto auto;
+    color: #333333;
+    font-size: 13px;
+    margin: 0;
+    padding: 50px 0 0;
     text-shadow: 0 1px 0 rgba(254, 254, 254, 0.1);
-	padding-top:50px;	
 }
 
 #container {
@@ -65,7 +70,7 @@ a:hover {
 
 h1, h2, h3, h4, h5, h6 {
     color: #41484A;
-    text-shadow: 0 1px 0 #ffffff;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.1);
 }
 
 h1 {
@@ -347,7 +352,7 @@ footer p {
 }
 
 #content .data-table tbody tr:hover, #content .data-table tfoot tr:hover {
-	background-color: #d2e8f2;
+	background-color: rgba(93,138,16,0.3);/*#d2e8f2;*/
 }
 
 #content .data-table tbody tr a {
@@ -426,30 +431,36 @@ footer p {
 
 #content h1 {
 	border-bottom: 1px solid #ffffff;
-    font-family: DroidArabicKufi, Roboto, 'Open Sans', sans-serif;
+    font-family: DroidArabicKufi, Nunito, Roboto, 'Open Sans', sans-serif;
     font-size: 49px;
     font-weight: 300;
     letter-spacing: -2px;
     padding-bottom: 10px;
 	}
 #content h2 {
-	color:#867f10;
-	line-height:46px;
-	padding-top:5px;
-	border-top:1px solid #ccc;	
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(254, 254, 254, 0.6);
+    border-radius: 2px 2px 2px 2px;
+    color: rgba(254, 254, 254, 0.9);
+    font-family: Kufi,Nunito,Roboto,arial,sans-serif;
+    line-height: 40px;
+    margin-top: 5px;
+    padding: 5px;
+    font-weight: normal;
+    text-align: center;
 }
 #content h2.success {
 	color:#5d8a10;
-	line-height:46px;
-	padding: 5px 25px 20px 35px; /*padding: 5px 0 20px 35px;*/
-	border-top:1px solid #ccc;
+	line-height:40px;
+	padding: 5px; /*padding: 5px 0 20px 35px;*/
+	border:1px solid #ccc;
 	background: url("#{resource['true.png']}") no-repeat 0px 15px transparent;
 				
 }#content h2.failure {
 	color:red;
-	line-height:46px;
-	padding: 5px 25px 20px 35px;
-	border-top:1px solid #ccc;
+	line-height:40px;
+	padding: 5px 5px 5px 5px;
+	border:1px solid #ccc;
 	background: url("#{resource['false.png']}") no-repeat 0px 15px transparent;
 }
 
@@ -616,23 +627,19 @@ button::-moz-focus-inner {
   	border: 0;
 }
 
-
 .btn-primary {
-  	background-color: #817B10;/* dk gold */
-  	*background-color: #817B10;
-  	background-image: -ms-linear-gradient(top, #B0A826, #979026);/* light gold, med gold */
-  	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#B0A826), to(#979026));
-  	background-image: -webkit-linear-gradient(top, #B0A826, #979026);
-  	background-image: -o-linear-gradient(top, #B0A826, #979026);
-  	background-image: -moz-linear-gradient(top, #B0A826, #979026);
-  	background-image: linear-gradient(top, #B0A826, #979026);
+	background: -moz-linear-gradient(center top , #5d8a10, #5d8a10) repeat scroll 0 0 rgba(103, 138, 16, 0.9);
+  	background: -ms-linear-gradient(center top , #008800, #5d8a10) repeat scroll 0 0 rgba(103, 138, 16, 0.9);
+  	background: -webkit-linear-gradient(center top , #5d8a10, #5d8a10) repeat scroll 0 0 rgba(103, 138, 16, 0.9);
+  	background: -o-linear-gradient(center top , #008800, #5d8a10) repeat scroll 0 0 rgba(103, 138, 16, 0.9);
+  	background: rgba(115, 154, 0, 0.9);
+  	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#00800), to(#5d8a10));  	
   	background-repeat: repeat-x;
   	border-color: #979026 #979026 #7C7301;
   	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#B0A826', endColorstr='#979026', GradientType=0);
-  	filter: progid:dximagetransform.microsoft.gradient(enabled=false);
-
-	font-family: DroidArabicKufi, Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif !important; 
+  	filter: progid:dximagetransform.microsoft.gradient(enabled=false);	
+	font-family: DroidArabicKufi, Arial, Roboto, "Helvetica Neue", Helvetica, sans-serif !important; 
 	font-weight:bold;
 	text-align:center;
 	color:#fff!important;
@@ -730,7 +737,7 @@ h4.page-header {
 
 .user-panel a {	
 	text-shadow: none;
-	color: #5D9A00;
+	color: #8F9F59;/*#5D9A00;*/
 	font-weight: bold;	
 	float: none;
 }
@@ -898,7 +905,7 @@ h4.page-header {
 		}
 .toplogo a:hover {
 	background: rgba(0,0,0,0.1);
-		}
+}
 
 /* CUSTOM FONT */
 @font-face {
