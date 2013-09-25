@@ -3217,7 +3217,7 @@ input[type="submit"].btn.btn-mini {
 
 .nav > li > a:hover {
   text-decoration: none;
-  background-color: #eeeeee;
+  background-color: rgba(1,119,1,0.9); /*#eeeeee*/
 }
 
 .nav > .pull-right {
@@ -3535,9 +3535,10 @@ input[type="submit"].btn.btn-mini {
 
 .tabs-left > .nav-tabs > li > a {
   margin-right: -1px;
-  -webkit-border-radius: 4px 0 0 4px;
-     -moz-border-radius: 4px 0 0 4px;
-          border-radius: 4px 0 0 4px;
+  /*4px 0 0 4px*/
+  -webkit-border-radius: 0 0 0 0;
+     -moz-border-radius: 0 0 0 0 ;
+          border-radius: 0 0 0 0;
 }
 
 .tabs-left > .nav-tabs > li > a:hover {
@@ -3763,9 +3764,10 @@ input[type="submit"].btn.btn-mini {
 .navbar-fixed-bottom .navbar-inner {
   padding-right: 0;
   padding-left: 0;
-  -webkit-border-radius: 0 0 5px 5px;
-     -moz-border-radius: 0 0 5px 5px;
-          border-radius: 0 0 5px 5px;
+  /*0 0 5px 5px;*/
+  -webkit-border-radius: 0 0 0 0;
+     -moz-border-radius: 0 0 0 0;
+          border-radius: 0 0 0 0;
 }
 
 .navbar-fixed-top .container,

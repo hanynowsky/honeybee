@@ -132,8 +132,6 @@
 }
 18
 px
-
-
 ;
 }
 </style>
@@ -189,13 +187,30 @@ px
 						</h:panelGrid>
 					</div>
 					<div class="nav-collapse collapse" id="top_div">
-						<ul class="nav">
-							<li><h:link id="help_top" outcome="/help/search"
+						<ul class="nav">							
+							<li id="li_app" >
+							<h:link id="app_top"
+									outcome="/misc/aboutus" value="Application"
+									/>
+								<ul>
+									<li><h:link id="todo_top"
+									outcome="/misc/todo" value="#{i18n.todo}"
+									/></li>
+									<li><h:link id="links_top"
+									outcome="/misc/links" value="#{i18n.links}"
+									/></li>
+									<li>
+									<h:link id="aboutus_top"
+									outcome="/misc/aboutus" value="#{i18n.aboutus}"
+									/>
+									</li>
+								</ul>							
+								</li>
+								<li><h:link id="help_top" outcome="/help/search"
 									value="#{i18n.help}" /></li>
-							<li><h:link id="aboutus_top" outcome="/misc/aboutus"
-									value="#{i18n.aboutus}" onmouseover="dialog_app.show()" /></li>
 							<li><a id="source_code" target="_blank"
-								href="https://github.com/hanynowsky/honeybee"><h:outputText
+								href="https://github.com/hanynowsky/honeybee">
+								<h:outputText
 										value="#{i18n.source_code}" /></a></li>
 							<li><h:link id="glossary" outcome="/misc/glossary"
 									value="#{i18n.glossary}" /></li>
@@ -203,9 +218,9 @@ px
 									value="#{i18n.search}" /></li>
 							<li><h:link id="contact_menu" outcome="/misc/contact"
 									value="#{i18n.contact}" /></li>
-						</ul>						
-						<p:dialog id="dialog_a" widgetVar="dialog_app" width="300" 
-						style="min-width:400px;position:fixed;top:45px;">
+						</ul>
+						<p:dialog id="dialog_a" widgetVar="dialog_app" width="300"
+							style="min-width:400px;position:fixed;top:45px;">
 							<h:outputText value="APP" />
 						</p:dialog>
 					</div>

@@ -114,8 +114,8 @@ option {
 .forgecontainer {
    /* background-color: #F2F2F2;*/
    	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.1);
-    border-radius: 4px 4px 4px 4px;
-    box-shadow: 0 2px 4px #000000;
+   	/*0 2px 4px #000000;*/  
+    box-shadow: 0 0 0 #000000;
 	padding: 0 10px 20px 10px;
 	padding-right: 20px;/*added for Arabic support*/
 	min-height: 530px;
@@ -131,9 +131,9 @@ footer {
 	text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
 	text-align:center;
 	background: rgba(0,0,0,0.5);
-	border-radius: 5px;
+	/*border-radius: 5px;*/
 	font-family: Kufi,Roboto,arial,helvetica;
-	box-shadow: 0 2px 4px #000000;
+	/*box-shadow: 0 2px 4px #000000;*/
 }
 footer #footer-wrapper {
 	margin:0 auto;
@@ -141,11 +141,13 @@ footer #footer-wrapper {
 footer a {
 	color:#080808;
 	text-decoration: none;
+	text-shadow: 1px 1px rgba(255, 255, 255, 0.25);
 }
 
 footer a:hover {
-	color:#555555;
+	color:#FFF;
 	text-decoration: underline;
+	text-shadow: 1px 1px rgba(0, 0, 0, 0.25);
 }
 footer p {
 	line-height:10px;	
@@ -545,10 +547,92 @@ p.logo {
 	font-size:14px;	
 	color:rgba(254,254,254,0.8); /*#b5b5b5*/
 }
+
+/*Added for submenu*/
+.navbar .nav > li > ul {
+visibility: hidden;
+position: fixed;
+top: 38px;
+margin-left: auto;
+margin-right: auto;
+width: auto;
+background: rgba(0,0,0,0.55);
+color:rgba(254,254,254,0.8);
+display: none;
+-webkit-transiton: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -ms-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -transition: opacity 0.2s;
+  list-style: none;
+}
+
+.navbar .nav > li:hover > ul {
+visibility: visible;
+list-style: none;
+display: block;
+text-align: center;
+font-size: 1em;
+margin-left: -10px;
+background: rgba(0,0,0,0.4);
+}
+
+.navbar .nav > li > ul > li {
+margin: 2px 10px 2px 10px;
+display: block;
+text-shadow: -1px 0 rgba(0, 0, 0, 0.25);
+font-family: Kufi,Roboto,Helvetica,arial;
+font-size: 14px;
+position: relative;
+cursor: pointer;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+ padding: 5px;
+ border: 1px solid rgba(0,0,0,0.05);
+ border-radius: 2px;
+}
+
+.navbar .nav > li > ul > li > a {
+font-family: Kufi,Roboto,Helvetica,arial;
+font-size: 14px;
+color:rgba(254,254,254,0.8);
+text-decoration: none;
+}
+.navbar .nav > li > ul > li > a:hover {
+font-family: Kufi,Roboto,Helvetica,arial;
+font-size: 14px;
+color:#8ebf3a;
+}
+
+/* ---   */
+
+
 .navbar .nav > li > a:hover,
 .navbar .nav > li > a.current {
 	color:#8ebf3a;
 }
+
+/*Added for submenu*/
+.nav > li > ul {
+visibility: visible;
+list-style: none;
+display: inline;
+color: white;
+}
+
+.nav > ul:HOVER > li {
+visibility: visible;
+list-style: none;
+}
+
+
+/* ---   */
+
+
+
 .navbar .brand {
 	font-weight:bold;
 	text-shadow:0 1px 0 #000;
@@ -567,7 +651,8 @@ p.logo {
 }
 
 .navbar-inner {
-	box-shadow: 0 2px 4px #000000;
+	/*0 2px 4px #000000;*/
+	box-shadow: 0 0px 0px #000000;
 }
 
 .navbar-fixed-top .brand {
@@ -906,6 +991,64 @@ h4.page-header {
 .toplogo a:hover {
 	background: rgba(0,0,0,0.1);
 }
+
+/* SUBMENU */
+
+.submenu {
+	font-variant: normal;
+	list-style: none;
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+.submenu > ul > li {
+	font: bold 12px/18px sans-serif;
+	display: inline-block;
+	margin-right: -4px;
+	position: relative;
+	padding: 15px 20px;
+	background: #fff;
+	cursor: pointer;
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	-ms-transition: all 0.2s;
+	-o-transition: all 0.2s;
+	transition: all 0.2s;
+}
+
+.submenu > ul > li:hover {
+	background: #555;
+	color: #fff;
+}
+
+.submenu > ul {
+	padding: 0;
+	position: absolute;
+	top: 40px;
+	left: 0;
+	width: 150px;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none; /*none*/
+	display: inline; /*none*/
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transiton: opacity 0.2s;
+	-moz-transition: opacity 0.2s;
+	-ms-transition: opacity 0.2s;
+	-o-transition: opacity 0.2s;
+	-transition: opacity 0.2s;
+}
+
+.submenu > ul:hover {
+	background: #666;
+	display: block;
+	opacity: 1;
+	visibility: visible;
+}
+
+
 
 /* CUSTOM FONT */
 @font-face {
