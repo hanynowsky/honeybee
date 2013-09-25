@@ -39,23 +39,41 @@
 			</a>
 		</p:outputPanel>
 
-		<div id="socialmedia" class="socialmedia">
-			<a style="padding: 2px;"
-				href="http://www.facebook.com/09089309480930442"
-				title="HoneyBee Facebook" target="_blank"> <img
-				src="#{resource['gfx/facebook-gray.png']}" width="16" height="16"
-				alt="opentika_img" /></a> <a
-				href="https://plus.google.com/u/0/b/115493201542087203824/115493201542087203824"
-				title="HoneyBee Google+" target="_blank"> <img
-				src="#{resource['gfx/googleplus-gray.png']}" width="16" height="16"
-				alt="opentika_img" /></a> <a style="padding: 2px;"
-				href="http://www.twitter.com/opentika2014" title="OpenTika Twitter"
-				target="_blank"> <img src="#{resource['gfx/twitter-gray.png']}"
-				width="16" height="16" alt="opentika_img" /></a> <a
-				style="padding: 2px;" href="http://www.youtube.com/opentika"
-				title="HoneyBee Youtube" target="_blank"> <img
-				src="#{resource['gfx/youtube-gray.png']}" width="16" height="16"
-				alt="opentika_img" /></a>
+		<div id="div_sm" class="socialmedia" style="top: 125px;">
+			<ul style="list-style: none;">
+				<li><a style="padding: 2px;"
+					href="http://www.facebook.com/09089309480930442"
+					title="HoneyBee Facebook" target="_blank"> <img
+						src="#{resource['gfx/facebook-gray.png']}" alt="opentika_img" /></a></li>
+			</ul>
+		</div>
+		<div id="div_sm2" class="socialmedia" style="top: 205px;">
+			<ul>
+				<li><a
+					href="https://plus.google.com/u/0/b/115493201542087203824/115493201542087203824"
+					title="HoneyBee Google+" target="_blank"> <img
+						src="#{resource['gfx/googleplus-gray.png']}" alt="opentika_img" />
+				</a></li>
+			</ul>
+		</div>
+		<div id="div_22" class="socialmedia" style="top: 340px;">
+			<ul>
+				<li><a style="padding: 2px;"
+					href="http://www.twitter.com/opentika2014" title="OpenTika Twitter"
+					target="_blank"> <img src="#{resource['gfx/twitter-gray.png']}"
+						alt="opentika_img" />
+				</a></li>
+			</ul>
+		</div>
+
+		<div id="div_3" class="socialmedia" style="top: 420px;">
+			<ul>
+				<li><a style="padding: 2px;"
+					href="http://www.youtube.com/opentika" title="HoneyBee Youtube"
+					target="_blank"> <img src="#{resource['gfx/youtube-gray.png']}"
+						alt="opentika_img" />
+				</a></li>
+			</ul>
 		</div>
 
 
@@ -120,6 +138,8 @@
 }
 18
 px
+
+
 ;
 }
 </style>
@@ -175,30 +195,21 @@ px
 						</h:panelGrid>
 					</div>
 					<div class="nav-collapse collapse" id="top_div">
-						<ul class="nav">							
-							<li id="li_app" >
-							<h:link id="app_top"
-									outcome="/misc/aboutus" value="Application"
-									/>
+						<ul class="nav">
+							<li id="li_app"><h:link id="app_top"
+									outcome="/misc/aboutus" value="Application" />
 								<ul>
-									<li><h:link id="todo_top"
-									outcome="/misc/todo" value="#{i18n.todo}"
-									/></li>
-									<li><h:link id="links_top"
-									outcome="/misc/links" value="#{i18n.links}"
-									/></li>
-									<li>
-									<h:link id="aboutus_top"
-									outcome="/misc/aboutus" value="#{i18n.aboutus}"
-									/>
-									</li>
-								</ul>							
-								</li>
-								<li><h:link id="help_top" outcome="/help/search"
+									<li><h:link id="todo_top" outcome="/misc/todo"
+											value="#{i18n.todo}" /></li>
+									<li><h:link id="links_top" outcome="/misc/links"
+											value="#{i18n.links}" /></li>
+									<li><h:link id="aboutus_top" outcome="/misc/aboutus"
+											value="#{i18n.aboutus}" /></li>
+								</ul></li>
+							<li><h:link id="help_top" outcome="/help/search"
 									value="#{i18n.help}" /></li>
 							<li><a id="source_code" target="_blank"
-								href="https://github.com/hanynowsky/honeybee">
-								<h:outputText
+								href="https://github.com/hanynowsky/honeybee"> <h:outputText
 										value="#{i18n.source_code}" /></a></li>
 							<li><h:link id="glossary" outcome="/misc/glossary"
 									value="#{i18n.glossary}" /></li>
@@ -207,10 +218,6 @@ px
 							<li><h:link id="contact_menu" outcome="/misc/contact"
 									value="#{i18n.contact}" /></li>
 						</ul>
-						<p:dialog id="dialog_a" widgetVar="dialog_app" width="300"
-							style="min-width:400px;position:fixed;top:45px;">
-							<h:outputText value="APP" />
-						</p:dialog>
 					</div>
 				</div>
 			</div>

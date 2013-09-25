@@ -553,8 +553,6 @@ p.logo {
 visibility: hidden;
 position: fixed;
 top: 38px;
-margin-left: auto;
-margin-right: auto;
 width: auto;
 background: rgba(0,0,0,0.55);
 color:rgba(254,254,254,0.8);
@@ -573,7 +571,7 @@ list-style: none;
 display: block;
 text-align: center;
 font-size: 1em;
-margin-left: -10px;
+margin-left: -1px;
 background: rgba(0,0,0,0.4);
 }
 
@@ -713,11 +711,11 @@ button::-moz-focus-inner {
 }
 
 .btn-primary {
-	background: -moz-linear-gradient(center top , #5d8a10, #5d8a10) repeat scroll 0 0 rgba(103, 138, 16, 0.9);
-  	background: -ms-linear-gradient(center top , #008800, #5d8a10) repeat scroll 0 0 rgba(103, 138, 16, 0.9);
-  	background: -webkit-linear-gradient(center top , #5d8a10, #5d8a10) repeat scroll 0 0 rgba(103, 138, 16, 0.9);
-  	background: -o-linear-gradient(center top , #008800, #5d8a10) repeat scroll 0 0 rgba(103, 138, 16, 0.9);
-  	background: rgba(115, 154, 0, 0.9);
+	background: -moz-linear-gradient(center top , #8FAC0D, #8FAC0D) repeat scroll 0 0 rgba(103, 138, 16, 0.9);
+  	background: -ms-linear-gradient(center top , #8FAC0D, #8FAC0D) repeat scroll 0 0 rgba(103, 138, 16, 0.9);
+  	background: -webkit-linear-gradient(center top , #5d8a10, #8FAC0D) repeat scroll 0 0 rgba(103, 138, 16, 0.9);
+  	background: -o-linear-gradient(center top , #8FAC0D, #8FAC0D) repeat scroll 0 0 rgba(103, 138, 16, 0.9);
+  	background: #8FAC0D;
   	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#00800), to(#5d8a10));  	
   	background-repeat: repeat-x;
   	border-color: #979026 #979026 #7C7301;
@@ -730,13 +728,17 @@ button::-moz-focus-inner {
 	color:#fff!important;
 	padding:6px 14px;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	border-radius: 2px; /*4px*/
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+	border-radius: 1px; /*4px*/
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
 	-moz-box-shadow: 0px 1px 2px rgba(137, 137, 137, 0.8);
 	-webkit-box-shadow: 0px 1px 3px rgba(137, 137, 137, 0.8);
 	box-shadow: 0px 1px 3px rgba(137, 137, 137, 0.8);
 	
+	transition: all .3s ease-in;
+	-o-transition: all .3s ease-in;
+	-moz-transition: all .3s ease-in;
+	-webkit-transition: all .3s ease-in;
 }
 
 .btn-primary:hover,
@@ -973,8 +975,11 @@ h4.page-header {
     padding: 8px 2px ;
     position: fixed;
     right: 3px;
-    text-align: center;
-    top: 340px;
+    text-align: center;    
+	}
+	
+	.socialmedia ul {
+	list-style: none;
 	}
 	
 	.socialmedia:HOVER {
@@ -1006,7 +1011,7 @@ h4.page-header {
 .submenu > ul > li {
 	font: bold 12px/18px sans-serif;
 	display: inline-block;
-	margin-right: -4px;
+	margin-left: -4px;
 	position: relative;
 	padding: 15px 20px;
 	background: #fff;
