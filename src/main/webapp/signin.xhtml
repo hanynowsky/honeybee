@@ -24,7 +24,7 @@
 			<h:outputText value="#{i18n.login}" rendered="#{true}" />
 		</h2>
 
-		<h:form id="authenticationForm" style="text-align:center;">
+		<h:form id="authenticationForm" style="text-align:center;" rendered="#{empty request.remoteUser}">
 			<h:panelGrid id="authGrid" columns="3"
 				columnClasses="label,component,required">
 				<p:outputLabel value="#{i18n.email}" />
@@ -54,8 +54,8 @@
 		<h:form>
 			<div style="margin: 20px" class="buttons">
 				<p:commandButton value="#{i18n.logout}" styleClass="btn btn-primary"
-					action="#{utilityBean.showMessage('info','Disconnected','')}"
-					actionListener="#{authenticationBean.logout}"
+					action="#{authenticationBean.logout}" ajax="false"
+					actionListener="#{utilityBean.showMessage('info','Disconnected','')}"
 					rendered="#{not empty request.remoteUser}" />
 			</div>
 		</h:form>

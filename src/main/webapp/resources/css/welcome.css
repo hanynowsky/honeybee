@@ -5,17 +5,19 @@ h1 {
 	font-size: 3.15em;
 	text-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
 	line-height: 60px;
+	color: rgba(0,0,0,0.5);
 }
 
 h2 {
 	font-variant: normal;
 	font-size: 1.8em;
+	color: rgba(255,248,254,0.9);
 	text-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
 }
 
 body {
 	font-family: Kufi, Nunito, Roboto, sans-serif, arial;
-	background: black url('../resources/gfx/bg-fig.jpg');
+	background: black url('../gfx/bg-fig.jpg');
 	background-size: 1920px 1200px;
 	background-repeat: no-repeat;
 	background-position: right;
@@ -75,7 +77,7 @@ input:ACTIVE {
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	padding: 5px;
 	margin: 5px;
-	width: 50px;
+	width: 40px;
 }
 
 #welcomediv {
@@ -84,38 +86,26 @@ input:ACTIVE {
 
 @font-face {
 	font-family: Roboto;
-	src: url("../resources/Roboto-Regular.ttf");
+	src: url("../Roboto-Regular.ttf");
 	font-weight: normal;
 }
 
 @font-face {
 	font-family: Kufi;
-	src: url("../resources/DroidKufi-Regular.ttf");
+	src: url("../DroidKufi-Regular.ttf");
 	font-weight: normal;
 }
 
 @font-face {
 	font-family: Nunito;
-	src: url("../resources/Nunito-Regular.ttf");
+	src: url("../Nunito-Regular.ttf");
 	font-weight: 300;
 }
 
 #img_bee {
-	animation: 8s ease 0s normal none 1 animated_img;
-	-moz-animation-name: animated_img;
-	-moz-animation-duration: 8s;
-	-moz-animation-timing-function: linear;
-	-moz-animation-delay: 2s;
-	-moz-animation-iteration-count: 2;
-	-moz-animation-direction: alternate;
-	-moz-animation-play-state: running;
-	-webkit-animation-name: animated_img;
-	-webkit-animation-duration: 8s;
-	-webkit-animation-timing-function: linear;
-	-webkit-animation-delay: 2s;
-	-webkit-animation-iteration-count: 2;
-	-webkit-animation-direction: alternate;
-	-webkit-animation-play-state: running;
+	-webkit-animation: 5s linear 1s alternate none 2 animated_img;
+	animation: 5s linear 1s alternate none 2 animated_img;
+    animation-play-state: running;	
 }
 
 

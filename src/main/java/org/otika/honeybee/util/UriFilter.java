@@ -61,18 +61,21 @@ public class UriFilter implements Filter {
 				while (headers.hasMoreElements()) {
 					String header = (String) headers.nextElement();
 					String headerValue = request.getHeader(header);
+					// System.out.println(header + " -> " + headerValue);
 					if (header.equalsIgnoreCase("referer")
 							&& request.getRemoteUser() == null) {
 						if (!headerValue.contains("javax.faces.resource")
-								&& !headerValue.equals("")) {
+								&& !headerValue.equals("")
+								&& !utilityBean.cutRefererString(headerValue)
+										.equals("/")) {
 							/*
-							 * TODO the operation is executed many times: figure
-							 * out how to make it execute only once
-							 * System.out.println
-							 * (utilityBean.cutRefererString(headerValue));
+							 * TODO Refactor this method to something efficient
 							 */
-							sessionBean.setOriginalViewName(utilityBean
-									.cutRefererString(headerValue));
+							String ovName = utilityBean
+									.cutRefererString(headerValue);
+							//System.out.println("Referer is : " + ovName);
+
+							sessionBean.setOriginalViewName(ovName);
 							break;
 						}
 						// TODO break here maybe :( ?
@@ -98,4 +101,3 @@ public class UriFilter implements Filter {
 		// TODO
 	}
 }
-

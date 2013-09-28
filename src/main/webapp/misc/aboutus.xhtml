@@ -11,9 +11,9 @@
 	<ui:define name="header">
 		<h:outputText value="#{i18n.about_app}" />
 	</ui:define>
-	 <ui:define name="subheader">
-        <h:outputText value="#{i18n.aboutus}" />
-    </ui:define>
+	<ui:define name="subheader">
+		<h:outputText value="#{i18n.aboutus}" />
+	</ui:define>
 
 	<ui:define name="main">
 		<style type="text/css">
@@ -29,18 +29,16 @@
 
 .div_aboutus {
 	background: rgba(0, 0, 0, 0.1);
-	width: 100%;
-	min-height: 80px;
+	width: auto;
+	min-height: 20px;
 	height: auto;
-	padding: 5px;
+	padding: 15px 5px 15px 5px;
 	color: white;
-	font-family: Kufi, Nunito, Roboto, arial;
+	font-family: Kufi, Roboto, Nunito,, sans-serif, arial;
 	font-size: 10pt;
 	font-weight: 500;
 	line-height: 20px;
-	border-radius: 5px;
 	margin: 5px 0 5px 0;
-	height: auto;
 }
 </style>
 		<h:form>
@@ -50,7 +48,7 @@
 		</h:form>
 		<div>
 
-			<div id="div_aboutus" class="div_aboutus">
+			<div id="div_aboutus" class="chromediv">
 				<img align="left" id="img_home" src="#{resource['bee.jpg']}"
 					alt="HoneyBee" />
 				<p>
@@ -59,40 +57,26 @@
 				</p>
 			</div>
 
-			<div class="div_aboutus">
+			<div class="chromediv">
+				<img src="#{resource['gfx/bee.svg']}" alt="honeybee home"
+					align="left" class="chromedivimg" />
 				<h:outputText
-					value="HoneyBee is released under licence GPL V3.
-			Terms can be read here: " />
-				<h:link outcome="/help/view?id=18" value="Terms" />
+					value="#{i18n.browser_support}" />
 				<h:panelGrid columns="2">
 					<h:outputLabel value="#{i18n.author}" />
 					<h:outputLink value="http://hanynowsky.wordpress.com"
 						target="_blank">
 						<h:outputText value="#{i18n.hanine_h_almadani}" />
 					</h:outputLink>
+					<h:outputLabel
+						value="Licence GPL V3" />
+					<h:link outcome="/help/view?id=18" value="Terms" />
 				</h:panelGrid>
 			</div>
-			<div class="div_aboutus">
+			<div class="div_aboutus" style="text-align: center;">
 				<a target="_blank" href="mailto:kyoshuu.madani@gmail.com"> <h:outputText
 						value="#{i18n.report_issue}" />
 				</a>
-			</div>
-			<div style="text-align: center;" class="div_aboutus">
-				<p:panel style="border: 0px solid gray;">
-					<a style="padding: 2px;"
-						href="http://www.facebook.com/09089309480930442"
-						title="HoneyBee Facebook" target="_blank"> <img
-						src="#{resource['gfx/facebook-gray.png']}" alt="opentika_img" /></a>
-					<a href="https://plus.google.com/109883863577461705256"
-						title="HoneyBee Google+" target="_blank"> <img
-						src="#{resource['gfx/googleplus-gray.png']}" alt="opentika_img" /></a>
-					<a style="padding: 2px;" href="http://www.twitter.com/opentika2014"
-						title="HoneyBee Twitter" target="_blank"> <img
-						src="#{resource['gfx/twitter-gray.png']}" alt="opentika_img" /></a>
-					<a style="padding: 2px;" href="http://www.youtube.com/opentika"
-						title="HoneyBee Youtube" target="_blank"> <img
-						src="#{resource['gfx/youtube-gray.png']}" alt="opentika_img" /></a>
-				</p:panel>
 			</div>
 		</div>
 		<p:separator style="height:2px;" />

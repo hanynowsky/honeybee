@@ -44,8 +44,8 @@ public class SomatotypeBean implements Serializable {
 	private double weight = 58.1; // Kg
 	private double humerusBicondyle = 5.65; // cm
 	private double femurBicondyle = 10.95; // cm
-	private double upperArmCirumference = 23.3; // cm
-	private double calfCirumference = 31.2; // cm
+	private double upperArmCirumference = 24.3; // cm
+	private double calfCirumference = 32.2; // cm
 
 	/* ------------ */
 	private int mesoDeviation;

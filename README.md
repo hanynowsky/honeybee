@@ -11,7 +11,10 @@ Purpose
 
 This application allows a user to :
 - browse prescriptions based on natural ingredients.
-- Computes his/her somatotye, body fat and body mass index.
+- browse nutritional and medicinal plants, honey types ...etc
+- browse resources on natural healing techniques like cupping
+- browse resources on biological nutrition
+- Compute somatotye, body fat and body mass index.
 - Contribute by adding content (registered and validated users only)
 The user have many ways to reach the information he/she needs.
 

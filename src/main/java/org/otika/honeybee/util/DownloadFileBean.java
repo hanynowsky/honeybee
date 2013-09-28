@@ -90,7 +90,9 @@ public class DownloadFileBean implements Serializable {
 		// exception in the logs:
 		// java.lang.IllegalStateException: Cannot forward after response has
 		// been committed.
-		facesContext.responseComplete();
+		
+		facesContext.responseComplete(); // TODO this might prevent Faces
+											// Messages from showing
 	}
 
 	// Helpers (can be refactored to public utility class)
@@ -101,9 +103,9 @@ public class DownloadFileBean implements Serializable {
 				resource.close();
 			} catch (IOException ex) {
 				// this will generally only be thrown when the client
-				// aborted the download.				
+				// aborted the download.
 				System.out.println(ex);
-                                System.out.println(ex.getMessage());
+				System.out.println(ex.getMessage());
 				Logger.getLogger(DownloadFileBean.class.getName()).log(
 						Level.ALL, ex.getMessage(), ex);
 			}

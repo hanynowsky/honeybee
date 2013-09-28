@@ -41,10 +41,10 @@ public class SHAConverter implements Converter {
             return value;
         }
         try {
-            System.out.println("Hashing value: " + value.toString());
+            //System.out.println("Hashing value: " + value.toString());
             UserManagerBean.setOriginalPassword(value.toString());
             utilityBean.setUnhashedPassword(value.toString());
-            System.out.println("Original password set to: " + UserManagerBean.getOriginalPassword());
+           // System.out.println("Original password set to: " + UserManagerBean.getOriginalPassword());
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
             byte[] hash = messageDigest.digest(value.getBytes("UTF-8"));
             StringBuilder stringBuilder = new StringBuilder();
@@ -52,7 +52,7 @@ public class SHAConverter implements Converter {
                 stringBuilder.append(Integer.toString((hash[i] & 0xff) + 0x100,
                         16).substring(1));
             }
-            System.out.println("Hashed value: " + stringBuilder.toString());
+           // System.out.println("Hashed value: " + stringBuilder.toString());
             return stringBuilder.toString();
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(SHAConverter.class.getName()).severe(

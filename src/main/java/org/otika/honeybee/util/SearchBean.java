@@ -46,7 +46,13 @@ public class SearchBean implements Serializable {
 	public void init() {
 
 		ingredients = new ArrayList<>();
+		initEngine();
+	}
 
+	/**
+	 * Initates search engine
+	 */
+	private void initEngine() {
 		try {
 			fullTextEntityManager = Search
 					.getFullTextEntityManager(this.entityManager);
@@ -79,7 +85,7 @@ public class SearchBean implements Serializable {
 	 * Hibernate Search Method to search ingredients
 	 */
 	public void searchIngredients() {
-		if (keyword != null && !keyword.equals("")) {
+		if (keyword != null && !keyword.equals("")) {			
 			QueryBuilder qb = fullTextEntityManager.getSearchFactory()
 					.buildQueryBuilder().forEntity(Ingredient.class).get();
 			org.apache.lucene.search.Query query = qb
@@ -150,6 +156,15 @@ public class SearchBean implements Serializable {
 		setKeyword("");
 		ingredients.clear();
 		refreshIndex();
+	}
+
+	/**
+	 * Faces method to search ingredients using Hibernate Search
+	 * @return
+	 */
+	public String searchIngredientItems() {		
+		searchIngredients();
+		return "/misc/search";
 	}
 
 	public String getKeyword() {

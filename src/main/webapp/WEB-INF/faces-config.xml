@@ -19,7 +19,7 @@
 			<var>i18n</var>
 		</resource-bundle>
 	</application>
-	<lifecycle>
+	 <lifecycle>
 		<phase-listener>org.otika.honeybee.util.MultiPageMessagesSupport</phase-listener>
 	</lifecycle>
 </faces-config>

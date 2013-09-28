@@ -5,12 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/google-rich-snippet.html" afterPath="$PROJECT_DIR$/src/main/google-rich-snippet.html" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_6.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_jackson_jackson_core_asl_1_8_8.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_jackson_jackson_mapper_asl_1_8_8.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_shrinkwrap_descriptors_shrinkwrap_descriptors_spi_1_1_0_beta_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/google-rich-snippet.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/resources/gfx/bg.jpg" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/misc/aboutus.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/misc/aboutus.xhtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/bootstrap.css" afterPath="$PROJECT_DIR$/src/main/webapp/resources/bootstrap.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/forge-style.css" afterPath="$PROJECT_DIR$/src/main/webapp/resources/forge-style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/honeybee.iml" afterPath="$PROJECT_DIR$/honeybee.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/i18n.properties" afterPath="$PROJECT_DIR$/src/main/resources/i18n.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/i18n_ar.properties" afterPath="$PROJECT_DIR$/src/main/resources/i18n_ar.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/misc/links.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/misc/links.xhtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/scaffold/pageTemplate.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/resources/scaffold/pageTemplate.xhtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/primefaces.css" afterPath="$PROJECT_DIR$/src/main/webapp/resources/primefaces.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/misc/todo.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/misc/todo.xhtml" />
     </list>
     <ignored path="honeybee.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="$PROJECT_DIR$/../../test/HelloWorld/.idea/workspace.xml" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372420807078" ignored="false" />
-    <file path="/Dummy.txt" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1379850531369" ignored="false" />
+    <file path="/Dummy.txt" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1380186096028" ignored="false" />
     <file path="/a.java" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372677334565" ignored="false" />
     <file path="/sample.java" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372677332218" ignored="false" />
     <file path="/AuthorEndpoint.java" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372677959995" ignored="false" />
@@ -249,8 +265,8 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -265,19 +281,6 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -305,6 +308,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -476,35 +492,35 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/i18n_fr.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state line="159" column="13" selection-start="3574" selection-end="3574" vertical-scroll-proportion="0.30555555" />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/i18n_en.properties">
       <provider editor-type-id="ResourceBundle">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/i18n_en.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="0" selection-start="18" selection-end="18" vertical-scroll-proportion="0.044510387" />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/i18n_ar.properties">
       <provider editor-type-id="ResourceBundle">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/i18n_ar.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="0" selection-start="65" selection-end="65" vertical-scroll-proportion="0.046296295" />
       </provider>
-      <provider editor-type-id="ResourceBundle">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/i18n.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="18" selection-end="18" vertical-scroll-proportion="-0.0" />
-      </provider>
       <provider editor-type-id="ResourceBundle">
         <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="18" selection-end="18" vertical-scroll-proportion="-0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/otika/honeybee/view/IngredientBean.java">

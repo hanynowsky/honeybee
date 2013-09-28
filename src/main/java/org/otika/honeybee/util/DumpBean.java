@@ -171,8 +171,7 @@ public class DumpBean {
 	public void watchPrintedPrescription(
 			@Observes PrescriptionPrintedEvent event) {
 		String msg = "Printing prescription number: " + event.getId();
-		System.out.println("System output: " + msg);
-		Logger.getLogger(getClass().getName()).log(Level.ALL, msg);
+		Logger.getLogger(getClass().getName()).info(msg);
 	}
 
 	/**
@@ -183,7 +182,6 @@ public class DumpBean {
 	public void watchSignout(@Observes SignoutEvent event) {
 		requestBean.log("SIGNOUT"); // The bean is decorated
 		String msg = "Sign out successful: " + event.getEmail();
-		System.out.println("System output: " + msg);
 		Logger.getLogger(getClass().getName()).log(Level.ALL, msg);
 	}
 
@@ -195,7 +193,6 @@ public class DumpBean {
 	public void watchSignin(@Observes SigninEvent event) {
 		requestBean.log("SIGNIN"); // The bean is decorated
 		String msg = "Sign in successful: " + event.getEmail();
-		System.out.println("System output: " + msg);
 		// TODO set redirection to referer here instead of login method
 		Logger.getLogger(getClass().getName()).info(msg);
 	}

@@ -10,10 +10,10 @@
 		<title>#{empty pageTitle ? '{#pageTitle}' : pageTitle}</title>
 		<link rel="icon" href="#{resource['favicon.ico']}" />
 		<h:outputScript name="js.js" />
-		<h:outputStylesheet name="primefaces-flick/theme.css" />
-		<h:outputStylesheet name="bootstrap.css" />
-		<h:outputStylesheet name="forge-style.css" />
-		<h:outputStylesheet name="primefaces.css" />
+		<h:outputStylesheet name="css/primefaces-flick/theme.css" />
+		<h:outputStylesheet name="css/bootstrap.css" />
+		<h:outputStylesheet name="css/primefaces.css" />
+		<h:outputStylesheet name="css/forge-style.css" />
 		<link rel="shortcut icon" type="image/x-icon"
 			href="#{request.contextPath}/resources/favicon.ico" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -38,44 +38,6 @@
 					value="#{i18n.feedback}" />
 			</a>
 		</p:outputPanel>
-
-		<div id="div_sm" class="socialmedia" style="top: 125px;">
-			<ul style="list-style: none;">
-				<li><a style="padding: 2px;"
-					href="http://www.facebook.com/09089309480930442"
-					title="HoneyBee Facebook" target="_blank"> <img
-						src="#{resource['gfx/facebook-gray.png']}" alt="opentika_img" /></a></li>
-			</ul>
-		</div>
-		<div id="div_sm2" class="socialmedia" style="top: 205px;">
-			<ul>
-				<li><a
-					href="https://plus.google.com/u/0/b/115493201542087203824/115493201542087203824"
-					title="HoneyBee Google+" target="_blank"> <img
-						src="#{resource['gfx/googleplus-gray.png']}" alt="opentika_img" />
-				</a></li>
-			</ul>
-		</div>
-		<div id="div_22" class="socialmedia" style="top: 340px;">
-			<ul>
-				<li><a style="padding: 2px;"
-					href="http://www.twitter.com/opentika2014" title="OpenTika Twitter"
-					target="_blank"> <img src="#{resource['gfx/twitter-gray.png']}"
-						alt="opentika_img" />
-				</a></li>
-			</ul>
-		</div>
-
-		<div id="div_3" class="socialmedia" style="top: 420px;">
-			<ul>
-				<li><a style="padding: 2px;"
-					href="http://www.youtube.com/opentika" title="HoneyBee Youtube"
-					target="_blank"> <img src="#{resource['gfx/youtube-gray.png']}"
-						alt="opentika_img" />
-				</a></li>
-			</ul>
-		</div>
-
 
 		<p:ajaxStatus id="ajaxStatusPanel_reg" styleClass="status">
 			<f:facet name="start">
@@ -134,32 +96,45 @@
 
 		<style type="text/css">
 #content h2.success {
-	background-position: #{htmlDirection
-}
-18
-px
-
-
-;
-}
+	background-position: #{htmlDirection} 18px;}
 </style>
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<h:link id="brandLink" outcome="/index.xhtml" styleClass="brand">
-						<h:outputText value="#{i18n.honeybee}" />
-						<p:effect rendered="#{utilityBean.viewName.contains('index')}"
-							type="pulsate" event="load" delay="500">
-							<f:param name="mode" value="'show'" />
-						</p:effect>
-					</h:link>
+					<div id="div_brand">
+						<h:link id="brandLink" outcome="/index.xhtml" styleClass="brand"
+						style="min-width: 185px;text-align: center;">
+							<h:outputText value="#{i18n.honeybee}" />
+							<p:effect rendered="#{utilityBean.viewName.contains('index')}"
+								type="fold" event="load" delay="500">
+								<f:param name="mode" value="'show'" />
+							</p:effect>
+						</h:link>
+					</div>
 					<div style="float: right;" class="nav-collapse collapse">
 						<h:panelGrid columns="2" dir="ltr" id="user-panel-grid">
 							<h:panelGroup styleClass="user-panel">
 								<h:link id="userlink" outcome="/login.xhtml">
-									<h:outputText rendered="#{not empty request.remoteUser}"
-										value="#{i18n.hi} #{userManagerBean.userObject.surname}!"
-										dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
+									<h:panelGroup rendered="#{not empty request.remoteUser}"> 
+									<ul class="nav">
+										<li><h:outputText
+												rendered="#{not empty request.remoteUser}"
+												value="#{i18n.hi} #{userManagerBean.userObject.surname}!"
+												dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}"
+												style="color: #8FAC0D;" />
+											<ul>
+												<li style="max-height:20px;"><h:form 														id="form_logout_up">
+														<h:commandLink value="#{i18n.logout}" id="but_logout_up"
+															action="#{authenticationBean.logout}" />
+													</h:form></li>
+												<li><h:link outcome="/enduser/view"
+														value="#{i18n.user_profile}" includeViewParams="true">
+														<f:param name="id"
+															value="#{userManagerBean.userObject.id}" />
+													</h:link></li>
+											</ul></li>
+									</ul>
+									</h:panelGroup>
 								</h:link>
 								<h:outputLink id="userconnect"
 									value="#{request.contextPath}/signin.xhtml">
@@ -196,8 +171,23 @@ px
 					</div>
 					<div class="nav-collapse collapse" id="top_div">
 						<ul class="nav">
-							<li id="li_app"><h:link id="app_top"
-									outcome="/misc/aboutus" value="Application" />
+						<li>							
+							<h:link id="naturopathyy" outcome="/misc/naturopathy"
+									value="#{i18n.naturopathy}" />
+									<ul>
+									<li><h:link id="nutrition" outcome="/misc/nutrition"
+									value="#{i18n.nutrition}" /></li>
+									<li><h:link id="cupping" outcome="/misc/cupping"
+									value="#{i18n.cupping}" /></li>
+									<li><h:link id="glossary" outcome="/misc/glossary"
+									value="#{i18n.glossary}" /></li>
+									</ul>									
+							</li>
+							<li><h:link id="help_top" outcome="/help/search"
+									value="#{i18n.help}" />									
+									</li>
+							<li id="li_app"><h:link id="app_top" outcome="/misc/aboutus"
+									value="#{i18n.application}" />
 								<ul>
 									<li><h:link id="todo_top" outcome="/misc/todo"
 											value="#{i18n.todo}" /></li>
@@ -205,16 +195,29 @@ px
 											value="#{i18n.links}" /></li>
 									<li><h:link id="aboutus_top" outcome="/misc/aboutus"
 											value="#{i18n.aboutus}" /></li>
-								</ul></li>
-							<li><h:link id="help_top" outcome="/help/search"
-									value="#{i18n.help}" /></li>
-							<li><a id="source_code" target="_blank"
+											<li><a id="mobile_top" href="#{request.contextPath}/home.html"
+											><h:outputText value="#{i18n.mobile}" /></a></li>
+											<li><a id="source_code_app" target="_blank"
 								href="https://github.com/hanynowsky/honeybee"> <h:outputText
 										value="#{i18n.source_code}" /></a></li>
-							<li><h:link id="glossary" outcome="/misc/glossary"
-									value="#{i18n.glossary}" /></li>
+								</ul></li>							
+							<li><a id="source_code" target="_blank"
+								href="https://github.com/hanynowsky/honeybee"> <h:outputText
+										value="#{i18n.source_code}" /></a></li>							
 							<li><h:link id="search_menu" outcome="/misc/search"
-									value="#{i18n.search}" /></li>
+									value="#{i18n.search}" />
+									<ul>
+									<li style="max-height: 40px;">
+									<h:form>
+									<h:commandLink action="#{searchBean.searchIngredientItems}">
+									<h:graphicImage value="#{resource['search.png']}" style="margin:5px;"/>
+									</h:commandLink>
+									<h:inputText value="#{searchBean.keyword}" 
+									style="font-family:Kufi,Roboto,arial,sans-serif;"/>
+									</h:form>
+									</li>
+									</ul>
+									</li>
 							<li><h:link id="contact_menu" outcome="/misc/contact"
 									value="#{i18n.contact}" /></li>
 						</ul>
@@ -295,9 +298,9 @@ px
 				<h2>
 					<ui:insert name="subheader" />
 				</h2>
-				<h:form>
+				<h:form styleClass="globalmsg">
 					<p:messages globalOnly="true" id="messages_global"
-						showDetail="false">
+						showDetail="false" >
 						<p:effect type="pulsate" event="load" delay="500">
 							<f:param name="mode" value="'show'" />
 						</p:effect>
@@ -339,6 +342,24 @@ px
 						value="OpenTika" />
 				</a>
 				<h:outputText value=" | @2013 - #{i18n.casablanca}" />
+			</div>
+			<div class="subfooter">
+				<h:outputText value="@ #{i18n.honeybee}" />
+				<a style="padding: 2px;"
+					href="http://www.facebook.com/09089309480930442"
+					title="HoneyBee Facebook" target="_blank"> <img
+					src="#{resource['gfx/facebook-gray.png']}" alt="opentika_img" />
+				</a> <a
+					href="https://plus.google.com/u/0/b/115493201542087203824/115493201542087203824"
+					title="HoneyBee Google+" target="_blank"> <img
+					src="#{resource['gfx/googleplus-gray.png']}" alt="opentika_img" />
+				</a> <a style="padding: 2px;" href="http://www.twitter.com/opentika2014"
+					title="OpenTika Twitter" target="_blank"> <img
+					src="#{resource['gfx/twitter-gray.png']}" alt="opentika_img" />
+				</a> <a style="padding: 2px;" href="http://www.youtube.com/opentika"
+					title="HoneyBee Youtube" target="_blank"> <img
+					src="#{resource['gfx/youtube-gray.png']}" alt="opentika_img" />
+				</a>
 			</div>
 		</footer>
 	</h:body>

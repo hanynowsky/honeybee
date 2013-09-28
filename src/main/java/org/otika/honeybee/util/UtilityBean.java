@@ -75,7 +75,7 @@ public class UtilityBean implements Serializable {
 	/**
 	 * Constructor
 	 */
-	public UtilityBean() {	
+	public UtilityBean() {
 	}
 
 	@PostConstruct
@@ -592,7 +592,9 @@ public class UtilityBean implements Serializable {
 				return true;
 			}
 		} catch (Exception ex) {
-			System.out.println("No Internet: " + ex.getMessage());
+			String message = "No Internet Connection!";
+			org.jboss.logging.Logger.getLogger(getClass().getName()).debug(
+					message);
 			return false;
 		}
 		return false;

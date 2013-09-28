@@ -35,7 +35,7 @@
 
 	<ui:define name="main">
 		<h:form id="create" rendered="#{isAdministrator or isAuthor}">
-			<h:messages globalOnly="true" styleClass="error" />
+			<p:messages globalOnly="true" autoUpdate="true" redisplay="false"/>
 
 			<h:panelGrid columnClasses="label,component,required" columns="3">
 				<h:outputLabel for="prescriptionBeanPrescriptionAuthor"
@@ -52,8 +52,8 @@
 						<f:selectItems value="#{authorBean.all}" var="_a"
 							itemLabel="#{utilityBean.switchLabel(_a)}" itemValue="#{_a}" />
 					</h:selectOneMenu>
-					<h:message for="prescriptionBeanPrescriptionAuthor"
-						styleClass="error" />
+					<p:message for="prescriptionBeanPrescriptionAuthor"
+						 />
 				</h:panelGroup>
 				<h:outputText />
 				<h:outputLabel for="prescriptionBeanPrescriptionTitle"

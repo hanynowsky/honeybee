@@ -22,7 +22,9 @@ function resetInputs(){
 	document.getElementById('contactForm:contactCaptcha').value = ' ';
 }
 	</script>
+		<div id="div_contact_msg" class="globalmsg">
 		<p:messages autoUpdate="true" id="contactMessages" />
+		</div>
 		<h:form id="contactForm" styleClass="contactform">
 			<h:panelGrid columns="3" id="contactGrid">
 				<p:outputLabel value="#{i18n.fullname}" for="contactName" />

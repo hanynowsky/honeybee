@@ -313,7 +313,8 @@ public class PrescriptionBean implements Serializable {
 	/**
 	 * Returns number of positive witnesses for a given prescription
 	 * 
-	 * @param p Prescription
+	 * @param p
+	 *            Prescription
 	 * @return counter Number of positive witnesses
 	 */
 	public int getPostiveWitnessesCount(Prescription p) {
@@ -339,8 +340,12 @@ public class PrescriptionBean implements Serializable {
 	/**
 	 * Returns number of negative witnesses for a given prescription
 	 * 
-	 * @param p <em>Prescription</em>
-	 * @return counter<p>Number of negative witnesses</p>
+	 * @param p
+	 *            <em>Prescription</em>
+	 * @return counter
+	 *         <p>
+	 *         Number of negative witnesses
+	 *         </p>
 	 */
 	public int getNegativeWitnessesCount(Prescription p) {
 		int counter = 0;
@@ -365,7 +370,7 @@ public class PrescriptionBean implements Serializable {
 	/**
 	 * Prints a prescription
 	 */
-	public void printPrescription(boolean writeCss, boolean openFox) {
+	public void printPrescription(boolean writeCss, boolean openFox, boolean download) {
 		// TODO re-factor this method using i-text library
 		// Or create a temporary file instead of a physical file
 		try {
@@ -686,13 +691,10 @@ public class PrescriptionBean implements Serializable {
 				// -------------
 				out.write("</body>");
 				out.write("</html>");
-				System.out.println("- presFile.html File Created in "
-						+ presFile.getCanonicalPath() + " | Encoded: "
-						+ fstream.getEncoding());
-				utilityBean.showMessage(
-						"INFO",
-						"presFile.html File Created in "
-								+ presFile.getCanonicalPath(), "");
+				Logger.getLogger(getClass().getName()).info(
+						"- presFile.html File Created in "
+								+ presFile.getCanonicalPath() + " | Encoded: "
+								+ fstream.getEncoding());
 				out.close();
 
 				// Fire Printed Prescription Event
@@ -701,9 +703,19 @@ public class PrescriptionBean implements Serializable {
 							this.prescription.getId()));
 				}
 
-				// Download the file
-				downloadFileBean.downloadFile(presFile);
+				// Faces Message
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage("Prescription File Created in "
+								+ presFile.getCanonicalPath()));
 
+				// Download the file
+				// TODO this method prevents Faces Messages from showing at the
+				// current view, and instead invoked after a redirect
+				if (download){
+				downloadFileBean.downloadFile(presFile);
+				}
+				
 				// Open created file in FireFox in Ubuntu Linux
 				if (System.getenv("DESKTOP_SESSION") != null && openFox) {
 					utilityBean.execBash("firefox -new-window "
@@ -717,6 +729,25 @@ public class PrescriptionBean implements Serializable {
 			Logger.getLogger(getClass().getName()).log(Level.SEVERE,
 					ex.getMessage(), ex);
 		}
+	}
+
+	/**
+	 * Faces Method: Print prescription
+	 * */
+	public String printPrescription() {
+		printPrescription(false, false, false);
+		// return "/prescription/view?id=" + this.prescription.getId();
+		return null;
+	}
+
+	/***
+	 * Test Method
+	 * 
+	 * @return null
+	 */
+	public String testMethod() {
+		utilityBean.showMessage("info", "Prescription exported", "");
+		return null;
 	}
 
 	/*

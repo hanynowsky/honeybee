@@ -312,14 +312,16 @@
 		<div class="buttons">
 			<h:form>
 				<p:commandButton id="presPrintButton" style="float:right;"
-					icon="ui-icon ui-icon-document" styleClass="btn btn-primary"
+					icon="ui-icon ui-icon-document" 
 					ajax="false">
 					<p:printer target=":PrescriptionviewForm:viewPresGrid" />
 				</p:commandButton>
+			</h:form>
+			<h:form>
 				<p:commandButton id="presDetailPrintButton" style="float:right;"
 					icon="ui-icon ui-icon-document" value="#{i18n.print}"
-					styleClass="btn btn-primary" ajax="false"
-					action="#{prescriptionBean.printPrescription(false,false)}" />
+					 ajax="false"
+					action="#{prescriptionBean.printPrescription}" />
 			</h:form>
 			<h:form style="margin:10px;">
 				<h:link value="#{i18n.view_all}" outcome="search"
@@ -344,8 +346,7 @@
 						target="#{witnessBean.witness.enduser}"
 						value="#{userManagerBean.userObject}" />
 				</p:commandButton>
-
-			</h:form>
+			</h:form>		
 		</div>
 	</ui:define>
 

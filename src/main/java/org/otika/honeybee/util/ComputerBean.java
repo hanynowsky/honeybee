@@ -97,7 +97,7 @@ public class ComputerBean implements Serializable {
 	private int personAge = 30;
 	private int personActivity;
 	private double personHeight = 177;
-	private double personWeight = 58.5;
+	private double personWeight = 58.2;
 	private int personGender;
 	private String formula = "Hamwi";
 	private int personMorph;

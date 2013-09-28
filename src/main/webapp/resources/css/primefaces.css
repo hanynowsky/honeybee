@@ -190,20 +190,23 @@ white-space: normal;
  
  .ui-selectonemenu-row {
  border: 1px solid #CCC;
- }
- 
+ } 
 
 .ui-growl {
- margin-top: 25px; 
- font-weight: lighter;
+ 	margin-top: 25px; 
+ 	word-wrap: break-word;
  }
 
 .ui-growl-item-container {
 	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.2);
 	border: 1px solid gray;
-	font-weight: lighter;
-	text-shadow: 0px 0 #EFEFEF;
+	text-shadow: 0 0 0 #EFEFEF;
 	font-family: Kufi,Nunito,arial,helevetica,sans-serif;
+	word-wrap: break-word;
+}
+
+.ui-growl-title {
+	font-weight: 600;
 }
 
 .imageswitch img {
@@ -225,8 +228,8 @@ white-space: normal;
 	font-family: Kufi,sans-serif,arial,verdana;
 	font-size: 0.8em;
 	padding: 5px;
-	background-color: rgba(0, 128, 0, 0.9);
-	background-image: url('../resources/gfx/graybg.png');	
+	background-color: rgba(254, 244, 242, 0.9);
+	background-image: url("#{resource['gfx/graybg.png']}");	
 	color: black;
 	border: 3px solid rgba(0, 0, 0, 0.075);
 	border-radius: 3px;
@@ -279,7 +282,7 @@ height: 35px;
 }
 
 .ui-messages-info, .ui-messages-warn, .ui-messages-error, .ui-messages-fatal {
-    background: none repeat scroll 0 0 rgba(254, 254, 254, 0.15);
+    background: none repeat scroll 0 0 rgba(254, 254, 254, 0.1);
     border: 1px solid;
     margin: 10px 0;
     padding: 10px;
@@ -296,6 +299,15 @@ height: 35px;
 }
 
 .ui-messages-info-summary {
-	color: #666;/*rgba(2,129,2,0.95); /* #BCE8F1*/
-    
+	color: #666; /*rgba(2,129,2,0.95); /* #BCE8F1*/    
 }
+
+.ui-messages-error, .ui-message-error {
+    border: 1px solid red; 
+	background: rgba(0,0,0,0.10);
+}
+
+
+
+/*Overrides*/
+
