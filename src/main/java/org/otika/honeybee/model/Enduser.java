@@ -38,9 +38,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 @NamedQueries(value = {
 		@NamedQuery(name = "Enduser.findByUserkey", query = "SELECT e FROM Enduser e WHERE e.userkey = :userkey"),
 		@NamedQuery(name = "Enduser.findByEmail", query = "select e from Enduser e where e.email = :email"),
-		@NamedQuery(name = "Enduser.findByEmailAndPassword", query = "select e from Enduser e where e.email = :email and e.password = :password")})
+		@NamedQuery(name = "Enduser.findByEmailAndPassword", query = "select e from Enduser e where e.email = :email and e.password = :password") })
 public class Enduser implements java.io.Serializable {
-			
+
 	private static final String ENTER_VALUE = "Enter a value / Entrez une valeur";
 	private static final String MALFORMED_EMAIL = "Mal-formed email / Email mal formé";
 	private static final long serialVersionUID = -5640669438836852305L;
@@ -64,6 +64,7 @@ public class Enduser implements java.io.Serializable {
 	private Date datejoined;
 	private String userkey = UUID.randomUUID().toString();
 	private Set<Witness> witnesses = new HashSet<Witness>(0);
+	private Set<Content> contents = new HashSet<Content>(0);
 
 	public Enduser() {
 	}
@@ -84,7 +85,7 @@ public class Enduser implements java.io.Serializable {
 			String telephone, String address, String facebook,
 			String googleplus, String twitter, String website,
 			boolean isactive, String gender, Date datejoined,
-			Set<Witness> witnesses) {
+			Set<Witness> witnesses, Set<Content> contents) {
 		this.usergroup = usergroup;
 		this.language = language;
 		this.name = name;
@@ -102,6 +103,7 @@ public class Enduser implements java.io.Serializable {
 		this.gender = gender;
 		this.datejoined = datejoined;
 		this.witnesses = witnesses;
+		this.contents = contents;
 	}
 
 	@Id
@@ -145,7 +147,7 @@ public class Enduser implements java.io.Serializable {
 		this.language = language;
 	}
 
-	@NotEmpty(message=ENTER_VALUE)
+	@NotEmpty(message = ENTER_VALUE)
 	@Column(name = "name", nullable = false, length = 45)
 	public String getName() {
 		return this.name;
@@ -155,7 +157,7 @@ public class Enduser implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@NotEmpty(message=ENTER_VALUE)
+	@NotEmpty(message = ENTER_VALUE)
 	@Column(name = "surname", nullable = false, length = 45)
 	public String getSurname() {
 		return this.surname;
@@ -164,10 +166,10 @@ public class Enduser implements java.io.Serializable {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
-	@NotEmpty(message=ENTER_VALUE)
+
+	@NotEmpty(message = ENTER_VALUE)
 	@Column(name = "password", nullable = false)
-	public String getPassword() {		
+	public String getPassword() {
 		return this.password;
 	}
 
@@ -175,7 +177,7 @@ public class Enduser implements java.io.Serializable {
 		this.password = password;
 	}
 
-	@NotEmpty(message=ENTER_VALUE)
+	@NotEmpty(message = ENTER_VALUE)
 	@Column(name = "passconf", nullable = false)
 	public String getPassconf() {
 		return this.passconf;
@@ -185,8 +187,8 @@ public class Enduser implements java.io.Serializable {
 		this.passconf = passconf;
 	}
 
-	@NotEmpty(message=ENTER_VALUE)
-	@Email(message=MALFORMED_EMAIL)
+	@NotEmpty(message = ENTER_VALUE)
+	@Email(message = MALFORMED_EMAIL)
 	@Column(name = "email", unique = true, nullable = false, length = 65)
 	public String getEmail() {
 		return this.email;
@@ -249,8 +251,8 @@ public class Enduser implements java.io.Serializable {
 	public void setWebsite(String website) {
 		this.website = website;
 	}
-	
-	@Column(name = "isactive",nullable=false)
+
+	@Column(name = "isactive", nullable = false)
 	public boolean getIsactive() {
 		return this.isactive;
 	}
@@ -287,6 +289,15 @@ public class Enduser implements java.io.Serializable {
 		this.witnesses = witnesses;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "enduser")
+	public Set<Content> getContents() {
+		return this.contents;
+	}
+
+	public void setContents(Set<Content> contents) {
+		this.contents = contents;
+	}
+
 	@Column(name = "userkey")
 	public String getUserkey() {
 		return userkey;
@@ -294,13 +305,13 @@ public class Enduser implements java.io.Serializable {
 
 	public void setUserkey(String userkey) {
 		this.userkey = userkey;
-	}	
-	
+	}
+
 	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see java.lang.Object#toString()
-	 */	
+	 */
 	@Override
 	public String toString() {
 		return name + " " + surname;

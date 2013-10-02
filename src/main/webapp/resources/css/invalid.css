@@ -1,11 +1,11 @@
 @charset "UTF-8";
 
 /* KeyFrames */
-@keyframes animated_img { 
+@keyframes animated_img {
 0% {
-	background: #4B6B1A;
-	left: 0px;
-	top: 0px;
+background: #4B6B1A;
+left: 0px;
+top: 0px;
 }
 
 25%
@@ -42,12 +42,11 @@ top:0px;
 }
 }
 
-
-@-webkit-keyframes animated_img { 
+@-webkit-keyframes animated_img {
 0% {
-	background: #4B6B1A;
-	left: 0px;
-	top: 0px;
+background: #4B6B1A;
+left: 0px;
+top: 0px;
 }
 
 25%
@@ -82,4 +81,9 @@ background:inherit;
 left:0px;
 top:0px;
 }
+}
+
+/* Faces values */
+#content h2.success {
+	background-position: #{utilityBean.htmlDirection == 'rtl' ? 'right' : 'left'} 18px;
 }

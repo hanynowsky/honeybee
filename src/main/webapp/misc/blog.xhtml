@@ -1,0 +1,229 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:forgeview="http://jboss.org/forge/view">
+
+	<ui:param name="pageTitle" value="#{i18n.blog}" />
+
+	<ui:define name="header">
+		<h:outputText value="#{i18n.blog}" />
+		<style type="text/css">
+.ui-accordion {
+	background: rgb(251, 251, 251);
+	color: #666;
+}
+
+#dialog_content_create_id {
+	background: rgb(251, 251, 251);
+}
+</style>
+		<script type="text/javascript">
+function setID(){
+setid();	
+}
+</script>
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="#{i18n.blog}" />
+	</ui:define>
+
+	<ui:define name="main">
+		<p:accordionPanel dynamic="true" cache="false"
+			value="#{contentBean.contentListByCtypeAndLanguage('blog')}"
+			var="contentItem" id="accordion_blog" onTabShow="setID();">
+			<p:tab titletip="#{contentItem.id}"
+				title="#{contentController.localizedItemString(contentItem,'title')}"
+				closable="true" id="accordion_blog_tab">
+				<h:form>
+					<p:remoteCommand autoRun="true"
+						actionListener="#{commentController.onTabChange(contentItem)}"
+						name="setid" update=":output" />
+				</h:form>
+				<p:dialog appendToBody="false" widgetVar="dialog_edit_ccontent"
+					width="500" style="background:#FBFBFB;"
+					header="#{i18n.edit} #{i18n.content} for #{contentItem.title} : #{contentItem.id}"
+					closable="false" modal="true"
+					rendered="#{isAdministrator or isAuthor}">
+					<h:form>
+						<p:inplace editor="true" label="Content"
+							disabled="#{not isAdministrator and not isAuthor}">
+							<p:editor value="#{contentItem.content}" style="min-width:500px;"
+								width="500" rendered="#{localeBean.locale.language == 'en'}" />
+							<p:editor value="#{contentItem.contentfr}"
+								style="min-width:500px;" width="500"
+								rendered="#{localeBean.locale.language == 'fr'}" />
+							<p:editor value="#{contentItem.contentar}"
+								style="min-width:500px;" width="500"
+								rendered="#{localeBean.locale.language == 'ar'}" />
+						</p:inplace>
+						<hr />
+						<p:commandButton value="Finish"
+							action="#{utilityBean.emptyMethod}" update=":accordion_blog"
+							onsuccess=":dialog_edit_ccontent.close()" />
+					</h:form>
+				</p:dialog>
+				<h:form>
+					<p:inplace editor="true"
+						style="font-variant:small-caps;font-weight:bold;"
+						disabled="#{not isAdministrator and not isAuthor}">
+						<p:inputText value="#{contentItem.title}"
+							rendered="#{localeBean.locale.language == 'en'}" />
+						<p:inputText value="#{contentItem.titlefr}"
+							rendered="#{localeBean.locale.language == 'fr'}" />
+						<p:inputText value="#{contentItem.titlear}"
+							rendered="#{localeBean.locale.language == 'ar'}" />
+					</p:inplace>
+					<hr style="height: 1px; margin: 5px;" />
+					<!-- Figure out how to escape HTML as in output Text -->
+					<div ondblclick="dialog_edit_ccontent.show()">
+						<h:outputText value="#{contentItem.content}" escape="false"
+							rendered="#{localeBean.locale.language == 'en'}" />
+						<h:outputText value="#{contentItem.contentfr}" escape="false"
+							rendered="#{localeBean.locale.language == 'fr'}" />
+						<h:outputText value="#{contentItem.contentar}" escape="false"
+							rendered="#{localeBean.locale.language == 'ar'}" />
+					</div>
+					<hr style="height: 1px;" />
+					<h:panelGroup style="font-size:12px;font-style: italic;">
+						<p:inplace editor="true"
+							disabled="#{(not isAdministrator) and (not isAuthor)}">
+							<p:calendar value="#{contentItem.datecreated}"
+								showButtonPanel="true" mode="inline" showOn="button" size="65"
+								navigator="true" locale="#{localeBean.locale.language}"
+								id="calendar_content_dm">
+							</p:calendar>
+						</p:inplace>
+						<h:outputText
+							value=" - #{contentItem.enduser.surname} #{contentItem.enduser.name} | #{contentItem.id} " />
+					</h:panelGroup>
+				</h:form>
+
+				<hr style="height: 1px;" />
+				<!-- Comment Grid or table here or maybe a child accordion-->
+				<hr style="height: 1px;" />
+				<p:commandButton value="#{i18n.delete}" icon="ui-icon ui-icon-minus"
+					action="#{contentController.deleteContent(contentItem)}"
+					update="accordion_blog" rendered="#{isAdministrator}" />
+				<hr style="height: 1px;" />
+
+				<h:form id="form_comment_create">
+					<p:dataGrid id="datatable_comments"
+						value="#{forgeview:asList(contentItem.comments)}" columns="1"
+						var="_comment" rows="3" emptyMessage="No Comments found"
+						paginator="true">
+						<p:column >
+						<p:panel header="#{_comment.cfname}">
+							<h:panelGrid columns="1">
+								<h:outputText value="#{_comment.comcontent}" />
+								<hr />							
+								<h:outputText value="#{_comment.datecreated}" />
+							</h:panelGrid>
+							</p:panel>
+						</p:column>
+					</p:dataGrid>
+
+					<h:panelGrid columns="3">
+						<h:outputLabel for="input_newcomment_name" value="#{i18n.name}" />
+						<h:inputText id="input_newcomment_name"
+							value="#{newComment.cfname}" />
+						<p:message for="input_newcomment_name" />
+						<h:outputLabel for="input_newcomment_email" value="#{i18n.email}" />
+						<h:inputText id="input_newcomment_email"
+							value="#{newComment.email}" />
+						<p:message for="input_newcomment_email" />
+						<h:outputLabel for="input_newcomment_url" value="#{i18n.url}" />
+						<h:inputText id="input_newcomment_url" value="#{newComment.url}" />
+						<p:message for="input_newcomment_url" />
+						<h:outputLabel for="input_newcomment_comcontent"
+							value="#{i18n.comment}" />
+						<h:inputTextarea id="input_newcomment_comcontent"
+							value="#{newComment.comcontent}" style="width:97%;" />
+						<p:message for="input_newcomment_comcontent" />
+						<h:outputLabel for="input_newcomment_content"
+							value="#{i18n.content}" />
+						<h:selectOneMenu id="input_newcomment_content"
+							value="#{newComment.content}"
+							converter="#{contentBean.converter}">
+							<f:selectItem itemLabel="#{contentItem.id}"
+								itemValue="#{contentItem}" />
+						</h:selectOneMenu>
+						<p:message for="input_newcomment_content" />
+					</h:panelGrid>
+					<div style="text-align: center;" id="div_createCommentButton">
+						<p:commandButton id="button_create_comment"
+							action="#{commentController.createComment}"
+							value="#{i18n.comment}" icon="ui-icon ui-icon-plus"
+							immediate="false" update="@all">
+						</p:commandButton>
+					</div>
+				</h:form>
+				<hr />
+				<h:form id="form_link">
+					<p:commandButton ajax="false"
+						action="/misc/blog?faces-redirect=true"
+						icon="ui-icon ui-icon-refresh" id="link_refreshBlog" />
+				</h:form>
+
+			</p:tab>
+		</p:accordionPanel>
+
+		<p:dialog rendered="#{isAdministrator or isAuthor}" modal="true"
+			id="dialog_content_create_id" style="min-width:500px;"
+			widgetVar="dialog_ccreate"
+			header="#{i18n.new} #{i18n.content} :#{newContent.id} | #{localeBean.selectedLanguageLabel}">
+			<h:form id="form_content_create">
+				<h:panelGrid columns="3">
+					<h:outputLabel value="#{i18n.title}" />
+					<h:inputText id="content_title" value="#{newContent.title}"
+						rendered="#{localeBean.locale.language == 'en'}" />
+					<h:inputText id="content_titlefr" value="#{newContent.titlefr}"
+						rendered="#{localeBean.locale.language == 'fr'}" />
+					<h:inputText id="content_titlear" value="#{newContent.titlear}"
+						rendered="#{localeBean.locale.language == 'ar'}" />
+					<p:message for="content_title" />
+					<h:outputLabel value="#{i18n.content}" />
+					<p:editor id="content_content" value="#{newContent.content}"
+						rendered="#{localeBean.locale.language == 'en'}" />
+					<p:editor id="content_contentfr" value="#{newContent.contentfr}"
+						rendered="#{localeBean.locale.language == 'fr'}" />
+					<p:editor id="content_contentar" value="#{newContent.contentar}"
+						rendered="#{localeBean.locale.language == 'ar'}" />
+					<p:message for="content_content" />
+					<h:outputLabel value="#{i18n.category}" />
+					<h:selectOneMenu id="content_ctype_smenu"
+						value="#{newContent.ctype}">
+						<f:selectItem itemLabel="#{i18n.blog}" itemValue="blog" />
+						<f:selectItem itemLabel="#{i18n.nutrition}" itemValue="nutrition" />
+						<f:selectItem itemLabel="#{i18n.naturopathy}"
+							itemValue="naturopathy" />
+						<f:selectItem itemLabel="#{i18n.cupping}" itemValue="cupping" />
+					</h:selectOneMenu>
+					<p:message for="content_ctype_smenu" />
+				</h:panelGrid>
+				<p:commandButton action="#{contentController.createContent}"
+					value="#{i18n.create}" update=":accordion_blog"
+					onsuccess=":dialog_ccreate.hide()" />
+			</h:form>
+		</p:dialog>
+		<p:panelGrid style="margin-top:10px;"
+			rendered="#{isAdministrator or isAuthor}" columns="2">
+			<p:commandButton value="#{i18.create} #{i18n.content}" type="button"
+				icon="ui-icon ui-icon-plus" onclick="dialog_ccreate.show()">
+				<p:ajax event="click" listener="#{contentBean.retrieve}"
+					update="dialog_content_create_id" />
+			</p:commandButton>
+		</p:panelGrid>
+
+		<hr style="height: 1px;" />
+		<p:outputPanel id="output">
+			<h:outputText value="Content is is: #{commentController.content.id}" />
+		</p:outputPanel>
+
+	</ui:define>
+</ui:composition>

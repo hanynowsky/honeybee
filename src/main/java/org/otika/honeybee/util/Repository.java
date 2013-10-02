@@ -14,6 +14,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 
 import org.otika.honeybee.model.Configuration;
+import org.otika.honeybee.model.Content;
 import org.otika.honeybee.model.Enduser;
 import org.otika.honeybee.model.Honey;
 import org.otika.honeybee.model.Ingredient;
@@ -209,6 +210,7 @@ public class Repository implements Serializable {
 
 	/**
 	 * Finds an object by its id and type
+	 * 
 	 * @param <T>
 	 * @param id
 	 * @return
@@ -265,6 +267,7 @@ public class Repository implements Serializable {
 
 	/**
 	 * Finds an ingredient by its label and form
+	 * 
 	 * @param label
 	 * @param form
 	 * @return ingredient
@@ -669,7 +672,7 @@ public class Repository implements Serializable {
 		try {
 			TypedQuery<Ptype> query = em.createNamedQuery("Ptype.findByLabel",
 					Ptype.class);
-			query.setParameter("label", label);			
+			query.setParameter("label", label);
 			return query.getSingleResult();
 		} catch (Exception ex) {
 			String msg = ex.getMessage() + " " + ex.getCause().getMessage();
@@ -677,4 +680,85 @@ public class Repository implements Serializable {
 			return null;
 		}
 	}
+
+	/**
+	 * List of Content items by content type (blog, nutrition ...)
+	 * 
+	 * @param ctype
+	 * @return list
+	 */
+	public List<Content> findContentByCtype(String ctype) {
+		try {
+			TypedQuery<Content> query = em.createNamedQuery(
+					"Content.findByCtype", Content.class);
+			query.setParameter("ctype", ctype);
+			return query.getResultList();
+		} catch (Exception ex) {
+			String msg = ex.getMessage() + " " + ex.getCause().getMessage();
+			org.jboss.logging.Logger.getLogger(getClass().getName()).error(msg);
+			return null;
+		}
+	}
+
+	/**
+	 * Finds a Content object by its ID
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Content findContentById(long id) {
+		try {
+			return em.find(Content.class, id);
+		} catch (Exception ex) {
+			String msg = ex.getMessage() + " " + ex.getCause().getMessage();
+			org.jboss.logging.Logger.getLogger(getClass().getName()).error(msg);
+			return null;
+		}
+	}
+
+	/**
+	 * <p>
+	 * Returns a list of Content items by Content type and View language
+	 * </p>
+	 * <p>
+	 * This is almost specific for Blog entries, as A blog entry is not
+	 * multilingual. So if column <em>contentfr</em> is not null and the content
+	 * type is <em>blog</em>, that means the Content item is a French Blog entry
+	 * </p>
+	 * <p>
+	 * This differs from other Content types like nutrition or cupping which are
+	 * multilingual, thus we use a simple non discriminatory query in order to
+	 * retrieve items.
+	 * </p>
+	 * 
+	 * @param ctype
+	 * @param lang
+	 * @return
+	 */
+	public List<Content> findContentByCtypeAndLanguage(String ctype, String lang) {
+		try {
+			TypedQuery<Content> query = em.createQuery(
+					"SELECT c FROM Content c WHERE c.content != null ORDER BY datecreated DESC",
+					Content.class);
+			if (lang.equalsIgnoreCase("fr")) {
+				query = em.createQuery(
+						"SELECT c FROM Content c WHERE c.contentfr != null ORDER BY datecreated DESC",
+						Content.class);
+			} else if (lang.equalsIgnoreCase("ar")) {
+				query = em.createQuery(
+						"SELECT c FROM Content c WHERE c.contentar != null ORDER BY datecreated DESC",
+						Content.class);
+			} else {
+				query = em.createQuery(
+						"SELECT c FROM Content c WHERE c.content != null ORDER BY datecreated DESC",
+						Content.class);
+			}
+			return query.getResultList();
+		} catch (Exception ex) {
+			String msg = ex.getMessage() + " " + ex.getCause().getMessage();
+			org.jboss.logging.Logger.getLogger(getClass().getName()).error(msg);
+			return null;
+		}
+	}
+
 } // END OF CLASS

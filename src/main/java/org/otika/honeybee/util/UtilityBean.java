@@ -105,6 +105,13 @@ public class UtilityBean implements Serializable {
 	public void dummyMethod(ActionEvent event) {
 		System.out.println(event.getComponent().getFamily());
 	}
+	
+	/**
+	 * Method to fake Command Button
+	 */
+	public String emptyMethod(){
+		return null;
+	}
 
 	/**
 	 * Method to convert an array of bytes to a file
