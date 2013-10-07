@@ -1,0 +1,132 @@
+@charset "UTF-8";
+
+.ui-bar-a, .ui-btn-text, .ui-content {
+	font-family: Kufi, Helvetica, Arial, sans-serif;
+}
+
+h1 {
+	min-width: 170px;
+	left: 0px;
+	margin-left: -20px;
+}
+
+.ui-header .ui-title {/*, .ui-footer .ui-title*/
+	min-height: 1.1em;
+	text-align: center;
+	font-size: 13px;
+	display: block;
+	margin: 12px 2px 12px -10px;
+	padding: 0;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	outline: 0 !important;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-table td {
+	border-width: 1px;
+	border-style: solid;
+	border-color: inherit;
+	padding: 4px 10px 4px 10px;
+	background: rgba(0,0,0,0.7);
+	font-size: 10px;
+	cursor: pointer;
+	color: #F5F4F2;
+}
+
+.ui-selectonemenu .ui-selectonemenu-label {
+	display: block;
+	border: none;
+	white-space: nowrap;
+	overflow: hidden;
+	font-weight: normal;
+	width: 80%;
+	min-height: 20px;
+	font-size: 11px;
+	cursor: pointer;
+	color: #F5F4F2;
+}
+
+.ui-selectonemenu {
+	display: inline-block;
+	position: relative;
+	zoom: 1;
+	cursor: pointer;
+	overflow: hidden;
+	min-width: 50px;
+	border: 1px solid rgba(255,255,255,0.1);
+	margin: 5px;
+}
+
+.ui-btn-corner-all {
+	-moz-border-radius: 3px/*{global-radii-buttons}*/;
+	-webkit-border-radius: 3px/*{global-radii-buttons}*/;
+	border-radius: 3px/*{global-radii-buttons}*/;
+}
+
+.ui-field-contain {/*fieldset.ui-field-contain*/
+	padding: .8em 0;
+	margin: 0;
+	border-width: 0 0 1px 0;
+	overflow: visible;
+	text-align: justify;
+	font-size: 13px;
+}
+
+tr:first-child {
+	background: rgba(255,255,255,0.9);
+	cursor: crosshair;
+}
+
+td:first-child {
+	font-weight: bold;
+}
+
+td:nth-child(2n) {
+	font-size: 14px;
+	text-align: justify;
+}
+
+.ui-block-b, .ui-block-c {
+	font-family: Kufi, Helvetica, Arial, sans-serif;
+}
+
+.ui-collapsible-content {
+	display: block;
+	margin: 0 -8px;
+	padding: 10px 16px;
+	border-top: none;
+	background-image: none;
+	font-weight: normal;
+	font-family: Kufi;
+	text-align: justify;
+	font-size: 12px;
+}
+
+.ui-growl {
+	background: rgba(53,53,53,1);
+	font-size: 12px;
+	text-shadow: none;
+	color: #F5F4F2;
+	font-family: Kufi, Helvetica, Arial, sans-serif;
+	border-bottom: 1px solid #F5F4F2;
+	border-top: 0px solid rgb(53,53,53);
+	top: 0px;
+	right: 0px;
+	text-align: center;
+	width: 100%;
+	margin-right: 0px;
+}
+
+.ui-growl-item-container {
+	min-height: 105px;
+	margin-bottom: 0px;
+	text-align: center;
+}
+
+/* FONTS */
+@font-face {
+	font-family: Kufi;
+	src: url("#{resource['DroidKufi-Regular.ttf']}");
+	font-weight: 300;
+}

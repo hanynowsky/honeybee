@@ -47,7 +47,11 @@
 				name="aboutus" />
 		</h:form>
 		<div>
-
+			<p:panel rendered="#{localeBean.language == 'ar'}">
+				<h2>
+					<h:outputText value="باقة من الأمل لمن يرجو الشفاء في العسل" />
+				</h2>
+			</p:panel>
 			<div id="div_aboutus" class="chromediv">
 				<img align="left" id="img_home" src="#{resource['bee.jpg']}"
 					alt="HoneyBee" />
@@ -60,16 +64,14 @@
 			<div class="chromediv">
 				<img src="#{resource['gfx/bee.svg']}" alt="honeybee home"
 					align="left" class="chromedivimg" />
-				<h:outputText
-					value="#{i18n.browser_support}" />
+				<h:outputText value="#{i18n.browser_support}" />
 				<h:panelGrid columns="2">
 					<h:outputLabel value="#{i18n.author}" />
 					<h:outputLink value="http://hanynowsky.wordpress.com"
 						target="_blank">
 						<h:outputText value="#{i18n.hanine_h_almadani}" />
 					</h:outputLink>
-					<h:outputLabel
-						value="Licence GPL V3" />
+					<h:outputLabel value="Licence GPL V3" />
 					<h:link outcome="/help/view?id=18" value="Terms" />
 				</h:panelGrid>
 			</div>

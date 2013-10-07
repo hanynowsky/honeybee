@@ -419,6 +419,7 @@ public class PlantBean implements Serializable {
 	 *            File Upload Event
 	 */
 	public void handleFileUpload(FileUploadEvent event) {
+		System.out.println("Uploading a file...");
 		String p = System.getProperty("java.io.tmpdir");
 		String separator = File.separator;
 		UploadedFile file = event.getFile();

@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{commentBean.id}" />
+		<f:event type="preRenderView" listener="#{commentBean.retrieve}" />
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="#{i18n.comment}" />
+
+	<ui:define name="header">
+		#{i18n.comment}
+	</ui:define>
+
+	<ui:define name="subheader">
+		#{i18n.comment}: #{commentBean.id}
+	</ui:define>
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+		<h:form id="form_edit_comment" rendered="#{isAdministrator}">
+			<h:panelGrid columns="3">
+				<p:outputLabel for="i_comcontent" value="#{i18n.comment}" />
+				<p:inplace editor="true" id="i_comcontent">
+					<p:inputTextarea value="#{commentBean.comment.comcontent}"
+						id="input_comcontent" />
+				</p:inplace>
+				<p:message for="i_comcontent" />
+
+				<p:outputLabel for="i_cfname" value="#{i18n.author}" />
+				<p:inplace editor="true" id="i_cfname">
+					<p:inputText value="#{commentBean.comment.cfname}"
+						id="i_cfname_input" />
+				</p:inplace>
+				<p:message for="i_cfname" />
+
+				<p:outputLabel for="i_email" value="#{i18n.email}" />
+				<p:inplace editor="true" id="i_email">
+					<p:inputText value="#{commentBean.comment.email}"
+						id="i_email_input" />
+				</p:inplace>
+				<p:message for="i_email" />
+
+				<p:outputLabel for="i_url" value="#{i18n.url}" />
+				<p:inplace editor="true" id="i_url">
+					<p:inputText value="#{commentBean.comment.url}" id="i_url_input" />
+				</p:inplace>
+				<p:message for="i_url" />
+
+				<p:outputLabel for="i_dateu" value="#{i18n.date} (Updated)" />
+				<h:outputText value="#{commentBean.comment.dateupdated}"
+					id="i_dateu" />
+				<p:message for="i_dateu" />
+
+				<p:outputLabel for="i_datec" value="#{i18n.date} (Creation)" />
+				<h:outputText value="#{commentBean.comment.datecreated}"
+					id="i_datec" />
+				<p:message for="i_datec" />
+
+				<p:outputLabel for="i_content" value="#{i18n.content}" />
+				<h:outputText value="#{commentBean.comment.content.id}"
+					id="i_content" />
+				<p:message for="i_content" />
+			</h:panelGrid>
+
+			<div style="text-align: center;">
+				<p:commandButton value="#{i18n.delete}" icon="ui-icon ui-icon-minus"
+					action="#{commentBean.delete}"
+					 />
+				<p:commandButton action="/misc/blog?faces-redirect=true"
+					value="#{i18n.blog}" immediate="true" />
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

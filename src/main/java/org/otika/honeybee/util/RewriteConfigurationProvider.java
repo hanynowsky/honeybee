@@ -25,8 +25,17 @@ public class RewriteConfigurationProvider extends HttpConfigurationProvider {
 
 	@Override
 	public Configuration getConfiguration(ServletContext arg0) {
-		
-		// TODO add security filter : ocpsoft : secure page
+
+		// TODO add security filter : Ocpsoft : secure page
+
+		// TODO BUG: Rewriting makes PrimeFaces fileUpload has no effect
+
+		// TODO: We did not write a rule for /application/contact.xhtml as it
+		// uses a PrimeFaces Uploader
+
+		// TODO we did not write a rule for /plant/create/xhtml as it uses a
+		// PrimeFaces Uploader
+
 		return ConfigurationBuilder
 				.begin()
 				.addRule()
@@ -34,7 +43,11 @@ public class RewriteConfigurationProvider extends HttpConfigurationProvider {
 						Path.matches("/misc/void.xhtml")))
 				.perform(Forward.to("/bmi/bmi.xhtml"))
 				.addRule(Join.path("/misc/{param}").to("/misc/{param}.xhtml"))
-				.addRule(Join.path("/plant/{param}").to("/plant/{param}.xhtml"))
+				.addRule(Join.path("/plant/view").to("/plant/view.xhtml"))
+				.addRule(Join.path("/plant/search").to("/plant/search.xhtml"))
+				.addRule(
+						Join.path("/mobile/{param}")
+								.to("/mobile/{param}.xhtml"))
 				.addRule(
 						Join.path("/language/{param}").to(
 								"/language/{param}.xhtml"))
@@ -76,11 +89,12 @@ public class RewriteConfigurationProvider extends HttpConfigurationProvider {
 								"/usergroup/{param}.xhtml"))
 				.addRule(Join.path("/home").to("/index.xhtml"))
 				.addRule(Join.path("/bmi/{param}").to("/bmi/{param}.xhtml"))
+				.addRule(Join.path("/blog/{param}").to("/blog/{param}.xhtml"))
 				.addRule(Join.path("/signin").to("/signin.xhtml"))
 				.addRule(Join.path("/login").to("/login.xhtml"))
 				.addRule(Join.path("/logout").to("/logout.xhtml"))
 				.addRule(Join.path("/error").to("/error.xhtml"))
 				.addRule(Join.path("/loginerror").to("/loginerror.xhtml"))
-				.addRule(Join.path("/admin/test").to("/admin/test.xhtml")) ;
+				.addRule(Join.path("/admin/test").to("/admin/test.xhtml"));
 	}
 }

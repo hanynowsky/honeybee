@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.otika.honeybee</groupId>
 	<artifactId>honeybee</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<packaging>war</packaging>
 	<properties>
 		<!-- Explicitly declaring the source encoding eliminates the following 
@@ -55,7 +55,13 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
-
+		<!-- Facebook -->
+		<dependency>
+			<groupId>org.agorava</groupId>
+			<artifactId>agorava-facebook-cdi</artifactId>
+			<version>0.6.1</version>
+			<scope>compile</scope>
+		</dependency>
 		<!-- Needed for running tests (you may also use TestNG) -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -182,7 +188,7 @@
 		<!-- Agorava Social Java -->
 		<dependency>
 			<groupId>org.agorava</groupId>
-			<artifactId>agorava-core-impl-cdi</artifactId>			
+			<artifactId>agorava-core-impl-cdi</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<!-- Added Manually: <dependency> <groupId>org.jboss.bom</groupId> <artifactId>jboss-javaee-6.0-with-hibernate</artifactId> 

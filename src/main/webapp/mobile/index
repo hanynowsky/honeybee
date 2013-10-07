@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<f:view locale="#{localeBean.locale}" renderKitId="PRIMEFACES_MOBILE"
+	contentType="text/html" encoding="utf-8">
+	<pm:page
+		title="HoneyBee Portal for Naturopathy - موقع نحلة العسل
+			للمعالجة بالطبيعة">
+		<h:outputStylesheet name="css/mobile.css" />
+		<pm:view id="view_page" title="HoneyBee Header" swatch="e">
+			<pm:header fixed="false" title="#{i18n.honeybee}" swatch="a">
+				<div
+					style="text-align: center; margin: 5px 1px 5px 1px; font-size: 11px;">
+					<hr />
+					<h:outputText value="Web Portal for Naturopathy" />
+				</div>
+			</pm:header>
+			<pm:content>
+				<div align="center">
+					<h:link outcome="mobile" >
+						<p:graphicImage url="#{resource['gfx/bee.svg']}"
+							style="background: inherit;width:256px;" />
+					</h:link>
+				</div>			
+			</pm:content>
+			<pm:footer swatch="e" style="text-align:center;" fixed="true">
+				<h:outputText style="font-size:70%;"
+					value="HoneyBee @ 2013. All Rights Reserved." />
+			</pm:footer>
+		</pm:view>
+		<!-- 	<div data-role="page" id="page1">
+			<div data-role="header">
+				<h1 style="font-size: 18px;">
+					<a href="../index.html">Mobile HoneyBee</a>
+				</h1>
+			</div>
+			<div data-role="content">
+				<ul id="listOfItems" data-role="listview" data-inset="true"
+					data-filter="true" style="list-style: none;">
+					<li><a href="../index.xhtml">#{i18n.home}</a></li>
+					<li><a href="../misc/search">#{i18n.search}</a></li>
+					<li><a href="../misc/aboutus">#{i18n.aboutus}</a></li>
+				</ul>
+			</div>
+			<div data-role="footer" style="font-size: 12px;">
+				<hr />
+				<h4>http://honeybee-otika.rhcloud.com</h4>
+			</div>
+		</div> -->
+	</pm:page>
+</f:view>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+<ui:composition template="template.xhtml">
+	<ui:define name="content">
+		<p:growl autoUpdate="true" id="sgrowl" />
+		<h:form id="form_search">
+			<div align="center">
+				<p:inputText value="#{searchBean.keyword}" required="true"
+					id="input_keyword"
+					requiredMessage="#{i18n.keyword} : #{i18n.required}" />
+				<p:commandButton icon="refresh" iconPos="center"
+					action="#{searchBean.release}" inline="true"
+					update=":output_search @form" />
+				<p:commandButton icon="search" inline="true" iconPos="center"
+					id="but_search" action="#{mobileBean.searchItems}"
+					update=":output_search :sgrowl" />
+			</div>
+			<p:defaultCommand target="but_search" />
+		</h:form>
+		<p:separator style="margin: 15px;" />
+		<p:outputPanel id="output_search">
+			<p:dataList value="#{searchBean.ingredients}" var="_item"
+				id="datalist_search">
+				<p:panel header="#{_item.plant.labellat}">
+					<p:graphicImage value="#{resource['gfx/bee.svg']}" width="64"
+						rendered="#{empty _item.plant.id}" />
+					<h:panelGrid columns="3">
+						<p:graphicImage value="#{imagesBean.image}" width="64"
+							rendered="#{not empty _item.plant.id}">
+							<f:param name="plant_id" value="#{_item.plant.id}" />
+						</p:graphicImage>
+						<h:link includeViewParams="true" outcome="ingredient">
+							<h:outputText style="color:rgb(0,119,1);"
+								value="#{mobileBean.localizedProperty(_item,'label')}" />
+							<f:param name="id" value="#{_item.id}" />
+						</h:link>
+						<h:outputText value="#{utilityBean.IngformName(_item.form)}" />
+					</h:panelGrid>
+					<hr style="margin: 10px 0 10px 0;" />
+					<h:panelGroup>
+						<h:outputText escape="false" value="#{_item.plant.descriptionar}"
+							rendered="#{localeBean.selectedLang.code == 'ar'}" />
+						<h:outputText escape="false" value="#{_item.plant.descriptionfr}"
+							rendered="#{localeBean.selectedLang.code == 'fr'}" />
+						<h:outputText escape="false" value="#{_item.plant.description}"
+							rendered="#{localeBean.selectedLang.code == 'en'}" />
+					</h:panelGroup>
+				</p:panel>
+			</p:dataList>
+		</p:outputPanel>
+	</ui:define>
+</ui:composition>
+</html>

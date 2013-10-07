@@ -46,26 +46,31 @@ setid();
 						name="setid" update=":output" />
 				</h:form>
 				<p:dialog appendToBody="false" widgetVar="dialog_edit_ccontent"
-					width="500" style="background:#FBFBFB;"
+					style="background:#FBFBFB;"
 					header="#{i18n.edit} #{i18n.content} for #{contentItem.title} : #{contentItem.id}"
 					closable="false" modal="true"
-					rendered="#{isAdministrator or isAuthor}">
-					<h:form>
-						<p:inplace editor="true" label="Content"
+					rendered="#{isAdministrator or isAuthor}" minWidth="500"
+					resizable="true" minHeight="500" width="600">
+					<!-- PrimeFaces BUG: In most cases inplace does not handle editor -->
+					<h:form id="form_edit_ccontent_inplace">
+						<p:inplace label="#{i18n.content}" editor="true"
+							id="inplace_editcc"
 							disabled="#{not isAdministrator and not isAuthor}">
-							<p:editor value="#{contentItem.content}" style="min-width:500px;"
-								width="500" rendered="#{localeBean.locale.language == 'en'}" />
-							<p:editor value="#{contentItem.contentfr}"
-								style="min-width:500px;" width="500"
+							<p:editor value="#{contentItem.content}"
+								rendered="#{localeBean.locale.language == 'en'}" />
+							<p:inputTextarea value="#{contentItem.contentfr}"
 								rendered="#{localeBean.locale.language == 'fr'}" />
-							<p:editor value="#{contentItem.contentar}"
-								style="min-width:500px;" width="500"
+							<p:inputTextarea value="#{contentItem.contentar}"
 								rendered="#{localeBean.locale.language == 'ar'}" />
 						</p:inplace>
 						<hr />
 						<p:commandButton value="Finish"
 							action="#{utilityBean.emptyMethod}" update=":accordion_blog"
 							onsuccess=":dialog_edit_ccontent.close()" />
+						<p:button outcome="/blog/content" value="Page #{i18n.edit}"
+							includeViewParams="true">
+							<f:param name="id" value="#{contentItem.id}" />
+						</p:button>
 					</h:form>
 				</p:dialog>
 				<h:form>
@@ -105,45 +110,63 @@ setid();
 				</h:form>
 
 				<hr style="height: 1px;" />
-				<!-- Comment Grid or table here or maybe a child accordion-->
-				<hr style="height: 1px;" />
-				<p:commandButton value="#{i18n.delete}" icon="ui-icon ui-icon-minus"
+				<p:commandButton value="#{i18n.delete} #{i18n.content}"
+					icon="ui-icon ui-icon-minus"
 					action="#{contentController.deleteContent(contentItem)}"
 					update="accordion_blog" rendered="#{isAdministrator}" />
 				<hr style="height: 1px;" />
 
 				<h:form id="form_comment_create">
 					<p:dataGrid id="datatable_comments"
-						value="#{forgeview:asList(contentItem.comments)}" columns="1"
-						var="_comment" rows="3" emptyMessage="No Comments found"
-						paginator="true">
-						<p:column >
-						<p:panel header="#{_comment.cfname}">
-							<h:panelGrid columns="1">
-								<h:outputText value="#{_comment.comcontent}" />
-								<hr />							
-								<h:outputText value="#{_comment.datecreated}" />
-							</h:panelGrid>
+						value="#{commentBean.fetchListOfCommentsForContent(contentItem)}"
+						columns="1" var="_comment" rows="3"
+						emptyMessage="No Comments found" paginator="true">
+						<!-- forgeview:asList(contentItem.comments) -->
+						<!-- Use a Dialog to delete a comment or a new page with h:link with view param -->
+						<p:column>
+							<p:panel header="#{_comment.cfname}">
+								<h:panelGrid columns="1">
+									<h:outputText value="#{_comment.comcontent}" />
+									<hr />
+								</h:panelGrid>
+								<h:panelGrid columns="3">
+									<h:outputText value="#{_comment.datecreated}"
+										style="font-style:italic;font-size:10px;">
+										<f:convertDateTime type="both" />
+									</h:outputText>
+									<h:outputText value="-" style="margin: 0 5px 0 5px;"/>
+									<h:outputText value="#{_comment.dateupdated}"
+										style="font-style:italic;font-size:10px;">
+										<f:convertDateTime type="both" />
+									</h:outputText>
+								</h:panelGrid>
 							</p:panel>
+							<h:link rendered="#{isAuthor or isAdministrator}"
+								outcome="/blog/comment" value="#{i18n.edit}" style="margin:5px;"
+								includeViewParams="true">
+								<f:param name="id" value="#{_comment.id}" />
+							</h:link>
 						</p:column>
 					</p:dataGrid>
 
 					<h:panelGrid columns="3">
 						<h:outputLabel for="input_newcomment_name" value="#{i18n.name}" />
-						<h:inputText id="input_newcomment_name"
-							value="#{newComment.cfname}" />
+						<p:inputText id="input_newcomment_name"
+							value="#{newComment.cfname}" required="true"
+							validator="#{commentBean.validateComment}" />
 						<p:message for="input_newcomment_name" />
 						<h:outputLabel for="input_newcomment_email" value="#{i18n.email}" />
-						<h:inputText id="input_newcomment_email"
-							value="#{newComment.email}" />
+						<p:inputText id="input_newcomment_email"
+							value="#{newComment.email}" required="true" />
 						<p:message for="input_newcomment_email" />
 						<h:outputLabel for="input_newcomment_url" value="#{i18n.url}" />
-						<h:inputText id="input_newcomment_url" value="#{newComment.url}" />
+						<p:inputText id="input_newcomment_url" value="#{newComment.url}" />
 						<p:message for="input_newcomment_url" />
 						<h:outputLabel for="input_newcomment_comcontent"
 							value="#{i18n.comment}" />
-						<h:inputTextarea id="input_newcomment_comcontent"
-							value="#{newComment.comcontent}" style="width:97%;" />
+						<p:inputTextarea id="input_newcomment_comcontent"
+							value="#{newComment.comcontent}" style="width:98%;"
+							validator="#{commentBean.validateComment}" required="true" />
 						<p:message for="input_newcomment_comcontent" />
 						<h:outputLabel for="input_newcomment_content"
 							value="#{i18n.content}" />
@@ -198,11 +221,10 @@ setid();
 					<h:outputLabel value="#{i18n.category}" />
 					<h:selectOneMenu id="content_ctype_smenu"
 						value="#{newContent.ctype}">
-						<f:selectItem itemLabel="#{i18n.blog}" itemValue="blog" />
-						<f:selectItem itemLabel="#{i18n.nutrition}" itemValue="nutrition" />
-						<f:selectItem itemLabel="#{i18n.naturopathy}"
-							itemValue="naturopathy" />
-						<f:selectItem itemLabel="#{i18n.cupping}" itemValue="cupping" />
+						<f:selectItems value="#{contentBean.contentTypeItems}"
+							var="_ctype" itemValue="#{_ctype.codevalue}"
+							itemLabel="#{contentBean.localizedCtype(_ctype)}" />
+						<f:selectItem itemValue="#{null}" itemLabel="-----" />
 					</h:selectOneMenu>
 					<p:message for="content_ctype_smenu" />
 				</h:panelGrid>
@@ -222,7 +244,9 @@ setid();
 
 		<hr style="height: 1px;" />
 		<p:outputPanel id="output">
-			<h:outputText value="Content is is: #{commentController.content.id}" />
+			<div class="crystaldiv">
+				<h:outputText value="Content : #{commentController.content.id}" />
+			</div>
 		</p:outputPanel>
 
 	</ui:define>

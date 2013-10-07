@@ -15,6 +15,7 @@ import javax.persistence.PersistenceContextType;
 import org.jboss.logging.Logger;
 import org.otika.honeybee.model.Content;
 import org.otika.honeybee.util.Repository;
+import org.otika.honeybee.util.UtilityBean;
 
 @Model
 public class ContentController {
@@ -31,6 +32,8 @@ public class ContentController {
 	@Inject
 	private PublisherBean publisherBean;
 	private Long id;
+	@Inject
+	private UtilityBean utilitybean;
 
 	public ContentController() {
 
@@ -53,11 +56,15 @@ public class ContentController {
 						.getCurrentInstance().getExternalContext()
 						.getRemoteUser()));
 				publisherBean.createContent(newContent);
+				utilitybean.showMessage("info", "Successfully Created Content "
+						+ localizedItemString(newContent, "title"), "");
 			} else {
-				// TODO maybe use primefaces inplace edition feature instead of
-				// calling the dialog
-				newContent = repository.findContentById(id);
-				publisherBean.updateContent(newContent);
+				// TODO For now we're using primefaces inplace edition feature
+				// instead
+				if (id != null) {
+					newContent = repository.findContentById(id);
+					publisherBean.updateContent(newContent);
+				}
 			}
 		} catch (Exception e) {
 			Logger.getLogger(getClass().getName()).debug(e.getMessage());
@@ -77,6 +84,7 @@ public class ContentController {
 		try {
 			// TODO attach content instance before deleting
 			publisherBean.deleteContent(content);
+			utilitybean.showMessage("info", "Deleted content: "+content.getId(), "");
 		} catch (Exception e) {
 			Logger.getLogger(getClass().getName()).error(e.getMessage());
 			FacesContext.getCurrentInstance().addMessage(null,
@@ -87,6 +95,7 @@ public class ContentController {
 
 	/**
 	 * Returns DB localized value of properties Content and Title
+	 * 
 	 * @param content
 	 * @param property
 	 * @return ""

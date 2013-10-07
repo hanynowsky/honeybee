@@ -65,7 +65,7 @@
 		dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}">
 		<p:outputPanel styleClass="feedback" autoUpdate="true">
 			<a href="mailto:contact.opentika@gmail.com"> <h:outputText
-					title="Feedback" value="#{i18n.feedback}" id="txt_feedback" />
+					title="#{i18n.feedback}" value="?" id="txt_feedback" />
 			</a>
 		</p:outputPanel>
 
@@ -192,7 +192,7 @@
 									<li><h:link id="aboutus_top" outcome="/misc/aboutus"
 											value="#{i18n.aboutus}" /></li>
 									<li><a id="mobile_top"
-										href="#{request.contextPath}/home.html"><h:outputText
+										href="#{request.contextPath}/mobile/mobile"><h:outputText
 												value="#{i18n.mobile}" /></a></li>
 									<li><a id="source_code_app" target="_blank"
 										href="https://github.com/hanynowsky/honeybee"> <h:outputText
@@ -205,22 +205,23 @@
 								<ul>
 									<li style="max-height: 40px;"><h:form>
 											<h:commandLink action="#{searchBean.searchIngredientItems}"
-											id="commandlink_search_top">
+												id="commandlink_search_top">
 												<h:graphicImage value="#{resource['search.png']}"
 													style="margin:5px;" />
 											</h:commandLink>
 											<h:inputText value="#{searchBean.keyword}"
 												style="font-family:Kufi,Roboto,arial,sans-serif;" />
-												<p:defaultCommand target="commandlink_search_top"/>
+											<p:defaultCommand target="commandlink_search_top" />
 										</h:form></li>
 								</ul></li>
-							<li><h:link id="contact_menu" outcome="/misc/contact"
-									value="#{i18n.contact}" /></li>
+							<li><h:link id="contact_menu"
+									outcome="/application/contact">
+									<h:outputText value="#{i18n.contact}" />
+								</h:link></li>
 						</ul>
 					</div>
 				</div>
 			</div>
-
 
 		</div>
 
@@ -229,8 +230,8 @@
 				<h:panelGroup id="top_nav_logo">
 					<div class="toplogo">
 						<h:link outcome="/index" id="link_top_nav_logo">
-							<h:graphicImage value="#{resource['gfx/library.png']}" width="140px"
-								id="img_library" alt="img_library_honeybee"  />
+							<h:graphicImage value="#{resource['gfx/library.png']}"
+								width="140px" id="img_library" alt="img_library_honeybee" />
 						</h:link>
 					</div>
 				</h:panelGroup>

@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html >
+<html xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" dir="#{utilityBean.htmlDirection}">
+<f:view locale="#{localeBean.locale}" renderKitId="PRIMEFACES_MOBILE"
+	contentType="text/html" encoding="utf-8">
+	<pm:page
+		title="HoneyBee Portal for Naturopathy - موقع نحلة العسل
+			للمعالجة بالطبيعة">
+		<h:outputStylesheet name="css/mobile.css" />
+		<f:facet name="meta">
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<link rel="shortcut icon" type="image/x-icon"
+			href="../resources/favicon.ico" />
+			<meta name="viewport" content="width=device-width, initial-scale=1" />
+		</f:facet>
+		<pm:view id="view_page" title="HoneyBee" swatch="c">
+			<pm:header fixed="true" title="#{i18n.honeybee} #{i18n.beta}"
+				swatch="a">
+				<div
+					style="text-align: center; margin: 5px 1px 5px 1px; font-size: 11px;">
+					<hr />
+					<h:outputText value="#{i18n['honeybee_suboutline']}" />
+				</div>
+				<f:facet name="right">
+					<h:form id="form_locale" dir="ltr">
+						<p:selectOneMenu id="localemenu"
+							value="#{localeBean.selectedLang}"
+							style="cursour:pointer;min-width:55px;"
+							onchange="document.getElementById('form_locale').submit();"
+							var="lang" converter="#{languageBean.converter}">
+							<f:selectItem itemDisabled="true" noSelectionOption="true"
+								itemLabel="#{localeBean.selectedLang.label.subSequence(0,2)}"
+								itemValue="#{localeBean.selectedLang}" id="item_loc_dummy" />
+							<f:selectItems value="#{languageBean.all}" var="lg"
+								itemLabel="#{localeBean.selectedLanguageLabel.subSequence(0,2)}"
+								itemValue="#{lg}" id="item_loc_sl" />
+							<p:column>
+								<p:graphicImage id="img_loc_#{lang.code}"
+									value="#{request.contextPath}/javax.faces.resource/gfx/#{lang.code}.png.jsf"
+									width="25" height="20" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{lang.label}" />
+							</p:column>
+						</p:selectOneMenu>
+					</h:form>
+				</f:facet>
+				<pm:navBar>
+					<p:button value="#{i18n.mobile}" icon="home"
+						href="mobile?reverse=true" />
+					<p:button value="#{i18n.aboutus}" icon="info"
+						href="info?reverse=true" />
+					<p:button value="#{i18n.search}" icon="search"
+						href="search?reverse=true" />
+				</pm:navBar>
+			</pm:header>
+			<pm:content>
+				<!-- styleClass="ui-btn-active" for button, make it dynamic  upon condition -->
+				<ui:insert name="content">
+					<div align="center">CONTENT HERE</div>
+				</ui:insert>
+			</pm:content>
+			<pm:footer swatch="a" style="text-align:center;" fixed="true">
+				<h:outputText style="font-size:70%;"
+					value="HoneyBee @ 2013. All Rights Reserved." />
+			</pm:footer>
+		</pm:view>
+	</pm:page>
+</f:view>
+</html>

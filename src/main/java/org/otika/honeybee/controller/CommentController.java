@@ -14,10 +14,15 @@ import javax.persistence.PersistenceContextType;
 import org.jboss.logging.Logger;
 import org.otika.honeybee.model.Comment;
 import org.otika.honeybee.model.Content;
+import org.otika.honeybee.util.UtilityBean;
 
 @Model
-public class CommentController {
+public class CommentController implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6898264918027605051L;
 	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	private EntityManager entityManager;
 	@Named
@@ -28,6 +33,8 @@ public class CommentController {
 	private PublisherBean publisherBean;
 	private Long id;
 	private Content content;
+	@Inject
+	private UtilityBean utilitybean;
 
 	public CommentController() {
 
@@ -41,7 +48,8 @@ public class CommentController {
 	public String createComment() {
 		try {
 			publisherBean.createComment(newComment);
-
+			utilitybean.showMessage("info", "New comment created by "
+					+ newComment.getCfname(), "");
 		} catch (Exception e) {
 			Logger.getLogger(getClass().getName()).debug(e.getMessage());
 			FacesContext.getCurrentInstance().addMessage(null,
@@ -55,7 +63,26 @@ public class CommentController {
 	}
 
 	/**
-	 * Listener for Accordion Panel
+	 * Deletes a comment item
+	 * 
+	 * @param comment
+	 * @return
+	 */
+	public String deleteComment(Comment comment) {
+		try {
+			publisherBean.deleteComment(comment);
+			utilitybean.showMessage("info", "Comment deleted: "
+					+ comment.getId(), "");
+		} catch (Exception e) {
+			Logger.getLogger(getClass().getName()).error(e.getMessage());
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(e.getMessage()));
+		}
+		return null;
+	}
+
+	/**
+	 * Listener for Accordion Panel that sets a content instance
 	 * 
 	 * @param content
 	 */

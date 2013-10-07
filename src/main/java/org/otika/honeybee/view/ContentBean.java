@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
@@ -26,6 +28,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.otika.honeybee.model.Codetable;
 import org.otika.honeybee.model.Content;
 import org.otika.honeybee.model.Enduser;
 import org.otika.honeybee.util.Repository;
@@ -51,10 +54,8 @@ public class ContentBean implements Serializable {
 	private Repository repository;
 	private Long id;
 	private Content content;
-
-	/*
-	 * Support creating and retrieving Content entities
-	 */
+	private List<Codetable> contentTypeItems;
+	private List<String> ctypes = new ArrayList<>();
 
 	@Inject
 	private Conversation conversation;
@@ -62,6 +63,18 @@ public class ContentBean implements Serializable {
 	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	private EntityManager entityManager;
 
+	@PostConstruct
+	public void init() {
+		contentTypeItems = new ArrayList<>();
+		contentTypeItems.addAll(repository.findCodeValueByType("ctype"));
+		for (Codetable codetable : contentTypeItems) {
+			ctypes.add(codetable.getCodetype());
+		}
+	}
+
+	/*
+	 * Support creating and retrieving Content entities
+	 */
 	public String create() {
 		if (this.conversation.isTransient()) {
 			this.conversation.begin();
@@ -72,7 +85,6 @@ public class ContentBean implements Serializable {
 	}
 
 	public void retrieve() {
-		System.out.println("Retrieving Content Object");
 
 		if (FacesContext.getCurrentInstance().isPostback()) {
 			return;
@@ -120,14 +132,58 @@ public class ContentBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Faces Method to delete a Content item
+	 * 
+	 * @return
+	 */
 	public String delete() {
 		this.conversation.end();
 
 		try {
+			// TODO Would lists persist ? :(
+			String nav = "/index?faces-redirect=true";
+
+			for (String type : ctypes) {
+				if (findById(getId()).getCtype().equalsIgnoreCase(type)) {
+					nav = "/misc/" + type + "?faces-redirect=true";
+				} else {
+					nav = "/index?faces-redirect=true";
+				}
+			}
+
 			this.entityManager.remove(findById(getId()));
 			this.entityManager.flush();
-			return "search?faces-redirect=true";
+			FacesMessage fmsg = new FacesMessage("Content Deleted");
+			FacesContext.getCurrentInstance().addMessage(null, fmsg);
+			return nav;
 		} catch (Exception e) {
+			Logger.getLogger(getClass().getName()).severe(e.getMessage());
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(e.getMessage()));
+			return null;
+		}
+	}
+
+	/**
+	 * Returns the database localized value of content type from Codetable
+	 * Entity
+	 * 
+	 * @return
+	 */
+	public String localizedCtype(Codetable codetable) {
+		try {
+			String lang = FacesContext.getCurrentInstance().getViewRoot()
+					.getLocale().getLanguage();
+			if (lang.equalsIgnoreCase("fr")) {
+				return codetable.getCodevaluefr();
+			} else if (lang.equalsIgnoreCase("ar")) {
+				return codetable.getCodevaluear();
+			} else {
+				return codetable.getCodevalue();
+			}
+		} catch (Exception e) {
+			Logger.getLogger(getClass().getName()).severe(e.getMessage());
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(e.getMessage()));
 			return null;
@@ -296,9 +352,8 @@ public class ContentBean implements Serializable {
 	 * @param content
 	 */
 	public void onTabChange(Content item) {
-		//retrieve();
-		System.out.println("Setting content id to "
-				+ item.getId());
+		// retrieve();
+		System.out.println("Setting content id to " + item.getId());
 		setId(item.getId());
 	}
 
@@ -367,6 +422,36 @@ public class ContentBean implements Serializable {
 	 */
 	public void setContent(Content content) {
 		this.content = content;
+	}
+
+	/**
+	 * @return the contentTypeItems
+	 */
+	public List<Codetable> getContentTypeItems() {
+		return contentTypeItems;
+	}
+
+	/**
+	 * @param contentTypeItems
+	 *            the contentTypeItems to set
+	 */
+	public void setContentTypeItems(List<Codetable> contentTypeItems) {
+		this.contentTypeItems = contentTypeItems;
+	}
+
+	/**
+	 * @return the ctypes
+	 */
+	public List<String> getCtypes() {
+		return ctypes;
+	}
+
+	/**
+	 * @param ctypes
+	 *            the ctypes to set
+	 */
+	public void setCtypes(List<String> ctypes) {
+		this.ctypes = ctypes;
 	}
 
 } // END OF CLASS

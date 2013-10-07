@@ -145,7 +145,7 @@ public class Author implements java.io.Serializable
    }
 
    @Field
-   @Column(name = "bio", length = 455)
+   @Column(name = "bio", length = 3055)
    public String getBio()
    {
       return this.bio;

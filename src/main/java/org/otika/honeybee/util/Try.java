@@ -1,6 +1,8 @@
 package org.otika.honeybee.util;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Try {
 
@@ -8,7 +10,19 @@ public class Try {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new Try().halfRoundedSoma(0.1);
+		new Try().stringLength();
+	}
+
+	public int stringLength() {
+		List<String> prohibitedWords = new ArrayList<>();
+		String[] keywords = { "fuck", "merde", "putain","chier" };
+		for (int i = 0; i < keywords.length; i++) {
+			prohibitedWords.add(keywords[i]);
+		}
+		for (String taboo: prohibitedWords){
+			System.out.println(taboo);	
+		}		
+		return keywords.length;
 	}
 
 	/**
@@ -17,7 +31,7 @@ public class Try {
 	 * @param value
 	 * @return half rounded value
 	 */
-	private double halfRoundedSoma(double value) {
+	public double halfRoundedSoma(double value) {
 		double returnedValue = value;
 		double formatedValue = Double.parseDouble(new DecimalFormat("#.#")
 				.format(value));
@@ -46,7 +60,7 @@ public class Try {
 				returnedValue = middleLimit;
 			}
 
-			if (value == middleLimit) {
+			if (value - middleLimit == 0) {
 				System.out.println(" EQ");
 				returnedValue = middleLimit;
 			}

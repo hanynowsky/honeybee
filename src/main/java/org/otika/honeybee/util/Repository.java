@@ -13,6 +13,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 
+import org.otika.honeybee.model.Codetable;
+import org.otika.honeybee.model.Comment;
 import org.otika.honeybee.model.Configuration;
 import org.otika.honeybee.model.Content;
 import org.otika.honeybee.model.Enduser;
@@ -737,22 +739,66 @@ public class Repository implements Serializable {
 	 */
 	public List<Content> findContentByCtypeAndLanguage(String ctype, String lang) {
 		try {
-			TypedQuery<Content> query = em.createQuery(
-					"SELECT c FROM Content c WHERE c.content != null ORDER BY datecreated DESC",
-					Content.class);
+			TypedQuery<Content> query = em
+					.createQuery(
+							"SELECT c FROM Content c WHERE c.content != null ORDER BY datecreated DESC",
+							Content.class);
 			if (lang.equalsIgnoreCase("fr")) {
-				query = em.createQuery(
-						"SELECT c FROM Content c WHERE c.contentfr != null ORDER BY datecreated DESC",
-						Content.class);
+				query = em
+						.createQuery(
+								"SELECT c FROM Content c WHERE c.contentfr != null ORDER BY datecreated DESC",
+								Content.class);
 			} else if (lang.equalsIgnoreCase("ar")) {
-				query = em.createQuery(
-						"SELECT c FROM Content c WHERE c.contentar != null ORDER BY datecreated DESC",
-						Content.class);
+				query = em
+						.createQuery(
+								"SELECT c FROM Content c WHERE c.contentar != null ORDER BY datecreated DESC",
+								Content.class);
 			} else {
-				query = em.createQuery(
-						"SELECT c FROM Content c WHERE c.content != null ORDER BY datecreated DESC",
-						Content.class);
+				query = em
+						.createQuery(
+								"SELECT c FROM Content c WHERE c.content != null ORDER BY datecreated DESC",
+								Content.class);
 			}
+			return query.getResultList();
+		} catch (Exception ex) {
+			String msg = ex.getMessage() + " " + ex.getCause().getMessage();
+			org.jboss.logging.Logger.getLogger(getClass().getName()).error(msg);
+			return null;
+		}
+	}
+
+	/**
+	 * Returns a list of Comment items for a parent Content
+	 * 
+	 * @param content
+	 * @return
+	 */
+	public List<Comment> findCommentByContent(Content content) {
+		try {
+			TypedQuery<Comment> query = em.createNamedQuery(
+					"Comment.findByContent", Comment.class);
+			query.setParameter("content", content);
+			return query.getResultList();
+		} catch (Exception ex) {
+			String msg = ex.getMessage() + " " + ex.getCause().getMessage();
+			org.jboss.logging.Logger.getLogger(getClass().getName()).error(msg);
+			return null;
+		}
+	}
+
+	/**
+	 * Returns a list of Codetable items by type
+	 * 
+	 * @param codetype
+	 * @return
+	 */
+	public List<Codetable> findCodeValueByType(String codetype) {
+		try {
+			TypedQuery<Codetable> query = em
+					.createQuery(
+							"SELECT c FROM Codetable c where c.codetype = :codetype ORDER BY c.codevalue",
+							Codetable.class);
+			query.setParameter("codetype", codetype);
 			return query.getResultList();
 		} catch (Exception ex) {
 			String msg = ex.getMessage() + " " + ex.getCause().getMessage();

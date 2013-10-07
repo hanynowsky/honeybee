@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{contentBean.id}" />
+		<f:event type="preRenderView" listener="#{contentBean.retrieve}" />
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="#{i18n.content}" />
+
+	<ui:define name="header">
+		#{i18n.content}
+	</ui:define>
+
+	<ui:define name="subheader">
+		#{i18n.content}: #{contentBean.id}
+	</ui:define>
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+		<h:form id="form_edit_comment"
+			rendered="#{isAdministrator or isAuthor}">
+			<p:panelGrid columns="3">
+
+				<p:outputLabel for="i_title" value="#{i18n.title}" />
+				<p:inplace editor="true" id="i_title">
+					<p:inputText value="#{contentBean.content.title}" id="input_title" />
+				</p:inplace>
+				<p:message for="i_title" />
+
+				<p:outputLabel for="i_titlefr" value="#{i18n.titlefr}" />
+				<p:inplace editor="true" id="i_titlefr">
+					<p:inputText value="#{contentBean.content.titlefr}"
+						id="input_titlefr" />
+				</p:inplace>
+				<p:message for="i_titlefr" />
+
+				<p:outputLabel for="i_titlear" value="#{i18n.titlear}" />
+				<p:inplace editor="true" id="i_titlear">
+					<p:inputText value="#{contentBean.content.titlear}"
+						id="input_titlear" />
+				</p:inplace>
+				<p:message for="i_titlear" />
+
+				<p:outputLabel for="i_content" value="#{i18n.content}" />
+				<p:inplace editor="true" id="i_content">
+					<p:editor value="#{contentBean.content.content}" id="input_content" />
+				</p:inplace>
+				<p:message for="i_content" />
+
+				<p:outputLabel for="i_contentfr" value="#{i18n.content} / FR" />
+				<p:inplace editor="true" id="i_contentfr">
+					<p:editor value="#{contentBean.content.contentfr}"
+						id="input_contentfr" />
+				</p:inplace>
+				<p:message for="i_contentfr" />
+
+				<p:outputLabel for="i_contentar" value="#{i18n.content} / AR" />
+				<p:inplace editor="true" id="i_contentar">
+					<p:editor value="#{contentBean.content.contentar}"
+						id="input_contentar" />
+				</p:inplace>
+				<p:message for="i_contentar" />
+
+				<p:outputLabel for="i_category" value="#{i18n.category}" />
+				<p:inplace editor="true" id="i_category">
+					<h:selectOneMenu value="#{contentBean.content.ctype}"
+						id="input_category">
+						<f:selectItems value="#{contentBean.contentTypeItems}"
+							var="_ctype" itemValue="#{_ctype.codevalue}"
+							itemLabel="#{contentBean.localizedCtype(_ctype)}" />
+						<f:selectItem itemValue="#{null}" itemLabel="-----" />
+					</h:selectOneMenu>
+				</p:inplace>
+				<p:message for="i_category" />
+
+			</p:panelGrid>
+
+			<div style="text-align: center;">
+				<p:commandButton value="#{i18n.delete}" icon="ui-icon ui-icon-minus"
+					action="#{contentBean.delete}" ajax="false" />
+				<p:commandButton action="/misc/blog?faces-redirect=true"
+					value="#{i18n.blog}" immediate="true" />
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+<ui:composition template="template.xhtml">
+	<ui:define name="content">
+		<p:panel rendered="#{localeBean.language == 'ar'}">
+			<h2>
+				<h:outputText value="باقة من الأمل لمن يرجو الشفاء في العسل" />
+			</h2>
+		</p:panel>
+		<pm:field>
+			<img src="#{resource['gfx/bee.svg']}" align="left"
+				style="margin: 5px;" width="164px;" />
+			<h:outputText value="#{i18n.aboutus_content}" />
+			<hr />
+			<h:panelGrid columns="2" style="font-size:11px;">
+				<p:outputLabel value="#{i18n.author}" style="font-weight:bold;" />
+				<h:outputLink
+				onclick="window.location.href='mailto:kyoshuu.madani@gmail.com';">
+					<h:outputText value="#{i18n.hanine_h_almadani}" />
+				</h:outputLink>
+				<p:outputLabel value="#{i18n.copyright}" style="font-weight:bold;" />
+				<h:outputLink value="https://opentika-otika.rhcloud.com">
+					<h:outputText value="OpenTika" />
+				</h:outputLink>
+				<p:outputLabel value="#{i18n.technology}" style="font-weight:bold;" />
+				<h:outputText value="#{i18n.jee}" />
+			</h:panelGrid>
+		</pm:field>
+	</ui:define>
+</ui:composition>
+</html>

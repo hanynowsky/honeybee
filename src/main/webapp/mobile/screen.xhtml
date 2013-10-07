@@ -1,0 +1,49 @@
+<!DOCTYPE html >
+<html>
+<head>
+<title>HoneyBee Portal for Naturopathy - موقع نحلة العسل
+	للمعالجة بالطبيعة</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon"
+	href="./resources/favicon.ico" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+<script type="text/javascript"> 
+		$(document).on("pageinit", "#page1", function(event){ 
+			alert("HoneyBee Ready To Go"); 
+		}); 
+	</script>
+</head>
+<body style="text-align: center;">
+	<div data-role="page" id="page1">
+		<div data-role="header">
+			<h1 style="font-size: 18px;">
+				<a href="../index.html">Mobile HoneyBee</a>
+			</h1>
+		</div>
+		<div data-role="content">
+			<div data-role="panel">
+				<form action="mobile.xhtml">
+					<button autofocus="autofocus" value="Enter" id="but_home_mobile"
+						formaction="mobile" >Enter</button>
+				</form>
+			</div>
+			<ul id="listOfItems" data-role="listview" data-inset="true"
+				data-filter="true" style="list-style: none;">
+				<li><a href="../index.xhtml">Home</a></li>
+				<li><a href="../misc/search">Search</a></li>
+				<li><a href="../misc/aboutus">About us</a></li>
+			</ul>
+		</div>
+		<div data-role="footer" style="font-size: 12px;">
+			<hr />
+			<h4>http://honeybee-otika.rhcloud.com</h4>
+		</div>
+	</div>
+</body>
+</html>

@@ -898,8 +898,8 @@ h4.page-header {
 	font-size: large;
 	color: white;
 	position: fixed;
-	right: 0px;
-	top: 300px;
+	left: 0px;
+	top: 555px;
 	font-variant: small-caps;
 	letter-spacing: 1px;
 }
@@ -1082,6 +1082,22 @@ h4.page-header {
 	width: 120px;
 	border: 1px solid #F5F4F2;
 	margin-right: 5px;
+}
+
+.crystaldiv {
+	font-family: Kufi, arial, Roboto, Nunito, sans-serif, monospace;
+	font-size: 1em;
+	font-weight: 100;
+	color: #FFF;
+	font-style: oblique;
+	font-variant: small-caps;
+	padding: 5px;
+	line-height: 20px;
+	text-align: justify;
+	margin: 5px 2px 5px 2px;
+	text-shadow: 0 1px 0 rgba(6,6,6,0.015);
+	background: rgba(0,0,0,0.15); /*rgba(255,255,255,1);/* #eeeeee; rgba(0,119,0,0.025);*/
+	border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .globalmsg {

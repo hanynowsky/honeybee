@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+<ui:composition template="template.xhtml">
+	<f:metadata>
+		<f:viewParam name="id" value="#{plantBean.id}" />
+		<f:event type="preRenderView" listener="#{plantBean.retrieve}" />
+	</f:metadata>
+	<ui:define name="content">
+		<div align="center">
+			<p:panelGrid columns="2">
+				<h:outputLabel value="#{i18n.label}" />
+				<h:outputText value="#{plantBean.plant.label}" />
+				<h:outputLabel value="#{i18n.image}" />
+				<p:graphicImage value="#{imagesBean.image}" width="164"
+					rendered="#{true}">
+					<f:param name="plant_id" value="#{plantBean.plant.id}" />
+				</p:graphicImage>
+				<h:outputLabel value="#{i18n.description}" />
+				<h:outputText value="#{plantBean.plant.description}"
+					rendered="#{localeBean.language == 'en'}" />
+				<h:outputText value="#{plantBean.plant.descriptionfr}"
+					rendered="#{localeBean.language == 'fr'}" />
+				<h:outputText value="#{plantBean.plant.descriptionar}"
+					rendered="#{localeBean.language == 'ar'}" />
+			</p:panelGrid>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

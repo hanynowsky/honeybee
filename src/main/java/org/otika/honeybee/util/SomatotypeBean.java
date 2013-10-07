@@ -724,7 +724,8 @@ public class SomatotypeBean implements Serializable {
 					&& (value - middleLimit <= upperLimit - value)) {
 				returnedValue = middleLimit;
 			}
-			if (value == middleLimit) {
+			if (Math.abs(value - middleLimit) == 0) {
+
 				returnedValue = middleLimit;
 			}
 		}
