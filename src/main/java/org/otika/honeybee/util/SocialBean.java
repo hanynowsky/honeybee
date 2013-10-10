@@ -1,19 +1,19 @@
 package org.otika.honeybee.util;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
 
 import org.agorava.Facebook;
 import org.agorava.core.api.oauth.OAuthAppSettings;
-import org.agorava.core.api.oauth.OAuthSession;
-import org.agorava.core.cdi.Current;
 import org.agorava.core.oauth.PropertyOAuthAppSettingsBuilder;
 
 /**
+ * <h1>Settings CDI producer for a Social Media using Agorava API.</h1>
+ * <p>
+ * Settings are read from agorava.properties in classpath
+ * </p>
  * 
- * @author Hanine .H ALMADANI <hanynowsky@gmail.com>
+ * @author <a href="mailto:hanynowsky@gmail.com">Hanine .H ALMADANI</a>
  * 
  */
 public class SocialBean {
@@ -34,24 +34,9 @@ public class SocialBean {
 	@ApplicationScoped
 	@Produces
 	@Facebook
-	public OAuthAppSettings produceSetting() {
+	public OAuthAppSettings facebookSettingsProducer() {
 		PropertyOAuthAppSettingsBuilder builder = new PropertyOAuthAppSettingsBuilder();
 		return builder.prefix("facebook").build();
-	}
-	
-	/**
-	 * OAuthSession
-	 * @param session
-	 * @return
-	 */
-	@SessionScoped
-	@Produces
-	@Facebook
-	@Current
-	public OAuthSession produceOauthSession(@Facebook @Default OAuthSession session) {
-		// TODO if we do not use @Default, we get a circular reference
-		// @Facebook @Default OAuthSession session
-	    return session;
 	}
 
 }

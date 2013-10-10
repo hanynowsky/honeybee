@@ -37,6 +37,8 @@ public class SessionBean implements Serializable {
 		setId(value);
 	}
 
+
+
 	public String getOriginalViewName() {
 		return originalViewName;
 	}

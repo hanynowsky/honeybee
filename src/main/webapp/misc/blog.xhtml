@@ -30,7 +30,7 @@ setid();
 	</ui:define>
 
 	<ui:define name="subheader">
-		<h:outputText value="#{i18n.blog}" />
+		<h:outputText value="#{i18n.blog} (#{localeBean.selectedLanguageLabel})" />
 	</ui:define>
 
 	<ui:define name="main">
@@ -95,7 +95,7 @@ setid();
 							rendered="#{localeBean.locale.language == 'ar'}" />
 					</div>
 					<hr style="height: 1px;" />
-					<h:panelGroup style="font-size:12px;font-style: italic;">
+					<h:panelGroup style="font-size:11px;font-style: italic;">
 						<p:inplace editor="true"
 							disabled="#{(not isAdministrator) and (not isAuthor)}">
 							<p:calendar value="#{contentItem.datecreated}"

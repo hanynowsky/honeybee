@@ -112,6 +112,24 @@ public class UtilityBean implements Serializable {
 	public String emptyMethod(){
 		return null;
 	}
+	
+	/**
+	 * Method that redirects to a given view path
+	 * @param url
+	 */
+	public void redirectToUrl(String url) {
+		try {
+			ExternalContext context = FacesContext.getCurrentInstance()
+					.getExternalContext();
+			if (!url.isEmpty() || url.equalsIgnoreCase("referer")) {
+				context.redirect(url);
+			} else {
+				context.redirect(context.getRequestContextPath() + "/index");
+			}
+		} catch (Exception ex) {
+			Logger.getLogger(getClass().getName()).severe(ex.getMessage());			
+		}
+	}
 
 	/**
 	 * Method to convert an array of bytes to a file

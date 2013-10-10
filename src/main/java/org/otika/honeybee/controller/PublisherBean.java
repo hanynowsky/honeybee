@@ -20,9 +20,13 @@ import org.otika.honeybee.model.Content;
  * 
  */
 @Stateless
-public class PublisherBean {
+public class PublisherBean implements java.io.Serializable {
 
-	@PersistenceContext(type=PersistenceContextType.EXTENDED)
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3929275547682463815L;
+	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	private EntityManager entityManager;
 
 	public PublisherBean() {

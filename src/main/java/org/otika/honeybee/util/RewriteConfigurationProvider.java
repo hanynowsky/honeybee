@@ -17,7 +17,10 @@ import org.ocpsoft.rewrite.servlet.config.rule.Join;
  * 
  */
 
+
 public class RewriteConfigurationProvider extends HttpConfigurationProvider {
+
+
 	@Override
 	public int priority() {
 		return 10;
@@ -25,8 +28,7 @@ public class RewriteConfigurationProvider extends HttpConfigurationProvider {
 
 	@Override
 	public Configuration getConfiguration(ServletContext arg0) {
-
-		// TODO add security filter : Ocpsoft : secure page
+		
 
 		// TODO BUG: Rewriting makes PrimeFaces fileUpload has no effect
 
@@ -96,5 +98,22 @@ public class RewriteConfigurationProvider extends HttpConfigurationProvider {
 				.addRule(Join.path("/error").to("/error.xhtml"))
 				.addRule(Join.path("/loginerror").to("/loginerror.xhtml"))
 				.addRule(Join.path("/admin/test").to("/admin/test.xhtml"));
+				/*
+				.addRule()
+				.when(Direction.isInbound().and(Path.matches("/{path}")))
+				.perform(
+						Log.message(Level.INFO, "Client requested path: {path}"))
+				.where("path")
+				.matches(".*")
+				.addRule()
+				.when(Direction.isInbound().and(URL.captureIn("url")))
+				.perform(Log.message(Level.INFO, "Client requested URL: {url}"))
+				.addRule()
+				.when(Header.matches("referer", "{referer}").and(JAASRoles.required("ADMINISTRATOR"))
+						.and(Direction.isOutbound()).
+						andNot(Path.matches("/signup.xhtml")))
+				.perform(Log.message(Level.INFO, "Referer is: {referer}").and(Log.message(Level.INFO, "REQUIRING JASS"))
+						)*/				
+				
 	}
 }

@@ -1,16 +1,26 @@
 package org.otika.honeybee.util;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Default;
+import javax.enterprise.inject.Produces;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.agorava.Facebook;
+import org.agorava.FacebookBaseService;
 import org.agorava.core.api.UserProfile;
 import org.agorava.core.api.oauth.OAuthService;
 import org.agorava.core.api.oauth.OAuthSession;
+import org.agorava.core.cdi.Current;
+import org.agorava.facebook.model.FacebookProfile;
+import org.agorava.core.api.oauth.OAuthToken;
 
 @Named
 @SessionScoped
@@ -23,9 +33,15 @@ public class SocialServiceBean implements Serializable {
 	private String authURL;
 	private UserProfile userProfile;
 	private String userFullName;
+	private String userEmail;
 	private String userImageUrl;
-	@EJB
-	// using @Inject : No bean is eligible for declaration
+	private boolean userVerified;
+	private String verifier;
+	private String verifierName;
+	private FacebookProfile facebookProfile;
+	private FacebookBaseService facebookBaseService;
+
+	@Inject
 	@Facebook
 	OAuthService service;
 
@@ -34,16 +50,95 @@ public class SocialServiceBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		authURL = service.getAuthorizationUrl();
-		OAuthSession session = getMyFacebookService().getSession();
-		userProfile = session.getUserProfile();
-		userFullName = userProfile.getFullName();
-		userImageUrl = userProfile.getProfileImageUrl();
+
 	}
 
 	@Named
 	public OAuthService getMyFacebookService() {
 		return service;
+	}
+
+	/**
+	 * OAuthSession
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@SessionScoped
+	@Produces
+	@Facebook
+	@Current
+	public OAuthSession produceOauthSession(@Facebook @Default OAuthSession session) {
+		// TODO @produces: if we do not use @Default, we get a circular
+		// reference
+		// @Facebook @Default OAuthSession session
+		return session;
+	}
+
+	/**
+	 * Faces FaceBook Connect Method
+	 * 
+	 * @return
+	 */
+	public String connect() {
+		try {
+			// TODO facebookProfile
+
+			authURL = service.getAuthorizationUrl();
+			System.out.println("authURL: " + authURL);
+			// OAuthSession session = getMyFacebookService().getSession();
+			// TODO
+			/*
+			 * verifierName = service.getVerifierParamName(); verifier =
+			 * service.getVerifier();
+			 */
+
+			// System.out.println("Session is connected?: " +
+			// session.isConnected());
+		} catch (Exception ex) {
+			/*
+			 * Logger.getLogger(getClass().getName()).severe( ex.getMessage());
+			 */
+			System.err.println(ex);
+			Logger.getLogger(getClass().getName()).severe(
+					"Cannot boot Social Service: ");
+		}
+		return "/misc/facebook?faces-redirect=true";
+	}
+
+	/**
+	 * Reset Connection
+	 */
+	public void resetConnection() {
+		service.resetSession();
+	}
+
+	/**
+	 * 
+	 * @param url
+	 * @throws IOException
+	 */
+	public void redirectToAuthorizationURL() throws IOException {
+		ExternalContext externalContext = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		externalContext.redirect(getAuthURL());
+	}
+
+	/**
+	 * Social Media Name
+	 * 
+	 * @return social media name as String
+	 */
+	public String getSocialMediaName() {
+		return service.getSocialMediaName().toLowerCase();
+	}
+	
+	/**
+	 * Social Media Access Token
+	 * @return
+	 */
+	public OAuthToken getAccessToken(){
+		return service.getAccessToken();				
 	}
 
 	/**
@@ -104,6 +199,96 @@ public class SocialServiceBean implements Serializable {
 	 */
 	public void setUserImageUrl(String userImageUrl) {
 		this.userImageUrl = userImageUrl;
+	}
+
+	/**
+	 * @return the facebookProfile
+	 */
+	public FacebookProfile getFacebookProfile() {
+		return facebookProfile;
+	}
+
+	/**
+	 * @param facebookProfile
+	 *            the facebookProfile to set
+	 */
+	public void setFacebookProfile(FacebookProfile facebookProfile) {
+		this.facebookProfile = facebookProfile;
+	}
+
+	/**
+	 * @return the userEmail
+	 */
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	/**
+	 * @param userEmail
+	 *            the userEmail to set
+	 */
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	/**
+	 * @return the userVerified
+	 */
+	public boolean isUserVerified() {
+		return userVerified;
+	}
+
+	/**
+	 * @param userVerified
+	 *            the userVerified to set
+	 */
+	public void setUserVerified(boolean userVerified) {
+		this.userVerified = userVerified;
+	}
+
+	/**
+	 * @return the verifier
+	 */
+	public String getVerifier() {
+		return verifier;
+	}
+
+	/**
+	 * @param verifier
+	 *            the verifier to set
+	 */
+	public void setVerifier(String verifier) {
+		this.verifier = verifier;
+	}
+
+	/**
+	 * @return the verifierName
+	 */
+	public String getVerifierName() {
+		return verifierName;
+	}
+
+	/**
+	 * @param verifierName
+	 *            the verifierName to set
+	 */
+	public void setVerifierName(String verifierName) {
+		this.verifierName = verifierName;
+	}
+
+	/**
+	 * @return the facebookBaseService
+	 */
+	public FacebookBaseService getFacebookBaseService() {
+		return facebookBaseService;
+	}
+
+	/**
+	 * @param facebookBaseService
+	 *            the facebookBaseService to set
+	 */
+	public void setFacebookBaseService(FacebookBaseService facebookBaseService) {
+		this.facebookBaseService = facebookBaseService;
 	}
 
 }

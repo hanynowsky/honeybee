@@ -7,6 +7,27 @@
 	<artifactId>honeybee</artifactId>
 	<version>1.0.3</version>
 	<packaging>war</packaging>
+	<description>Naturopathy Database web Portal</description>
+	<url>https://honeybee-otika.rhcloud.com</url>
+	<inceptionYear>2013</inceptionYear>
+	<name>honeybee</name>
+	<organization>
+		<name>OpenTika</name>
+		<url>https://opentika-otika.rhcloud.com</url>
+	</organization>
+	<scm>
+		<developerConnection>Hanine HAMZIOUI ALMADANI</developerConnection>
+	</scm>
+	<developers>
+		<developer>
+			<name>Hanine HAMZIOUI ALMADANI</name>
+			<email>hanynowsky@gmail.com</email>
+			<timezone>CET</timezone>
+			<roles>
+				<role>Project Lead</role>
+			</roles>
+		</developer>
+	</developers>
 	<properties>
 		<!-- Explicitly declaring the source encoding eliminates the following 
 			message: -->
@@ -43,18 +64,23 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			<!-- Agorava Dependency Management -->
-			<dependency>
+			<!-- Agorava Dependency Management  -->
+			 <dependency>
 				<groupId>org.agorava</groupId>
 				<artifactId>agorava-bom</artifactId>
 				<version>0.6.1</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
+	<!-- Agorava CDI Core-->
+		<dependency>
+			<groupId>org.agorava</groupId>
+			<artifactId>agorava-core-impl-cdi</artifactId>
+			<scope>compile</scope>
+		</dependency>
 		<!-- Facebook -->
 		<dependency>
 			<groupId>org.agorava</groupId>
@@ -62,6 +88,13 @@
 			<version>0.6.1</version>
 			<scope>compile</scope>
 		</dependency>
+		<!-- Linkedin or Twitter 
+		<dependency>
+			<groupId>org.agorava</groupId>
+			<artifactId>agorava-twitter-cdi</artifactId>
+			<version>0.6.1</version>
+			<scope>compile</scope>
+		</dependency> -->
 		<!-- Needed for running tests (you may also use TestNG) -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -184,13 +217,7 @@
 			<artifactId>mahout</artifactId>
 			<version>0.7</version>
 			<type>pom</type>
-		</dependency>
-		<!-- Agorava Social Java -->
-		<dependency>
-			<groupId>org.agorava</groupId>
-			<artifactId>agorava-core-impl-cdi</artifactId>
-			<scope>compile</scope>
-		</dependency>
+		</dependency>	
 		<!-- Added Manually: <dependency> <groupId>org.jboss.bom</groupId> <artifactId>jboss-javaee-6.0-with-hibernate</artifactId> 
 			<version>1.0.1.Final</version> <type>pom</type> <scope>import</scope> </dependency> 
 			<dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-core</artifactId> 
@@ -316,13 +343,4 @@
 			</build>
 		</profile>
 	</profiles>
-	<name>honeybee</name>
-	<description>Naturopathy Database</description>
-	<organization>
-		<name>OpenTika</name>
-		<url>https://opentika-otika.rhcloud.com</url>
-	</organization>
-	<scm>
-		<developerConnection>Hanine HAMZIOUI</developerConnection>
-	</scm>
 </project>

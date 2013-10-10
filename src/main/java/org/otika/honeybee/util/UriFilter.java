@@ -28,6 +28,7 @@ public class UriFilter implements Filter {
 	private UtilityBean utilityBean;
 	@Inject
 	private SessionBean sessionBean;
+	private boolean DEBUG = false;
 
 	/**
 	 * Default constructor.
@@ -72,13 +73,15 @@ public class UriFilter implements Filter {
 							 * TODO Refactor this method to something efficient
 							 */
 							String ovName = utilityBean
-									.cutRefererString(headerValue);
-							//System.out.println("Referer is : " + ovName);
-
-							sessionBean.setOriginalViewName(ovName);
+									.cutRefererString(headerValue);							
+							Logger.getLogger(getClass().getName()).debug(
+									"Orinal View : " + ovName);
+							if (DEBUG) {
+								sessionBean.setOriginalViewName(ovName);
+							}
 							break;
 						}
-						// TODO break here maybe :( ?
+
 					}
 				}
 

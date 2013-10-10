@@ -94,7 +94,9 @@
 		<ui:param name="isRegistered"
 			value="#{request.isUserInRole('REGISTERED')}" />
 		<ui:param name="isAuthor" value="#{request.isUserInRole('AUTHOR')}" />
-
+		<ui:param name="isArabic" value="#{localeBean.language eq 'ar'}" />
+		<ui:param name="isFrench" value="#{localeBean.language eq 'fr'}" />
+		<ui:param name="isEnglish" value="#{localeBean.language eq 'en'}" />
 
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
@@ -135,12 +137,20 @@
 										</ul>
 									</h:panelGroup>
 								</h:link>
-								<h:outputLink id="userconnect"
-									value="#{request.contextPath}/signin.xhtml">
-									<h:outputText rendered="#{empty request.remoteUser}"
-										value="#{i18n.login}!"
-										dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
-								</h:outputLink>
+								<ul class="nav">
+									<li><h:outputLink id="userconnect"
+											value="#{request.contextPath}/signin.xhtml">
+											<h:outputText rendered="#{empty request.remoteUser}"
+												value="#{i18n.login}!"
+												dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
+										</h:outputLink>
+										<ul>
+											<li><h:form>
+													<p:commandLink value="Facebook"
+														action="#{socialServiceBean.connect}" />
+												</h:form></li>
+										</ul></li>
+								</ul>
 							</h:panelGroup>
 
 							<h:form id="form_locale" style="height:20px;"
@@ -214,8 +224,7 @@
 											<p:defaultCommand target="commandlink_search_top" />
 										</h:form></li>
 								</ul></li>
-							<li><h:link id="contact_menu"
-									outcome="/application/contact">
+							<li><h:link id="contact_menu" outcome="/application/contact">
 									<h:outputText value="#{i18n.contact}" />
 								</h:link></li>
 						</ul>

@@ -1,5 +1,6 @@
 package org.otika.honeybee.controller;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Model;
 import javax.enterprise.inject.Produces;
@@ -29,7 +30,7 @@ public class CommentController implements java.io.Serializable {
 	@Produces
 	@RequestScoped
 	private Comment newComment = new Comment();
-	@Inject
+	@EJB
 	private PublisherBean publisherBean;
 	private Long id;
 	private Content content;

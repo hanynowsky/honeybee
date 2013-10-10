@@ -25,7 +25,7 @@ import org.otika.honeybee.model.Enduser;
 
 /**
  * 
- * @author hanine
+ * @author Hanine .H ALMADANI <hanynowsky@gmail.com>
  */
 @Stateless
 @Named(value = "authenticationBean")
@@ -115,28 +115,12 @@ public class AuthenticationBean {
 					// view
 					localeBean.setSelectedLang(repository.findByCode(user
 							.getLanguage().getCode()));
-					/*
-					 * localeBean.setLocale(new Locale(user.getLanguage()
-					 * .getCode())); FacesContext .getCurrentInstance()
-					 * .getViewRoot() .setLocale(new
-					 * Locale(user.getLanguage().getCode()));
-					 */
-					// response.sendRedirect(request.getContextPath()+
-					// File.separator+request.getRequestURI().toString());
-
-					// Cookie cookie = new Cookie("honeybee", "honeybee");
-					// cookie.setValue(user.getEmail());
-					// cookie.setMaxAge(29000000);
-					// response.addCookie(cookie);
-
-					// System.out.println(response.getCharacterEncoding());
-					// String uri = "/" + request.getRequestURI().split("/")[2];
-					// System.out.println("returning: " + uri);
+					// TODO Cookie work here
 
 					String logsuc = bundleBean.i18n("login_successful");
 					context.addMessage(null, new FacesMessage(logsuc));
 				}
-				// return uri;
+				
 			} else {
 				if (repository.findByEmail(email) != null) {
 					context.addMessage(null,
@@ -161,18 +145,11 @@ public class AuthenticationBean {
 
 		if (!outcome.equalsIgnoreCase("") && !outcome.contains("referer")) {
 			return outcome;
-		} else if (outcome.contains("referer")) {
-			if (sessionBean.getOriginalViewName().contains("signin")) {
-				return "/index.xhtml?faces-redirect=false";
-			} else {
-				System.out.println("Redirecting to: "
-						+ sessionBean.getOriginalViewName().replace(".xhtml",
-								""));
-				return sessionBean.getOriginalViewName().replace(".xhtml", "")
-						+ "?faces-redirect=true";
-			}
 		} else {
-			return null;
+			String ovName = utilityBean.cutRefererString(request
+					.getHeader("referer"));
+			sessionBean.setOriginalViewName(ovName);
+			return ovName + "?faces-redirect=true";
 		}
 
 	} // END OF LOGIN METHOD
@@ -188,7 +165,7 @@ public class AuthenticationBean {
 		try {
 			if (request.getRemoteUser() != null) {
 				signoutEvent.fire(new SignoutEvent(request.getRemoteUser()));
-				request.logout();				
+				request.logout();
 				context.addMessage(null,
 						new FacesMessage(bundleBean.i18n("logout_successful")));
 				FacesContext
