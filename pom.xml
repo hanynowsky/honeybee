@@ -86,29 +86,17 @@
 	<!-- Agorava CDI Core-->
 		<dependency>
 			<groupId>org.agorava</groupId>
-			<artifactId>agorava-core-impl-cdi</artifactId>
+			<artifactId>agorava-core-impl-cdi</artifactId>			
 			<scope>compile</scope>
 		</dependency>
 		<!-- Facebook -->
 		<dependency>
 			<groupId>org.agorava</groupId>
 			<artifactId>agorava-facebook-cdi</artifactId>
-			<version>0.6.1</version>
-			<scope>compile</scope>
-		</dependency>
-		<!--Linkedin or Twitter -->
-		<dependency>
-			<groupId>org.agorava</groupId>
-			<artifactId>agorava-twitter-cdi</artifactId>
 			<version>0.6.0</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.agorava</groupId>
-			<artifactId>agorava-linkedin-cdi</artifactId>
-			<version>0.6.0</version>
-			<scope>compile</scope>
-		</dependency>
+		
 		<!-- Needed for running tests (you may also use TestNG) -->
 		<dependency>
 			<groupId>junit</groupId>

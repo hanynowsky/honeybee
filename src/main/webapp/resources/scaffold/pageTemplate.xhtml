@@ -137,7 +137,7 @@
 										</ul>
 									</h:panelGroup>
 								</h:link>
-								<p:outputPanel  rendered="#{empty request.remoteUser}" >
+								<p:outputPanel rendered="#{empty request.remoteUser}">
 								<ul class="nav">
 									<li><h:outputLink id="userconnect" rendered="#{empty request.remoteUser}"
 											value="#{request.contextPath}/signin.xhtml">
@@ -149,7 +149,18 @@
 										<ul>
 											<li><h:form>
 													<p:commandLink value="Facebook"
-														action="#{socialServiceBean.connect}" />
+														action="#{socialServiceBean.connect}" 
+														disabled="true"/>
+												</h:form></li>
+												<li><h:form>
+													<p:commandLink value="Twitter"
+														action="#{socialServiceBean.connect}" 
+														disabled="true"/>
+												</h:form></li>
+												<li><h:form style="max-height:10px;">
+													<p:commandLink value="Google"
+														action="#{socialServiceBean.connect}" 
+														disabled="true"/>
 												</h:form></li>
 										</ul></li>
 

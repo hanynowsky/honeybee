@@ -110,7 +110,7 @@ public class SocialServiceBean implements Serializable {
 	 * Reset Connection
 	 */
 	public void resetConnection() {
-		service.resetSession();
+		//service.;
 	}
 
 	/**
