@@ -22,7 +22,7 @@
 			types of honey - natural prescriptions
 		  - Body masse index - somatotype - Index de masse corporelle - 
 		  types de miels - fruits et légumes - honeybeez - honeybeem - 
-		  honeybeep - honeybeet - honeybees - honeybeed - Mohammed Al faid - 
+		  honeybeep - honeybeet - honeybees - honeybeee - honeybeed - Mohammed Al faid - 
 		  Jamal Skali" />
 		<meta lang="en" name="keywords"
 			content="naturopathy - naturotherapy - types of honey - 
@@ -137,20 +137,24 @@
 										</ul>
 									</h:panelGroup>
 								</h:link>
+								<p:outputPanel  rendered="#{empty request.remoteUser}" >
 								<ul class="nav">
-									<li><h:outputLink id="userconnect"
+									<li><h:outputLink id="userconnect" rendered="#{empty request.remoteUser}"
 											value="#{request.contextPath}/signin.xhtml">
 											<h:outputText rendered="#{empty request.remoteUser}"
 												value="#{i18n.login}!"
 												dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
 										</h:outputLink>
+										
 										<ul>
 											<li><h:form>
 													<p:commandLink value="Facebook"
 														action="#{socialServiceBean.connect}" />
 												</h:form></li>
 										</ul></li>
+
 								</ul>
+								</p:outputPanel>
 							</h:panelGroup>
 
 							<h:form id="form_locale" style="height:20px;"

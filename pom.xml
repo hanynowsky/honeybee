@@ -75,6 +75,14 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
+
+		<!--Guava Java Collection Utilities -->
+		<dependency>
+	<groupId>com.google.guava</groupId>
+	<artifactId>guava</artifactId>
+	<version>r09</version>
+</dependency>
+            
 	<!-- Agorava CDI Core-->
 		<dependency>
 			<groupId>org.agorava</groupId>
@@ -88,13 +96,19 @@
 			<version>0.6.1</version>
 			<scope>compile</scope>
 		</dependency>
-		<!-- Linkedin or Twitter 
+		<!--Linkedin or Twitter -->
 		<dependency>
 			<groupId>org.agorava</groupId>
 			<artifactId>agorava-twitter-cdi</artifactId>
-			<version>0.6.1</version>
+			<version>0.6.0</version>
 			<scope>compile</scope>
-		</dependency> -->
+		</dependency>
+		<dependency>
+			<groupId>org.agorava</groupId>
+			<artifactId>agorava-linkedin-cdi</artifactId>
+			<version>0.6.0</version>
+			<scope>compile</scope>
+		</dependency>
 		<!-- Needed for running tests (you may also use TestNG) -->
 		<dependency>
 			<groupId>junit</groupId>
