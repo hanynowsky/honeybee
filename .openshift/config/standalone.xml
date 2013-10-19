@@ -100,8 +100,8 @@
                         <flush-strategy>IdleConnections</flush-strategy>
                     </pool>
                     <security>
-                        <user-name>adminwNJulYt</user-name>
-                        <password>1GK_z_NqUW7g</password>
+                        <user-name>adminQTnK1ed</user-name>
+                        <password>dY7YPB_VVzgR</password>
                     </security>
                     <validation>
                         <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
