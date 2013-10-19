@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Callback
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<f:metadata>
+	<f:viewParam name="#{currentService.verifierParamName}"
+		value="#{currentSession.verifier}" required="true"
+		requiredMessage="We didn't get the authorization from #{currentService.socialMediaName}. Please go back and Try Again !" />
+	<f:event type="preRenderView"
+		listener="#{socialServiceBean.connectCurrentService()}" />
+</f:metadata>
+<h:head>
+	<script type="text/javascript">
+        function moveOn() {
+            window.opener.location.reload();
+            window.close();
+        }
+
+        moveOn();
+    </script>
+</h:head>
+<h:body>
+	<h:messages />
+
+	<h1>Social HoneyBee CallBack</h1>
+
+	<p>Getting Authorization from #{currentService.socialMediaName}</p>
+    You're ready to Connect to
+    <h:outputLink value="#" onclick="moveOn();">HoneyBee Social</h:outputLink>
+
+</h:body>
+</html>

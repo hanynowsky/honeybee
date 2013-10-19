@@ -375,6 +375,7 @@ public class MailBean {
 			String htmlmail = "<h1>HoneyBee Database Dump</h1>"
 					+ "<p>Please find attached HoneyBee database dump.</p>";
 			try {
+				mail.setMailSession(session);
 				mail.addTo(email);
 				mail.setFrom("opentika.contact@gmail.com");
 				mail.setSubject("HoneyBee Database Dump");
@@ -387,9 +388,12 @@ public class MailBean {
 					mail.attach(db);
 					System.out
 							.println("Attached File to email " + db.getName());
+				} else {
+					System.out.println("No Attached DB dump");
+					Logger.getLogger(getClass().getName()).info(
+							"No Attached DB dump");
 				}
 
-				mail.setMailSession(session);
 				System.out.println("Sending mail ");
 				mail.send();
 				System.out.println("Mail probably sent!");

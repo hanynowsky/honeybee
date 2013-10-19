@@ -28,7 +28,6 @@ input {
 	background: rgb(45, 72, 17);
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	border-radius: 3px;
-	padding: 10px;
 	color: white;
 	font-weight: bold;
 	font-family: Kufi, Naskh, Nunito, Roboto, sans-serif;
@@ -38,7 +37,7 @@ input {
 
 input:HOVER {
 	background: transparent;
-	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.025) inset, 0 0 8pxrgba(0, 0, 0, 0.7);
+	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.025) inset, 0 0 8px rgba(0, 0, 0, 0.7);
 	cursor: pointer;
 }
 
@@ -87,25 +86,25 @@ input:ACTIVE {
 
 @font-face {
 	font-family: Roboto;
-	src: url("../Roboto-Regular.ttf");
+	src: url("../fonts/Roboto-Regular.ttf");
 	font-weight: normal;
 }
 
 @font-face {
 	font-family: Kufi;
-	src: url("../DroidKufi-Regular.ttf");
+	src: url("../fonts/DroidKufi-Regular.ttf");
 	font-weight: normal;
 }
 
 @font-face {
 	font-family: Naskh;
-	src: url("../DroidNaskh-Regular.ttf");
+	src: url("../fonts/DroidNaskh-Regular.ttf");
 	font-weight: normal;
 }
 
 @font-face {
 	font-family: Nunito;
-	src: url("../Nunito-Regular.ttf");
+	src: url("../fonts/Nunito-Regular.ttf");
 	font-weight: 300;
 }
 

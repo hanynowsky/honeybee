@@ -83,6 +83,7 @@ top:0px;
 }
 }
 
+
 /* Faces values */
 #content h2.success {
 	background-position: #{utilityBean.htmlDirection == 'rtl' ? 'right' : 'left'} 18px;

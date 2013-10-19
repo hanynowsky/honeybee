@@ -1130,51 +1130,51 @@ h4.page-header {
 /* CUSTOM FONT */
 @font-face {
 	font-family: Kufi;
-	src: url("#{resource['DroidKufi-Regular.ttf']}");
+	src: url("#{resource['fonts/DroidKufi-Regular.ttf']}");
 	/* url('DroidKufi-Regular.eot'); IE9+ */
 	font-weight: 300;
 }
 
 @font-face {
 	font-family: Naskh;
-	src: url("#{resource['DroidNaskh-Regular.ttf']}");
+	src: url("#{resource['fonts/DroidNaskh-Regular.ttf']}");
 	font-size: small;
 	font-weight: 300;
 }
 
 @font-face {
 	font-family: Naskh;
-	src: url("#{resource['DroidNaskh-Bold.ttf']}");
+	src: url("#{resource['fonts/DroidNaskh-Bold.ttf']}");
 	font-weight: bold;
 }
 
 @font-face {
 	font-family: Nunito;
-	src: url("#{resource['Nunito-Regular.ttf']}");
+	src: url("#{resource['fonts/Nunito-Regular.ttf']}");
 	font-weight: 300;
 }
 
 @font-face {
 	font-family: Nunito;
-	src: url("#{resource['Nunito-Bold.ttf']}");
+	src: url("#{resource['fonts/Nunito-Bold.ttf']}");
 	font-weight: bold;
 }
 
 @font-face {
 	font-family: Nunito;
-	src: url("#{resource['Nunito-Light.ttf']}");
+	src: url("#{resource['fonts/Nunito-Light.ttf']}");
 	font-weight: 100;
 }
 
 @font-face {
 	font-family: Roboto;
-	src: url("#{resource['Roboto-Regular.ttf']}");
+	src: url("#{resource['fonts/Roboto-Regular.ttf']}");
 	font-weight: normal;
 }
 
 @font-face {
 	font-family: Roboto;
-	src: url("#{resource['Roboto-Bold.ttf']}");
+	src: url("#{resource['fonts/Roboto-Bold.ttf']}");
 	font-weight: 600;
 }
 /* END */

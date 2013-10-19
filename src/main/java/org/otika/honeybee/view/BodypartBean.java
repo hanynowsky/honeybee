@@ -3,6 +3,7 @@ package org.otika.honeybee.view;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
@@ -26,6 +27,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.otika.honeybee.model.Bodypart;
+import org.otika.honeybee.util.Repository;
+import org.otika.honeybee.util.UtilityBean;
 
 /**
  * Backing bean for Bodypart entities.
@@ -33,295 +36,310 @@ import org.otika.honeybee.model.Bodypart;
  * This class provides CRUD functionality for all Bodypart entities. It focuses
  * purely on Java EE 6 standards (e.g. <tt>&#64;ConversationScoped</tt> for
  * state management, <tt>PersistenceContext</tt> for persistence,
- * <tt>CriteriaBuilder</tt> for searches) rather than introducing a CRUD framework or
- * custom base class.
+ * <tt>CriteriaBuilder</tt> for searches) rather than introducing a CRUD
+ * framework or custom base class.
  * 
  */
 
 @Named
 @Stateful
 @ConversationScoped
-public class BodypartBean implements Serializable
-{
+public class BodypartBean implements Serializable {
 
-   private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-   /*
-    * Support creating and retrieving Bodypart entities
-    */
+	/*
+	 * Support creating and retrieving Bodypart entities
+	 */
 
-   private Long id;
+	private Long id;
 
-   public Long getId()
-   {
-      return this.id;
-   }
+	private String pathLabel;
 
-   public void setId(Long id)
-   {
-      this.id = id;
-   }
+	public Long getId() {
+		return this.id;
+	}
 
-   private Bodypart bodypart;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-   public Bodypart getBodypart()
-   {
-      return this.bodypart;
-   }
+	private Bodypart bodypart;
 
-   @Inject
-   private Conversation conversation;
+	public Bodypart getBodypart() {
+		return this.bodypart;
+	}
 
-   @PersistenceContext(type = PersistenceContextType.EXTENDED)
-   private EntityManager entityManager;
+	@Inject
+	private Conversation conversation;
+	@Inject
+	private Repository repository;
+	@Inject
+	private UtilityBean utilityBean;
 
-   public String create()
-   {
-	   if (this.conversation.isTransient()) {
+	@PersistenceContext(type = PersistenceContextType.EXTENDED)
+	private EntityManager entityManager;
+
+	public String create() {
+		if (this.conversation.isTransient()) {
 			this.conversation.begin();
 		} else {
 			this.conversation.end();
 		}
-      return "create?faces-redirect=true";
-   }
+		return "create?faces-redirect=true";
+	}
 
-   public void retrieve()
-   {
+	public void retrieve() {
 
-      if (FacesContext.getCurrentInstance().isPostback())
-      {
-         return;
-      }
+		if (FacesContext.getCurrentInstance().isPostback()) {
+			return;
+		}
 
-      if (this.conversation.isTransient())
-      {
-         this.conversation.begin();
-      }
+		if (this.conversation.isTransient()) {
+			this.conversation.begin();
+		}
 
-      if (this.id == null)
-      {
-         this.bodypart = this.example;
-      }
-      else
-      {
-         this.bodypart = findById(getId());
-      }
-   }
+		if (this.id == null) {
+			this.bodypart = this.example;
+		} else {
+			this.bodypart = findById(getId());			
+		}
+	}
 
-   public Bodypart findById(Long id)
-   {
+	public Bodypart findById(Long id) {
+		return this.entityManager.find(Bodypart.class, id);
+	}
 
-      return this.entityManager.find(Bodypart.class, id);
-   }
+	/**
+	 * Finds a Bodypart item by its label and initiates the bean
+	 * 
+	 * @param label
+	 * @return bodypart
+	 */
+	public Bodypart findByLabel(String label) {
+		try {
+			if (!label.isEmpty()) {
+				Bodypart bodypart = repository.findBodypartByLikeLabel(label);
+				this.id = bodypart.getId();
+				retrieve();
+				System.out.println("Fetched Bodypart ID is: " + this.id);
+				return bodypart;
+			}
+		} catch (Exception ex) {
+			Logger.getLogger(getClass().getName()).severe(
+					"Argument Label is NULL " + ex.getMessage());
+		}
+		return null;
+	}
 
-   /*
-    * Support updating and deleting Bodypart entities
-    */
+	/**
+	 * Action Listener that sets a new value for Bodypart ID
+	 * 
+	 * @param label
+	 */
+	public void revalueId() {
+		String pathLabelValue = FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestParameterMap().get("pathLabel");
+		System.out.println("pathLabelvalue is: " + pathLabelValue);
+		if (pathLabelValue != null) {			
+			this.id = findByLabel(pathLabelValue).getId();
+			this.bodypart = findById(id);						
+			utilityBean.redirectToFacesURL("/bodypart/view?id="+this.id);
+		} else {
+			System.out.println("pathLabel is null");
+		}
+	}
 
-   public String update()
-   {
-      this.conversation.end();
+	/*
+	 * Support updating and deleting Bodypart entities
+	 */
 
-      try
-      {
-         if (this.id == null)
-         {
-            this.entityManager.persist(this.bodypart);
-            return "search?faces-redirect=true";
-         }
-         else
-         {
-            this.entityManager.merge(this.bodypart);
-            return "view?faces-redirect=true&id=" + this.bodypart.getId();
-         }
-      }
-      catch (Exception e)
-      {
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
-         return null;
-      }
-   }
+	public String update() {
+		this.conversation.end();
 
-   public String delete()
-   {
-      this.conversation.end();
+		try {
+			if (this.id == null) {
+				this.entityManager.persist(this.bodypart);
+				return "search?faces-redirect=true";
+			} else {
+				this.entityManager.merge(this.bodypart);
+				return "view?faces-redirect=true&id=" + this.bodypart.getId();
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(e.getMessage()));
+			return null;
+		}
+	}
 
-      try
-      {
-         this.entityManager.remove(findById(getId()));
-         this.entityManager.flush();
-         return "search?faces-redirect=true";
-      }
-      catch (Exception e)
-      {
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
-         return null;
-      }
-   }
+	public String delete() {
+		this.conversation.end();
 
-   /*
-    * Support searching Bodypart entities with pagination
-    */
+		try {
+			this.entityManager.remove(findById(getId()));
+			this.entityManager.flush();
+			return "search?faces-redirect=true";
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(e.getMessage()));
+			return null;
+		}
+	}
 
-   private int page;
-   private long count;
-   private List<Bodypart> pageItems;
+	/*
+	 * Support searching Bodypart entities with pagination
+	 */
 
-   private Bodypart example = new Bodypart();
+	private int page;
+	private long count;
+	private List<Bodypart> pageItems;
 
-   public int getPage()
-   {
-      return this.page;
-   }
+	private Bodypart example = new Bodypart();
 
-   public void setPage(int page)
-   {
-      this.page = page;
-   }
+	public int getPage() {
+		return this.page;
+	}
 
-   public int getPageSize()
-   {
-      return 10;
-   }
+	public void setPage(int page) {
+		this.page = page;
+	}
 
-   public Bodypart getExample()
-   {
-      return this.example;
-   }
+	public int getPageSize() {
+		return 10;
+	}
 
-   public void setExample(Bodypart example)
-   {
-      this.example = example;
-   }
+	public Bodypart getExample() {
+		return this.example;
+	}
 
-   public void search()
-   {
-      this.page = 0;
-   }
+	public void setExample(Bodypart example) {
+		this.example = example;
+	}
 
-   public void paginate(AjaxBehaviorEvent evt)
-   {
+	public void search() {
+		this.page = 0;
+	}
 
-      CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+	public void paginate(AjaxBehaviorEvent evt) {
 
-      // Populate this.count
+		CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
 
-      CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
-      Root<Bodypart> root = countCriteria.from(Bodypart.class);
-      countCriteria = countCriteria.select(builder.count(root)).where(
-            getSearchPredicates(root));
-      this.count = this.entityManager.createQuery(countCriteria)
-            .getSingleResult();
+		// Populate this.count
 
-      // Populate this.pageItems
+		CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
+		Root<Bodypart> root = countCriteria.from(Bodypart.class);
+		countCriteria = countCriteria.select(builder.count(root)).where(
+				getSearchPredicates(root));
+		this.count = this.entityManager.createQuery(countCriteria)
+				.getSingleResult();
 
-      CriteriaQuery<Bodypart> criteria = builder.createQuery(Bodypart.class);
-      root = criteria.from(Bodypart.class);
-      TypedQuery<Bodypart> query = this.entityManager.createQuery(criteria
-            .select(root).where(getSearchPredicates(root)));
-      query.setFirstResult(this.page * getPageSize()).setMaxResults(
-            getPageSize());
-      this.pageItems = query.getResultList();
-   }
+		// Populate this.pageItems
 
-   private Predicate[] getSearchPredicates(Root<Bodypart> root)
-   {
+		CriteriaQuery<Bodypart> criteria = builder.createQuery(Bodypart.class);
+		root = criteria.from(Bodypart.class);
+		TypedQuery<Bodypart> query = this.entityManager.createQuery(criteria
+				.select(root).where(getSearchPredicates(root)));
+		query.setFirstResult(this.page * getPageSize()).setMaxResults(
+				getPageSize());
+		this.pageItems = query.getResultList();
+	}
 
-      CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-      List<Predicate> predicatesList = new ArrayList<Predicate>();
+	private Predicate[] getSearchPredicates(Root<Bodypart> root) {
 
-      String label = this.example.getLabel();
-      if (label != null && !"".equals(label))
-      {
-         predicatesList.add(builder.like(root.<String> get("label"), '%' + label + '%'));
-      }
-      String labelfr = this.example.getLabelfr();
-      if (labelfr != null && !"".equals(labelfr))
-      {
-         predicatesList.add(builder.like(root.<String> get("labelfr"), '%' + labelfr + '%'));
-      }
-      String labelar = this.example.getLabelar();
-      if (labelar != null && !"".equals(labelar))
-      {
-         predicatesList.add(builder.like(root.<String> get("labelar"), '%' + labelar + '%'));
-      }
+		CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+		List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-      return predicatesList.toArray(new Predicate[predicatesList.size()]);
-   }
+		String label = this.example.getLabel();
+		if (label != null && !"".equals(label)) {
+			predicatesList.add(builder.like(root.<String> get("label"),
+					'%' + label + '%'));
+		}
+		String labelfr = this.example.getLabelfr();
+		if (labelfr != null && !"".equals(labelfr)) {
+			predicatesList.add(builder.like(root.<String> get("labelfr"),
+					'%' + labelfr + '%'));
+		}
+		String labelar = this.example.getLabelar();
+		if (labelar != null && !"".equals(labelar)) {
+			predicatesList.add(builder.like(root.<String> get("labelar"),
+					'%' + labelar + '%'));
+		}
 
-   public List<Bodypart> getPageItems()
-   {
-      return this.pageItems;
-   }
+		return predicatesList.toArray(new Predicate[predicatesList.size()]);
+	}
 
-   public long getCount()
-   {
-      return this.count;
-   }
+	public List<Bodypart> getPageItems() {
+		return this.pageItems;
+	}
 
-   /*
-    * Support listing and POSTing back Bodypart entities (e.g. from inside an
-    * HtmlSelectOneMenu)
-    */
+	public long getCount() {
+		return this.count;
+	}
 
-   public List<Bodypart> getAll()
-   {
+	/*
+	 * Support listing and POSTing back Bodypart entities (e.g. from inside an
+	 * HtmlSelectOneMenu)
+	 */
 
-      CriteriaQuery<Bodypart> criteria = this.entityManager
-            .getCriteriaBuilder().createQuery(Bodypart.class);
-      return this.entityManager.createQuery(
-            criteria.select(criteria.from(Bodypart.class))).getResultList();
-   }
+	public List<Bodypart> getAll() {
 
-   @Resource
-   private SessionContext sessionContext;
+		CriteriaQuery<Bodypart> criteria = this.entityManager
+				.getCriteriaBuilder().createQuery(Bodypart.class);
+		return this.entityManager.createQuery(
+				criteria.select(criteria.from(Bodypart.class))).getResultList();
+	}
 
-   public Converter getConverter()
-   {
+	@Resource
+	private SessionContext sessionContext;
 
-      final BodypartBean ejbProxy = this.sessionContext.getBusinessObject(BodypartBean.class);
+	public Converter getConverter() {
 
-      return new Converter()
-      {
+		final BodypartBean ejbProxy = this.sessionContext
+				.getBusinessObject(BodypartBean.class);
 
-         @Override
-         public Object getAsObject(FacesContext context,
-               UIComponent component, String value)
-         {
+		return new Converter() {
 
-            return ejbProxy.findById(Long.valueOf(value));
-         }
+			@Override
+			public Object getAsObject(FacesContext context,
+					UIComponent component, String value) {
 
-         @Override
-         public String getAsString(FacesContext context,
-               UIComponent component, Object value)
-         {
+				return ejbProxy.findById(Long.valueOf(value));
+			}
 
-            if (value == null)
-            {
-               return "";
-            }
+			@Override
+			public String getAsString(FacesContext context,
+					UIComponent component, Object value) {
 
-            return String.valueOf(((Bodypart) value).getId());
-         }
-      };
-   }
+				if (value == null) {
+					return "";
+				}
 
-   /*
-    * Support adding children to bidirectional, one-to-many tables
-    */
+				return String.valueOf(((Bodypart) value).getId());
+			}
+		};
+	}
 
-   private Bodypart add = new Bodypart();
+	/*
+	 * Support adding children to bidirectional, one-to-many tables
+	 */
 
-   public Bodypart getAdd()
-   {
-      return this.add;
-   }
+	private Bodypart add = new Bodypart();
 
-   public Bodypart getAdded()
-   {
-      Bodypart added = this.add;
-      this.add = new Bodypart();
-      return added;
-   }
+	public Bodypart getAdd() {
+		return this.add;
+	}
+
+	public Bodypart getAdded() {
+		Bodypart added = this.add;
+		this.add = new Bodypart();
+		return added;
+	}
+
+	public String getPathLabel() {
+		return pathLabel;
+	}
+
+	public void setPathLabel(String pathLabel) {
+		this.pathLabel = pathLabel;
+	}
 }

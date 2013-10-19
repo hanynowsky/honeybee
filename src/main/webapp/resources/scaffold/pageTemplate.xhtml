@@ -9,7 +9,7 @@
 	<h:head>
 		<title>#{empty pageTitle ? '{#pageTitle}' : pageTitle}</title>
 		<link rel="icon" href="#{resource['favicon.ico']}" />
-		<h:outputScript name="js.js" />
+		<h:outputScript name="js/js.js" />
 		<h:outputStylesheet name="css/primefaces-flick/theme.css" />
 		<h:outputStylesheet name="css/bootstrap.css" />
 		<h:outputStylesheet name="css/primefaces.css" />
@@ -138,33 +138,25 @@
 									</h:panelGroup>
 								</h:link>
 								<p:outputPanel rendered="#{empty request.remoteUser}">
-								<ul class="nav">
-									<li><h:outputLink id="userconnect" rendered="#{empty request.remoteUser}"
-											value="#{request.contextPath}/signin.xhtml">
-											<h:outputText rendered="#{empty request.remoteUser}"
-												value="#{i18n.login}!"
-												dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
-										</h:outputLink>
-										
-										<ul>
-											<li><h:form>
-													<p:commandLink value="Facebook"
-														action="#{socialServiceBean.connect}" 
-														disabled="true"/>
-												</h:form></li>
-												<li><h:form>
-													<p:commandLink value="Twitter"
-														action="#{socialServiceBean.connect}" 
-														disabled="true"/>
-												</h:form></li>
-												<li><h:form style="max-height:10px;">
-													<p:commandLink value="Google"
-														action="#{socialServiceBean.connect}" 
-														disabled="true"/>
-												</h:form></li>
-										</ul></li>
+									<ul class="nav">
+										<li><h:outputLink id="userconnect"
+												rendered="#{empty request.remoteUser}"
+												value="#{request.contextPath}/signin.xhtml">
+												<h:outputText rendered="#{empty request.remoteUser}"
+													value="#{i18n.login}!"
+													dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
+											</h:outputLink>
 
-								</ul>
+											<ul>
+												<li><h:link value="Facebook" outcome="/social/social"
+														disabled="false" includeViewParams="true" /></li>
+												<li><h:link value="Google" outcome="/social/social"
+														disabled="true" /></li>
+												<li><h:link value="Twitter" outcome="/social/social"
+														disabled="true" /></li>
+											</ul></li>
+
+									</ul>
 								</p:outputPanel>
 							</h:panelGroup>
 
@@ -219,6 +211,9 @@
 									<li><a id="mobile_top"
 										href="#{request.contextPath}/mobile/mobile"><h:outputText
 												value="#{i18n.mobile}" /></a></li>
+									<li><a id="rest_top"
+										href="#{request.contextPath}/rest/resources" > <h:outputText
+											value="#{i18n.webservice}" /></a></li>
 									<li><a id="source_code_app" target="_blank"
 										href="https://github.com/hanynowsky/honeybee"> <h:outputText
 												value="#{i18n.source_code}" /></a></li>

@@ -59,6 +59,8 @@ public class UtilityBean implements Serializable {
 
 	private static final long serialVersionUID = -5489916236604357383L;
 	static boolean APP_DEBUG = false;
+	private boolean shown = false;
+	private boolean visible = true;
 	private ExternalContext externalContext;
 	private FacesContext facesContext;
 	private StreamedContent image;
@@ -105,16 +107,17 @@ public class UtilityBean implements Serializable {
 	public void dummyMethod(ActionEvent event) {
 		System.out.println(event.getComponent().getFamily());
 	}
-	
+
 	/**
 	 * Method to fake Command Button
 	 */
-	public String emptyMethod(){
+	public String emptyMethod() {
 		return null;
 	}
-	
+
 	/**
-	 * Method that redirects to a given view path
+	 * Method that redirects to a given referer view path
+	 * 
 	 * @param url
 	 */
 	public void redirectToUrl(String url) {
@@ -127,7 +130,7 @@ public class UtilityBean implements Serializable {
 				context.redirect(context.getRequestContextPath() + "/index");
 			}
 		} catch (Exception ex) {
-			Logger.getLogger(getClass().getName()).severe(ex.getMessage());			
+			Logger.getLogger(getClass().getName()).severe(ex.getMessage());
 		}
 	}
 
@@ -699,6 +702,26 @@ public class UtilityBean implements Serializable {
 		return null;
 	}
 
+	/**
+	 * Faces redirect to Faces URL
+	 * 
+	 * @param path
+	 * @throws IOException
+	 */
+	public void redirectToFacesURL(String path) {
+
+		ExternalContext externalContext = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		try {
+			externalContext.redirect(externalContext.getRequestContextPath()
+					+ path);
+		} catch (IOException e) {
+			Logger.getLogger(getClass().getName()).severe(
+					"IO Exception while handling Faces redirection"
+							+ e.getMessage());			
+		}
+	}
+
 	/*
 	 * Setters & Getters
 	 */
@@ -723,6 +746,35 @@ public class UtilityBean implements Serializable {
 	 */
 	public void setGaugeMeterModel(MeterGaugeChartModel gaugeMeterModel) {
 		this.gaugeMeterModel = gaugeMeterModel;
+	}
+
+	/**
+	 * @return the shown
+	 */
+	public boolean isShown() {
+		return shown;
+	}
+
+	/**
+	 * @param shown
+	 *            the shown to set
+	 */
+	public void setShown(boolean shown) {
+		this.shown = shown;
+	}
+
+	/**
+	 * @return the visible
+	 */
+	public boolean isVisible() {
+		return visible;
+	}
+
+	/**
+	 * @param visible the visible to set
+	 */
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 
 } // END OF CLASS

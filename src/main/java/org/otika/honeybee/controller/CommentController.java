@@ -17,6 +17,11 @@ import org.otika.honeybee.model.Comment;
 import org.otika.honeybee.model.Content;
 import org.otika.honeybee.util.UtilityBean;
 
+/**
+ * Controller that calls CRUD operations for Comment entities
+ * @author Hanine .H ALMADANI <hanynowsky@gmail.com>
+ *
+ */
 @Model
 public class CommentController implements java.io.Serializable {
 
@@ -58,7 +63,7 @@ public class CommentController implements java.io.Serializable {
 		}
 		/*
 		 * TODO On the View figure out how to properly use AJAX to append a
-		 * newly created comment with navigating
+		 * newly created comment with navigation
 		 */
 		return "/misc/blog?faces-redirect=true";
 	}

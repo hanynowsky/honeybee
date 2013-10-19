@@ -4999,7 +4999,7 @@ a.badge:hover {
 
 @font-face {
 font-family: DroidArabicKufi; 
-src: url("#{resource['DroidKufi-Regular.ttf']}");
+src: url("#{resource['fonts/DroidKufi-Regular.ttf']}");
      /* url('Sansation_Light.eot'); IE9+ */
 font-weight:normal;
 }

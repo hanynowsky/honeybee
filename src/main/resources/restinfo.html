@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>HoneyBee Portal For Naturopathy WebService</title>
+<link rel="shortcut icon" type="image/png"
+	href="opentika-logo-small.png" />
+<style type="text/css">
+body {
+	background-color: #FBFBFB;
+	color: #666;
+	font-family: Helvetica, arial, sans-serif, Verdana, Tahoma;
+	font-size: 14px;
+}
+
+.restdiv {
+	background-color: white;
+	border: 1px solid rgba(3, 3, 3, 0.2);
+	padding: 15px;
+	margin: 1px 25% 1px 25%;
+}
+
+code {
+	border: 1px solid #F5F4F2;
+	background: rgba(0, 0, 0, 0.1);
+	padding: 5px;
+	margin: 5px 5px 5px 5px;
+	color: #666;
+	font-weight: bold;
+}
+</style>
+<head>
+<body>
+	<div class="restdiv">
+		<aside style="text-align: center;">
+			<h1>HoneyBee Portal For Naturopathy</h1>
+			<h2>WebService</h2>
+		</aside>
+		<aside>
+			<p>For the time being, only lists of some elements are available.
+				Specific webservices to manipulate data would be implemented on
+				demand!</p>
+			<code>Resources are produced as JSON objects</code>
+			<p style="font-size: 12px;">
+				<cite><strong>Example:</strong>
+					https://honeybee-otika.rhcloud.com/rest/resources/plants/ordered</cite>
+				<em style="text-decoration: underline;">where</em> <strong>/rest/resources/plants/ordered</strong> is the URL suffix
+			</p>
+		</aside>
+		<h3>List of Prescriptions</h3>
+		<article>
+			<p>
+				You can get a list of prescriptions through this URL suffix: <a
+					href="/honeybee/rest/resources/prescriptions/ordered">/rest/resources/prescriptions/ordered</a>
+			</p>
+		</article>
+		<h3>List of Plants</h3>
+		<article>
+			You can get a list of ingredients through this URL suffix: <a
+				href="/honeybee/rest/resources/plants/ordered">/rest/resources/plants/ordered</a>
+		</article>
+		<h3>List of Ingredients</h3>
+		<article>
+			You can get a list of ingredients through this URL suffix: <a
+				href="/honeybee/rest/resources/ingredients/ordered">/rest/resources/ingredients/ordered</a>
+		</article>
+		<h3>List of Stores</h3>
+		<article>
+			<p>
+				You can get a list of stores through this URL suffix: <a
+					href="/honeybee/rest/resources/stores/ordered">/rest/resources/stores/ordered</a>
+			</p>
+		</article>
+		<h3>List of Honeys</h3>
+		<article>
+			You can get a list of honeys through this URL suffix: <a
+				href="/honeybee/rest/resources/honeys/ordered">/rest/resources/honeys/ordered</a>
+		</article>
+	</div>
+<body>
+</html>

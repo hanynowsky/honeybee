@@ -1,26 +1,43 @@
 package org.otika.honeybee.util;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Default;
+import javax.enterprise.event.Observes;
+import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Produces;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.agorava.Facebook;
-import org.agorava.FacebookBaseService;
+import org.agorava.core.api.MultiSessionManager;
 import org.agorava.core.api.UserProfile;
+import org.agorava.core.api.event.SocialEvent;
+import org.agorava.core.api.event.StatusUpdated;
 import org.agorava.core.api.oauth.OAuthService;
 import org.agorava.core.api.oauth.OAuthSession;
-import org.agorava.core.cdi.Current;
-import org.agorava.facebook.model.FacebookProfile;
 import org.agorava.core.api.oauth.OAuthToken;
+import org.agorava.facebook.model.FacebookProfile;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Maps;
+
+/**
+ * <p>
+ * Multi Social Service Management using Agorava API
+ * </p>
+ * 
+ * @author Hanine .H ALMADANI <hanynowsky@gmail.com>
+ * 
+ */
 
 @Named
 @SessionScoped
@@ -30,6 +47,8 @@ public class SocialServiceBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -7875755648192164905L;
+	private String Status;
+	private String selectedService;
 	private String authURL;
 	private UserProfile userProfile;
 	private String userFullName;
@@ -39,11 +58,11 @@ public class SocialServiceBean implements Serializable {
 	private String verifier;
 	private String verifierName;
 	private FacebookProfile facebookProfile;
-	private FacebookBaseService facebookBaseService;
+	// private FacebookBaseService facebookBaseService; // Add getter and setter
 
 	@Inject
-	@Facebook
-	OAuthService service;
+	// Why the hell is it not eligible for injection?
+	private MultiSessionManager manager;
 
 	public SocialServiceBean() {
 	}
@@ -54,63 +73,148 @@ public class SocialServiceBean implements Serializable {
 	}
 
 	@Named
-	public OAuthService getMyFacebookService() {
-		return service;
-	}
-
-	/**
-	 * OAuthSession
-	 * 
-	 * @param session
-	 * @return
-	 */
-	@SessionScoped
 	@Produces
-	@Facebook
-	@Current
-	public OAuthSession produceOauthSession(@Facebook @Default OAuthSession session) {
-		// TODO @produces: if we do not use @Default, we get a circular
-		// reference
-		// @Facebook @Default OAuthSession session
-		return session;
+	public OAuthService getCurrentService() {
+		return manager.getCurrentService();
 	}
 
 	/**
-	 * Faces FaceBook Connect Method
+	 * OAuthSession instance from MultiServiceManager
 	 * 
 	 * @return
 	 */
-	public String connect() {
-		try {
-			// TODO facebookProfile
-
-			authURL = service.getAuthorizationUrl();
-			System.out.println("authURL: " + authURL);
-			// OAuthSession session = getMyFacebookService().getSession();
-			// TODO
-			/*
-			 * verifierName = service.getVerifierParamName(); verifier =
-			 * service.getVerifier();
-			 */
-
-			// System.out.println("Session is connected?: " +
-			// session.isConnected());
-		} catch (Exception ex) {
-			/*
-			 * Logger.getLogger(getClass().getName()).severe( ex.getMessage());
-			 */
-			System.err.println(ex);
-			Logger.getLogger(getClass().getName()).severe(
-					"Cannot boot Social Service: ");
-		}
-		return "/misc/facebook?faces-redirect=true";
+	public OAuthSession getCurrentSession() {
+		return manager.getCurrentSession();
 	}
 
 	/**
-	 * Reset Connection
+	 * OAuthSession Setter
+	 * 
+	 * @param currentSession
+	 */
+	public void setCurrentSession(OAuthSession currentSession) {
+		manager.setCurrentSession(currentSession);
+	}
+
+	/**
+	 * List of Active sessions
+	 * 
+	 * @return
+	 */
+	public List<OAuthSession> getSessions() {
+		return newArrayList(manager.getActiveSessions());
+	}
+
+	/**
+	 * Access Token Getter from Current OAth Session
+	 * 
+	 * @return
+	 */
+	public OAuthToken getAccessToken() {
+		return getCurrentSession().getAccessToken();
+	}
+
+	/**
+	 * Session Map
+	 * 
+	 * @return
+	 */
+	public Map<String, OAuthSession> getSessionsMap() {
+		return Maps.uniqueIndex(getSessions(),
+				new Function<OAuthSession, String>() {
+					@Override
+					public String apply(OAuthSession arg0) {
+
+						return arg0.toString();
+					}
+				});
+	}
+
+	/**
+	 * Connect Current Social Service
+	 */
+	public void connectCurrentService() {
+		Logger.getLogger(getClass().getName()).info(
+				"Connecting current social service");
+		manager.connectCurrentService();
+	}
+
+	/**
+	 * Current Session Name getter
+	 * 
+	 * @return
+	 */
+	public String getCurrentSessionName() {
+		return manager.getCurrentSession() == null ? "" : manager
+				.getCurrentSession().toString();
+	}
+
+	/**
+	 * Current session name setter
+	 * 
+	 * @param cursrvHdlStr
+	 */
+	public void setCurrentSessionName(String cursrvHdlStr) {
+		setCurrentSession(getSessionsMap().get(cursrvHdlStr));
+	}
+
+	/**
+	 * Faces redirect to authorization URL
+	 * 
+	 * @param url
+	 * @throws IOException
+	 */
+	public void redirectToAuthorizationURL(String url) throws IOException {
+
+		ExternalContext externalContext = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		externalContext.redirect(url);
+	}
+
+	/**
+	 * Time Line URL
+	 * 
+	 * @return
+	 */
+	public String getTimeLineUrl() {
+		if (getCurrentSession() != null && getCurrentSession().isConnected())
+			return "/social/"
+					+ getManager().getCurrentService().getSocialMediaName()
+							.toLowerCase() + ".xhtml";
+		return "";
+	}
+
+	/**
+	 * Initiates a new session for select social service
+	 * 
+	 * @throws IOException
+	 */
+	public void serviceInit() throws IOException {
+		Logger.getLogger(getClass().getName()).info(
+				"Initiating new session for " + selectedService.toString());
+		redirectToAuthorizationURL(manager.initNewSession(selectedService));
+
+	}
+
+	/**
+	 * Observer for Status update
+	 * 
+	 * @param statusUpdate
+	 */
+	protected void statusUpdateObserver(
+			@Observes @Any StatusUpdated statusUpdate) {
+		if (statusUpdate.getStatus().equals(SocialEvent.Status.SUCCESS)) {
+			setStatus("");
+		}
+	}
+
+	/**
+	 * Destroys current session to reset connection
 	 */
 	public void resetConnection() {
-		//service.;
+		Logger.getLogger(getClass().getName()).info(
+				"Reseting social connection");
+		manager.destroyCurrentSession();
 	}
 
 	/**
@@ -130,15 +234,7 @@ public class SocialServiceBean implements Serializable {
 	 * @return social media name as String
 	 */
 	public String getSocialMediaName() {
-		return service.getSocialMediaName().toLowerCase();
-	}
-	
-	/**
-	 * Social Media Access Token
-	 * @return
-	 */
-	public OAuthToken getAccessToken(){
-		return service.getAccessToken();				
+		return getCurrentService().getSocialMediaName().toLowerCase();
 	}
 
 	/**
@@ -277,18 +373,48 @@ public class SocialServiceBean implements Serializable {
 	}
 
 	/**
-	 * @return the facebookBaseService
+	 * @return the status
 	 */
-	public FacebookBaseService getFacebookBaseService() {
-		return facebookBaseService;
+	public String getStatus() {
+		return Status;
 	}
 
 	/**
-	 * @param facebookBaseService
-	 *            the facebookBaseService to set
+	 * @param status
+	 *            the status to set
 	 */
-	public void setFacebookBaseService(FacebookBaseService facebookBaseService) {
-		this.facebookBaseService = facebookBaseService;
+	public void setStatus(String status) {
+		Status = status;
+	}
+
+	/**
+	 * @return the selectedService
+	 */
+	public String getSelectedService() {
+		return selectedService;
+	}
+
+	/**
+	 * @param selectedService
+	 *            the selectedService to set
+	 */
+	public void setSelectedService(String selectedService) {
+		this.selectedService = selectedService;
+	}
+
+	/**
+	 * @return the manager
+	 */
+	public MultiSessionManager getManager() {
+		return manager;
+	}
+
+	/**
+	 * @param manager
+	 *            the manager to set
+	 */
+	public void setManager(MultiSessionManager manager) {
+		this.manager = manager;
 	}
 
 }

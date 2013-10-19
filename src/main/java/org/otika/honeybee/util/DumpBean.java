@@ -122,10 +122,10 @@ public class DumpBean {
 			String username = System.getenv("OPENSHIFT_MYSQLDB_USERNAME");
 			String pass = System.getenv("OPENSHIFT_MYSQLDB_PASSWORD");
 			if (pass == null || pass.equals("")) {
-				pass = "1GK_z_NqUW7g";
+				pass = "dY7YPB_VVzgR";
 			}
 			if (username == null || username.equals("")) {
-				username = "adminwNJulYt";
+				username = "adminQTnK1ed";
 			}
 
 			try {

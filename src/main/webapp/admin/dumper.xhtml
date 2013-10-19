@@ -36,10 +36,11 @@
 				<p:inputText id="input_recp" value="#{remoteDumpBean.recipient}" />
 				<p:message for="input_recp"/>
 			</h:panelGrid>
-			<p:commandButton value="Dump" 
+			<p:commandButton value="Dump" id="but_dump" 
 				action="#{remoteDumpBean.dumpFile}" />
 		</h:form>
 		<p:separator style="height:1px;margin:10px;" />
-		<h:link outcome="/admin/dashboard" value="Dashboard"/>
+		<h:link outcome="/admin/dashboard" value="Dashboard" />
+		<p:blockUI trigger="dumpForm:but_dump" block="dumpForm" />
 	</ui:define>
 </ui:composition>

@@ -56,6 +56,9 @@ public class RemoteDumpBean {
 				mailBean.emailDatabase(recipient,
 						utilityBean.dumpFile(fileName));
 
+			} else {
+				Logger.getLogger(getClass().getName()).info(
+						"No Internet access: Dumped DB was not emailed");
 			}
 			File tempFile = new File(fileName);
 			if (tempFile.exists()) {
@@ -67,7 +70,7 @@ public class RemoteDumpBean {
 				System.out.println("Deleting DB temp file");
 				tempFile.delete();
 			}
-			// TODO use SCP instead
+			// TODO use SCP command instead
 			File zFile = new File(fileName + ".zip");
 			if (tempFile.exists()) {
 				utilityBean.execBash("mkdir -v -p $HOME/app-root/data");

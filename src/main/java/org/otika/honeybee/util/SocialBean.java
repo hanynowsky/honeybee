@@ -34,8 +34,9 @@ public class SocialBean {
 	@ApplicationScoped
 	@Produces
 	@Facebook
-	public OAuthAppSettings facebookSettingsProducer() {
+	public OAuthAppSettings facebookProducer() {
 		PropertyOAuthAppSettingsBuilder builder = new PropertyOAuthAppSettingsBuilder();
+		builder.callback("/social/callback.xhtml");
 		return builder.prefix("facebook").build();
 	}
 

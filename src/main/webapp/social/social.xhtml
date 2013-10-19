@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html >
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<h:outputScript name="bootstrap.min.js" library="js" />
+	<h:outputScript name="main.js" library="js" />
+
+	<ui:param name="pageTitle" value="#{i18n.social}" />
+
+	<ui:define name="header">
+		<h:outputText value="#{i18n.social}" />
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="#{i18n.social}" />
+	</ui:define>
+
+	<ui:define name="main">
+		<h:panelGroup id="panelgroup" layout="block" style="max-width:700px;">
+			<h2>#{i18n.profile}</h2>
+
+			<p:panel styleClass="chromediv" style="padding:10px;"
+				rendered="#{(empty socialServiceBean.currentSession) or !(socialServiceBean.currentSession.connected)}">
+				<h:outputText
+					value="#{i18n.no_social_connection}" />
+			</p:panel>
+
+			<h:panelGroup
+				rendered="#{not(empty socialServiceBean.currentSession) and socialServiceBean.currentSession.connected}">
+				<h:panelGrid columns="2">
+					<h:graphicImage
+						value="#{socialServiceBean.currentSession.userProfile.profileImageUrl}" />
+					<h:panelGroup>
+						<p>
+							<h:outputText
+								value="#{socialServiceBean.currentSession.userProfile.fullName}" />
+						</p>
+
+						<p>
+							<h:outputText
+								value="Working with #{socialServiceBean.currentSession.name}" />
+						</p>
+					</h:panelGroup>
+				</h:panelGrid>
+
+				<h6>Switch to another Social network</h6>
+				<h:form>
+					<h:selectOneRadio id="chooseService"
+						value="#{socialServiceBean.currentSessionName}"
+						layout="pageDirection">
+						<f:selectItems value="#{socialServiceBean.sessions}" var="serv"
+							itemValue="#{serv.name}" itemLabel="#{serv.name}" />
+						<f:ajax render=":panelgroup" onevent="triggerAllData" />
+					</h:selectOneRadio>
+				</h:form>
+				<h6>Close Social network</h6>
+				<h:commandLink action="#{socialClient.resetConnection}"
+					value="#{currentSession.name}" />
+				<br />
+				<h2>choose the Social network you want to work with.. :</h2>
+				<h:form id="form_srvc">
+					<h:selectOneRadio id="chooseService"
+						value="#{socialServiceBean.currentSessionName}">
+						<f:selectItems value="#{socialServiceBean.sessions}" var="srvc"
+							itemValue="#{srvc.name}" itemLabel="#{srvc.name}" />
+						<f:ajax render="form_srvc" />
+					</h:selectOneRadio>
+				</h:form>
+			</h:panelGroup>
+			<div >
+				<h2>
+					<h:outputText value="#{i18n.available_services}" />
+				</h2>
+
+				<h:form style="border:1px solid rgba(255,255,255,0.3);">
+					<ul style="list-style: none;">
+						<ui:repeat var="service"
+							value="#{socialServiceBean.manager.listOfServices}">
+							<li><h:outputLink value="#"
+									onclick="window.open('startoauth.xhtml?service=#{service}','oauth','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=0,resizable=0,width=400,height=400,modal=yes')">
+									<h:graphicImage id="serviceIcon" library="gfx"
+										name="#{service.toLowerCase()}-gray.png" height="32"
+										width="32" title="#{service}" />
+								</h:outputLink></li>
+						</ui:repeat>
+					</ul>
+				</h:form>
+			</div>
+		</h:panelGroup>
+	</ui:define>
+
+</ui:composition>

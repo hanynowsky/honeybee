@@ -6,6 +6,7 @@ import javax.inject.Inject;
 @Model
 public class RequestBean implements Service {
 
+	
 	private String hello;
 	@Inject
 	private UtilityBean utilityBean;

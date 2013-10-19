@@ -10,6 +10,12 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
+/**
+ * Ensures Character encoding in every request or response is UTF-8
+ * 
+ * @author hanine
+ * 
+ */
 @WebFilter
 public class CharacterEncodingChecker implements Filter {
 
@@ -22,7 +28,7 @@ public class CharacterEncodingChecker implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");		
+		response.setCharacterEncoding("UTF-8");
 		chain.doFilter(request, response);
 
 	}

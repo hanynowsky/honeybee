@@ -1,54 +1,68 @@
 <!DOCTYPE html>
 <html lang="fr">
-	<head>
-		<meta charset="UTF-8" />		
-		<link rel="shortcut icon" type="image/x-icon"
-		href="resources/favicon.ico" />
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link href="./resources/css/welcome.css" rel="stylesheet"
-		type="text/css" />
-		<script type="text/javascript">
+<head>
+<meta charset="UTF-8" />
+<link rel="shortcut icon" type="image/x-icon"
+	href="resources/favicon.ico" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="./resources/css/welcome.css" rel="stylesheet"
+	type="text/css" />
+<script type="text/javascript">
 			document.write('<link href="./resources/css/invalid.css" rel="stylesheet" type="text/css">');
 		</script>
-		<meta lang="fr" name="keywords"
-		content="naturopathy - naturopathie - naturotherapy - types of honey - natural prescriptions
+<meta lang="fr" name="keywords"
+	content="naturopathy - naturopathie - naturotherapy - types of honey - natural prescriptions
 		- Body masse index - somatotype - Index de masse corporelle -
 		types de miels - fruits et légumes - honeybeez - honeybeem - honeybeep -
-		honeybeet - honeybees - honeybeed - Mohammed Al fayed - Jamal Skali" />
-		<meta lang="en" name="keywords"
-		content="naturopathy - naturotherapy - types of honey - natural prescriptions
+		honeybeet - honeybees - honeybeed - honeybeee - Mohammed Al faid - Jamal Skalli" />
+<meta lang="en" name="keywords"
+	content="naturopathy - naturotherapy - types of honey - natural prescriptions
 		- Body mass index - somatotype - honeybeez - honeybeem - honeybeep -
 		honeybeet - honeybees - honeybeed" />
-		<meta lang="ar" name="keywords"
-		content=" - نحلة العسل العربية - العلاج الطبيعي بالاعشاب - محمد الفايد - جمال الصقلي
-		- ابن قيم الجوزية - الطب النبوي -  التداوي بالاعشاب - الطب البديل
+<meta lang="ar" name="keywords"
+	content=" - نحلة العسل العربية - العلاج الطبيعي بالاعشاب - محمد الفايد - جمال الصقلي
+		-  الطب النبوي ابن قيم الجوزية - التداوي بالاعشاب - الطب البديل
 		- خضر وفواكه - وصفات طبيعية - مؤشر الكتلة الجسدية - نمط جسدي" />
-		<meta name="description"
-		content="Base de données de naturopathie - prescription naturelles - types de miel" />
-		<meta name="author"
-		content="Hanine HAMZIOUI AL MADANI حنين حمزوي المدني" />
-		<title>HoneyBee - نحلة العسل</title>
+<meta name="description"
+	content="Base de données de naturopathie - prescription naturelles - types de miel" />
+<meta name="author"
+	content="Hanine HAMZIOUI AL MADANI حنين حمزوي المدني" />
+<title>HoneyBee - نحلة العسل</title>
+<style type="text/css">
+.vis {
+	visibility: visible;
+}
 
-	</head>
-	<body style="text-align: center;">
-		<div id="w_div_1" class="crystal" style="margin-top: 5%;">
-			<a href="./home" id="w_a_1"> <img id="img_bee"
-			src="resources/gfx/bee.png" title="honeybee" alt="honeybee" /> </a>
-			<h1 style="text-align: center;">HoneyBee Portal for Naturopathy</h1>
-			<h1 style="text-align: center;">موقع نحلة العسل للطبيعيات</h1>
-			<h2 style="text-align: center;">Portail de l'Abeille Mielleuse
+.hid {
+	visibility: hidden;
+}
+</style>
+</head>
+<body style="text-align: center;">
+	<div id="w_div_1" class="crystal" style="margin-top: 2%;">
+		<a href="./home" id="w_a_1"> <img id="img_bee"
+			src="resources/gfx/bee.png" title="honeybee" alt="honeybee" />
+		</a>
+		<h1 style="text-align: center;">HoneyBee Portal for Naturopathy</h1>
+		<h1 style="text-align: center;">موقع نحلة العسل للطبيعيات</h1>
+		<h2 style="text-align: center;">Portail de l'Abeille Mielleuse
 			pour la Naturopathie</h2>
-			<a href="https://plus.google.com/115493201542087203824"
+		<a href="https://plus.google.com/115493201542087203824"
 			rel="publisher" style="font-size: 1px; color: transparent;">G+</a>
-		</div>
-		<div id="welcomediv" class="crystal" style="margin-bottom: 2%;">
-			<form id="form_enter" enctype="application/x-www-form-urlencoded"
+	</div>
+	<div id="welcomediv" class="crystal" style="margin-bottom: 2%;">
+		<form id="form_enter" enctype="application/x-www-form-urlencoded"
 			action="./home" method="post" name="form_w_enter">
-				<input id="w_i_1" type="submit" value="Enter - ادخل" name="w_i1_n" />
-			</form>
-		</div>
-		<audio id="w_au_1" autoplay="autoplay" src="resources/gfx/bee.ogg" >
+			<input id="w_i_1" type="submit" value="Enter - ادخل" name="w_i1_n"
+				onclick="document.getElementById('gif_loading').className = 'vis';"
+				onprogress="window.open('./application/loading.html','oauth','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=0,resizable=0,width=400,height=25,modal=yes')" />
+		</form>
+	</div>	
 
-		</audio>
-	</body>
+	<img alt="gif.gif" src="./resources/gif.gif" width="90px"
+		align="middle" class="hid" id="gif_loading">
+	<audio id="w_au_1" autoplay="autoplay" src="resources/gfx/bee.ogg">
+	</audio>
+
+</body>
 </html>

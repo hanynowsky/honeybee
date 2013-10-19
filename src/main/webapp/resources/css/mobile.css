@@ -127,6 +127,6 @@ td:nth-child(2n) {
 /* FONTS */
 @font-face {
 	font-family: Kufi;
-	src: url("#{resource['DroidKufi-Regular.ttf']}");
+	src: url("#{resource['fonts/DroidKufi-Regular.ttf']}");
 	font-weight: 300;
 }

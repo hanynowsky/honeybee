@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -29,6 +30,7 @@ import org.otika.honeybee.model.Registery;
 import org.otika.honeybee.model.Store;
 import org.otika.honeybee.model.Substance;
 import org.otika.honeybee.model.Witness;
+import org.otika.honeybee.model.Bodypart;
 
 /**
  * Repository to fetch data from database Should be stateless. We don't need to
@@ -77,6 +79,50 @@ public class Repository implements Serializable {
 				return query.getSingleResult();
 			} catch (Exception ex) {
 				// No need for Finally for EM is closed by container
+				Logger.getLogger(Repository.class.getName()).log(Level.ALL,
+						ex.getMessage());
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Finds a Bodypart item by its label
+	 * 
+	 * @param label
+	 * @return
+	 */
+	public Bodypart findBodypartByLabel(String label) {
+		if (label != null && !label.equals("")) {
+			try {
+				TypedQuery<Bodypart> query = em.createNamedQuery(
+						"Bodypart.findByLabel", Bodypart.class);
+				query.setParameter("label", label);
+				return query.getSingleResult();
+			} catch (Exception ex) {
+				// No need for Finally for EM is closed by container
+				Logger.getLogger(Repository.class.getName()).log(Level.ALL,
+						ex.getMessage());
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Finds a Bodypart item by label (Native query using Like operator)
+	 * @param likeLabel
+	 * @return
+	 */
+	public Bodypart findBodypartByLikeLabel(String likeLabel) {
+		if (likeLabel != null && !likeLabel.equals("")) {
+			try {
+				Query query = em.createNativeQuery(
+						"SELECT * FROM bodypart WHERE label LIKE '" + likeLabel
+								+ "%'", Bodypart.class);				
+				Bodypart bodypart = (Bodypart) query.getResultList().get(0);
+				System.out.println("Like Bodypart fetched: " + bodypart);
+				return bodypart;
+			} catch (Exception ex) {				
 				Logger.getLogger(Repository.class.getName()).log(Level.ALL,
 						ex.getMessage());
 			}

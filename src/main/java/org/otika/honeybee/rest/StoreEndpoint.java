@@ -2,6 +2,8 @@ package org.otika.honeybee.rest;
 
 import java.util.List;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,6 +25,7 @@ import org.otika.honeybee.model.Store;
 /**
  * 
  */
+@DeclareRoles("ADMINISTRATOR")
 @Stateless
 @Path("/stores")
 public class StoreEndpoint
@@ -38,6 +41,7 @@ public class StoreEndpoint
       return Response.created(UriBuilder.fromResource(StoreEndpoint.class).path(String.valueOf(entity.getId())).build()).build();
    }
 
+   @RolesAllowed("ADMINISTRATOR")
    @DELETE
    @Path("/{id:[0-9][0-9]*}")
    public Response deleteById(@PathParam("id") Long id)
@@ -72,6 +76,7 @@ public class StoreEndpoint
       return em.createQuery("SELECT s FROM Store s", Store.class).getResultList();
    }
 
+   @RolesAllowed("ADMINISTRATOR")
    @PUT
    @Path("/{id:[0-9][0-9]*}")
    @Consumes(MediaType.APPLICATION_JSON)

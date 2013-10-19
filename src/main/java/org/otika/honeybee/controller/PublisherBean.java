@@ -10,13 +10,13 @@ import org.otika.honeybee.model.Comment;
 import org.otika.honeybee.model.Content;
 
 /**
- * <h>CRUD Bean</h>
+ * <h1>CRUD Bean</h1>
  * <p>
  * No need to implement an interface or extend an abstract class since we only
  * have two or three objects
  * </p>
  * 
- * @author Hanine.H
+ * @author Hanine .H ALMADANI <hanynowsky@gmail.com>
  * 
  */
 @Stateless

@@ -17,6 +17,15 @@ import org.otika.honeybee.model.Content;
 import org.otika.honeybee.util.Repository;
 import org.otika.honeybee.util.UtilityBean;
 
+/**
+ * <p>
+ * Bean controller for Content entities
+ * </p>
+ * 
+ * @author Hanine .H ALMADANI <hanynowsky@gmail.com>
+ * 
+ */
+
 @Model
 public class ContentController {
 
@@ -84,7 +93,8 @@ public class ContentController {
 		try {
 			// TODO attach content instance before deleting
 			publisherBean.deleteContent(content);
-			utilitybean.showMessage("info", "Deleted content: "+content.getId(), "");
+			utilitybean.showMessage("info",
+					"Deleted content: " + content.getId(), "");
 		} catch (Exception e) {
 			Logger.getLogger(getClass().getName()).error(e.getMessage());
 			FacesContext.getCurrentInstance().addMessage(null,
