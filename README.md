@@ -10,7 +10,7 @@ Purpose
 =======
 
 This application allows a user to :
-- browse prescriptions based on natural ingredients.
+- Browse prescriptions based on natural ingredients.
 - browse nutritional and medicinal plants, honey types ...etc
 - browse resources on natural healing techniques like cupping
 - browse resources on biological nutrition
