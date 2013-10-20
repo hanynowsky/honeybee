@@ -40,20 +40,58 @@
 	font-family: Sans-serif, arial, verdana, helvetica;
 	width: 100%;
 	text-shadow: 0 1px 0 #CCC;
-	background: rgba(0,0,0,0.1) url("#{resource['search.png']}") no-repeat;
+	background-image: url("#{resource['search.png']}");
+	background-repeat: no-repeat;
+	background-color: rgba(0, 0, 0, 0.2);
 	text-indent: 25px;
-	background-position: #{utilityBean.htmlDirection=='rtl'?   'right':'left'
-}
-
-;
+	background-position: #{utilityBean.htmlDirection=='rtl'?   'right':'left'};
 }
 .searchGrid {
 	width: 100%;
 }
+
+#form_autocomplete input {
+	font-family: Sans-serif, arial, verdana, helvetica;
+	font-size: 13pt;
+	text-shadow: 0 1px 0 #CCC;
+	background-image: url("#{resource['search.png']}");
+	background-repeat: no-repeat;
+	background-color: rgba(255, 255, 255, 0.5);
+	text-indent: 25px;
+	width: 97%;
+	padding: 10px;
+	background-position: #{utilityBean.htmlDirection=='rtl'?   'right':'left'};
+}
 </style>
+
+		<script type="text/javascript">
+		function submit(){
+document.getElementById('globalSearchForm').submit();
+}
+</script>
 		<h2 class="success">
 			<h:outputText value="#{i18n.general_search}" />
 		</h2>
+		<!-- Be ware: The Primefaces autocomplete component is buggy: NumberFormat Exception -->
+		<h:form id="form_autocomplete">
+			<p:autoComplete value="#{searchBean.ingredient}" style="width:100%;"
+				completeMethod="#{searchBean.autoComplete}" id="autocomplete_search"
+				maxResults="25" minQueryLength="2" var="_i"
+				itemLabel="#{ingredientBean.switchLabel(_i)}" itemValue="#{_i}"
+				converter="#{ingredientBean.converter}">
+				<p:column style="width:20%;text-align:center">
+					<p:graphicImage value="#{imagesBean.image}"
+						rendered="#{not empty _i.plant}" width="32">
+						<f:param name="plant_id" value="#{_i.plant.id}" />
+					</p:graphicImage>
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{_i.labellat} - #{ingredientBean.switchLabel(_i)} : #{_i.form}" />
+				</p:column>
+				<p:ajax update=":globalSearchForm" event="itemSelect" />
+			</p:autoComplete>
+		</h:form>
 		<p:separator style="height:1px;" />
 		<h:form id="globalSearchForm">
 			<h:panelGrid columns="2" styleClass="searchGrid">
@@ -66,13 +104,13 @@
 				<h:panelGroup>
 					<p:commandButton action="#{searchBean.searchIngredients}"
 						value="#{i18n.search}" styleClass="searchButton"
-						update="globalSearchForm:searchTable">
+						update="globalSearchForm:searchTable" icon="ui-icon ui-icon-search">
 					</p:commandButton>
 				</h:panelGroup>
 			</h:panelGrid>
 			<div align="center">
 				<p:commandButton action="#{searchBean.release()}"
-					update="globalSearchForm:searchTable globalSearchForm:general_search_input"
+					update="globalSearchForm:searchTable globalSearchForm:general_search_input :form_autocomplete"
 					icon="ui-icon ui-icon-refresh" />
 			</div>
 			<p:separator style="height:1px;margin:20px;" />

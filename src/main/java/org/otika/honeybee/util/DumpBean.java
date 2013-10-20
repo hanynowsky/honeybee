@@ -46,6 +46,8 @@ public class DumpBean {
 	private BundleBean bundleBean;
 	@Inject
 	private ContactBean contactBean;
+	@Inject
+	private RemoteDumpBean remoteDumpBean;
 
 	/**
 	 * Default constructor.
@@ -90,7 +92,7 @@ public class DumpBean {
 					+ dumpPath);
 			try {
 				System.out.println("Attempt to call zip file function");
-				utilityBean.zipFile(new File(dumpPath)); 
+				utilityBean.zipFile(new File(dumpPath));
 				// Produces exception if we use faces Message
 				System.out.println("zip file function called");
 
@@ -122,10 +124,10 @@ public class DumpBean {
 			String username = System.getenv("OPENSHIFT_MYSQLDB_USERNAME");
 			String pass = System.getenv("OPENSHIFT_MYSQLDB_PASSWORD");
 			if (pass == null || pass.equals("")) {
-				pass = "dY7YPB_VVzgR";
+				pass = remoteDumpBean.getPassword();
 			}
 			if (username == null || username.equals("")) {
-				username = "adminQTnK1ed";
+				username = remoteDumpBean.getUsername();
 			}
 
 			try {

@@ -12,8 +12,11 @@ import javax.inject.Inject;
 @Model
 public class RemoteDumpBean {
 
-	private String username = "adminwNJulYt";
-	private String password = "1GK_z_NqUW7g";
+	/**
+	 * Values of Password and Username must be initiated as they're used at startup
+	 */
+	private String username = "adminQTnK1ed"; 
+	private String password = "dY7YPB_VVzgR";
 	private String host = "127.7.193.130";
 	private String recipient = "opentika.contact@gmail.com";
 	private String db = "honeybee";

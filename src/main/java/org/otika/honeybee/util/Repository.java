@@ -110,6 +110,7 @@ public class Repository implements Serializable {
 
 	/**
 	 * Finds a Bodypart item by label (Native query using Like operator)
+	 * 
 	 * @param likeLabel
 	 * @return
 	 */
@@ -118,11 +119,11 @@ public class Repository implements Serializable {
 			try {
 				Query query = em.createNativeQuery(
 						"SELECT * FROM bodypart WHERE label LIKE '" + likeLabel
-								+ "%'", Bodypart.class);				
+								+ "%'", Bodypart.class);
 				Bodypart bodypart = (Bodypart) query.getResultList().get(0);
 				System.out.println("Like Bodypart fetched: " + bodypart);
 				return bodypart;
-			} catch (Exception ex) {				
+			} catch (Exception ex) {
 				Logger.getLogger(Repository.class.getName()).log(Level.ALL,
 						ex.getMessage());
 			}
@@ -350,6 +351,33 @@ public class Repository implements Serializable {
 				TypedQuery<Ingredient> query = em.createNamedQuery(
 						"Ingredient.findByLabel", Ingredient.class);
 				query.setParameter("label", label);
+				return query.getResultList();
+			} catch (Exception ex) {
+				Logger.getLogger(Repository.class.getName()).log(Level.ALL,
+						ex.getMessage());
+				System.out.println(ex.getMessage());
+				return null;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * List of ingredients using a native query
+	 * 
+	 * @param keyword
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Ingredient> findByLikeLabel(String keyword) {
+		if (keyword != null && !keyword.equals("")) {
+			try {
+				Query query = em.createNativeQuery(
+						"SELECT * FROM ingredient WHERE label LIKE '" + keyword
+								+ "' or labelfr LIKE '" + keyword
+								+ "' or labelar LIKE '" + keyword
+								+ "' or labellat LIKE '" + keyword + "'",
+						Ingredient.class);
 				return query.getResultList();
 			} catch (Exception ex) {
 				Logger.getLogger(Repository.class.getName()).log(Level.ALL,
