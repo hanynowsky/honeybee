@@ -87,7 +87,7 @@ public class MailBean {
 		// Set properties
 		props = new Properties();
 		props.put("mail.smtp.host", host); // HOST
-		props.put("mail.debug", "false"); // TODO DEBUG
+		props.put("mail.debug", "true"); // TODO DEBUG
 		props.put("mail.smtp.auth", "true"); // AUTH
 		// props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.port", port);
