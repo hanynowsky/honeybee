@@ -4,4 +4,6 @@
 # it could be python, php, ruby, etc.
 
 echo "Executing Post Deploy hook";
+ 
+#/usr/bin/mysql -u adminQTnK1ed -pdY7YPB_VVzgR -e "SET character_set_database = utf8" honeybee > /dev/null
 exit 0;
