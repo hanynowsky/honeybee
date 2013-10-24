@@ -3,3 +3,8 @@
 # available.  Otherwise it will execute while your application is stopped
 # before the deploy step.  This script gets executed directly, so it
 # could be python, php, ruby, etc.
+
+echo " Setting UTF8 for MYSQLD";
+sed -i '/mysqld]/ a\collation-server=utf8_general_ci' ~/mysql/conf/my.cnf
+sed -i '/mysqld]/ a\character-set-server=utf8' ~/mysql/conf/my.cnf
+exit 0;

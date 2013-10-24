@@ -6,4 +6,8 @@
 echo "Executing Post Deploy hook";
  
 #/usr/bin/mysql -u adminQTnK1ed -pdY7YPB_VVzgR -e "SET character_set_database = utf8" honeybee > /dev/null
+echo "Must use a MySQL utility to set character set and collation to UTF8 or sed or tail or tee to append keys and values in ~/mysql/conf/my.cnf";
+echo " under [mysqld] section";
+sed -i '/mysqld]/ a\collation-server=utf8_general_ci' ~/mysql/conf/my.cnf
+sed -i '/mysqld]/ a\character-set-server=utf8' ~/mysql/conf/my.cnf
 exit 0;
