@@ -3,3 +3,7 @@
 # build hook has been run but before the application has been started back
 # up again.  This script gets executed directly, so it could be python, php,
 # ruby, etc.
+
+echo "Must use a MySQL utility to set character set and collation to UTF8 or sed or tail or tee to append keys and values in ~/mysql/conf/my.cnf";
+echo " under [mysqld] section";
+exit 0;

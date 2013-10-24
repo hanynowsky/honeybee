@@ -1,480 +1,479 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<title>Human Body</title>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>#{i18n.human_body}</title>
 
-	<style type="text/css">
-.highlight {
-	fill: yellow;
-	text-align: justify;
-}
-</style>
-	<script type="text/javascript">
-	function bodypart(id) {
-		fillme(id);  		
-  		unfillme(id);
-  		remote(id);
-	}
-	
-	function fillme(id){
-	document.getElementById(id).style.fill = '#008000';
-	document.getElementById(id).style.opacity = '0.9';
-	document.getElementById(id).style.stroke = '#ffffff';
-	// 	
-		
-}
-	function unfillme(id){
-	document.getElementById(id).style.fill='#d40000';
-	document.getElementById(id).style.opacity = '0.5';
-	
-}
+        <style type="text/css">
+            .highlight {
+                fill: yellow;
+                text-align: justify;
+            }
+        </style>
+        <script type="text/javascript">
+            function bodypart(id) {
+                fillme(id);
+                unfillme(id);
+                remote(id);
+            }
 
-	function remote(id){
-		if (confirm('View ' + id + ' ?')) {
-			navigate([{name:'pathLabel',value:id}]);
-			return true;
-		} else {
-			return false;
-		}		
-		}
-</script>
-</h:head>
-<h:body>
-	<h:form id="form_remote">
-		<p:remoteCommand name="navigate" action="#{bodypartBean.retrieve}"
-			actionListener="#{bodypartBean.revalueId}" update=":text"
-			process="@this">
-			<f:param name="pathLabel" value="#{bodypartBean.pathLabel}" />
-		</p:remoteCommand>
-	</h:form>
+            function fillme(id) {
+                document.getElementById(id).style.fill = '#008000';
+                document.getElementById(id).style.opacity = '0.9';
+                document.getElementById(id).style.stroke = '#ffffff';
+                // 	
 
-	<p:outputPanel id="text">
-		<h:outputText value="#{bodypartBean.bodypart.label}" />
-	</p:outputPanel>
-	<!--<embed src="drawing.svg" type="image/svg+xml" />-->
-	<svg xmlns:dc="http://purl.org/dc/elements/1.1/"
-		xmlns:cc="http://creativecommons.org/ns#"
-		xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-		xmlns:svg="http://www.w3.org/2000/svg"
-		xmlns="http://www.w3.org/2000/svg"
-		xmlns:xlink="http://www.w3.org/1999/xlink"
-		xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-		xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-		sodipodi:docname="drawing.svg" inkscape:version="0.48.4 r9939"
-		version="1.1" id="svg6509" height="820" width="500">
-  <sodipodi:namedview id="base" pagecolor="#ffffff"
-			bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0"
-			inkscape:pageshadow="2" inkscape:zoom="1.1491267" inkscape:cx="350"
-			inkscape:cy="565.33237" inkscape:document-units="px" showgrid="false"
-			inkscape:window-width="1366" inkscape:window-height="695"
-			inkscape:window-x="0" inkscape:window-y="24"
-			inkscape:window-maximized="1" inkscape:current-layer="svg6509" />
-  <script id="inkwebjs" type="text/javascript">
-// some script here
-</script>
-  <title id="title7061">human-body</title>
-  <defs id="defs6511">
-    <filter id="filter7071" inkscape:label="Fluorescence"
-			inkscape:menu="Color"
-			inkscape:menu-tooltip="Oversaturate colors which can be fluorescent in real world"
-			x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">
-      <feColorMatrix id="feColorMatrix7073" type="hueRotate" values="0" />
-      <feColorMatrix id="feColorMatrix7075" type="saturate" values="1" />
-      <feColorMatrix id="feColorMatrix7077" type="matrix"
-			values="2 -1 0 0 0 0 2 -1 0 0 -1 0 2 0 0 0 0 0 1 0 " />
-    </filter>
-  </defs>
-  <metadata id="metadata6514">
-    <rdf:RDF>
-      <cc:Work rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>human-body</dc:title>
-        <cc:license
-					rdf:resource="http://creativecommons.org/licenses/by-nc-nd/3.0/" />
-        <dc:date>2013</dc:date>
-        <dc:creator>
-          <cc:Agent>
-            <dc:title>Hanine HAMZIOUI ALMADANI</dc:title>
-          </cc:Agent>
-        </dc:creator>
-        <dc:rights>
-          <cc:Agent>
-            <dc:title>CC</dc:title>
-          </cc:Agent>
-        </dc:rights>
-        <dc:publisher>
-          <cc:Agent>
-            <dc:title>OpenTika</dc:title>
-          </cc:Agent>
-        </dc:publisher>
-        <dc:identifier>otika-humanbody</dc:identifier>
-        <dc:language>English</dc:language>
-        <dc:subject>
-          <rdf:Bag>
-            <rdf:li>human body</rdf:li>
-          </rdf:Bag>
-        </dc:subject>
-      </cc:Work>
-      <cc:License
-				rdf:about="http://creativecommons.org/licenses/by-nc-nd/3.0/">
-        <cc:permits
-					rdf:resource="http://creativecommons.org/ns#Reproduction" />
-        <cc:permits
-					rdf:resource="http://creativecommons.org/ns#Distribution" />
-        <cc:requires rdf:resource="http://creativecommons.org/ns#Notice" />
-        <cc:requires
-					rdf:resource="http://creativecommons.org/ns#Attribution" />
-        <cc:prohibits
-					rdf:resource="http://creativecommons.org/ns#CommercialUse" />
-      </cc:License>
-    </rdf:RDF>
-  </metadata>
-  <image y="1.4285716" x="0.80478382" id="image6578"
-			xlink:href="../resources/bmi/body.jpg" height="820" width="500" />
-  <path sodipodi:type="arc"
-			style="opacity:0.3;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;filter:url(#filter7071)"
-			id="head" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,214.11935,33.587261)"
-			inkscape:label="#path6581" onclick="bodypart('head')"
-			onmouseover="document.getElementById('head').style.fill='#008000'"
-			onmouseout="document.getElementById('head').style.fill = '#d40000'">
-    <title id="title6803">head</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="neck" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,194.25851,111.75324)"
-			onclick="bodypart('neck')" onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);"	 		
-			inkscape:label="#path6581-2">
-    <title id="title6869">neck</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="eye" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,228.19733,60.409912)"
-			onclick="bodypart('eye')" onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);" 
-			inkscape:label="#path6581-9">
-    <title id="title7059">eye</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="hand" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,287.37269,68.241946)"
-			onclick="bodypart('hand')" inkscape:label="#path6581-6"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6859">hand</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="arm" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,352.63965,83.035789)"
-			onclick="bodypart('arm');" inkscape:label="#path6581-69"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6861">arm</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="upperarm" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,345.67784,129.15777)"
-			onclick="bodypart('upperarm');" inkscape:label="#path6581-98"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6863">upperarm</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="shoulder" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,285.63224,121.32573)"
-			onclick="bodypart('shoulder')" inkscape:label="#path6581-21"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6865">shoulder</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="throat" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,215.14393,118.71506)"
-			onclick="bodypart('throat')" inkscape:label="#path6581-4"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6867">throat</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="breast" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,249.95298,170.0584)"
-			onclick="bodypart('breast')" inkscape:label="#path6581-0"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6877">breast</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="lung" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,178.59444,188.33314)"
-			onclick="bodypart('lung')" inkscape:label="#path6581-90"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6873">lung</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="thigh" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,266.48727,431.1262)"
-			onclick="bodypart('thigh')" inkscape:label="#path6581-5"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6914">thigh</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="knee" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,272.57885,522.49993)"
-			onclick="bodypart('knee')" inkscape:label="#path6581-67"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6916">knee</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="calf" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,259.52547,593.85846)"
-			onclick="bodypart('calf')" inkscape:label="#path6581-92"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6918">calf</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="foot" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,302.16654,721.78169)"
-			onclick="bodypart('foot')" inkscape:label="#path6581-1"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6920">foot</title>
-  </path>
-    <path sodipodi:type="arc"
-			style="opacity:0.3;fill:#D40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="clavicle" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,282,699)"
-			onclick="bodypart('clavicle')" inkscape:label="#path6581-9"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6920">clavicle</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="spine" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,215.14393,237.93602)"
-			onclick="bodypart('spine')" inkscape:label="#path6581-3"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6881">spine</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="stomach" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,229.93778,270.13439)"
-			onclick="bodypart('stomach')" inkscape:label="#path6581-699"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6889">stomach</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="genital" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,215.14393,372.82105)"
-			onclick="bodypart('genital')" inkscape:label="#path6581-96"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6891">Genital-System</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="pancreas" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,198.60964,257.95122)"
-			onclick="bodypart('pancreas')" inkscape:label="#path6581-52"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6887">pancreas</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="liver" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,173.37309,216.18037)"
-			onclick="bodypart('liver')" inkscape:label="#path6581-24"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6875">liver</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="mouth" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,215.14394,84.776237)"
-			onclick="bodypart('mouth')" inkscape:label="#path6581-55"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title7057">mouth</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="nose" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,215.14394,67.37172)"
-			onclick="bodypart('nose')" inkscape:label="#path6581-2-1"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6871">nose</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="heart" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,226.45687,208.34834)"
-			onclick="bodypart('heart')" inkscape:label="#path6581-2-2"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6883">heart</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="spleen" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,243.86139,257.95122)"
-			inkscape:transform-center-x="-10.442712"
-			inkscape:transform-center-y="16.534295" onclick="bodypart('spleen')"
-			inkscape:label="#path6581-699-2"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6885">spleen</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="kidney" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,259.52546,216.18037)"
-			inkscape:transform-center-x="-24.366329"
-			inkscape:transform-center-y="79.709664" onclick="bodypart('kidney')"
-			inkscape:label="#path6581-0-3"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6879">kidney</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="urinary" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,215.14393,350.19518)"
-			onclick="bodypart('urinary')" inkscape:label="#path6581-96"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6891-4">Urinary-System</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="duodenum" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,198.60964,282.31755)"
-			onclick="bodypart('duodenum')" inkscape:label="#path6581-92"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6918-0">duodenum</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="crus" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.52301617,0.34867744,-0.34867744,0.52301617,180.3397,620.45477)"
-			onclick="bodypart('crus')" inkscape:label="#path6581-92"
-			inkscape:transform-center-x="1.5021239"
-			inkscape:transform-center-y="-7.5106366"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6918-05">crus</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="basin" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,261.26592,318.86704)"
-			onclick="bodypart('basin')" inkscape:label="#path6581-92"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6918-0-7">basin</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="waist" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,273.44908,285.79845)"
-			onclick="bodypart('waist')" inkscape:label="#path6581-92"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6918-0-7-6">waist</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.60060000999999996;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001000000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="buttock" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,288.24292,350.19518)"
-			onclick="bodypart('buttock')" inkscape:label="#path6581-92"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6918-0-7-9">buttock</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.60060000000000002;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001000000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="back" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,296.94518,212.69947)"
-			onclick="bodypart('back')" inkscape:label="#path6581-92"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6918-0-7-9-0">back</title>
-  </path>
-  <path sodipodi:type="arc"
-			style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			id="ear" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
-			sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
-			d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
-			transform="matrix(0.6285872,0,0,0.6285872,183.8158,69.982403)"
-			inkscape:label="#path6581" onclick="bodypart('ear')"
-			onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
-    <title id="title6803-4">ear</title>
-  </path>
-</svg>
+            }
+            function unfillme(id) {
+                document.getElementById(id).style.fill = '#d40000';
+                document.getElementById(id).style.opacity = '0.5';
 
-</h:body>
+            }
+
+            function remote(id) {
+                if (confirm('View ' + id + ' ?')) {
+                    navigate([{name: 'pathLabel', value: id}]);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <h:form id="form_remote">
+            <p:remoteCommand name="navigate" action="#{bodypartBean.retrieve}"
+                             actionListener="#{bodypartBean.revalueId}" update=":text"
+                             process="@this">
+                <f:param name="pathLabel" value="#{bodypartBean.pathLabel}" />
+            </p:remoteCommand>
+        </h:form>
+
+        <p:outputPanel id="text">
+            <h:outputText value="#{bodypartBean.bodypart.label}" />
+        </p:outputPanel>
+        <!--<embed src="drawing.svg" type="image/svg+xml" />-->
+        <svg xmlns:dc="http://purl.org/dc/elements/1.1/"
+             xmlns:cc="http://creativecommons.org/ns#"
+             xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+             xmlns:svg="http://www.w3.org/2000/svg"
+             xmlns="http://www.w3.org/2000/svg"
+             xmlns:xlink="http://www.w3.org/1999/xlink"
+             xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+             xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+             sodipodi:docname="drawing.svg" inkscape:version="0.48.4 r9939"
+             version="1.1" id="svg6509" height="820" width="500">
+            <sodipodi:namedview id="base" pagecolor="#ffffff"
+                                bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0"
+                                inkscape:pageshadow="2" inkscape:zoom="1.1491267" inkscape:cx="350"
+                                inkscape:cy="565.33237" inkscape:document-units="px" showgrid="false"
+                                inkscape:window-width="1366" inkscape:window-height="695"
+                                inkscape:window-x="0" inkscape:window-y="24"
+                                inkscape:window-maximized="1" inkscape:current-layer="svg6509" />
+            <script id="inkwebjs" type="text/javascript">
+                // some script here
+            </script>
+            <title id="title7061">human-body</title>
+            <defs id="defs6511">
+                <filter id="filter7071" inkscape:label="Fluorescence"
+                        inkscape:menu="Color"
+                        inkscape:menu-tooltip="Oversaturate colors which can be fluorescent in real world"
+                        x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">
+                    <feColorMatrix id="feColorMatrix7073" type="hueRotate" values="0" />
+                    <feColorMatrix id="feColorMatrix7075" type="saturate" values="1" />
+                    <feColorMatrix id="feColorMatrix7077" type="matrix"
+                                   values="2 -1 0 0 0 0 2 -1 0 0 -1 0 2 0 0 0 0 0 1 0 " />
+                </filter>
+            </defs>
+            <metadata id="metadata6514">
+                <rdf:RDF>
+                    <cc:Work rdf:about="">
+                        <dc:format>image/svg+xml</dc:format>
+                        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+                        <dc:title>human-body</dc:title>
+                        <cc:license
+                            rdf:resource="http://creativecommons.org/licenses/by-nc-nd/3.0/" />
+                        <dc:date>2013</dc:date>
+                        <dc:creator>
+                            <cc:Agent>
+                                <dc:title>Hanine HAMZIOUI ALMADANI</dc:title>
+                            </cc:Agent>
+                        </dc:creator>
+                        <dc:rights>
+                            <cc:Agent>
+                                <dc:title>CC</dc:title>
+                            </cc:Agent>
+                        </dc:rights>
+                        <dc:publisher>
+                            <cc:Agent>
+                                <dc:title>OpenTika</dc:title>
+                            </cc:Agent>
+                        </dc:publisher>
+                        <dc:identifier>otika-humanbody</dc:identifier>
+                        <dc:language>English</dc:language>
+                        <dc:subject>
+                            <rdf:Bag>
+                                <rdf:li>human body</rdf:li>
+                            </rdf:Bag>
+                        </dc:subject>
+                    </cc:Work>
+                    <cc:License
+                        rdf:about="http://creativecommons.org/licenses/by-nc-nd/3.0/">
+                        <cc:permits
+                            rdf:resource="http://creativecommons.org/ns#Reproduction" />
+                        <cc:permits
+                            rdf:resource="http://creativecommons.org/ns#Distribution" />
+                        <cc:requires rdf:resource="http://creativecommons.org/ns#Notice" />
+                        <cc:requires
+                            rdf:resource="http://creativecommons.org/ns#Attribution" />
+                        <cc:prohibits
+                            rdf:resource="http://creativecommons.org/ns#CommercialUse" />
+                    </cc:License>
+                </rdf:RDF>
+            </metadata>
+            <image y="1.4285716" x="0.80478382" id="image6578"
+                   xlink:href="../resources/bmi/body.jpg" height="820" width="500" />
+            <path sodipodi:type="arc"
+                  style="opacity:0.3;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;filter:url(#filter7071)"
+                  id="head" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,214.11935,33.587261)"
+                  inkscape:label="#path6581" onclick="bodypart('head')"
+                  onmouseover="document.getElementById('head').style.fill = '#008000'"
+                  onmouseout="document.getElementById('head').style.fill = '#d40000'">
+                <title id="title6803">head</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="neck" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,194.25851,111.75324)"
+                  onclick="bodypart('neck')" onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);"	 		
+                  inkscape:label="#path6581-2">
+                <title id="title6869">neck</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="eye" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,228.19733,60.409912)"
+                  onclick="bodypart('eye')" onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);" 
+                  inkscape:label="#path6581-9">
+                <title id="title7059">eye</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="hand" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,287.37269,68.241946)"
+                  onclick="bodypart('hand')" inkscape:label="#path6581-6"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6859">hand</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="arm" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,352.63965,83.035789)"
+                  onclick="bodypart('arm');" inkscape:label="#path6581-69"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6861">arm</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="upperarm" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,345.67784,129.15777)"
+                  onclick="bodypart('upperarm');" inkscape:label="#path6581-98"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6863">upperarm</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="shoulder" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,285.63224,121.32573)"
+                  onclick="bodypart('shoulder')" inkscape:label="#path6581-21"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6865">shoulder</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="throat" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,215.14393,118.71506)"
+                  onclick="bodypart('throat')" inkscape:label="#path6581-4"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6867">throat</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="breast" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,249.95298,170.0584)"
+                  onclick="bodypart('breast')" inkscape:label="#path6581-0"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6877">breast</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="lung" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,178.59444,188.33314)"
+                  onclick="bodypart('lung')" inkscape:label="#path6581-90"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6873">lung</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="thigh" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,266.48727,431.1262)"
+                  onclick="bodypart('thigh')" inkscape:label="#path6581-5"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6914">thigh</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="knee" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,272.57885,522.49993)"
+                  onclick="bodypart('knee')" inkscape:label="#path6581-67"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6916">knee</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="calf" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,259.52547,593.85846)"
+                  onclick="bodypart('calf')" inkscape:label="#path6581-92"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6918">calf</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="foot" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,302.16654,721.78169)"
+                  onclick="bodypart('foot')" inkscape:label="#path6581-1"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6920">foot</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.3;fill:#D40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="clavicle" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,282,699)"
+                  onclick="bodypart('clavicle')" inkscape:label="#path6581-9"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6920">clavicle</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="spine" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,215.14393,237.93602)"
+                  onclick="bodypart('spine')" inkscape:label="#path6581-3"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6881">spine</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="stomach" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,229.93778,270.13439)"
+                  onclick="bodypart('stomach')" inkscape:label="#path6581-699"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6889">stomach</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="genital" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,215.14393,372.82105)"
+                  onclick="bodypart('genital')" inkscape:label="#path6581-96"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6891">Genital-System</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="pancreas" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,198.60964,257.95122)"
+                  onclick="bodypart('pancreas')" inkscape:label="#path6581-52"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6887">pancreas</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="liver" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,173.37309,216.18037)"
+                  onclick="bodypart('liver')" inkscape:label="#path6581-24"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6875">liver</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="mouth" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,215.14394,84.776237)"
+                  onclick="bodypart('mouth')" inkscape:label="#path6581-55"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title7057">mouth</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="nose" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,215.14394,67.37172)"
+                  onclick="bodypart('nose')" inkscape:label="#path6581-2-1"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6871">nose</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="heart" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,226.45687,208.34834)"
+                  onclick="bodypart('heart')" inkscape:label="#path6581-2-2"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6883">heart</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="spleen" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,243.86139,257.95122)"
+                  inkscape:transform-center-x="-10.442712"
+                  inkscape:transform-center-y="16.534295" onclick="bodypart('spleen')"
+                  inkscape:label="#path6581-699-2"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6885">spleen</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="kidney" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,259.52546,216.18037)"
+                  inkscape:transform-center-x="-24.366329"
+                  inkscape:transform-center-y="79.709664" onclick="bodypart('kidney')"
+                  inkscape:label="#path6581-0-3"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6879">kidney</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="urinary" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,215.14393,350.19518)"
+                  onclick="bodypart('urinary')" inkscape:label="#path6581-96"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6891-4">Urinary-System</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="duodenum" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,198.60964,282.31755)"
+                  onclick="bodypart('duodenum')" inkscape:label="#path6581-92"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6918-0">duodenum</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="crus" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.52301617,0.34867744,-0.34867744,0.52301617,180.3397,620.45477)"
+                  onclick="bodypart('crus')" inkscape:label="#path6581-92"
+                  inkscape:transform-center-x="1.5021239"
+                  inkscape:transform-center-y="-7.5106366"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6918-05">crus</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="basin" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,261.26592,318.86704)"
+                  onclick="bodypart('basin')" inkscape:label="#path6581-92"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6918-0-7">basin</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="waist" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,273.44908,285.79845)"
+                  onclick="bodypart('waist')" inkscape:label="#path6581-92"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6918-0-7-6">waist</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.60060000999999996;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001000000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="buttock" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,288.24292,350.19518)"
+                  onclick="bodypart('buttock')" inkscape:label="#path6581-92"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6918-0-7-9">buttock</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.60060000000000002;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001000000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="back" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,296.94518,212.69947)"
+                  onclick="bodypart('back')" inkscape:label="#path6581-92"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6918-0-7-9-0">back</title>
+            </path>
+            <path sodipodi:type="arc"
+                  style="opacity:0.28720021;fill:#d40000;fill-opacity:1;stroke:#000000;stroke-width:0.69800001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+                  id="ear" sodipodi:cx="50.908222" sodipodi:cy="60.727791"
+                  sodipodi:rx="8.2671471" sodipodi:ry="8.2671471"
+                  d="m 59.175369,60.727791 a 8.2671471,8.2671471 0 1 1 -16.534294,0 8.2671471,8.2671471 0 1 1 16.534294,0 z"
+                  transform="matrix(0.6285872,0,0,0.6285872,183.8158,69.982403)"
+                  inkscape:label="#path6581" onclick="bodypart('ear')"
+                  onmouseover="fillme(this.id);" onmouseout="unfillme(this.id);">
+                <title id="title6803-4">ear</title>
+            </path>
+        </svg>
+
+    </h:body>
 </html>

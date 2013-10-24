@@ -82,7 +82,7 @@
 	display: block;
 	width: 22px;
 	height: 22px;
-	background-image: url("#{resource['remove.png']}");
+	background-image: url("#{resource['gfx/remove.png']}");
 }
 
 .primedatatable-footer {
@@ -318,7 +318,12 @@
 }
 
 .ui-autocomplete-table td:hover {
-	color: blue	
+	color: blue;
+        cursor: pointer;
+}
+
+.ui-selectonemenu-table td {
+	cursor: pointer;
 }
 /*Overrides*/
 

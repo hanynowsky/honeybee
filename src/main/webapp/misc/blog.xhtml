@@ -150,7 +150,7 @@ setid();
 					</p:dataGrid>
 
 					<h:panelGrid columns="3">
-						<h:outputLabel for="input_newcomment_name" value="#{i18n.name}" />
+						<h:outputLabel for="input_newcomment_name" value="#{i18n.full_name}" />
 						<p:inputText id="input_newcomment_name"
 							value="#{newComment.cfname}" required="true"
 							validator="#{commentBean.validateComment}" />

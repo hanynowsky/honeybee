@@ -121,8 +121,8 @@ public class DumpBean {
 			}
 
 		} else {
-			String username = System.getenv("OPENSHIFT_MYSQLDB_USERNAME");
-			String pass = System.getenv("OPENSHIFT_MYSQLDB_PASSWORD");
+			String username = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+			String pass = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
 			if (pass == null || pass.equals("")) {
 				pass = remoteDumpBean.getPassword();
 			}

@@ -1,31 +1,31 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/resources/scaffold/pageTemplate.xhtml"
-	xmlns:h="http://java.sun.com/jsf/html">
-	<ui:param name="pageTitle" value="#{i18n.welcome_home}" />
-	<ui:define name="header">
-		<div class="index">
-			<h:outputText value="#{i18n.honeybee}" />
-		</div>
-	</ui:define>
-	<ui:define name="subheader">
-		<h:outputText value="#{i18n.welcome_home}" />
-	</ui:define>
-	<ui:define name="main">
-		<div class="index">
-			<h4 style="padding: 0px;">
-				<h:outputText value="#{i18n.honeybee_ready}"
-					style="font-size:12pt;font-family:Kufi,Roboto,Arial;
-					font-variant:small-caps;font-weight:lighter;" />
-			</h4>
-			<div class="chromediv" >
-				<img src="#{resource['gfx/bee.svg']}" 
-				alt="honeybee home" align="left"
-					 class="chromedivimg" style="width: 230px;" />				
-			<h:outputText value="#{i18n.aboutus_content}" />
-			</div>
-		</div>
-	</ui:define>
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/scaffold/pageTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html">
+    <ui:param name="pageTitle" value="#{i18n.welcome_home}" />
+    <ui:define name="header">
+        <div class="index">
+            <h:outputText value="#{i18n.honeybee}" />
+        </div>
+    </ui:define>
+    <ui:define name="subheader">
+        <h:outputText value="#{i18n.welcome_home}" />
+    </ui:define>
+    <ui:define name="main">
+        <div class="index">
+            <h4 style="padding: 0px;">
+                <h:outputText value="#{i18n.honeybee_ready}"
+                              style="font-size:12pt;font-family:Kufi,Roboto,Arial;
+                              font-variant:small-caps;font-weight:lighter;" />
+            </h4>
+            <div class="chromediv" >
+                <img src="#{resource['gfx/bee.svg']}" 
+                     alt="honeybee home" align="left"
+                     class="chromedivimg" style="width: 230px;" />				
+                <h:outputText value="#{i18n.aboutus_content}" />
+            </div>
+        </div>
+    </ui:define>
 </ui:composition>

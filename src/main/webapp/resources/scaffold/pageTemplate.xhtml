@@ -1,384 +1,390 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<f:view id="honeybee_view" contentType="text/html"
-	locale="#{localeBean.locale}" encoding="utf-8">
-	<h:head>
-		<title>#{empty pageTitle ? '{#pageTitle}' : pageTitle}</title>
-		<link rel="icon" href="#{resource['favicon.ico']}" />
-		<h:outputScript name="js/js.js" />
-		<h:outputStylesheet name="css/primefaces-flick/theme.css" />
-		<h:outputStylesheet name="css/bootstrap.css" />
-		<h:outputStylesheet name="css/primefaces.css" />
-		<h:outputStylesheet name="css/forge-style.css" />
-		<link rel="shortcut icon" type="image/x-icon"
-			href="#{request.contextPath}/resources/favicon.ico" />
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta lang="fr" name="keywords"
-			content="naturopathy - naturopathie - naturotherapy - 
-			types of honey - natural prescriptions
-		  - Body masse index - somatotype - Index de masse corporelle - 
-		  types de miels - fruits et légumes - honeybeez - honeybeem - 
-		  honeybeep - honeybeet - honeybees - honeybeee - honeybeed - Mohammed Al faid - 
-		  Jamal Skali" />
-		<meta lang="en" name="keywords"
-			content="naturopathy - naturotherapy - types of honey - 
-			natural prescriptions
-		  - Body mass index - somatotype - honeybeez - honeybeem - honeybeep - 
-		  honeybeet - honeybees - honeybeed" />
-		<meta lang="ar" name="keywords"
-			content="العلاج الطبيعي بالاعشاب -
-			 محمد الفايد - جمال الصقلي - ابن قيم الجوزية -
-			 الطب النبوي -  التداوي بالاعشاب - الطب البديل -
-			 خضر وفواكه - وصفات طبيعية - مؤشر الكتلة الجسدية - نمط جسدي" />
-		<meta name="description"
-			content="Base de données de naturopathie - prescriptions naturelles - 
-			types de miel - nutrition saine - plantes nutritionnelle - 
-			plantes medicinales - medecine alternative" />
-		<meta name="author"
-			content="Hanine HAMZIOUI AL MADANI حنين حمزوي المدني" />
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view id="honeybee_view" contentType="text/html"
+            locale="#{localeBean.locale}" encoding="utf-8">
+        <h:head>
+            <title>#{empty pageTitle ? '{#pageTitle}' : pageTitle}</title>
+            <link rel="icon" href="#{resource['gfx/favicon.ico']}" />
+            <h:outputScript name="js/js.js" />
+            <h:outputStylesheet name="css/primefaces-flick/theme.css" />
+            <h:outputStylesheet name="css/bootstrap.css" />
+            <h:outputStylesheet name="css/primefaces.css" />
+            <h:outputStylesheet name="css/forge-style.css" />
+            <link rel="shortcut icon" type="image/x-icon"
+                  href="#{request.contextPath}/resources/gfx/favicon.ico" />
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <meta lang="fr" name="keywords"
+                  content="naturopathy - naturopathie - naturotherapy - 
+                  types of honey - natural prescriptions
+                  - Body masse index - somatotype - Index de masse corporelle - 
+                  types de miels - fruits et légumes - honeybeez - honeybeem - 
+                  honeybeep - honeybeet - honeybees - honeybeee - honeybeed - Mohammed Al faid - 
+                  Jamal Skali" />
+            <meta lang="en" name="keywords"
+                  content="naturopathy - naturotherapy - types of honey - 
+                  natural prescriptions
+                  - Body mass index - somatotype - honeybeez - honeybeem - honeybeep - 
+                  honeybeet - honeybees - honeybeed" />
+            <meta lang="ar" name="keywords"
+                  content="العلاج الطبيعي بالاعشاب -
+                  محمد الفايد - جمال الصقلي - ابن قيم الجوزية -
+                  الطب النبوي -  التداوي بالاعشاب - الطب البديل -
+                  خضر وفواكه - وصفات طبيعية - مؤشر الكتلة الجسدية - نمط جسدي" />
+            <meta name="description"
+                  content="Base de données de naturopathie - prescriptions naturelles - 
+                  types de miel - nutrition saine - plantes nutritionnelle - 
+                  plantes medicinales - medecine alternative" />
+            <meta name="author"
+                  content="Hanine HAMZIOUI AL MADANI حنين حمزوي المدني" />
 
-		<script type="text/javascript">
-            function colorify() {
-                var topitems = document.getElementById('top_div').getElementsByTagName('a');
-                var viewid = "#{utilityBean.viewName}";
-                /*this requires the bean to be request scoped*/
-                if (viewid !== '/index.xhtml') {
-                    document.getElementById(viewid.split('/')[1]).className = 'active-menuitem';
+            <script type="text/javascript">
+                function colorify() {
+                    var topitems = document.getElementById('top_div').getElementsByTagName('a');
+                    var viewid = "#{utilityBean.viewName}";
+                    /*this requires the bean to be request scoped*/
+                    if (viewid !== '/index.xhtml') {
+                        document.getElementById(viewid.split('/')[1]).className = 'active-menuitem';
+                    }
+                    if (viewid === '/misc/aboutus.xhtml') {
+                        topitems[1].className = 'active-topmenuitem';
+                        document.getElementById('aboutus_top').className = 'active-topmenuitem';
+                    }
                 }
-                if (viewid === '/misc/aboutus.xhtml') {
-                    topitems[1].className = 'active-topmenuitem';
-                    document.getElementById('aboutus_top').className = 'active-topmenuitem';
-                }
-            }
 
-            function originalView(){
-			/**/ 
+                function originalView() {
+                    /**/
                 }
             </script>
-	</h:head>
+        </h:head>
 
-	<h:body onload="colorify();"
-		dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}">
-		<p:outputPanel styleClass="feedback" autoUpdate="true">
-			<a href="mailto:contact.opentika@gmail.com"> <h:outputText
-					title="#{i18n.feedback}" value="?" id="txt_feedback" />
-			</a>
-		</p:outputPanel>
+        <h:body onload="colorify();"
+                dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}">
+            <p:outputPanel styleClass="feedback" autoUpdate="true">
+                <a href="mailto:contact.opentika@gmail.com"> <h:outputText
+                        title="#{i18n.feedback}" value="?" id="txt_feedback" />
+                </a>
+            </p:outputPanel>
 
-		<p:ajaxStatus id="ajaxStatusPanel_reg" styleClass="status">
-			<f:facet name="start">
-				<div class="statusdiv">
-					<h:outputText value="#{i18n.loading}" />
-					<p:separator style="margin:2px;" />
-					<h:graphicImage value="#{resource['gif.gif']}"
-						alt="honeybee_img_loading" />
-				</div>
-			</f:facet>
-			<f:facet name="complete">
-				<h:outputText value="" style="background-color:transparent;" />
-			</f:facet>
-		</p:ajaxStatus>
-		<p:growl autoUpdate="true" life="5000" id="growl_general"
-			showDetail="false" />
-		<ui:param name="html-direction"
-			value="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
-		<ui:param name="htmlDirection"
-			value="#{utilityBean.htmlDirection == 'rtl' ? 'right' : 'left'}" />
-		<ui:param name="isAdministrator"
-			value="#{request.isUserInRole('ADMINISTRATOR')}" />
-		<ui:param name="isGuest" value="#{request.isUserInRole('GUEST')}" />
-		<ui:param name="isRegistered"
-			value="#{request.isUserInRole('REGISTERED')}" />
-		<ui:param name="isAuthor" value="#{request.isUserInRole('AUTHOR')}" />
-		<ui:param name="isArabic" value="#{localeBean.language eq 'ar'}" />
-		<ui:param name="isFrench" value="#{localeBean.language eq 'fr'}" />
-		<ui:param name="isEnglish" value="#{localeBean.language eq 'en'}" />
+            <p:ajaxStatus id="ajaxStatusPanel_reg" styleClass="status">
+                <f:facet name="start">
+                    <div class="statusdiv">
+                        <h:outputText value="#{i18n.loading}" />
+                        <p:separator style="margin:2px;" />
+                        <h:graphicImage value="#{resource['gfx/gif.gif']}"
+                                        alt="honeybee_img_loading" />
+                    </div>
+                </f:facet>
+                <f:facet name="complete">
+                    <h:outputText value="" style="background-color:transparent;" />
+                </f:facet>
+            </p:ajaxStatus>
+            <p:growl autoUpdate="true" life="5000" id="growl_general"
+                     showDetail="false" />
+            <ui:param name="html-direction"
+                      value="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
+            <ui:param name="htmlDirection"
+                      value="#{utilityBean.htmlDirection == 'rtl' ? 'right' : 'left'}" />
+            <ui:param name="isAdministrator"
+                      value="#{request.isUserInRole('ADMINISTRATOR')}" />
+            <ui:param name="isGuest" value="#{request.isUserInRole('GUEST')}" />
+            <ui:param name="isRegistered"
+                      value="#{request.isUserInRole('REGISTERED')}" />
+            <ui:param name="isAuthor" value="#{request.isUserInRole('AUTHOR')}" />
+            <ui:param name="isArabic" value="#{localeBean.language eq 'ar'}" />
+            <ui:param name="isFrench" value="#{localeBean.language eq 'fr'}" />
+            <ui:param name="isEnglish" value="#{localeBean.language eq 'en'}" />
 
-		<div class="navbar navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="container">
-					<div id="div_brand">
-						<h:link id="brandLink" outcome="/index.xhtml" styleClass="brand"
-							style="min-width: 185px;text-align: center;">
-							<h:outputText value="#{i18n.honeybee}" />
-							<p:effect rendered="#{utilityBean.viewName.contains('index')}"
-								type="fold" event="load" delay="500">
-								<f:param name="mode" value="'show'" />
-							</p:effect>
-						</h:link>
-					</div>
-					<div style="float: right;" class="nav-collapse collapse">
-						<h:panelGrid columns="2" dir="ltr" id="user-panel-grid">
-							<h:panelGroup styleClass="user-panel">
-								<h:link id="userlink" outcome="/login.xhtml">
-									<h:panelGroup rendered="#{not empty request.remoteUser}">
-										<ul class="nav">
-											<li><h:outputText
-													rendered="#{not empty request.remoteUser}"
-													value="#{i18n.hi} #{userManagerBean.userObject.surname}!"
-													dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}"
-													style="color: #8FAC0D;" />
-												<ul>
-													<li style="max-height: 20px;"><h:form
-															id="form_logout_up">
-															<h:commandLink value="#{i18n.logout}" id="but_logout_up"
-																action="#{authenticationBean.logout}" />
-														</h:form></li>
-													<li><h:link outcome="/enduser/view"
-															value="#{i18n.user_profile}" includeViewParams="true">
-															<f:param name="id"
-																value="#{userManagerBean.userObject.id}" />
-														</h:link></li>
-												</ul></li>
-										</ul>
-									</h:panelGroup>
-								</h:link>
-								<p:outputPanel rendered="#{empty request.remoteUser}">
-									<ul class="nav">
-										<li><h:outputLink id="userconnect"
-												rendered="#{empty request.remoteUser}"
-												value="#{request.contextPath}/signin.xhtml">
-												<h:outputText rendered="#{empty request.remoteUser}"
-													value="#{i18n.login}!"
-													dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
-											</h:outputLink>
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <div id="div_brand">
+                            <h:link id="brandLink" outcome="/index.xhtml" styleClass="brand"
+                                    style="min-width: 185px;text-align: center;">
+                                <h:outputText value="#{i18n.honeybee}" />
+                                <p:effect rendered="#{utilityBean.ViewNamecontains('index')}"
+                                          type="fold" event="load" delay="500">
+                                    <f:param name="mode" value="'show'" />
+                                </p:effect>
+                            </h:link>
+                        </div>
+                        <div style="float: right;" class="nav-collapse collapse">
+                            <h:panelGrid columns="2" dir="ltr" id="user-panel-grid">
+                                <h:panelGroup styleClass="user-panel">
+                                    <h:link id="userlink" outcome="/login.xhtml">
+                                        <h:panelGroup rendered="#{not empty request.remoteUser}">
+                                            <ul class="nav">
+                                                <li><h:outputText
+                                                        rendered="#{not empty request.remoteUser}"
+                                                        value="#{i18n.hi} #{userManagerBean.userObject.surname}!"
+                                                        dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}"
+                                                        style="color: #8FAC0D;" />
+                                                    <ul>
+                                                        <li style="max-height: 20px;"><h:form
+                                                                id="form_logout_up">
+                                                                <h:commandLink value="#{i18n.logout}" id="but_logout_up"
+                                                                               action="#{authenticationBean.logout}" />
+                                                            </h:form></li>
+                                                        <li><h:link outcome="/enduser/view"
+                                                                    value="#{i18n.user_profile}" includeViewParams="true">
+                                                                <f:param name="id"
+                                                                         value="#{userManagerBean.userObject.id}" />
+                                                            </h:link></li>
+                                                    </ul></li>
+                                            </ul>
+                                        </h:panelGroup>
+                                    </h:link>
+                                    <p:outputPanel rendered="#{empty request.remoteUser}">
+                                        <ul class="nav">
+                                            <li><h:outputLink id="userconnect"
+                                                              rendered="#{empty request.remoteUser}"
+                                                              value="#{request.contextPath}/signin.xhtml">
+                                                    <h:outputText rendered="#{empty request.remoteUser}"
+                                                                  value="#{i18n.login}!"
+                                                                  dir="#{localeBean.locale.language != 'ar' ? 'ltr' : 'rtl'}" />
+                                                </h:outputLink>
 
-											<ul>
-												<li><h:link value="Facebook" outcome="/social/social"
-														disabled="false" includeViewParams="true" /></li>
-												<li><h:link value="Google" outcome="/social/social"
-														disabled="true" /></li>
-												<li><h:link value="Twitter" outcome="/social/social"
-														disabled="true" /></li>
-											</ul></li>
+                                                <ul>
+                                                    <li><h:link value="Facebook" outcome="/social/social"
+                                                                disabled="false" includeViewParams="true" /></li>
+                                                    <li><h:link value="Google" outcome="/social/social"
+                                                                disabled="true" /></li>
+                                                    <li><h:link value="Twitter" outcome="/social/social"
+                                                                disabled="true" /></li>
+                                                </ul></li>
 
-									</ul>
-								</p:outputPanel>
-							</h:panelGroup>
+                                        </ul>
+                                    </p:outputPanel>
+                                </h:panelGroup>
 
-							<h:form id="form_locale" style="height:20px;"
-								styleClass="onemenu">
-								<p:selectOneMenu id="localemenu"
-									value="#{localeBean.selectedLang}"
-									style="width:120px;margin-right:1px;top:3px;"
-									onchange="document.getElementById('form_locale').submit();"
-									var="lang" converter="#{languageBean.converter}">
-									<f:selectItem itemDisabled="true" noSelectionOption="true"
-										itemLabel="#{localeBean.selectedLang.label}"
-										itemValue="#{localeBean.selectedLang}" id="item_loc_dummy" />
-									<f:selectItems value="#{languageBean.all}" var="lg"
-										itemLabel="#{localeBean.selectedLanguageLabel}"
-										itemValue="#{lg}" id="item_loc_sl" />
-									<p:column>
-										<p:graphicImage id="img_loc_#{lang.code}"
-											value="#{request.contextPath}/javax.faces.resource/gfx/#{lang.code}.png.jsf"
-											width="25" height="20" />
-									</p:column>
-									<p:column>
-										<h:outputText value="#{lang.label}" />
-									</p:column>
-								</p:selectOneMenu>
-							</h:form>
-						</h:panelGrid>
-					</div>
-					<div class="nav-collapse collapse" id="top_div">
-						<ul class="nav">
-							<li><h:link id="naturopathyy" outcome="/misc/naturopathy"
-									value="#{i18n.naturopathy}" />
-								<ul>
-									<li><h:link id="nutrition" outcome="/misc/nutrition"
-											value="#{i18n.nutrition}" /></li>
-									<li><h:link id="cupping" outcome="/misc/cupping"
-											value="#{i18n.cupping}" /></li>
-									<li><h:link id="glossary" outcome="/misc/glossary"
-											value="#{i18n.glossary}" /></li>
-								</ul></li>
-							<li><h:link id="help_top" outcome="/help/search"
-									value="#{i18n.help}" /></li>
-							<li id="li_app"><h:link id="app_top" outcome="/misc/aboutus"
-									value="#{i18n.application}" />
-								<ul>
-									<li><h:link id="todo_top" outcome="/misc/todo"
-											value="#{i18n.todo}" /></li>
-									<li><h:link id="links_top" outcome="/misc/links"
-											value="#{i18n.links}" /></li>
-									<li><h:link id="aboutus_top" outcome="/misc/aboutus"
-											value="#{i18n.aboutus}" /></li>
-									<li><a id="mobile_top"
-										href="#{request.contextPath}/mobile/mobile"><h:outputText
-												value="#{i18n.mobile}" /></a></li>
-									<li><a id="rest_top"
-										href="#{request.contextPath}/rest/resources" > <h:outputText
-											value="#{i18n.webservice}" /></a></li>
-									<li><a id="source_code_app" target="_blank"
-										href="https://github.com/hanynowsky/honeybee"> <h:outputText
-												value="#{i18n.source_code}" /></a></li>
-								</ul></li>
-							<li><h:link id="blog" outcome="/misc/blog"
-									value="#{i18n.blog}" /></li>
-							<li><h:link id="search_menu" outcome="/misc/search"
-									value="#{i18n.search}" />
-								<ul>
-									<li style="max-height: 40px;"><h:form>
-											<h:commandLink action="#{searchBean.searchIngredientItems}"
-												id="commandlink_search_top">
-												<h:graphicImage value="#{resource['search.png']}"
-													style="margin:5px;" />
-											</h:commandLink>
-											<h:inputText value="#{searchBean.keyword}"
-												style="font-family:Kufi,Roboto,arial,sans-serif;" />
-											<p:defaultCommand target="commandlink_search_top" />
-										</h:form></li>
-								</ul></li>
-							<li><h:link id="contact_menu" outcome="/application/contact">
-									<h:outputText value="#{i18n.contact}" />
-								</h:link></li>
-						</ul>
-					</div>
-				</div>
-			</div>
+                                <h:form id="form_locale" style="height:20px;"
+                                        styleClass="onemenu">
+                                    <p:selectOneMenu id="localemenu"
+                                                     value="#{localeBean.selectedLang}"
+                                                     style="width:120px;margin-right:1px;top:3px;"
+                                                     onchange="document.getElementById('form_locale').submit();"
+                                                     var="lang" converter="#{languageBean.converter}">
+                                        <f:selectItem itemDisabled="true" noSelectionOption="true"
+                                                      itemLabel="#{localeBean.selectedLang.label}"
+                                                      itemValue="#{localeBean.selectedLang}" id="item_loc_dummy" />
+                                        <f:selectItems value="#{languageBean.all}" var="lg"
+                                                       itemLabel="#{localeBean.selectedLanguageLabel}"
+                                                       itemValue="#{lg}" id="item_loc_sl" />
+                                        <p:column>
+                                            <p:graphicImage id="img_loc_#{lang.code}"
+                                                            value="#{request.contextPath}/javax.faces.resource/gfx/#{lang.code}.png.jsf"
+                                                            width="25" height="20" />
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="#{lang.label}" />
+                                        </p:column>
+                                    </p:selectOneMenu>
+                                </h:form>
+                            </h:panelGrid>
+                        </div>
+                        <div class="nav-collapse collapse" id="top_div">
+                            <ul class="nav">
+                                <li><h:link id="naturopathyy" outcome="/misc/naturopathy"
+                                            value="#{i18n.naturopathy}" />
+                                    <ul>
+                                        <li><h:link id="nutrition" outcome="/misc/nutrition"
+                                                    value="#{i18n.nutrition}" /></li>
+                                        <li><h:link id="cupping" outcome="/misc/cupping"
+                                                    value="#{i18n.cupping}" /></li>
+                                        <li><h:link id="allopathy" outcome="/misc/allopathy"
+                                                    value="#{i18n.allopathy}" /></li>
+                                        <li><h:link id="homeopathy" outcome="/misc/homeopathy"
+                                                    value="#{i18n.homeopathy}" /></li>
+                                        <li><h:link id="spicapuncture" outcome="/misc/spicapuncture"
+                                                    value="#{i18n.spicapuncture}" /></li>
+                                        <li><h:link id="glossary" outcome="/misc/glossary"
+                                                    value="#{i18n.glossary}" /></li>
+                                    </ul></li>
+                                <li><h:link id="help_top" outcome="/help/search"
+                                            value="#{i18n.help}" /></li>
+                                <li id="li_app"><h:link id="app_top" outcome="/misc/aboutus"
+                                                        value="#{i18n.application}" />
+                                    <ul>
+                                        <li><h:link id="todo_top" outcome="/misc/todo"
+                                                    value="#{i18n.todo}" /></li>
+                                        <li><h:link id="links_top" outcome="/misc/links"
+                                                    value="#{i18n.links}" /></li>
+                                        <li><h:link id="aboutus_top" outcome="/misc/aboutus"
+                                                    value="#{i18n.aboutus}" /></li>
+                                        <li><a id="mobile_top"
+                                               href="#{request.contextPath}/mobile/mobile"><h:outputText
+                                                    value="#{i18n.mobile}" /></a></li>
+                                        <li><a id="rest_top"
+                                               href="#{request.contextPath}/rest/resources" > <h:outputText
+                                                    value="#{i18n.webservice}" /></a></li>
+                                        <li><a id="source_code_app" target="_blank"
+                                               href="https://github.com/hanynowsky/honeybee"> <h:outputText
+                                                    value="#{i18n.source_code}" /></a></li>
+                                    </ul></li>
+                                <li><h:link id="blog" outcome="/misc/blog"
+                                            value="#{i18n.blog}" /></li>
+                                <li><h:link id="search_menu" outcome="/misc/search"
+                                            value="#{i18n.search}" />
+                                    <ul>
+                                        <li style="max-height: 40px;"><h:form>
+                                                <h:commandLink action="#{searchBean.searchIngredientItems}"
+                                                               id="commandlink_search_top">
+                                                    <h:graphicImage value="#{resource['gfx/search.png']}"
+                                                                    style="margin:5px;" />
+                                                </h:commandLink>
+                                                <h:inputText value="#{searchBean.keyword}"
+                                                             style="font-family:Kufi,Roboto,arial,sans-serif;" />
+                                                <p:defaultCommand target="commandlink_search_top" />
+                                            </h:form></li>
+                                    </ul></li>
+                                <li><h:link id="contact_menu" outcome="/application/contact">
+                                        <h:outputText value="#{i18n.contact}" />
+                                    </h:link></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-		</div>
+            </div>
 
-		<div class="container forgecontainer">
-			<div id="navigation">
-				<h:panelGroup id="top_nav_logo">
-					<div class="toplogo">
-						<h:link outcome="/index" id="link_top_nav_logo">
-							<h:graphicImage value="#{resource['gfx/library.png']}"
-								width="140px" id="img_library" alt="img_library_honeybee" />
-						</h:link>
-					</div>
-				</h:panelGroup>
-				<h:panelGroup rendered="#{isAdministrator == true}">
-					<ul>
-						<li><h:link id="dashboard" outcome="/admin/dashboard"
-								value="#{i18n.dashboard}" /></li>
-					</ul>
-				</h:panelGroup>
-				<h:panelGroup>
-					<ul>
-						<li><h:link id="prescription" outcome="/prescription/search"
-								value="#{i18n.prescriptions}" /></li>
-						<li><h:link id="author" outcome="/author/search"
-								value="#{i18n.authors}" /></li>
-						<li><h:link id="witness" outcome="/witness/search"
-								value="#{i18n.witnesses}" /></li>
-					</ul>
-				</h:panelGroup>
-				<h:panelGroup>
-					<ul>
-						<li><h:link id="virtue" outcome="/virtue/search"
-								value="#{i18n.virtues}" /></li>
-						<li><h:link id="defect" outcome="/defect/search"
-								value="#{i18n.defects}" /></li>
-						<li><h:link id="bodypart" outcome="/bodypart/search"
-								value="#{i18n.bodyparts}" /></li>
-					</ul>
-				</h:panelGroup>
-				<h:panelGroup>
-					<ul>
-						<li><h:link id="ingredient" outcome="/ingredient/search"
-								value="#{i18n.ingredients}" /></li>
-						<li><h:link id="complement" outcome="/complement/search"
-								value="#{i18n.complements}" /></li>
-						<li><h:link id="honey" outcome="/honey/search"
-								value="#{i18n.honey}" /></li>
-						<li><h:link id="plant" outcome="/plant/search"
-								value="#{i18n.plants}" /></li>
-						<li><h:link id="substance" outcome="/substance/search"
-								value="#{i18n.substances}" /></li>
-					</ul>
-				</h:panelGroup>
-				<h:panelGroup>
-					<ul>
-						<li><h:link id="store" outcome="/store/search"
-								value="#{i18n.stores}" /></li>
-					</ul>
-				</h:panelGroup>
-				<h:panelGroup>
-					<ul>
-						<li><h:link id="bmi" outcome="/bmi/bmi" value="#{i18n.bmi}" />
-						</li>
-					</ul>
-				</h:panelGroup>
-			</div>
+            <div class="container forgecontainer">
+                <div id="navigation">
+                    <h:panelGroup id="top_nav_logo">
+                        <div class="toplogo">
+                            <h:link outcome="/index" id="link_top_nav_logo">
+                                <h:graphicImage value="#{resource['gfx/library.png']}"
+                                                width="140px" id="img_library" alt="img_library_honeybee" />
+                            </h:link>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{isAdministrator == true}">
+                        <ul>
+                            <li><h:link id="dashboard" outcome="/admin/dashboard"
+                                        value="#{i18n.dashboard}" /></li>
+                        </ul>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <ul>
+                            <li><h:link id="prescription" outcome="/prescription/search"
+                                        value="#{i18n.prescriptions}" /></li>
+                            <li><h:link id="author" outcome="/author/search"
+                                        value="#{i18n.authors}" /></li>
+                            <li><h:link id="witness" outcome="/witness/search"
+                                        value="#{i18n.witnesses}" /></li>
+                        </ul>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <ul>
+                            <li><h:link id="virtue" outcome="/virtue/search"
+                                        value="#{i18n.virtues}" /></li>
+                            <li><h:link id="defect" outcome="/defect/search"
+                                        value="#{i18n.defects}" /></li>
+                            <li><h:link id="bodypart" outcome="/bodypart/search"
+                                        value="#{i18n.bodyparts}" /></li>
+                        </ul>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <ul>
+                            <li><h:link id="ingredient" outcome="/ingredient/search"
+                                        value="#{i18n.ingredients}" /></li>
+                            <li><h:link id="complement" outcome="/complement/search"
+                                        value="#{i18n.complements}" /></li>
+                            <li><h:link id="honey" outcome="/honey/search"
+                                        value="#{i18n.honey}" /></li>
+                            <li><h:link id="plant" outcome="/plant/search"
+                                        value="#{i18n.plants}" /></li>
+                            <li><h:link id="substance" outcome="/substance/search"
+                                        value="#{i18n.substances}" /></li>
+                        </ul>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <ul>
+                            <li><h:link id="store" outcome="/store/search"
+                                        value="#{i18n.stores}" /></li>
+                        </ul>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <ul>
+                            <li><h:link id="bmi" outcome="/bmi/bmi" value="#{i18n.bmi}" />
+                            </li>
+                        </ul>
+                    </h:panelGroup>
+                </div>
 
-			<div id="content">
-				<h1>
-					<ui:insert name="header" />
-				</h1>
-				<h2>
-					<ui:insert name="subheader" />
-				</h2>
-				<h:form styleClass="globalmsg">
-					<p:messages globalOnly="true" id="messages_global"
-						showDetail="false">
-						<p:effect type="pulsate" event="load" delay="500">
-							<f:param name="mode" value="'show'" />
-						</p:effect>
-					</p:messages>
+                <div id="content">
+                    <h1>
+                        <ui:insert name="header" />
+                    </h1>
+                    <h2>
+                        <ui:insert name="subheader" />
+                    </h2>
+                    <h:form styleClass="globalmsg">
+                        <p:messages globalOnly="true" id="messages_global"
+                                    showDetail="false">
+                            <p:effect type="pulsate" event="load" delay="500">
+                                <f:param name="mode" value="'show'" />
+                            </p:effect>
+                        </p:messages>
 
-					<p:idleMonitor onidle="idleDialog.show();" id="idleMonitor"
-						timeout="1740000">
-						<p:ajax event="idle"
-							listener="#{utilityBean.showMessage('info','IDLE','-')}"
-							update="messages_global" />
-					</p:idleMonitor>
-					<p:dialog header="HoneyBee" widgetVar="idleDialog" modal="true"
-						closable="#{empty request.remoteUser}" id="dialog_idle">
-						<h:panelGrid columns="1" style="text-align:center;">
-							<h:outputText value="Expired Session!" />
-							<p:separator style="height:1px;" />
-							<h:link id="link_idle_home" value="#{i18n.home}"
-								styleClass="btn btn-primary" outcome="/index"
-								rendered="#{empty request.remoteUser}" />
-							<p:separator style="height:1px;" />
-							<p:commandButton id="button_idle" value="#{i18n.logout}"
-								action="/index" ajax="false"
-								rendered="#{not empty request.remoteUser}" />
-							<h:link id="link_idle_back" value="#{i18n.home}"
-								styleClass="btn btn-primary" outcome="/index"
-								rendered="#{not empty request.remoteUser}" />
-						</h:panelGrid>
-					</p:dialog>
-				</h:form>
+                        <p:idleMonitor onidle="idleDialog.show();" id="idleMonitor"
+                                       timeout="1740000">
+                            <p:ajax event="idle"
+                                    listener="#{utilityBean.showMessage('info','IDLE','-')}"
+                                    update="messages_global" />
+                        </p:idleMonitor>
+                        <p:dialog header="HoneyBee" widgetVar="idleDialog" modal="true"
+                                  closable="#{empty request.remoteUser}" id="dialog_idle">
+                            <h:panelGrid columns="1" style="text-align:center;">
+                                <h:outputText value="Expired Session!" />
+                                <p:separator style="height:1px;" />
+                                <h:link id="link_idle_home" value="#{i18n.home}"
+                                        styleClass="btn btn-primary" outcome="/index"
+                                        rendered="#{empty request.remoteUser}" />
+                                <p:separator style="height:1px;" />
+                                <p:commandButton id="button_idle" value="#{i18n.logout}"
+                                                 action="/index" ajax="false"
+                                                 rendered="#{not empty request.remoteUser}" />
+                                <h:link id="link_idle_back" value="#{i18n.home}"
+                                        styleClass="btn btn-primary" outcome="/index"
+                                        rendered="#{not empty request.remoteUser}" />
+                            </h:panelGrid>
+                        </p:dialog>
+                    </h:form>
 
-				<ui:insert name="main" />
-			</div>
-		</div>
+                    <ui:insert name="main" />
+                </div>
+            </div>
 
-		<footer>
-			<div id="footer-wrapper">
-				<h:outputText value="#{i18n.powered_by}" />
-				<a href="http://opentika-otika.rhcloud.com"> <h:outputText
-						value="OpenTika" />
-				</a>
-				<h:outputText value=" | @2013 - #{i18n.casablanca}" />
-			</div>
-			<div class="subfooter">
-				<h:outputText value="@ #{i18n.honeybee}" />
-				<a style="padding: 2px;"
-					href="http://www.facebook.com/09089309480930442"
-					title="HoneyBee Facebook" target="_blank"> <img
-					src="#{resource['gfx/facebook-gray.png']}" alt="opentika_img" />
-				</a> <a
-					href="https://plus.google.com/u/0/b/115493201542087203824/115493201542087203824"
-					title="HoneyBee Google+" target="_blank"> <img
-					src="#{resource['gfx/googleplus-gray.png']}" alt="opentika_img" />
-				</a> <a style="padding: 2px;" href="http://www.twitter.com/opentika2014"
-					title="OpenTika Twitter" target="_blank"> <img
-					src="#{resource['gfx/twitter-gray.png']}" alt="opentika_img" />
-				</a> <a style="padding: 2px;" href="http://www.youtube.com/opentika"
-					title="HoneyBee Youtube" target="_blank"> <img
-					src="#{resource['gfx/youtube-gray.png']}" alt="opentika_img" />
-				</a>
-			</div>
-		</footer>
-	</h:body>
-</f:view>
+            <footer>
+                <div id="footer-wrapper">
+                    <h:outputText value="#{i18n.powered_by}" />
+                    <a href="http://opentika-otika.rhcloud.com"> <h:outputText
+                            value="OpenTika" />
+                    </a>
+                    <h:outputText value=" | @2013 - #{i18n.casablanca}" />
+                </div>
+                <div class="subfooter">
+                    <h:outputText value="@ #{i18n.honeybee}" />
+                    <a style="padding: 2px;"
+                       href="http://www.facebook.com/09089309480930442"
+                       title="HoneyBee Facebook" target="_blank"> <img
+                            src="#{resource['gfx/facebook-gray.png']}" alt="opentika_img" />
+                    </a> <a
+                        href="https://plus.google.com/u/0/b/115493201542087203824/115493201542087203824"
+                        title="HoneyBee Google+" target="_blank"> <img
+                            src="#{resource['gfx/googleplus-gray.png']}" alt="opentika_img" />
+                    </a> <a style="padding: 2px;" href="http://www.twitter.com/opentika2014"
+                            title="OpenTika Twitter" target="_blank"> <img
+                            src="#{resource['gfx/twitter-gray.png']}" alt="opentika_img" />
+                    </a> <a style="padding: 2px;" href="http://www.youtube.com/opentika"
+                            title="HoneyBee Youtube" target="_blank"> <img
+                            src="#{resource['gfx/youtube-gray.png']}" alt="opentika_img" />
+                    </a>
+                </div>
+            </footer>
+        </h:body>
+    </f:view>
 </html>
