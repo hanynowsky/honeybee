@@ -5,6 +5,7 @@
 # could be python, php, ruby, etc.
 
 echo " Setting UTF8 for MYSQLD";
-sed -i '/mysqld]/ a\collation-server=utf8_general_ci' ~/mysql/conf/my.cnf
-sed -i '/mysqld]/ a\character-set-server=utf8' ~/mysql/conf/my.cnf
+pathtofile="/var/lib/openshift/51b8b47c4382ec3cf90002c3/mysql/conf/my.cnf"
+sed -i '/mysqld]/ a\collation-server=utf8_general_ci' $pathtofile
+sed -i '/mysqld]/ a\character-set-server=utf8' $pathtofile
 exit 0;

@@ -10,7 +10,7 @@
             </goals>
         </action>
         <action>
-            <actionName>CUSTOM-Clean and Build package and Deploy</actionName>
+            <actionName>CUSTOM-Clean and Build Package and Deploy</actionName>
             <displayName>Clean and Build package and Deploy</displayName>
             <goals>
                 <goal>clean</goal>
