@@ -17,5 +17,5 @@ sed -i '/mysqld]/ a\collation-server=utf8_general_ci' $pathtofile
 sed -i '/mysqld]/ a\character-set-server=utf8' $pathtofile
 
 echo "Well as the mysql folder is protected, the sed command would probably fail"
-/usr/bin/mysql -h $OPENSHIFT_MYSQL_DB_HOST -u $OPENSHIFT_MYSQL_DB_USERNAME --password=$OPENSHIFT_MYSQL_DB_PASSWORD -P $OPENSHIFT_MYSQL_DB_PORT -e 'SET GLOBAL character_set_server=utf8, collation_server=utf8_general_ci;'
+/usr/bin/mysql -h $OPENSHIFT_MYSQL_DB_HOST -u $OPENSHIFT_MYSQL_DB_USERNAME --password=$OPENSHIFT_MYSQL_DB_PASSWORD -P $OPENSHIFT_MYSQL_DB_PORT -e 'SET GLOBAL character_set_server=utf8, collation_server=utf8_general_ci, character_set_connection=utf8, character_set_database=utf8, character_set_client=utf8, character_set_results=utf8;'
 exit 0;

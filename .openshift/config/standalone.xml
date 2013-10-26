@@ -94,7 +94,7 @@
                     </security>
                 </datasource>
                 <datasource jndi-name="java:jboss/datasources/MysqlDS" pool-name="MysqlDS" use-java-context="true" use-ccm="true">
-                    <connection-url>jdbc:mysql://127.7.193.130:3306/honeybee</connection-url>
+                    <connection-url>jdbc:mysql://127.7.193.130:3306/honeybee?useUnicode=true&characterEncoding=UTF-8</connection-url>
                     <driver>mysql</driver>
                     <pool>
                         <flush-strategy>IdleConnections</flush-strategy>
