@@ -329,7 +329,7 @@
             </mail-session>
              <mail-session jndi-name="java:jboss/mail/otikamail">
                 <smtp-server ssl="true" outbound-socket-binding-ref="mailsmtp">
-                    <login name="opentika.contact@gmail.com" password="BK206789"/>
+                    <login name="opentika.contact@gmail.com" password="mygmailpassword"/>
                 </smtp-server>
             </mail-session>
         </subsystem>
