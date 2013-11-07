@@ -16,6 +16,7 @@ This application allows a user to :
 - browse resources on biological nutrition
 - Compute somatotype, body fat and body mass index (BMI).
 - Contribute by adding content (registered and validated users only)
+- Others
 The user have many ways to reach the information he/she needs.
 
 Email Contact
