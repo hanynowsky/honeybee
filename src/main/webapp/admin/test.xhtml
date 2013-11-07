@@ -50,5 +50,9 @@
 				 #{cookie}
 				 </p:panelGrid>
 		</h:form>
+		<hr />
+		<h:form>
+			<h:commandButton  value="Send Test Email" action="#{mailServerBean.sendEmail}" />
+		</h:form>
 	</ui:define>
 </ui:composition>

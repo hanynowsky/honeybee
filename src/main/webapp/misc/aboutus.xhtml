@@ -1,118 +1,127 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/resources/scaffold/pageTemplate.xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/scaffold/pageTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
 
-	<ui:param name="pageTitle" value="#{i18n.about_app}" />
+    <ui:param name="pageTitle" value="#{i18n.about_app}" />
 
-	<ui:define name="header">
-		<h:outputText value="#{i18n.about_app}" />
-	</ui:define>
-	<ui:define name="subheader">
-		<h:outputText value="#{i18n.aboutus}" />
-	</ui:define>
+    <ui:define name="header">
+        <h:outputText value="#{i18n.about_app}" />
+    </ui:define>
+    <ui:define name="subheader">
+        <h:outputText value="#{i18n.aboutus}" />
+    </ui:define>
 
-	<ui:define name="main">
-		<style type="text/css">
-#img_home {
-	border: 1px solid rgba(0, 0, 0, 0.1);
-	height: 70px;
-	border-radius: 5px;
-	text-align: center;
-	margin: 5px;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px
-		rgba(254, 254, 254, 0.6);
-}
+    <ui:define name="main">
+        <style type="text/css">
+            #img_home {
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                height: 70px;
+                border-radius: 5px;
+                text-align: center;
+                margin: 5px;
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px
+                    rgba(254, 254, 254, 0.6);
+            }
 
-.div_aboutus {
-	background: rgba(0, 0, 0, 0.1);
-	width: auto;
-	min-height: 20px;
-	height: auto;
-	padding: 15px 5px 15px 5px;
-	color: white;
-	font-family: Kufi, Roboto, Nunito, sans-serif, arial;
-	font-size: 10pt;
-	font-weight: 500;
-	line-height: 20px;
-	margin: 5px 0 5px 0;
-}
-</style>
-		<h:form>
-			<p:remoteCommand autoRun="true"
-				actionListener="#{utilityBean.showMessage('INFO','About HoneyBee','HoneyBee')}"
-				name="aboutus" />
-		</h:form>
-		<div>
-			<p:panel rendered="#{localeBean.language == 'ar'}">
-				<h2>
-					<h:outputText value="باقة من الأمل لمن يرجو الشفاء في العسل" />
-				</h2>
-			</p:panel>
-			<div id="div_aboutus" class="chromediv">
-				<img align="left" id="img_home" src="#{resource['gfx/beequeen.jpg']}"
-					alt="HoneyBee" />
-				<p>
-					<h:outputText value="#{i18n.aboutus_content}"
-						style="text-align:justify;" />
-				</p>
-			</div>
+            .div_aboutus {
+                background: rgba(0, 0, 0, 0.1);
+                width: auto;
+                min-height: 20px;
+                height: auto;
+                padding: 15px 5px 15px 5px;
+                color: white;
+                font-family: Kufi, Roboto, Nunito, sans-serif, arial;
+                font-size: 10pt;
+                font-weight: 500;
+                line-height: 20px;
+                margin: 5px 0 5px 0;
+            }
+        </style>
+        <h:form>
+            <p:remoteCommand autoRun="true"
+                             actionListener="#{utilityBean.showMessage('INFO','About HoneyBee','HoneyBee')}"
+                             name="aboutus" />
+        </h:form>
+        <div>
+            <p:panel rendered="#{localeBean.language == 'ar'}">
+                <h2>
+                    <h:outputText value="باقة من الأمل لمن يرجو الشفاء في العسل" />
+                </h2>
+            </p:panel>
+            <div id="div_aboutus" class="chromediv">
+                <img align="left" id="img_home" src="#{resource['gfx/beequeen.jpg']}"
+                     alt="HoneyBee" />
+                <p>
+                    <h:outputText value="#{i18n.aboutus_content}"
+                                  style="text-align:justify;" />
+                </p>
+            </div>
 
-			<div class="chromediv">
-				<img src="#{resource['gfx/bee.svg']}" alt="honeybee home"
-					align="left" class="chromedivimg" />
-				<h:outputText value="#{i18n.browser_support}" />
-				<h:panelGrid columns="2">
-					<h:outputLabel value="#{i18n.author}" />
-					<h:outputLink value="http://hanynowsky.wordpress.com"
-						target="_blank">
-						<h:outputText value="#{i18n.hanine_h_almadani}" />
-					</h:outputLink>
-					<h:outputLabel value="Licence GPL V3" />
-					<h:link outcome="/help/view?id=18" value="Terms" />
-				</h:panelGrid>
-			</div>
-			<h2>
-				<h:outputText value="#{i18n.technical_environment}" id="text" />
-			</h2>
-			<div>
-				<h:form>
-					<p:selectOneRadio value="#{utilityBean.shown}">
-						<f:selectItem itemLabel="#{i18n.yes}" itemValue="#{true}" />
-						<f:selectItem itemLabel="#{i18n.no}" itemValue="#{false}" />
-						<p:ajax process="@this" update=":output_tech" />
-					</p:selectOneRadio>
-				</h:form>
-			</div>
-			<p:outputPanel id="output_tech">
-				<p:panel styleClass="chromediv" style="min-height: 100px;"
-					id="panel_tech" rendered="#{utilityBean.shown}">
-					<img src="#{resource['gfx/bee.svg']}" alt="honeybee home"
-						align="left" class="chromedivimg" />
-					<h3>
-						<h:outputText value="#{i18n.technical_environment}" />
-					</h3>
-					<h:panelGrid columns="2">
-						<h:outputLabel value="#{i18n.technology}" />
-						<h:outputText value="#{i18n.jee}" />
-                                                <h:outputLabel value="#{i18n.os}" />
-						<h:outputText value="Ubuntu Linux 13.04" />
-						<h:outputLabel value="#{i18n.database}" />
-						<h:outputText value="MySQL 5.5 InnoDB" />
-					</h:panelGrid>
-				</p:panel>
-			</p:outputPanel>
-			<div class="div_aboutus" style="text-align: center;">
-				<a target="_blank" href="mailto:kyoshuu.madani@gmail.com"> <h:outputText
-						value="#{i18n.report_issue}" />
-				</a>
-			</div>
-		</div>
-		<p:separator style="height:2px;" />
-	</ui:define>
+            <div class="chromediv">
+                <img src="#{resource['gfx/bee.svg']}" alt="honeybee home"
+                     align="left" class="chromedivimg" />
+                <h:outputText value="#{i18n.browser_support}" />
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{i18n.author}" />
+                    <h:outputLink value="http://hanynowsky.wordpress.com"
+                                  target="_blank">
+                        <h:outputText value="#{i18n.hanine_h_almadani}" />
+                    </h:outputLink>
+                    <h:outputLabel value="Licence GPL V3" />
+                    <h:link outcome="/help/view?id=18" value="Terms" />
+                </h:panelGrid>
+            </div>
+            <h2>
+                <h:outputText value="#{i18n.technical_environment}" id="text" />
+            </h2>
+            <div>
+                <h:form>
+                    <p:selectOneRadio value="#{utilityBean.shown}">
+                        <f:selectItem itemLabel="#{i18n.yes}" itemValue="#{true}" />
+                        <f:selectItem itemLabel="#{i18n.no}" itemValue="#{false}" />
+                        <p:ajax process="@this" update=":output_tech" />
+                    </p:selectOneRadio>
+                </h:form>
+            </div>
+            <p:outputPanel id="output_tech">
+                <p:panel styleClass="chromediv" style="min-height: 100px;"
+                         id="panel_tech" rendered="#{utilityBean.shown}">
+                    <img src="#{resource['gfx/bee.svg']}" alt="honeybee home"
+                         align="left" class="chromedivimg" />
+                    <h3>
+                        <h:outputText value="#{i18n.technical_environment}" />
+                    </h3>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="#{i18n.technology}" />
+                        <h:outputText value="#{i18n.jee}" />
+                        <h:outputLabel value="#{i18n.os}" />
+                        <h:outputText value="Ubuntu Linux 13.04" />
+                        <h:outputLabel value="#{i18n.database}" />
+                        <h:outputText value="MySQL 5.5 InnoDB" />
+                    </h:panelGrid>
+                </p:panel>
+            </p:outputPanel>
+            <div class="chromediv" style="min-height:200px;">
+                <img src="#{resource['gfx/bee.svg']}" alt="honeybee home"
+                     align="left" class="chromedivimg" />
+                     <h3><h:outputText  value="Contributions"/></h3>
+                <h:panelGrid columns="1">                    
+                    <h:outputText  value="#{i18n.soon}" style="padding-bottom: 20px;"/>
+
+                </h:panelGrid>
+            </div>
+            <div class="div_aboutus" style="text-align: center;">
+                <a target="_blank" href="mailto:kyoshuu.madani@gmail.com"> <h:outputText
+                        value="#{i18n.report_issue}" />
+                </a>
+            </div>
+        </div>
+        <p:separator style="height:2px;" />
+    </ui:define>
 
 </ui:composition>

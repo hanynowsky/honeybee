@@ -327,6 +327,11 @@
             <mail-session jndi-name="java:jboss/mail/Default">
                 <smtp-server outbound-socket-binding-ref="mail-smtp"/>
             </mail-session>
+             <mail-session jndi-name="java:jboss/mail/otikamail">
+                <smtp-server ssl="true" outbound-socket-binding-ref="mailsmtp">
+                    <login name="opentika.contact@gmail.com" password="BK206789"/>
+                </smtp-server>
+            </mail-session>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:messaging:1.1">
             <hornetq-server>
@@ -523,6 +528,9 @@
         <socket-binding name="txn-status-manager" port="4713"/>
         <outbound-socket-binding name="mail-smtp">
             <remote-destination host="localhost" port="25"/>
+        </outbound-socket-binding>
+         <outbound-socket-binding name="mailsmtp">
+            <remote-destination host="smtp.googlemail.com" port="465"/>
         </outbound-socket-binding>
     </socket-binding-group>
 

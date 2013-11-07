@@ -1,2 +1,3 @@
 .project
 /target
+.openshift/config/standalone.xml
