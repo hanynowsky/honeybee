@@ -1,3 +1,4 @@
 .project
 /target
 /.openshift/config/standalone.xml
+/.zinfo/todo.txt
