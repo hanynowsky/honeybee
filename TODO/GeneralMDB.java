@@ -10,6 +10,7 @@ import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 /**
+ *
  * Message-Driven Bean implementation class for: GeneralMDB
  */
 @MessageDriven(name = "GeneralMDB", activationConfig = {
