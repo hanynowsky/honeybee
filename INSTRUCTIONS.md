@@ -1,4 +1,4 @@
-honeybee
+Honeybee
 ========
 
 Naturopathy &amp; personal health &amp; Nutrution Database

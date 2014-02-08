@@ -4,29 +4,11 @@
     <option name="SCOPE_TYPE" value="2" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_6.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_jackson_jackson_core_asl_1_8_8.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_jackson_jackson_mapper_asl_1_8_8.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_shrinkwrap_descriptors_shrinkwrap_descriptors_spi_1_1_0_beta_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/google-rich-snippet.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/resources/gfx/bg.jpg" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/misc/aboutus.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/misc/aboutus.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/bootstrap.css" afterPath="$PROJECT_DIR$/src/main/webapp/resources/bootstrap.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/forge-style.css" afterPath="$PROJECT_DIR$/src/main/webapp/resources/forge-style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/honeybee.iml" afterPath="$PROJECT_DIR$/honeybee.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/i18n.properties" afterPath="$PROJECT_DIR$/src/main/resources/i18n.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/i18n_ar.properties" afterPath="$PROJECT_DIR$/src/main/resources/i18n_ar.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/misc/links.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/misc/links.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/scaffold/pageTemplate.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/resources/scaffold/pageTemplate.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/primefaces.css" afterPath="$PROJECT_DIR$/src/main/webapp/resources/primefaces.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/misc/todo.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/misc/todo.xhtml" />
-    </list>
+    <list default="true" id="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" name="Default" comment="" />
     <ignored path="honeybee.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="$PROJECT_DIR$/../../test/HelloWorld/.idea/workspace.xml" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372420807078" ignored="false" />
-    <file path="/Dummy.txt" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1380186096028" ignored="false" />
+    <file path="/Dummy.txt" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1391282580912" ignored="false" />
     <file path="/a.java" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372677334565" ignored="false" />
     <file path="/sample.java" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372677332218" ignored="false" />
     <file path="/AuthorEndpoint.java" changelist="02c4b2dd-bb23-43e3-adb1-5fe713b20eb3" time="1372677959995" ignored="false" />
@@ -173,10 +155,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="49" />
+    <option name="x" value="48" />
     <option name="y" value="-1" />
-    <option name="width" value="1317" />
-    <option name="height" value="769" />
+    <option name="width" value="1319" />
+    <option name="height" value="770" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -229,7 +211,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -250,7 +232,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -265,8 +247,8 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -281,6 +263,19 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -308,19 +303,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -391,7 +373,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="49" y="-1" width="1317" height="769" extended-state="6" />
+    <frame x="48" y="-1" width="1319" height="770" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
