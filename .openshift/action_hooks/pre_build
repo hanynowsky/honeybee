@@ -8,5 +8,5 @@
 #character_set_server=utf8
 
 echo "Pre Build action hook is executing"
-
+rm -vfr /var/lib/openshift/51b8b47c4382ec3cf90002c3/jbossas/standalone/tmp/vfs/*
 exit 0;

@@ -70,7 +70,7 @@ public class DumpBean {
 	 */
 	// @Schedule(second = "*/30", minute = "*", hour = "*", dayOfWeek = "*",
 	// dayOfMonth = "*", month = "*", year = "*", info = "DataBaseDumpTimer")
-	@Schedule(second = "11", minute = "06", hour = "16", dayOfWeek = "*", dayOfMonth = "*", month = "*", year = "*", info = "DataBaseDumpTimer")
+	//@Schedule(second = "11", minute = "06", hour = "16", dayOfWeek = "*", dayOfMonth = "*", month = "*", year = "*", info = "DataBaseDumpTimer")
 	private void scheduledTimeout(final Timer t) {
 		/*
 		 * Date date = new Date(); DateFormat timeFormat = new
