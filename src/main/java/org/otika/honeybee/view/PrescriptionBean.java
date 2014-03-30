@@ -376,13 +376,12 @@ public class PrescriptionBean implements Serializable {
                 Prescription prescriptionItem = findById(id);
                 String authorName = prescriptionItem.getAuthor().getName();
                 String p = System.getProperty("user.home");
-                String path = p + File.separator + "honeybee" + File.separator
+                String path = p + File.separator + "app-root"+ File.separator + "data" + File.separator + "honeybee" + File.separator
                         + "export" + File.separator;
-
+		System.out.println("Export path is: "+ path);
                 File presFile = new File(path + "presFile" + "_"
                         + prescriptionItem.getId() + ".html");
-                new File(p + File.separator + "honeybee" + File.separator
-                        + "export").mkdirs();
+                new File(p + File.separator + "app-root"+ File.separator + "data" + File.separator + "honeybee" + File.separator + "export").mkdirs();
                 presFile.createNewFile();
 
                 InputStream is = getClass().getResourceAsStream("/css");
@@ -708,6 +707,7 @@ public class PrescriptionBean implements Serializable {
                 // Download the file
                 // TODO this method prevents Faces Messages from showing at the
                 // current view, and instead invoked after a redirect
+		System.out.println("Trying to upload Prescription printable file");
                 if (download) {
                     downloadFileBean.downloadFile(presFile);
                 }

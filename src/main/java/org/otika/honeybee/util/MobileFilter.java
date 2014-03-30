@@ -43,7 +43,7 @@ public class MobileFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 		HttpSession session = request.getSession(false);
-		if (request.getHeader("User-Agent").indexOf("Mobile") != -1) {
+		if (request.getHeader("User-Agent").indexOf("Mobile") != -1 || request.getHeader("User-Agent").indexOf("Nokia") != -1) {
 			response.sendRedirect(request.getContextPath()
 					+ "/mobile/mobile");
 			Logger.getLogger(getClass().getName()).info(
