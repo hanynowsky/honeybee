@@ -48,6 +48,8 @@ public class DumpBean {
 	private ContactBean contactBean;
 	@Inject
 	private RemoteDumpBean remoteDumpBean;
+	// Activate the DB dump or not
+	static boolean ACK = false;
 
 	/**
 	 * Default constructor.
@@ -82,86 +84,90 @@ public class DumpBean {
 		 * String dateFormat = yearFormat.format(date) +
 		 * monthFormat.format(date) + dayFormat.format(date);
 		 */
-
-		if (System.getProperty("user.home").contains("hanin")) {
-			String dumpPath = System.getProperty("java.io.tmpdir")
-					+ File.separator + "honeybee.sql";
-			utilityBean.execBash("mkdir -v -p $HOME/app-root/data");
-
-			utilityBean.execBash("mysqldump -v -u root -pmonsql honeybee > "
-					+ dumpPath);
-			try {
-				System.out.println("Attempt to call zip file function");
-				utilityBean.zipFile(new File(dumpPath));
-				// Produces exception if we use faces Message
-				System.out.println("zip file function called");
-
-			} catch (Exception ex) {
-				String msg = "Hanin: Exception handling dump file: "
-						+ ex.getMessage();
-				Logger.getLogger(getClass().getName()).severe(msg);
-			}
-
-			try {
-				File tempFile = new File(dumpPath);
-				File comFile = new File(dumpPath + ".zip");
-				if (tempFile.exists()) {
-					utilityBean
-							.execBash("notify-send -u low -a HoneyBee -i emblem-default HoneyBee-DB-Dump-Done");
-					utilityBean.execBash("mv " + dumpPath + ""
-							+ " $HOME/app-root/data/");
-					tempFile.delete();
-				}
-				if (comFile.exists()) {
-					utilityBean.execBash("mv " + dumpPath + ".zip"
-							+ " $HOME/app-root/data/");
-				}
-			} catch (Exception exp) {
-				System.err.println(exp.getMessage());
-			}
-
-		} else {
-			String username = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
-			String pass = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
-			if (pass == null || pass.equals("")) {
-				pass = remoteDumpBean.getPassword();
-			}
-			if (username == null || username.equals("")) {
-				username = remoteDumpBean.getUsername();
-			}
-
-			try {
-
-				String fileName = System.getProperty("java.io.tmpdir")
+		if (ACK) {
+			if (System.getProperty("user.home").contains("hanynowsky")) {
+				String dumpPath = System.getProperty("java.io.tmpdir")
 						+ File.separator + "honeybee.sql";
-				Logger.getLogger(getClass().getName()).log(Level.INFO,
-						"Attempt to dump DB : username & pass = {0} {1}",
-						new Object[] { username, pass });
-				utilityBean.execBash("mysqldump -h 127.7.193.130 -v -u "
-						+ username + " -p" + pass + " honeybee >" + fileName);
+				utilityBean.execBash("mkdir -v -p $HOME/app-root/data");
 
-				/* Send DB by email */
-				Logger.getLogger(getClass().getName()).info(
-						"Attempt to send DB email");
-				mailBean.emailDatabase("opentika.contact@gmail.com",
-						utilityBean.dumpFile(fileName));
+				utilityBean
+						.execBash("mysqldump -v -u root -pmonsql honeybee > "
+								+ dumpPath);
+				try {
+					System.out.println("Attempt to call zip file function");
+					utilityBean.zipFile(new File(dumpPath));
+					// Produces exception if we use faces Message
+					System.out.println("zip file function called");
 
-				File tempFile = new File(fileName);
-				if (tempFile.exists()) {
-					System.out.println("Deleting DB temp file");
-					tempFile.delete();
+				} catch (Exception ex) {
+					String msg = "Hanin: Exception handling dump file: "
+							+ ex.getMessage();
+					Logger.getLogger(getClass().getName()).severe(msg);
 				}
-				// TODO use SCP instead
-				utilityBean.execBash("mv " + fileName + ".zip"
-						+ " $HOME/app-root/data/");
-			} catch (Exception ex) {
-				String msg = "Exception handling dump file: " + ex.getMessage();
-				Logger.getLogger(getClass().getName()).severe(msg);
-			}
-		}
 
-		System.out.println("@Schedule called at: " + new java.util.Date());
-		System.out.println(t.getSchedule());
+				try {
+					File tempFile = new File(dumpPath);
+					File comFile = new File(dumpPath + ".zip");
+					if (tempFile.exists()) {
+						utilityBean
+								.execBash("notify-send -u low -a HoneyBee -i emblem-default HoneyBee-DB-Dump-Done");
+						utilityBean.execBash("mv " + dumpPath + ""
+								+ " $HOME/app-root/data/");
+						tempFile.delete();
+					}
+					if (comFile.exists()) {
+						utilityBean.execBash("mv " + dumpPath + ".zip"
+								+ " $HOME/app-root/data/");
+					}
+				} catch (Exception exp) {
+					System.err.println(exp.getMessage());
+				}
+
+			} else {
+				String username = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+				String pass = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+				if (pass == null || pass.equals("")) {
+					pass = remoteDumpBean.getPassword();
+				}
+				if (username == null || username.equals("")) {
+					username = remoteDumpBean.getUsername();
+				}
+
+				try {
+
+					String fileName = System.getProperty("java.io.tmpdir")
+							+ File.separator + "honeybee.sql";
+					Logger.getLogger(getClass().getName()).log(Level.INFO,
+							"Attempt to dump DB : username & pass = {0} {1}",
+							new Object[] { username, pass });
+					utilityBean.execBash("mysqldump -h 127.7.193.130 -v -u "
+							+ username + " -p" + pass + " honeybee >"
+							+ fileName);
+
+					/* Send DB by email */
+					Logger.getLogger(getClass().getName()).info(
+							"Attempt to send DB email");
+					mailBean.emailDatabase("opentika.contact@gmail.com",
+							utilityBean.dumpFile(fileName));
+
+					File tempFile = new File(fileName);
+					if (tempFile.exists()) {
+						System.out.println("Deleting DB temp file");
+						tempFile.delete();
+					}
+					// TODO use SCP instead
+					utilityBean.execBash("mv " + fileName + ".zip"
+							+ " $HOME/app-root/data/");
+				} catch (Exception ex) {
+					String msg = "Exception handling dump file: "
+							+ ex.getMessage();
+					Logger.getLogger(getClass().getName()).severe(msg);
+				}
+			}
+
+			System.out.println("@Schedule called at: " + new java.util.Date());
+			System.out.println(t.getSchedule());
+		}
 	}
 
 	/**
