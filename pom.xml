@@ -65,13 +65,13 @@
 				<scope>import</scope>
 			</dependency>
 			<!-- Agorava Dependency Management -->
-			<dependency>
+			<!-- <dependency>
 				<groupId>org.agorava</groupId>
 				<artifactId>agorava-bom</artifactId>
 				<version>0.6.1</version>
 				<type>pom</type>
 				<scope>import</scope>
-			</dependency>
+			</dependency> -->
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
@@ -88,25 +88,26 @@
 			<version>r09</version>
 		</dependency>
 
-		<!-- Agorava CDI Core -->
+		<!-- Agorava CDI Core 
 		<dependency>
 			<groupId>org.agorava</groupId>
 			<artifactId>agorava-core-impl-cdi</artifactId>
 			<scope>compile</scope>
-		</dependency>
+		</dependency> -->
 		<!-- Facebook -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.agorava</groupId>
 			<artifactId>agorava-facebook-cdi</artifactId>
 			<version>0.6.0</version>
 			<scope>compile</scope>
-		</dependency>
+		</dependency> -->
 		<!-- Facebook4J -->
+		<!-- 
 		<dependency>
 			<groupId>org.facebook4j</groupId>
 			<artifactId>facebook4j-core</artifactId>
 			<version>[2.1,)</version>
-		</dependency>
+		</dependency> -->
 		<!-- Needed for running tests (you may also use TestNG) -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -279,7 +280,7 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<!--<version>2.3.2</version> -->
-				<version>3.1</version>
+				<version>3.2</version>
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
