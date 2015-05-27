@@ -22,6 +22,7 @@ import org.otika.honeybee.util.UtilityBean;
  * @author Hanine .H ALMADANI <hanynowsky@gmail.com>
  *
  */
+
 @Model
 public class CommentController implements java.io.Serializable {
 

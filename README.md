@@ -19,6 +19,12 @@ This application allows a user to :
 - Etc ...
 The user have many ways to reach the information he/she needs.
 
+TODO
+====
+- Integration of Google+/faceBook
+- Update Database with common plants
+- Update Database with Nutrition chapters and blogs
+
 Email Contact
 =============
-hanynowsky@gmail.com
+hanine.hamzioui@gmail.com
