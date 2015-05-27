@@ -9,6 +9,11 @@ import javax.inject.Named;
 import facebook4j.FacebookFactory;
 import facebook4j.conf.ConfigurationBuilder; */
 
+/*
+import facebook4j.Facebook;
+import facebook4j.FacebookFactory;
+import facebook4j.conf.ConfigurationBuilder;
+*/
 /**
  * Uses facebook4j API. See pom.xml
  */
@@ -27,6 +32,7 @@ public class FaceBooker implements Serializable {
 	public FaceBooker() {
 		// TODO --
 	/*	ConfigurationBuilder cb = new ConfigurationBuilder();
+		/*ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true)
 				.setOAuthAppId("*********************")
 				.setOAuthAppSecret("******************************************")
